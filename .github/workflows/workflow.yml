@@ -37,7 +37,7 @@ jobs:
       # Run a command on GCP VM via SSH
       - name: Run command on GCP VM
         run: |
-          gcloud compute ssh prayer-prompts --command "echo 'Hello from GCP VM'"
+          gcloud compute ssh --zone us-central1-a prayer-prompts --command "echo 'Hello from GCP VM'"
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
