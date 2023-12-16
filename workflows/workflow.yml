@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+#on:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Firebase credentials
+        run: |
+          echo $FIREBASE_KEY > credentials.json
+          echo $FIREBASE_URL > firebase_url
+      - name: Build the Docker image
+        run: docker build -t jacobmacleod/flashcard-app:latest .
+      - name: Log in to Docker Hub and push image
+        run: |
+          docker login -u jacobmacleod -p $DOCKER_PASSWORD
+          docker push jacobmacleod/flashcard-app:latest
+
