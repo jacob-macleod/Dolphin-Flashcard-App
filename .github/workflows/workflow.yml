@@ -32,7 +32,7 @@ jobs:
         with:
           service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: your-project-id
+          project_id: dev-vms-jacob
           
       # Run a command on GCP VM via SSH
       - name: Run command on GCP VM
