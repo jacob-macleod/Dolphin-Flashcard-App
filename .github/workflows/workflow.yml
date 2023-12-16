@@ -9,16 +9,19 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set up Firebase credentials
         run: |
-          echo $FIREBASE_KEY > credentials.json
-          echo $FIREBASE_URL > firebase_url
+          echo "$FIREBASE_KEY" > credentials.json
+          echo "$FIREBASE_URL" > firebase_url
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+          FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
       - name: Build the Docker image
         run: docker build -t jacobmacleod/flashcard-app:latest .
-      - name: Test credentials
-        run: echo $DOCKER_PASSWORD
       - name: Log in to Docker Hub and push image
         run: |
           docker login -u jacobmacleod -p $DOCKER_PASSWORD
           docker push jacobmacleod/flashcard-app:latest
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 #jobs:
 #  build:
