@@ -1,6 +1,6 @@
 # Flashcard-App
 ## Broad Overview
-A broad overview of the plans for the language learning app
+A broad overview of the plans for the flashcard app
 
 ## USPs and Points of Differentiation
 * Flashcard app with nice UI
