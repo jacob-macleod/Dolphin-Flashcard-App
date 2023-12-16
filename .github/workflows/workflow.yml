@@ -1,6 +1,9 @@
-name: Workflow
+name: CI/CD Workflow
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -22,6 +25,21 @@ jobs:
           docker push jacobmacleod/flashcard-app:latest
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: actions/checkout@v3
+      # Setup Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.3.0
+        with:
+          service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: your-project-id
+          
+      # Run a command on GCP VM via SSH
+      - name: Run command on GCP VM
+        run: |
+          gcloud compute ssh prayer-prompts --command "echo 'Hello from GCP VM'"
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
 
 #jobs:
 #  build:
