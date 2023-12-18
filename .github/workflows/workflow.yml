@@ -36,12 +36,14 @@ jobs:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
   
       - id: 'compute-ssh'
-        uses: 'google-github-actions/ssh-compute@v1'
-        with:
-          instance_name: 'prayer-prompts'
-          zone: 'us-central1-a'
-          ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-          command: 'echo Hello world'
+        #uses: 'google-github-actions/ssh-compute@v1'
+        run: gcloud compute ssh prayer-prompts --zone us-central1-a --project dev-vms-jacob  --ssh-key-file /tmp/8484796c40c0e55ca3777d55/google_compute_engine --quiet --tunnel-through-iap --command="echo Hello world"
+
+        #with:
+        #  instance_name: 'prayer-prompts'
+        #  zone: 'us-central1-a'
+        #  ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+        #  command: 'echo Hello world'
   
       # Example of using the output
       - id: 'test'
