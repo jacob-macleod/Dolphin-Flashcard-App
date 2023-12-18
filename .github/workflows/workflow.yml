@@ -7,6 +7,9 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,21 +28,26 @@ jobs:
           docker push jacobmacleod/flashcard-app:latest
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: actions/checkout@v3
-      # Setup Google Cloud SDK
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.3.0
+    
+      - uses: 'actions/checkout@v4'
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
         with:
-          service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          project_id: dev-vms-jacob
-          
-      # Run a command on GCP VM via SSH
-      - name: Run command on GCP VM
-        run: |
-          gcloud compute ssh --zone us-central1-a prayer-prompts --command "echo 'Hello from GCP VM'"
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+  
+      - id: 'compute-ssh'
+        uses: 'google-github-actions/ssh-compute@v1'
+        with:
+          instance_name: 'prayer-prompts'
+          zone: 'us-central1-a'
+          ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+          command: 'echo Hello world'
+  
+      # Example of using the output
+      - id: 'test'
+        run: |-
+          echo '${{ steps.build.outputs.stdout }}'
+          echo '${{ steps.build.outputs.stderr }}'
 
 #jobs:
 #  build:
