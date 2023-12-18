@@ -37,8 +37,7 @@ jobs:
   
       - id: 'compute-ssh'
         #uses: 'google-github-actions/ssh-compute@v1'
-        run: gcloud compute ssh prayer-prompts --zone us-central1-a --project dev-vms-jacob  --ssh-key-file /tmp/8484796c40c0e55ca3777d55/google_compute_engine --quiet --tunnel-through-iap --command="pwd"
-        #run: gcloud compute ssh prayer-prompts --zone us-central1-a --project dev-vms-jacob  --ssh-key-file /tmp/8484796c40c0e55ca3777d55/google_compute_engine --quiet --tunnel-through-iap --command="sudo docker-compose up --force-recreate --build -d && sudo docker image prune -f"
+        run: gcloud compute ssh prayer-prompts --zone us-central1-a --project dev-vms-jacob  --ssh-key-file /tmp/8484796c40c0e55ca3777d55/google_compute_engine --quiet --tunnel-through-iap --command="cd /home/jacob_e_macleod && ls && sudo docker-compose up --force-recreate --build -d && sudo docker image prune -f"
 
         #with:
         #  instance_name: 'prayer-prompts'
