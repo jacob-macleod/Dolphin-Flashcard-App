@@ -42,3 +42,34 @@ A broad overview of the planned features to be made
 * If they want to edit it, they can first clone it
 * Users can find flashcards made by other users on a separate search tab
 * Users can be given access to flashcard by the owner
+
+## Contributors
+Contributors are welcome!
+
+At the moment, the development code reads `firebase_url` and `credentials.json` when interacting with the database, which are included in `.gitignore` and stores the information for the **production database**. Therefore, if developing, this may need to be worked around by changing some functions into dummy functions. In time, I need to investigate this further and find a final solution.
+
+In addition, you can store data in these files of your own firebase setup, made specifically for testing purposes. This is the ideal option at the moment, and you can use the free firebase tier.
+
+## Server setup
+
+At the moment, a pipeline exists to:
+- Build the docker container
+- Upload it to docker hub as a private container since it contains keys
+- SSH into a GCP VM and update the container
+
+If you want to manually setup the code, follow the following steps:
+- `firebase_url` and `credentials.json` in the overall project directory, which store the url of the firebase instance and the firebase credentials (api key)
+- Get the code on the server, using git or docker(your own build of the code)
+- If using docker, a `docker-compose.yml` file can be made, using the following information:
+
+```yaml
+version: '3'
+
+services:
+  flashcard-app:
+    image: jacobmacleod/flashcard-app:latest
+    ports:
+      - "5000:5000" 
+```
+- `docker-compose up` can be used to build the code, and `docker-compose up --force-recreate --build -d && docker image prune -f` to update the container
+
