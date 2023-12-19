@@ -1,6 +1,7 @@
 """ Provides a class to interact with the database """
 import os
 import firebase_admin
+from firebase_admin import auth
 from firebase_admin import db, credentials
 
 class Database:
@@ -20,3 +21,6 @@ class Database:
     def get(self, path):
         """ Get data from database """
         return db.reference(path).get()
+
+    def create_user(self, email, password) :
+        auth.create_user(email=email, password=password)
