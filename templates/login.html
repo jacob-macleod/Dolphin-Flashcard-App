@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Authentication - Google Sign-In</title>
+</head>
+<body>
+  <h1>Firebase Authentication - Google Sign-In</h1>
+  <button onclick="signInWithGoogle()">Sign in using Google</button>
+  <button onclick="logOut()">Sign out</button>
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+
+  <script>
+    var firebaseConfig = {};
+    fetch('/api/firebase-config')
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok.');
+        }
+        return response.json(); // Parse the JSON response
+    })
+    .then(credentials => {
+        // Use credentials.json content as firebaseConfig
+        firebaseConfig = {
+            apiKey: credentials.apiKey,
+            authDomain: credentials.authDomain,
+            databaseURL: credentials.databaseURL,
+            projectId: credentials.projectId,
+            storageBucket: credentials.storageBucket,
+            messagingSenderId: credentials.messagingSenderId,
+            appId: credentials.appId,
+            measurementId: credentials.measurementId
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    });
+
+    function createAccount(userID, displayName) {
+        const endpoint = '/api/create-account';
+        const data = {
+            userID: userID,
+            displayName: displayName
+        }; // JSON payload
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            // Add any other headers if required
+            },
+            body: JSON.stringify(data) // Convert data to JSON string
+        })
+        .then(response => {
+            if (response.ok) {
+            return response.json(); // Parse response JSON if successful
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log('Account creation successful:', data);
+            // Handle success response here
+        })
+        .catch(error => {
+            console.error('There was an error creating the account:', error);
+            // Handle error here
+        });
+    }
+
+    function createCookie(name, value, days) {
+        let expires = '';
+        
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = '; expires=' + date.toUTCString();
+        }
+        
+        document.cookie = name + '=' + value + expires + '; path=/';
+    }
+
+    // Function to handle Google sign-in
+    function signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      // Sign in
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          // Successful sign-in, you can access user information here
+          const user = result.user;
+          console.log(user)
+          console.log(user.displayName)
+          createAccount(user.uid, user.displayName)
+          createCookie("userID", user.uid)
+          console.log("Signed in")
+        })
+        .catch((error) => {
+          // Handle errors here
+          console.error('Google sign-in error: ', error);
+        });
+    }
+
+    function logOut() {
+        firebase.auth().signOut().then(function() {
+            console.log('Signed Out');
+        }, function(error) {
+            console.error('Sign Out Error', error);
+        });
+    }
+  </script>
+</body>
+</html>
