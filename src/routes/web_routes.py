@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint
-from src.database.database import database as db
+from database.database import database as db
 web_routes = Blueprint('web_routes', __name__)
 
 @web_routes.route("/")
