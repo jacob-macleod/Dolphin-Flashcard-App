@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, abort, jsonify, request
 import os
 import json
-from src.database.database import database as db
+from database.database import database as db
 api_routes = Blueprint('api_routes', __name__)
 
 # Check if the request is coming from local traffic
