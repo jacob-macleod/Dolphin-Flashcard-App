@@ -1,3 +1,4 @@
 credentials.json
 firebase_url
 *pyc
+*_pycache_

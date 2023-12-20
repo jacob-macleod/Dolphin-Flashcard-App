@@ -28,3 +28,5 @@ class Database:
 
     def save(self, path, data) :
         db.reference(path).set(data)
+
+database = Database()
