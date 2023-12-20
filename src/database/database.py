@@ -1,8 +1,10 @@
 """ Provides a class to interact with the database """
 import os
+import json
 import firebase_admin
 from firebase_admin import auth
 from firebase_admin import db, credentials
+import pyrebase
 
 class Database:
     """ Interact with the database"""
@@ -17,10 +19,12 @@ class Database:
         firebase_url = f.read()
 
     firebase_admin.initialize_app(cred, {"databaseURL": firebase_url})
+    print (json.load(open('firebase_config.json')))
+    pb = pyrebase.initialize_app(json.load(open('firebase_config.json')))
 
     def get(self, path):
         """ Get data from database """
         return db.reference(path).get()
 
-    def create_user(self, email, password) :
-        auth.create_user(email=email, password=password)
+    def save(self, path, data) :
+        db.reference(path).set(data)
