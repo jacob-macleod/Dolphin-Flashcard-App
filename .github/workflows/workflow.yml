@@ -41,7 +41,7 @@ jobs:
       - name: Test Docker Image
         run: |
           docker login -u jacobmacleod -p $DOCKER_PASSWORD
-          docker run -p 5000:5000 jacobmacleod/flashcard-app:latest
+          docker run -d -p 5000:5000 jacobmacleod/flashcard-app:latest
           curl GET http://localhost:5000          
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
