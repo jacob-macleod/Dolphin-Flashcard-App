@@ -17,9 +17,11 @@ jobs:
         run: |
           echo "$FIREBASE_KEY" > credentials.json
           echo "$FIREBASE_URL" > firebase_url
+          echo "$FIREBASE_CONFIG" > firebase_config.json
         env:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
       - name: Build the Docker image
         run: docker build -t jacobmacleod/flashcard-app:latest .
       - name: Log in to Docker Hub and push image
