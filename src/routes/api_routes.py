@@ -116,3 +116,23 @@ def create_flashcard() :
     except Exception as e:
         # Return the error as a json object
         return jsonify(e), 500
+
+@api_routes.route("/api/get-flashcard", methods=["GET"])
+def get_flashcard() :
+    """ Get a flashcard based on the name and user ID
+        Add json to request as in:
+        {
+            "userID": "my-id",
+            "flashcardName": "My new set"
+        }
+    """
+    try :
+        user_id = request.json.get("userID")
+        flashcard_name = request.json.get("flashcardName")
+        flashcard_id = hash_to_numeric(user_id + flashcard_name)
+
+        return jsonify(db.get("/users/" + user_id + "/flashcards/" + flashcard_id))
+
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(e), 500
