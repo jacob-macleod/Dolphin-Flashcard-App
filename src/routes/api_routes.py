@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, abort, jsonify, request
 import os
 import json
+import hashlib
 from database.database import database as db
 api_routes = Blueprint('api_routes', __name__)
 
@@ -11,6 +12,18 @@ def is_local_request():
     client_ip = request.remote_addr
     # Check if the client's IP address is localhost (127.0.0.1 or ::1) or the docker network
     return client_ip in ('127.0.0.1', '172.17.0.1', '::1')
+
+def hash_to_numeric(input_string):
+    """ Hash a string, convert it to a number, then return a string version of the number
+        Importantly, this is deterministic - the same value will be returned every time it is hashed"""
+    # Convert the input string to its hash using SHA-256
+    hashed_string = hashlib.sha256(input_string.encode()).hexdigest()
+
+    # Convert the hexadecimal hash to an integer (base 16)
+    hashed_numeric = int(hashed_string, 16)
+
+    # Return the numeric representation of the hash
+    return str(hashed_numeric)
 
 @api_routes.route("/api/create-account", methods=["POST"])
 def create_account():
@@ -59,31 +72,47 @@ def serve_credentials():
     
 @api_routes.route("/api/create-flashcard", methods=["POST"])
 def create_flashcard() :
-    """ Create a flashcard set for the user. Flashcards have a front, back, review status and last review date"""
-    user_id = request.json.get("userID")
-    flashcard_name = request.json.get("flashcardName")
-    flashcard_description = request.json.get("flashcardDescription")
-    cards = request.json.get("cards")
-    # Make this generate a random number
-    flashcard_id = "1"
-    for card in cards:
-        print (card.get("front"))
-    """flashcard_id = request.json.get("flashcardID")
-    front = request.json.get("front")
-    back = request.json.get("back")
-    review_status = request.json.get("reviewStatus")
-    last_review_date = request.json.get("lastReviewDate")
+    """ Create or edit a flashcard set for the user. Flashcards have a front, back, review status and last review date
+        Example request:
+        {
+            "userID": "my-id",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "cards": [
+                {
+                    "front":"Front 1",
+                    "back": "Back 1",
+                    "reviewStatus":"0",
+                    "lastReview": "dd/mm/yyyy"
+                },
+                {
+                    "front":"Front 2",
+                    "back": "Back 2",
+                    "reviewStatus":"0",
+                    "lastReview": "dd/mm/yyyy"
+                }
+            ]
+        }
+    """
+    try :
+        user_id = request.json.get("userID")
+        flashcard_name = request.json.get("flashcardName")
+        flashcard_description = request.json.get("flashcardDescription")
+        cards = request.json.get("cards")
+        # A hashed version of the userID and flashcard name
+        flashcard_id = hash_to_numeric(user_id + flashcard_name)
 
-    if db.get("/users/" + user_id + "/flashcards/" + flashcard_id) is None:
-        db.save("/users/" + user_id + "/flashcards/" + flashcard_id,
-            {
-                "flashcardID": flashcard_id,
-                "front": front,
-                "back": back,
-                "reviewStatus": review_status,
-                "lastReviewDate": last_review_date
-            }
-        )
+        if db.get("/users/" + user_id + "/flashcards/" + flashcard_id) is None:
+            db.save("/users/" + user_id + "/flashcards/" + flashcard_id,
+                {
+                    "flashcardID": flashcard_id,
+                    "flashcardName": flashcard_name,
+                    "flashcardDescription": flashcard_description,
+                    "cards": cards
+                }
+            )
 
-    return jsonify({"success": True}, 200)"""
-    return jsonify({"success": True}, 200)
+        return jsonify({"success": True}, 200)
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(e), 500
