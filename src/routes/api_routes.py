@@ -1,7 +1,8 @@
-from flask import render_template, Blueprint, abort, jsonify, request
-import os
 import json
+import os
 import hashlib
+from flask import render_template, Blueprint, abort, jsonify, request
+from classes.card import Card
 from database.database import database as db
 api_routes = Blueprint('api_routes', __name__)
 
@@ -136,3 +137,50 @@ def get_flashcard() :
     except Exception as e:
         # Return the error as a json object
         return jsonify(e), 500
+
+@api_routes.route("/api/calculate-card-stats")
+def calculate_card_stats() :
+    """ Used when a user is revising a set of cards.
+        For each card, calculate the next card to look at,
+        And the new card review times and review statuses
+    """
+    # The current card being looked at
+    current_index = request.json.get("currentIndex")
+    # The max num of cards
+    max_index = request.json.get("maxIndex")
+    # Whether the card was right, wrong, or easy
+    card_status = request.json.get("cardStatus")
+    last_review = request.json.get("lastReview")
+    review_status = request.json.get("reviewStatus")
+    # How many cards have been looked at in the set this session before getting one wrong
+    streak = request.json.get("cardStreak")
+
+    card = Card(
+        current_index,
+        max_index,
+        card_status,
+        last_review,
+        review_status,
+        streak
+    )
+
+    # If the user got the card right
+    if card_status == "right":
+        card.increment_index()
+        card.increment_review_status()
+    elif card.status == "easy" :
+        card.increment_index()
+        card.easy_button()
+    else:
+        card.reset_card()
+
+
+    # Return the updated card details
+    return jsonify({
+        "currentIndex": card.current_index,
+        "maxIndex": card.max_index,
+        "cardStatus": card.status,
+        "lastReview": card.last_review,
+        "reviewStatus": card.review_status,
+        "cardStreak": card.streak
+    })
