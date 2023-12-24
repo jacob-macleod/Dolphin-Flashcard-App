@@ -1,6 +1,7 @@
 import json
 import os
 import hashlib
+import threading
 from flask import render_template, Blueprint, abort, jsonify, request
 from classes.card import Card
 from database.database import database as db
@@ -26,6 +27,12 @@ def hash_to_numeric(input_string):
 
     # Return the numeric representation of the hash
     return str(hashed_numeric)
+
+
+def increase_xp(user_id, increment_amount) :
+    """ Increase the user's XP by 10 """
+    db.increment("/users/" + user_id + "/statistics/totalXP", increment_amount)
+    db.increment("/users/" + user_id + "/statistics/weeklyXP", increment_amount)
 
 @api_routes.route("/api/create-account", methods=["POST"])
 def create_account():
@@ -139,7 +146,7 @@ def get_flashcard() :
         # Return the error as a json object
         return jsonify(e), 500
 
-@api_routes.route("/api/calculate-card-stats", methods=["GET"])
+@api_routes.route("/api/calculate-card-stats", methods=["POST"])
 def calculate_card_stats() :
     """ Used when a user is revising a set of cards.
         For each card, calculate the next card to look at,
@@ -147,6 +154,7 @@ def calculate_card_stats() :
 
         Example request:
         {
+            "userID": "my-id",
             "cardStatus": "right",
             "cardStreak": "3",
             "currentIndex": "4",
@@ -155,6 +163,7 @@ def calculate_card_stats() :
             "reviewStatus": "8.0"
         }
     """
+    user_id = request.json.get("userID")
     # The current card being looked at
     current_index = request.json.get("currentIndex")
     # The max num of cards
@@ -185,6 +194,8 @@ def calculate_card_stats() :
     else:
         card.reset_card()
 
+    thread = threading.Thread(target=increase_xp, args=(user_id, 10))
+    thread.start()
 
     # Return the updated card details
     return jsonify({
