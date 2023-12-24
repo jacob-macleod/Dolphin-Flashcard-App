@@ -2,7 +2,7 @@ import json
 import os
 import hashlib
 import threading
-from flask import render_template, Blueprint, abort, jsonify, request
+from flask import Blueprint, abort, jsonify, request
 from classes.card import Card
 from database.database import database as db
 from classes.date import Date
@@ -194,7 +194,9 @@ def calculate_card_stats() :
     else:
         card.reset_card()
 
-    thread = threading.Thread(target=increase_xp, args=(user_id, 10))
+    # When review_status is small, it's close to 10. The bigger it is, the smaller xp_increase is
+    xp_increase = round(10 - (1-(int(float(review_status)) / 100)))
+    thread = threading.Thread(target=increase_xp, args=(user_id, xp_increase))
     thread.start()
 
     # Return the updated card details
