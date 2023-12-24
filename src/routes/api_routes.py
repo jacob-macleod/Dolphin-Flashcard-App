@@ -4,6 +4,7 @@ import hashlib
 from flask import render_template, Blueprint, abort, jsonify, request
 from classes.card import Card
 from database.database import database as db
+from classes.date import Date
 api_routes = Blueprint('api_routes', __name__)
 
 # Check if the request is coming from local traffic
@@ -138,11 +139,21 @@ def get_flashcard() :
         # Return the error as a json object
         return jsonify(e), 500
 
-@api_routes.route("/api/calculate-card-stats")
+@api_routes.route("/api/calculate-card-stats", methods=["GET"])
 def calculate_card_stats() :
     """ Used when a user is revising a set of cards.
         For each card, calculate the next card to look at,
         And the new card review times and review statuses
+
+        Example request:
+        {
+            "cardStatus": "right",
+            "cardStreak": "3",
+            "currentIndex": "4",
+            "lastReview": "09/01/2024",
+            "maxIndex": "20",
+            "reviewStatus": "8.0"
+        }
     """
     # The current card being looked at
     current_index = request.json.get("currentIndex")
@@ -184,3 +195,30 @@ def calculate_card_stats() :
         "reviewStatus": card.review_status,
         "cardStreak": card.streak
     })
+
+@api_routes.route("/api/get-today-cards", methods=["GET"])
+def get_today_cards() :
+    """ Get all the flashcards to be learned today for a user
+        Requests include soley a json including userID
+        Example request:
+        {
+            "userID": "my-id"
+        }
+    """
+    user_id = request.json.get("userID")
+    cards_to_return = []
+    date = Date()
+
+    # Get all flashcards
+    flashcards = db.get("/users/" + user_id + "/flashcards")
+    # Select only the cards due today or previous days
+    for flashcard_id, flashcard_data in flashcards.items():
+        # Access the "cards" list within each flashcard
+        cards_list = flashcard_data.get("cards", [])
+        # Iterate through each card in the "cards" list
+        for card in cards_list:
+            if card["lastReview"] <= date.get_current_date():
+                card["flashcardName"] = flashcard_data["flashcardName"]
+                cards_to_return.append(card)
+
+    return jsonify(cards_to_return)

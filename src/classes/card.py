@@ -1,5 +1,6 @@
 """ Handle functions associated with cards such as incrementing review dates """
 from datetime import datetime, timedelta
+from classes.date import Date
 
 class Card:
     """ Stores data for a single flashcard """
@@ -12,6 +13,7 @@ class Card:
     last_review = None
     review_status = None
     streak = None
+    date = None
 
     def __init__(
             self,
@@ -28,15 +30,7 @@ class Card:
         self.last_review = last_review
         self.review_status = review_status
         self.streak = streak
-
-    def get_current_date(self):
-        """ Get the current date """
-        current_date = datetime.now()
-
-        # Format the date as dd/mm/yyyy
-        formatted_date = current_date.strftime('%d/%m/%Y')
-
-        return formatted_date
+        self.date = Date()
 
     def increase_date_by_days(self, input_date, days_to_add):
         """ Increase a date by days_to_add """
@@ -75,7 +69,7 @@ class Card:
     def reset_card(self) :
         """ Reset the card - if the answers were wrong """
         self.review_status = "0.0"
-        self.last_review = self.get_current_date()
+        self.last_review = self.date.get_current_date()
 
         if int(self.current_index)-5 > 0:
             self.current_index = str(int(self.current_index) -5)
