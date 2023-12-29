@@ -2,6 +2,8 @@ import json
 import os
 from flask import Blueprint, abort, jsonify, request
 from database.database import database as db
+from classes.date import Date
+
 authentication_routes = Blueprint('api_routes', __name__)
 
 # Check if the request is coming from local traffic
@@ -17,7 +19,7 @@ def create_account():
     """ Create an account for the user if one is not created """
     user_id = request.json.get("userID")
     name = request.json.get("displayName")
-    print (name)
+    date = Date()
 
     if db.get("/users/" + user_id) is None:
         db.save("/users/" + user_id,
@@ -28,6 +30,7 @@ def create_account():
                     "streak": "0",
                     "totalXP": "0",
                     "weeklyXP": "0",
+                    "lastStreak": date.get_current_date()
                 },
                 "heatmapData": {}
             }

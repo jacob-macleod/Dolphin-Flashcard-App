@@ -2,6 +2,7 @@
 import threading
 from flask import Blueprint, request, jsonify
 from database.database import database as db
+from classes.date import Date
 from classes.card import Card
 
 statistics_routes = Blueprint('statistics_routes', __name__)
@@ -73,3 +74,31 @@ def calculate_card_stats() :
         "reviewStatus": card.review_status,
         "cardStreak": card.streak
     })
+
+@statistics_routes.route("/api/calculate-streak", methods=["POST"])
+def calculate_streak() :
+    """ Calculate the user's streak, and increase it if needed
+        json should be included with the request as the following:
+        {
+            "userID": "my id"
+        }
+        ?increase=true can be added to the streak to increase it if needed
+     """
+
+    user_id = request.json.get("userID")
+    date = Date()
+    stats = db.get("/users/" + user_id + "/statistics/")
+    last_streak = stats["lastStreak"]
+    today = date.get_current_date()
+    difference = date.compare_dates(last_streak, today)
+    print (difference)
+
+    # If the streak needs to be reset
+    if difference < -1:
+        db.save("/users/" + user_id + "/statistics/streak", "0")
+        db.save("/users/" + user_id + "/statistics/lastStreak", today)
+    if difference == -1 and request.args.get("increase") == "true":
+        db.increment("/users/" + user_id + "/statistics/streak", 1)
+        db.save("/users/" + user_id + "/statistics/lastStreak", today)
+
+    return jsonify({"success": True}, 200)
