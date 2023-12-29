@@ -27,6 +27,13 @@ class Database:
         return db.reference(path).get()
 
     def save(self, path, data) :
+        """ Save data to a path """
         db.reference(path).set(data)
+
+    def increment(self, path, increment_amount) :
+        """ Increment a number stored as a string from a path in the database """
+        old_value = self.get(path)
+        new_value = str(int(old_value) + int(increment_amount))
+        self.save(path, new_value)
 
 database = Database()
