@@ -1,5 +1,6 @@
 """ Routes relating to general card management """
 import hashlib
+import json
 from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
@@ -33,13 +34,13 @@ def create_flashcard() :
                 {
                     "front":"Front 1",
                     "back": "Back 1",
-                    "reviewStatus":"0",
+                    "reviewStatus":"0.0",
                     "lastReview": "dd/mm/yyyy"
                 },
                 {
                     "front":"Front 2",
                     "back": "Back 2",
-                    "reviewStatus":"0",
+                    "reviewStatus":"0.0",
                     "lastReview": "dd/mm/yyyy"
                 }
             ]
@@ -96,21 +97,54 @@ def get_today_cards() :
         {
             "userID": "my-id"
         }
+
+        If a card review status is 0.0, it is not started.
+        If it is 0.x, it is actively studying
+        If it is >= 1.x, it is learned
     """
     user_id = request.json.get("userID")
     cards_to_return = []
     date = Date()
 
+    # Get the card presets
+    with open("card_presets.json", "r") as f:
+        card_presets = json.load(f)
+
+    not_started = 0
+    actively_studying = 0
+    recapping = 0
+
     # Get all flashcards
     flashcards = db.get("/users/" + user_id + "/flashcards")
+    if flashcards is None:
+        return jsonify(["User has no flashcards"])
+
     # Select only the cards due today or previous days
-    for flashcard_id, flashcard_data in flashcards.items():
+    for _, flashcard_data in flashcards.items():
         # Access the "cards" list within each flashcard
         cards_list = flashcard_data.get("cards", [])
         # Iterate through each card in the "cards" list
         for card in cards_list:
             if card["lastReview"] <= date.get_current_date():
                 card["flashcardName"] = flashcard_data["flashcardName"]
-                cards_to_return.append(card)
+
+                # Work out if the card is new, being learned, or learned
+                daily_review = card["reviewStatus"].split(".")[0]
+                sub_daily_review = card["reviewStatus"].split(".")[1]
+
+                if daily_review == "0" and sub_daily_review == "0":
+                    not_started += 1
+                    count = not_started
+                    limit = card_presets["notStarted"]
+                elif daily_review == "0":
+                    actively_studying += 1
+                    count = actively_studying
+                    limit = card_presets["activelyStudying"]
+                else :
+                    recapping += 1
+                    count = recapping
+                    limit = card_presets["recapping"]
+                if int(count) < int(limit):
+                    cards_to_return.append(card)
 
     return jsonify(cards_to_return)
