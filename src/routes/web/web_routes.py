@@ -16,3 +16,8 @@ def data() :
 def sign_in_web() :
     """ Load the sign in page for web """
     return render_template("login.html")
+
+@web_routes.route("/landing-page")
+def landing_page() :
+    """ Load the landing page """
+    return render_template("media_query_text.html")
