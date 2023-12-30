@@ -77,7 +77,12 @@ def calculate_card_stats() :
 
 @statistics_routes.route("/api/update-heatmap", methods=["POST"])
 def update_heatmap() :
-    """ Called when streak is updated """
+    """ Called when streak is updated
+        Requests should have json in the following format:
+    {
+        "userID": "my id"
+    }
+     """
     user_id = request.json.get("userID")
     heatmap = db.get("/users/" + user_id + "/heatmapData")
     date = Date()
@@ -100,6 +105,18 @@ def update_heatmap() :
         heatmap = {}
         heatmap[(today)] = "1"
     db.save("/users/" + user_id + "/heatmapData", heatmap)
+    return jsonify(heatmap)
+
+@statistics_routes.route("/api/get-heatmap", methods=["POST"])
+def get_heatmap() :
+    """ Get the user's heatmap data
+        Requests should have json in the following format:
+    {
+        "userID": "my id"
+    }
+    """
+    user_id = request.json.get("userID")
+    heatmap = db.get("/users/" + user_id + "/heatmapData")
     return jsonify(heatmap)
 
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
