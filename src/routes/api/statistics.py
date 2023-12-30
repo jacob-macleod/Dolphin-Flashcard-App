@@ -75,6 +75,33 @@ def calculate_card_stats() :
         "cardStreak": card.streak
     })
 
+@statistics_routes.route("/api/update-heatmap", methods=["POST"])
+def update_heatmap() :
+    """ Called when streak is updated """
+    user_id = request.json.get("userID")
+    heatmap = db.get("/users/" + user_id + "/heatmapData")
+    date = Date()
+    today = date.get_current_date().replace('/', '-')
+
+    # Heatmap has a date as the key, and the value is the number of cards reviewed that day
+    if heatmap is not None :
+        item_found = False
+        for item in heatmap:
+            if item == today:
+                item_found = True
+                # Increment data
+                heatmap[item] = str(int(heatmap[item]) + 1)
+
+        # If no data for today is recorded
+        if not item_found:
+            heatmap[today] = "1"
+    # If the heatmap has not been created yet
+    else :
+        heatmap = {}
+        heatmap[(today)] = "1"
+    db.save("/users/" + user_id + "/heatmapData", heatmap)
+    return jsonify(heatmap)
+
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
 def calculate_streak() :
     """ Calculate the user's streak, and increase it if needed
@@ -91,7 +118,6 @@ def calculate_streak() :
     last_streak = stats["lastStreak"]
     today = date.get_current_date()
     difference = date.compare_dates(last_streak, today)
-    print (difference)
 
     # If the streak needs to be reset
     if difference < -1:
