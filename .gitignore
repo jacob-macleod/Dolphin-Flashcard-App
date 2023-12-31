@@ -3,3 +3,4 @@ firebase_url
 firebase_config.json
 *pyc
 *_pycache_
+env
