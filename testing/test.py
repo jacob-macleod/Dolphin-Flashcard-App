@@ -32,6 +32,13 @@ def test_check_request_json() :
     )
     assert result is True
 
+    # Test with valid keys and some extra ones
+    result = check_request_json(
+        '{"key1": "value1", "key2": "value2", "key3": "myValue"}',
+        {"key1": "value1", "key2": "value2"}
+    )
+    assert result is False
+
     # Test with invalid keys
     result = check_request_json(
         '{"key3": "value1", "key4": "value2"}',
