@@ -4,6 +4,7 @@ import json
 from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
+from verification.api_error_checking import check_request_json
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
@@ -46,6 +47,35 @@ def create_flashcard() :
             ]
         }
     """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "cards": [
+                {
+                    "front":"Front 1",
+                    "back": "Back 1",
+                    "reviewStatus":"0.0",
+                    "lastReview": "dd/mm/yyyy"
+                },
+                {
+                    "front":"Front 2",
+                    "back": "Back 2",
+                    "reviewStatus":"0.0",
+                    "lastReview": "dd/mm/yyyy"
+                }
+            ]
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
+
     try :
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
@@ -78,6 +108,20 @@ def get_flashcard() :
             "flashcardName": "My new set"
         }
     """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id",
+            "flashcardName": "My new set"
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
+
     try :
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
@@ -102,6 +146,19 @@ def get_today_cards() :
         If it is 0.x, it is actively studying
         If it is >= 1.x, it is learned
     """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id"
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
+
     user_id = request.json.get("userID")
     cards_to_return = []
     date = Date()
