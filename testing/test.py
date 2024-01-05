@@ -44,6 +44,31 @@ def test_check_request_json() :
         '{"key3": "", "key4": ""}',
         {"key1": "", "key2": ""}
     )
-    print (result)
-    print ('Extra keys found in request: key1, key2')
-    assert result == 'Extra keys found in request: key1, key2'
+    assert result == 'Extra keys found in request: key1, key2' or result == 'Extra keys found in request: key2, key1'
+
+    # Test with valid regex pattern
+    expected_format = '''
+        {
+            "name": "",
+            "age": "\\\\d+",
+            "email": "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\\\.[a-zA-Z0-9-.]+"
+        }
+    '''
+    request_data = {
+        "name": "John Doe",
+        "age": "30",
+        "email": "john@example.com",
+    }
+    result = check_request_json(expected_format, request_data)
+    assert result is True
+
+    # Test with invalid regex pattern
+    expected_format = '''
+    {
+        "name": "",
+        "age": "\\\\d{3}",
+        "email": "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\\\.[a-zA-Z0-9-.]+"
+    }
+    '''
+    result = check_request_json(expected_format, request_data)
+    assert result == "Value for key 'age' does not match the expected pattern"
