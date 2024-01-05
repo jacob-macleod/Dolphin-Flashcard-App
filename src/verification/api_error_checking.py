@@ -40,6 +40,6 @@ def check_request_json(expected_format, request):
 
     except json.JSONDecodeError as e:
         return f"JSON decoding error: {e}"
-    
+
     except Exception as ex:
         return f"An error occurred: {ex}"
