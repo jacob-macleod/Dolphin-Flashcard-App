@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
 from classes.card import Card
+from verification.api_error_checking import check_request_json
 
 statistics_routes = Blueprint('statistics_routes', __name__)
 
@@ -29,6 +30,25 @@ def calculate_card_stats() :
             "reviewStatus": "8.0"
         }
     """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id",
+            "cardStatus": "right",
+            "cardStreak": "3",
+            "currentIndex": "4",
+            "lastReview": "09/01/2024",
+            "maxIndex": "20",
+            "reviewStatus": "8.0"
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
+
     user_id = request.json.get("userID")
     # The current card being looked at
     current_index = request.json.get("currentIndex")
@@ -83,6 +103,19 @@ def update_heatmap() :
         "userID": "my id"
     }
      """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id",
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
+
     user_id = request.json.get("userID")
     heatmap = db.get("/users/" + user_id + "/heatmapData")
     date = Date()
@@ -115,6 +148,19 @@ def get_heatmap() :
         "userID": "my id"
     }
     """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id",
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
+
     user_id = request.json.get("userID")
     heatmap = db.get("/users/" + user_id + "/heatmapData")
     return jsonify(heatmap)
@@ -128,6 +174,18 @@ def calculate_streak() :
         }
         ?increase=true can be added to the streak to increase it if needed
      """
+    # Check the request json
+    expected_format = '''{
+            "userID": "my-id",
+        }'''
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if not result:
+        return jsonify(
+            {"error": "Bad request - the request should be in the format " + expected_format}
+        ), 400
 
     user_id = request.json.get("userID")
     date = Date()
