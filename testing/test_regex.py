@@ -9,6 +9,30 @@ from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 def test_review_status() :
     """ Test the review status regex pattern """
 
+    # Valid review status
+    assert re.match(REVIEW_STATUS_REGEX, "3.14") is not None
+
+    # Valid review status
+    assert re.match(REVIEW_STATUS_REGEX, "0.5") is not None
+
+    # Valid review status
+    assert re.match(REVIEW_STATUS_REGEX, "123.456") is not None
+
+    # Invalid review status
+    assert re.match(REVIEW_STATUS_REGEX, ".789") is None
+
+    # Invalid review status
+    assert re.match(REVIEW_STATUS_REGEX, "42.") is None
+
+    # Invalid review status
+    assert re.match(REVIEW_STATUS_REGEX, "123") is None
+
+    # Invalid review status
+    assert re.match(REVIEW_STATUS_REGEX, "abc") is None
+
+def test_date() :
+    """ Test the date regex pattern """
+
     # Valid date
     assert re.match(DATE_REGEX, "31/01/2023") is not None
 
