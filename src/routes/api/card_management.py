@@ -49,15 +49,15 @@ def create_flashcard() :
     """
     # Check the request json
     expected_format = '''{
-            "userID": "my-id",
-            "flashcardName": "My new set",
-            "flashcardDescription": "This is\nmy description",
+            "userID": "",
+            "flashcardName": "",
+            "flashcardDescription": "",
             "cards": [
                 {
-                    "front":"Front 1",
-                    "back": "Back 1",
-                    "reviewStatus":"0.0",
-                    "lastReview": "dd/mm/yyyy"
+                    "front":"",
+                    "back": "",
+                    "reviewStatus":"^\\d+\\.\\d+$",
+                    "lastReview": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"
                 },
                 {
                     "front":"Front 2",
