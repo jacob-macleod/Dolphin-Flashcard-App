@@ -44,7 +44,8 @@ def test_check_request_json() :
         '{"key3": "", "key4": ""}',
         {"key1": "", "key2": ""}
     )
-    assert result == 'Extra keys found in request: key1, key2' or result == 'Extra keys found in request: key2, key1'
+    assert (result == 'Extra keys found in request: key1, key2'
+            or result == 'Extra keys found in request: key2, key1')
 
     # Test with valid regex pattern
     expected_format = '''
