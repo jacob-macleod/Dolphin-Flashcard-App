@@ -19,7 +19,7 @@ def is_local_request():
 def create_account():
     """ Create an account for the user if one is not created """
     # Check the request json
-    expected_format = '{"userID":"", "displayName": ""}'
+    expected_format = {"userID":"", "displayName": ""}
     result = check_request_json(
         expected_format,
         request.json

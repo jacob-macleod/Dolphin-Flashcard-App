@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
 from verification.api_error_checking import check_request_json
-from routes.api.regex_patterns import REVIEW_STATUS_JSON, DATE_JSON
+from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
@@ -49,7 +49,7 @@ def create_flashcard() :
         }
     """
     # Check the request json
-    expected_format = '''{
+    expected_format = {
             "userID": "",
             "flashcardName": "",
             "flashcardDescription": "",
@@ -57,11 +57,12 @@ def create_flashcard() :
                 {
                     "front":"",
                     "back": "",
-                    "reviewStatus":"''' + REVIEW_STATUS_JSON + '''",
-                    "lastReview": "''' + DATE_JSON + '''"
+                    "reviewStatus": REVIEW_STATUS_REGEX,
+                    "lastReview": DATE_REGEX
                 }
             ]
-        }'''
+        }
+
     result = check_request_json(
         expected_format,
         request.json
@@ -104,10 +105,10 @@ def get_flashcard() :
         }
     """
     # Check the request json
-    expected_format = '''{
-            "userID": "my-id",
-            "flashcardName": "My new set"
-        }'''
+    expected_format = {
+            "userID": "",
+            "flashcardName": ""
+        }
     result = check_request_json(
         expected_format,
         request.json
@@ -142,9 +143,9 @@ def get_today_cards() :
         If it is >= 1.x, it is learned
     """
     # Check the request json
-    expected_format = '''{
-            "userID": "my-id"
-        }'''
+    expected_format = {
+            "userID": ""
+        }
     result = check_request_json(
         expected_format,
         request.json
