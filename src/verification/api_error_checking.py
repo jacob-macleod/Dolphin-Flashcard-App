@@ -2,44 +2,48 @@
 import json
 import re
 
+def dict_to_array(input_dict):
+    """Convert a dictionary to an array of key-value pairs"""
+    output_array = []
+    # For each key in the dictionary
+    for key in input_dict:
+        # If the value is a dictionary
+        if isinstance(input_dict[key], dict) :
+            # Call the function recursively
+            output_array.append([key, dict_to_array(input_dict[key])])
+        else :
+            # Otherwise, add the key-value pair to the array
+            output_array.append([key])
+
+    return output_array
+
+def append_items_to_array(dictionary, result=[]):
+    """ Append all values of dictionary to an array """
+    for key, value in dictionary.items():
+        if isinstance(value, dict):
+            append_items_to_array(value, result)
+        else:
+            result.append(value)
+    return result
+
 def check_request_json(expected_format, request):
     """Checks if the keys in the request match the keys in the expected format"""
-    try:
-        # Load the expected format JSON string to compare keys
-        expected_format_json = json.loads(expected_format)
 
-        # Extract keys from the expected format
-        expected_keys = set(expected_format_json.keys())
+    # Make an array of the expected keys and actual keys
+    expected_format_arr = dict_to_array(expected_format)
+    request_arr = dict_to_array(request)
+    keys_correct = expected_format_arr == request_arr
 
-        # Extract keys from the request dictionary
-        request_keys = set(request.keys())
+    # If the keys of both match
+    if keys_correct:
+        expected_values = append_items_to_array(expected_format, result = [])
+        request_values = append_items_to_array(request, result = [])
 
-        # Check each key in the expected format
-        for key, value in expected_format_json.items():
-            if key not in request:
-                if value == "":
-                    continue  # Accept any value if the expected value is a blank string
-                else:
-                    return f"Key '{key}' not found in the request"
+        # Check if the values match the expected format
+        for i, expected_value in enumerate(expected_values):
+            if not re.match(expected_value, request_values[i]):
+                return "Value for '" + expected_values[i] + "' does not match the expected pattern '" + request_values[i] + "'"
+    else:
+        return "Your supplied json keys do not match the expected format"
 
-            # If expected value is a blank string, accept any value in request
-            if value == "":
-                continue
-
-            # Parse value in expected format as a regex pattern and check against the request value
-            pattern = re.compile(value)
-            if not pattern.match(str(request[key])):
-                return f"Value for key '{key}' does not match the expected pattern"
-
-        # Check if there are any extra keys in the request that were not in the expected format
-        if not request_keys.issubset(expected_keys):
-            extra_keys = request_keys - expected_keys
-            return f"Extra keys found in request: {', '.join(extra_keys)}"
-
-        return True  # All checks passed
-
-    except json.JSONDecodeError as e:
-        return f"JSON decoding error: {e}"
-
-    except Exception as ex:
-        return f"An error occurred: {ex}"
+    return True
