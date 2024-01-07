@@ -5,6 +5,7 @@ from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
 from verification.api_error_checking import check_request_json
+from routes.api.regex_patterns import REVIEW_STATUS_JSON, DATE_JSON
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
@@ -56,14 +57,8 @@ def create_flashcard() :
                 {
                     "front":"",
                     "back": "",
-                    "reviewStatus":"^\\d+\\.\\d+$",
-                    "lastReview": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"
-                },
-                {
-                    "front":"Front 2",
-                    "back": "Back 2",
-                    "reviewStatus":"0.0",
-                    "lastReview": "dd/mm/yyyy"
+                    "reviewStatus":"''' + REVIEW_STATUS_JSON + '''",
+                    "lastReview": "''' + DATE_JSON + '''"
                 }
             ]
         }'''
