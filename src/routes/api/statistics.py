@@ -5,6 +5,7 @@ from database.database import database as db
 from classes.date import Date
 from classes.card import Card
 from verification.api_error_checking import check_request_json
+from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, NUMBER, CARD_STATUS
 
 statistics_routes = Blueprint('statistics_routes', __name__)
 
@@ -31,15 +32,15 @@ def calculate_card_stats() :
         }
     """
     # Check the request json
-    expected_format = '''{
-            "userID": "my-id",
-            "cardStatus": "right",
-            "cardStreak": "3",
-            "currentIndex": "4",
-            "lastReview": "09/01/2024",
-            "maxIndex": "20",
-            "reviewStatus": "8.0"
-        }'''
+    expected_format = {
+            "userID": "",
+            "cardStatus": CARD_STATUS,
+            "cardStreak": NUMBER,
+            "currentIndex": NUMBER,
+            "lastReview": DATE_REGEX,
+            "maxIndex": NUMBER,
+            "reviewStatus": REVIEW_STATUS_REGEX
+        }
     result = check_request_json(
         expected_format,
         request.json
@@ -104,9 +105,9 @@ def update_heatmap() :
     }
      """
     # Check the request json
-    expected_format = '''{
-            "userID": "my-id",
-        }'''
+    expected_format = {
+            "userID": "",
+        }
     result = check_request_json(
         expected_format,
         request.json
@@ -149,9 +150,9 @@ def get_heatmap() :
     }
     """
     # Check the request json
-    expected_format = '''{
-            "userID": "my-id",
-        }'''
+    expected_format = {
+            "userID": "",
+        }
     result = check_request_json(
         expected_format,
         request.json
@@ -175,9 +176,9 @@ def calculate_streak() :
         ?increase=true can be added to the streak to increase it if needed
      """
     # Check the request json
-    expected_format = '''{
-            "userID": "my-id",
-        }'''
+    expected_format = {
+            "userID": "",
+        }
     result = check_request_json(
         expected_format,
         request.json
