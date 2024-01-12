@@ -2,3 +2,4 @@ flask
 firebase_admin
 Pyrebase4==4.7.1
 requests_toolbelt==0.10.1
+pylint

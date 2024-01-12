@@ -4,6 +4,8 @@ from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
 from classes.card import Card
+from verification.api_error_checking import check_request_json
+from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, NUMBER, CARD_STATUS
 
 statistics_routes = Blueprint('statistics_routes', __name__)
 
@@ -29,6 +31,25 @@ def calculate_card_stats() :
             "reviewStatus": "8.0"
         }
     """
+    # Check the request json
+    expected_format = {
+            "userID": "",
+            "cardStatus": CARD_STATUS,
+            "cardStreak": NUMBER,
+            "currentIndex": NUMBER,
+            "lastReview": DATE_REGEX,
+            "maxIndex": NUMBER,
+            "reviewStatus": REVIEW_STATUS_REGEX
+        }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
     user_id = request.json.get("userID")
     # The current card being looked at
     current_index = request.json.get("currentIndex")
@@ -83,6 +104,19 @@ def update_heatmap() :
         "userID": "my id"
     }
      """
+    # Check the request json
+    expected_format = {
+            "userID": "",
+        }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
     user_id = request.json.get("userID")
     heatmap = db.get("/users/" + user_id + "/heatmapData")
     date = Date()
@@ -115,6 +149,19 @@ def get_heatmap() :
         "userID": "my id"
     }
     """
+    # Check the request json
+    expected_format = {
+            "userID": "",
+        }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
     user_id = request.json.get("userID")
     heatmap = db.get("/users/" + user_id + "/heatmapData")
     return jsonify(heatmap)
@@ -128,6 +175,18 @@ def calculate_streak() :
         }
         ?increase=true can be added to the streak to increase it if needed
      """
+    # Check the request json
+    expected_format = {
+            "userID": "",
+        }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
 
     user_id = request.json.get("userID")
     date = Date()
