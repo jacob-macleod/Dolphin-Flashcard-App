@@ -69,4 +69,4 @@ jobs:
     steps:
       - name: Test GCP Server is Running
         run: |
-          curl GET http://35.188.117.183:80      
+          curl GET http://35.188.117.183:80

@@ -3,6 +3,7 @@ import os
 from flask import Blueprint, abort, jsonify, request
 from database.database import database as db
 from classes.date import Date
+from verification.api_error_checking import check_request_json
 
 authentication_routes = Blueprint('api_routes', __name__)
 
@@ -17,6 +18,17 @@ def is_local_request():
 @authentication_routes.route("/api/create-account", methods=["POST"])
 def create_account():
     """ Create an account for the user if one is not created """
+    # Check the request json
+    expected_format = {"userID":"", "displayName": ""}
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
     user_id = request.json.get("userID")
     name = request.json.get("displayName")
     date = Date()
