@@ -67,9 +67,9 @@ def create_flashcard() :
         expected_format,
         request.json
     )
-    if not result:
+    if result is not True:
         return jsonify(
-            {"error": "Bad request - the request should be in the format " + expected_format}
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
     try :
@@ -113,9 +113,9 @@ def get_flashcard() :
         expected_format,
         request.json
     )
-    if not result:
+    if result is not True:
         return jsonify(
-            {"error": "Bad request - the request should be in the format " + expected_format}
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
     try :
@@ -150,9 +150,9 @@ def get_today_cards() :
         expected_format,
         request.json
     )
-    if not result:
+    if result is not True:
         return jsonify(
-            {"error": "Bad request - the request should be in the format " + expected_format}
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
     user_id = request.json.get("userID")
