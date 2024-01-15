@@ -19,16 +19,16 @@ def create_xp_goal(user_id, goal_xp, end_date) :
      - data storing:
         - start date
         - starting XP
-        -  desired XP
+        - desired XP
     This is the same as a card goal except for the data section
     """
 
     date = Date()
+    goal_xp = str(goal_xp)
     goal_type = "XP"
-    title = "Gain " + str(goal_xp) + " XP by " + end_date
+    title = "Gain " + goal_xp + " XP by " + end_date
     status = "in progress"
     start_date = date.get_current_date()
-    starting_xp = db.get("/users/" + user_id + "/statistics/totalXP")
     goal_id = hash_to_numeric(user_id + title)
 
     db.save(
@@ -41,11 +41,44 @@ def create_xp_goal(user_id, goal_xp, end_date) :
             "fail_date": "",
             "data": {
                 "start_date": start_date,
-                "starting_xp": starting_xp,
+                "starting_xp": "0",
                 "goal_xp": goal_xp
             }
         }
     )
 
-def create_card_goal() :
-    """ Create a card goal for the user """
+def create_card_goal(user_id, desired_cards_to_revise, end_date) :
+    """ Create a card goal for the user
+    Card goals have:
+     - ID
+     - type (XP)
+     - title
+     - end date
+     - status (failed, completed or in progress)
+     - a fail date if failed
+     - data storing:
+        - cards revised so far
+        - starting XP
+        - desired cards to revise
+    """
+
+    desired_cards_to_revise = str(desired_cards_to_revise)
+    goal_type = "Card"
+    title = "Revise " + desired_cards_to_revise + " cards by " + end_date
+    status = "in progress"
+    goal_id = hash_to_numeric(user_id + title)
+
+    db.save(
+        "/users/" + user_id + "/goals/" + goal_id + "/",
+        {
+            "type": goal_type,
+            "title": title,
+            "end_date": end_date,
+            "status": status,
+            "fail_date": "",
+            "data": {
+                "cards_revised_so_far": "0",
+                "cards_to_revise": desired_cards_to_revise
+            }
+        }
+    )
