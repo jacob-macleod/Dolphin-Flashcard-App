@@ -3,9 +3,15 @@ from classes.date import Date
 from database.database import database as db
 from routes.api.card_management import hash_to_numeric
 
-def update_goals() :
+def update_goals(user_id) :
     """ Update the user's goals, depending on whether it is
     an XP or card goal """
+    # Get the user's goals
+    goals = db.get("/users/" + user_id + "/goals/")
+
+    # For each goal
+    for goal in goals:
+        pass
 
 def create_xp_goal(user_id, goal_xp, end_date) :
     """ Create an XP goal for the user
