@@ -22,9 +22,13 @@ jobs:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+      - name: Install node
+        run: |
+          sudo apt install nodejs npm
+          npm install -g create-react-app
+          npm install react react-dom react-scripts web-vitals
       - name: Build the React App for Deployment
         run: |
-          apt install nodejs npm
           cd frontend
           npm run build
       - name: Build the Docker image
