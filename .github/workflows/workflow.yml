@@ -26,6 +26,7 @@ jobs:
       - name: Install node
         run: |
           sudo apt install nodejs npm
+          npm install -g create-react-app
       - name: Build the React App for Deployment
         run: |
           cd frontend
