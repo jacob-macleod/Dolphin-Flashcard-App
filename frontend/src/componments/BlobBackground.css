@@ -1,0 +1,23 @@
+.background{
+    width: 100vw;
+    height: 100vh;
+}
+
+.background-panel{
+    width: 100vw;
+    height: 100vh;
+    background-color: #F2F4F5BF;
+    position: absolute;
+}
+
+.background{
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(50px);
+    -webkit-filter: blur(50px);
+    -moz-filter: blur(50px);
+    -o-filter: blur(50px);
+    -ms-filter: blur(50px);
+    filter: blur(50px);
+    overflow: hidden;
+}
