@@ -2,7 +2,7 @@
 import sys
 import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, '..', 'backend)
+src_path = os.path.join(current_dir, '..', 'backend')
 sys.path.append(src_path)
 from verification.api_error_checking import check_request_json
 
