@@ -8,14 +8,7 @@ function App() {
   return (
     <>
       <GridContainer>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
-        <GridItem>1</GridItem>
+        <GridItem><h1>Hello World</h1></GridItem>
       </GridContainer>
     <BlobBackground />
     </>
