@@ -1,0 +1,6 @@
+.blob{
+    width: 40vw;
+    height: 40vw;
+    border-radius: 463px;
+    background: var(--Primary-Gradient, linear-gradient(180deg, #5D54C3 0%, #6A84C5 50.01%, #78B9DE 99.74%));
+}

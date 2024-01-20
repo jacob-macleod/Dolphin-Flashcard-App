@@ -1,0 +1,9 @@
+.link {
+    color: var(--Primary-Colour, #6A84C5);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    text-decoration-line: underline;
+}

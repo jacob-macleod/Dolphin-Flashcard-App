@@ -2,7 +2,7 @@ import re
 import sys
 import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, '..', 'src')
+src_path = os.path.join(current_dir, '..', 'backend')
 sys.path.append(src_path)
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, NUMBER, CARD_STATUS
 
