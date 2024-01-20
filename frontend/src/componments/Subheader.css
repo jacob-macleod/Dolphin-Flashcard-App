@@ -1,0 +1,8 @@
+.subheader {
+    color: var(--Black-Colour, #222829);
+    font-family: Roboto;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}

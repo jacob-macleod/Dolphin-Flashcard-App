@@ -26,7 +26,7 @@ jobs:
         run: |
           sudo apt install nodejs npm
           npm install -g create-react-app
-          npm install react react-dom react-scripts web-vitals
+          npm install react react-dom react-scripts web-vitals react-helmet
       - name: Build the React App for Deployment
         run: |
           cd frontend
