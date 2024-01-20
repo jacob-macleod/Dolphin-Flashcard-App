@@ -1,0 +1,8 @@
+.text {
+    color: var(--Black-Colour, #222829);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
