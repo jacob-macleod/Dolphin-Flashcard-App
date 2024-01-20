@@ -25,7 +25,6 @@ function LandingPage() {
 
       <GridContainer layout="auto">
         <GridItem style={{
-          height: "600px",
           justifyContent: "center", 
           display: "flex",
           textAlign: "left"
