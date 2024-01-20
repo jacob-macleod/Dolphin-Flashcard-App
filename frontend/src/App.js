@@ -1,16 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import BlobBackground from './componments/BlobBackground';
-import GridContainer from './componments/GridContainer';
-import GridItem from './componments/GridItem';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LandingPage from "./screens/LandingPage";
+import Dashboard from "./screens/Dashboard";
 
 function App() {
+  const title = "Dolphin Flashcards";
+
   return (
     <>
-      <GridContainer>
-        <GridItem><h1>Hello World</h1></GridItem>
-      </GridContainer>
-    <BlobBackground />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
