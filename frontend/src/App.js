@@ -4,8 +4,6 @@ import LandingPage from "./screens/LandingPage";
 import Dashboard from "./screens/Dashboard";
 
 function App() {
-  const title = "Dolphin Flashcards";
-
   return (
     <>
       <BrowserRouter>
