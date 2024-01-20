@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@font-face {
+    font-family: Roboto;
+    src: url(roboto-latin.woff2);
+  }
 
 body{
     background-color: #F8F8F8;
