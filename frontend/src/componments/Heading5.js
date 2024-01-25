@@ -1,11 +1,11 @@
 import React from 'react';
-import './SmallText.css';
+import './Header5.css';
 
-function SmallText({ text, style={} }) {
+function Heading5({ text, style={} }) {
 
     return (
         <p className='small-text' style={style}>{text}</p>
     );
 }
 
-export default SmallText;
+export default Heading5;
