@@ -30,14 +30,16 @@ function SignInPage({ userID, setUserID }) {
         </meta>
       </Helmet>
 
-      <GridContainer layout="auto">
+      <GridContainer layout="auto" classType="centered-grid-container">
         <GridItem>
           <Header text="Ready to start your learning journey?" />
+
           <button onClick={ () => {
               // Initialise the firebase project and sign in with google
               firebase.initializeApp(apikey);
               signInWithGoogle(setUserID);
           }}>Continue with Google</button>
+
         </GridItem>
       </GridContainer>
     <BlobBackground />
