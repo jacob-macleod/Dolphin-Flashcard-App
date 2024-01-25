@@ -1,6 +1,8 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
+import firebase from 'firebase/compat/app';
+import { getConfig, signInWithGoogle } from '../api/Authentication';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
@@ -9,8 +11,15 @@ import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
 
-function LandingPage() {
-  const title = "Dolphin Flashcards";
+function SignInPage({ userID, setUserID }) {
+  const [apikey, setApikey] = useState(null);
+  const title = "Login";
+
+  // Get the API key
+  useEffect(() => {
+    getConfig(setApikey);
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -23,7 +32,12 @@ function LandingPage() {
 
       <GridContainer layout="auto">
         <GridItem>
-          <Header text="Dashboard Page" />
+          <Header text="Ready to start your learning journey?" />
+          <button onClick={ () => {
+              // Initialise the firebase project and sign in with google
+              firebase.initializeApp(apikey);
+              signInWithGoogle(setUserID);
+          }}>Continue with Google</button>
         </GridItem>
       </GridContainer>
     <BlobBackground />
@@ -31,4 +45,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default SignInPage;
