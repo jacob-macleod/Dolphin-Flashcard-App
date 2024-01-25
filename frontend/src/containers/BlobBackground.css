@@ -18,7 +18,9 @@
 }
 
 .filter{
-    background-color: #f2f4f582;
+    top: 0px;
+    bottom: 0px;
+    background-color: #f2f4f574;
     z-index: 1;
     position: fixed;
     width: 100%;
