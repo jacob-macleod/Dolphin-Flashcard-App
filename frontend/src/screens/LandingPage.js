@@ -24,7 +24,7 @@ function LandingPage() {
         </meta>
       </Helmet>
 
-      <GridContainer layout="auto">
+      <GridContainer layout="auto" classType="centered-grid-container">
         <GridItem style={{
           height: "600px",
         }}>

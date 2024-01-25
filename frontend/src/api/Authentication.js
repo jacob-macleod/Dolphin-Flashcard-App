@@ -44,6 +44,7 @@ export function signInWithGoogle(setUserID) {
             setUserID(user.uid);
             createCookie('userName', user.displayName)
             createCookie('userID', user.uid);
+            createCookie("profileImage", user.photoURL);
             })
             .catch((error) => {
             // Handle errors here

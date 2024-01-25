@@ -1,0 +1,12 @@
+.small-text {
+    color: var(--Grey-Text-Colour, #747474);
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    width: fit-content;
+    margin: 0px;
+}
