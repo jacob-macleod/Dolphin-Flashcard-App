@@ -1,0 +1,14 @@
+.paragraph {
+    color: var(--Black-Colour, #222829);
+    text-align: center;
+
+    /* p */
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+
+    flex: 1 0 0;
+    align-self: stretch;
+}
