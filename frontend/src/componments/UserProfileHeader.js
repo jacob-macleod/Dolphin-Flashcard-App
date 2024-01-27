@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import Image from '../componments/Image';
 import Heading5 from './Heading5';
 import dropdownArrow from '../static/dropdown-arrow.svg';
@@ -9,7 +9,7 @@ function UserProfileHeader({ setAccountDropdownVisibility, accountDropdownVisibi
     const dropdownArrowSize = "16px";
 
     function handleClick() {
-        setAccountDropdownVisibility(accountDropdownVisibility == true ? false : true);
+        setAccountDropdownVisibility(accountDropdownVisibility === true ? false : true);
     }
 
     return (

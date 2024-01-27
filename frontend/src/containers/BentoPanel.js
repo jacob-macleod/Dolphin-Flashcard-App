@@ -16,7 +16,7 @@ import WhiteOverlay from '../componments/WhiteOverlay';
 
 function BentoPanel({ item1, item2, view, style={}, overlayMarginBottom }) {
     console.log({display: "inline-flex", marginBottom: overlayMarginBottom})
-    return view == "desktop" ?
+    return view === "desktop" ?
         <WhiteOverlay style={{display: "inline-flex", marginBottom: overlayMarginBottom}}>
             <div style={style}>
                 {item1}
