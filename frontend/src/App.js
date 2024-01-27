@@ -1,15 +1,19 @@
-import React from 'react';
+import { React, useState} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LandingPage from "./screens/LandingPage";
-import Dashboard from "./screens/Dashboard";
+import SignInPage from './screens/SignIn';
+import MainPage from "./screens/MainPage";
+import { getCookie } from './api/Authentication';
+
 
 function App() {
+  const [userID, setUserID] = useState(getCookie("userID"));
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<SignInPage active={false}/>} />
+          <Route path="/dashboard" element={<MainPage userID={userID} setUserID={setUserID}/>} />
         </Routes>
       </BrowserRouter>
     </>

@@ -6,7 +6,9 @@
     font-weight: bold;
     line-height: normal;
     margin-bottom: 16px;
-    background: -webkit-linear-gradient(120deg, #5D54C3 0%, #6A84C5 50.01%, #78B9DE 99.74%);
+    margin-top: 16px;
+    background: var(--Primary-Gradient, linear-gradient(180deg, #5D54C3 0%, #6A84C5 50.01%, #78B9DE 99.74%));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
