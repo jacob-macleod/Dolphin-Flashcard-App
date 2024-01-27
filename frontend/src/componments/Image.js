@@ -8,6 +8,7 @@ function Image({
     className="",
     onClick,
     paddingRight="10px",
+    paddingBottom="0px",
     marginBottom="0px"
 }) {
 
@@ -22,6 +23,7 @@ function Image({
             width: width,
             height: height,
             borderRadius: borderRadius,
+            paddingBottom: paddingBottom,
             paddingRight: paddingRight,
             marginBottom: marginBottom
         }} onClick={handleClick}/>
