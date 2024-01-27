@@ -26,38 +26,41 @@ function LandingPage() {
 
       <GridContainer layout="auto" classType="centered-grid-container">
         <GridItem style={{
-          height: "600px",
+          justifyContent: "center", 
+          display: "flex",
+          textAlign: "left"
         }}>
-          <Header text="We’re launching soon..." />
-          <Subheader
-          text="Our goal? To design the best
-            flashcard app ever by prioritizing
-            users and their goals."
-          />
+          <div style={{width:"600px"}}>
+            <Header text="We’re launching soon..." />
+            <Subheader
+            text="Our goal? To design the best
+              flashcard app ever by prioritizing
+              users and their goals."
+            />
 
-        <p class="text">
-          We aim to launch in mid-2024.
-          Want to learn more? Check out our <a
-            href="https://github.com/jacob-macleod/Flashcard-App"
-            class="link">
-             Github Page!
-          </a>
-        </p>
-
-        <p class="text">
-          <span class="bold">Designer: </span>
-          <a href="https://github.com/nathan-a-macleod" class="link">
-            Nathan MacLeod
-          </a>
-        </p>
-
-        <p class="text">
-          <span class="bold">Developer: </span>
-          <a href="https://github.com/jacob-macleod" class="link">
-            Jacob MacLeod
-          </a>
-        </p>
-
+          <p class="text">
+            We aim to launch in mid-2024.
+            Want to learn more? Check out our <a
+              href="https://github.com/jacob-macleod/Flashcard-App"
+              class="link">
+               Github Page!
+            </a>
+          </p>
+  
+          <p class="text">
+            <span class="bold">Designer: </span>
+            <a href="https://github.com/nathan-a-macleod" class="link">
+              Nathan MacLeod
+            </a>
+          </p>
+  
+          <p class="text">
+            <span class="bold">Developer: </span>
+            <a href="https://github.com/jacob-macleod" class="link">
+              Jacob MacLeod
+            </a>
+          </p>
+                </div>
         </GridItem>
       </GridContainer>
     <BlobBackground />
