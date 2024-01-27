@@ -1,6 +1,5 @@
 import { React, useState} from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LandingPage from "./screens/LandingPage";
 import SignInPage from './screens/SignIn';
 import MainPage from "./screens/MainPage";
 import { getCookie } from './api/Authentication';
