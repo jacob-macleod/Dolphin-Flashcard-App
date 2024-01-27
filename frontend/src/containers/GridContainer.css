@@ -1,6 +1,13 @@
 .grid-container {
-    top: 50%;
-    transform: translate(0, -50%);
+    display: grid;
+    z-index: 2;
+    position: absolute;
+    padding-right: 7vw;
+    width: calc(100vw - 85px);
+    height: 100vh;
+}
+
+.centered-grid-container {
     display: grid;
     padding: 10px;
     z-index: 2;

@@ -5,15 +5,15 @@ import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import Header from '../componments/Header';
+import SidePanel from '../containers/SidePanel';
 import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
 
-function LandingPage() {
-  const title = "Dolphin Flashcards";
-
+function Dashboard() {
+  const title = "Dashboard";
   return (
-    <>
+    <div style={{top: "0px;"}}>
       <Helmet>
         <title>{ title }</title>
         <meta
@@ -22,14 +22,19 @@ function LandingPage() {
         </meta>
       </Helmet>
 
-      <GridContainer layout="auto">
+      <GridContainer>
+        <SidePanel />
         <GridItem>
-          <Header text="Dashboard Page" />
+          <Header text="Main Panel" />
+        </GridItem>
+
+        <GridItem>
+          <Header text="Third panel" />
         </GridItem>
       </GridContainer>
     <BlobBackground />
-    </>
+    </div>
   );
 }
 
-export default LandingPage;
+export default Dashboard;

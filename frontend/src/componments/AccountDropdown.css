@@ -1,0 +1,9 @@
+.account-dropdown-background {
+    position: absolute;
+    filter: drop-shadow(0px 2px 14.8px rgba(13, 41, 68, 0.12));
+    background-color: white;
+    width: 141px;
+    height: 116px;
+    margin-left: 50px;
+    border-radius: 16px;
+}

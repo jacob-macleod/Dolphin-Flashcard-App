@@ -1,6 +1,6 @@
 """ Provides main server logic """
 import os
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, url_for
 from routes.api.authentication import authentication_routes
 from routes.api.statistics import statistics_routes
 from routes.api.card_management import card_management_routes

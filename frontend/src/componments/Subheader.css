@@ -1,8 +1,12 @@
 .subheader {
-    color: var(--Black-Colour, #222829);
     font-family: Roboto;
-    font-size: 21px;
+    font-size: 28px;
     font-style: normal;
     font-weight: 700;
-    line-height: normal;
+    line-height: 40px; /* 142.857% */
+
+    background: var(--Primary-Gradient, linear-gradient(180deg, #5D54C3 0%, #6A84C5 50.01%, #78B9DE 99.74%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
