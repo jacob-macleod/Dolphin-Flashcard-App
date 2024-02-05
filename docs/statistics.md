@@ -31,12 +31,12 @@ Calculate card statistics when a user is revising a set of cards. For each card,
 HTTP Status: 200
 ```
     {
-        "currentIndex": “integer”,
-        "maxIndex": "integer",
-        "cardStatus": "string",
-        "lastReview": "string",
-        "reviewStatus": "float",
-        "cardStreak": "integer"
+        "currentIndex": "3",
+        "maxIndex": "25",
+        "cardStatus": "right",
+        "lastReview": "01/01/2024",
+        "reviewStatus": "8.0",
+        "cardStreak": "5"
     }
 
 ```
