@@ -1,34 +1,8 @@
 /* API Methods to deal with Authentication */
 import firebase from 'firebase/compat/app';
+import serverURL from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-
-
-export async function getConfig(setApikey) {
-    console.log("Fetching")
-    fetch('http://127.0.0.1:5000/api/firebase-config')
-    .then(response => {
-        if (!response.ok) {
-            console.log(response);
-            throw new Error('Network response was not ok.');
-        }
-        return response.json(); // Parse the JSON response
-    })
-    .then(credentials => {
-        // Use credentials.json content as firebaseConfig
-        const firebaseConfig = {
-            apiKey: credentials.apiKey,
-            authDomain: credentials.authDomain,
-            databaseURL: credentials.databaseURL,
-            projectId: credentials.projectId,
-            storageBucket: credentials.storageBucket,
-            messagingSenderId: credentials.messagingSenderId,
-            appId: credentials.appId,
-            measurementId: credentials.measurementId
-        };
-        setApikey(firebaseConfig);
-    });
-};
 
 export function signInWithGoogle(setUserID) {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -54,7 +28,7 @@ export function signInWithGoogle(setUserID) {
   
 
 export function createAccount(userID, displayName) {
-    const endpoint = 'http://127.0.0.1:5000/api/create-account';
+    const endpoint = serverURL + 'create-account';
     const data = {
         userID: userID,
         displayName: displayName
