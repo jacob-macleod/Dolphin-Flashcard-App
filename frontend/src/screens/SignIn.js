@@ -22,7 +22,6 @@ import '../componments/Link.css';
 import '../componments/Bold.css';
 
 function SignInPage({ userID, setUserID, active=true }) {
-  const [apikey, setApikey] = useState(null);
   const title = "Login";
   const [width, setWidth] = useState(window.innerWidth);
   const mobileBreakpoint = 878;
