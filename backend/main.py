@@ -4,9 +4,9 @@ from flask import Flask, send_from_directory, url_for
 from routes.api.authentication import authentication_routes
 from routes.api.statistics import statistics_routes
 from routes.api.card_management import card_management_routes
+print ("Starting")
 
 app = Flask(__name__, template_folder='../templates', static_folder="../frontend/build")
-
 app.register_blueprint(authentication_routes)
 app.register_blueprint(statistics_routes)
 app.register_blueprint(card_management_routes)
