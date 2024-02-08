@@ -5,7 +5,7 @@ import firebase_admin
 from firebase_admin import auth
 from firebase_admin import db, credentials
 import pyrebase
-from backend.database.database_abstract import DatabaseAbstract
+from database.database_abstract import DatabaseAbstract
 
 class FirebaseDatabase(DatabaseAbstract):
     """ Interact with the database"""

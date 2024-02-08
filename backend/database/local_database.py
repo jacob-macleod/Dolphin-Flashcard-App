@@ -1,7 +1,6 @@
 """ Provides a class to interact with the database """
 import json
-#from backend.database.database_abstract import DatabaseAbstract
-from database_abstract import DatabaseAbstract
+from database.database_abstract import DatabaseAbstract
 
 class LocalDatabase(DatabaseAbstract):
     """ Write to local files for development """
@@ -89,6 +88,3 @@ class LocalDatabase(DatabaseAbstract):
         print ("Incrementing " + path + " by " + str(increment_amount))
 
 db = LocalDatabase()
-
-db.save("user/userID/Va1l/e1", {'name': 'John'})
-print (db.get("user/userID/Val/"))
