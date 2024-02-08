@@ -5,3 +5,6 @@ firebase_config.json
 *_pycache_
 env
 frontend/build
+frontend/src/api/config.js
+backend/database/database_config.py
+frontend/node_modules/*

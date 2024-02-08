@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import firebase from 'firebase/compat/app';
-import { getConfig, signInWithGoogle } from '../api/Authentication';
+import { signInWithGoogle } from '../api/Authentication';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
@@ -42,9 +42,6 @@ function SignInPage({ userID, setUserID, active=true }) {
       setWidth(window.innerWidth);
     }
   
-    // Get the API key
-    getConfig(setApikey);
-  
     // Set the initial window size
     setWidth(window.innerWidth);
   
@@ -65,7 +62,17 @@ function SignInPage({ userID, setUserID, active=true }) {
 
   const signInButton = active ? <Button text="Continue with Google" onClick={ () => {
       // Initialise the firebase project and sign in with google
-      firebase.initializeApp(apikey);
+      // This should be fine to expose - if its not I need to resolve it ASAP
+      firebase.initializeApp({
+        "apiKey": "AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M",
+        "authDomain": "dolphin-flashcards.firebaseapp.com",
+        "databaseURL": "https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app",
+        "projectId": "dolphin-flashcards",
+        "storageBucket": "dolphin-flashcards.appspot.com",
+        "messagingSenderId": "481940183221",
+        "appId": "1:481940183221:web:67bdc346eef4a5306286fc",
+        "measurementId": "G-76Y8VTC390"
+    });
       signInWithGoogle(setUserID);
     }}/> : <Button text="Coming soon..." disabled={true} />
 
