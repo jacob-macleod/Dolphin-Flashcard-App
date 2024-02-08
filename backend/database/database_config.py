@@ -1,1 +1,1 @@
-type="local"
+type="production"

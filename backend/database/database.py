@@ -1,7 +1,7 @@
 """ Provides a class to interact with the database """
-from backend.database.firebase_database import FirebaseDatabase
-from backend.database.local_database import LocalDatabase
-from backend.database.database_config import type
+from database.firebase_database import FirebaseDatabase
+from database.local_database import LocalDatabase
+from database.database_config import type
 
 class Database:
     """ Use the firebase database if in production, else use

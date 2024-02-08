@@ -7,3 +7,4 @@ env
 frontend/build
 frontend/src/api/config.js
 backend/database/database_config.py
+frontend/node_modules/*
