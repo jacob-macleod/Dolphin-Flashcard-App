@@ -6,3 +6,4 @@ firebase_config.json
 env
 frontend/build
 frontend/src/api/config.js
+backend/database/database_config.py
