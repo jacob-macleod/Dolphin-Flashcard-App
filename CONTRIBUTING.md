@@ -69,6 +69,8 @@ Depending on the value of the `type` variable, either the `FirebaseDatabase` or 
 by the `Database` class as `db`. `FirebaseDatabase` and `LocalDatabase` inherit from the `DatabaseAbstract` abstract class, and so must have a `get`, `save` and
 `increment` method. For either class, these are used in the same way.
 
+Note that API documentation is in `docs/`
+
 ###  2.2. <a name='UsingaLocalFilesRecommended'></a>Using a Local Files (Recommended)
 
 To contribute to the backend, using local files, follow these steps:
