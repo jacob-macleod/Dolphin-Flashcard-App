@@ -79,10 +79,7 @@ function SignInPage({ userID, setUserID, active=true }) {
     <div style={{height: "fit-content"}}>
       <Helmet>
         <title>{ title }</title>
-        <meta
-            name="viewport" 
-            content="width=device-width, initial-scale=1.0">
-        </meta>
+        <meta name="viewport" content="width=device-width, user-scalable=yes"></meta>
       </Helmet>
 
       <GridContainer layout="auto" classType="centered-grid-container">
