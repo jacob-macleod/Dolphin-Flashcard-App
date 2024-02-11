@@ -9,7 +9,8 @@ function Image({
     onClick,
     paddingRight="10px",
     paddingBottom="0px",
-    marginBottom="0px"
+    marginBottom="0px",
+    objectFit="fill"
 }) {
 
     const handleClick = () => {
@@ -25,7 +26,8 @@ function Image({
             borderRadius: borderRadius,
             paddingBottom: paddingBottom,
             paddingRight: paddingRight,
-            marginBottom: marginBottom
+            marginBottom: marginBottom,
+            objectFit: objectFit
         }} onClick={handleClick}/>
     );
 }

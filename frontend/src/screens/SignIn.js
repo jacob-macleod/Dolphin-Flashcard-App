@@ -106,7 +106,8 @@ function SignInPage({ userID, setUserID, active=true }) {
               item2 = {<Image
                 width={width < tabletBreakpoint ? goalsTabletSize.width : goalsDesktopSize.width}
                 height={width < tabletBreakpoint ? goalsTabletSize.height : goalsDesktopSize.height}
-                url={goals}/>}
+                url={goals}
+                objectFit="contain"/>}
               view={view}
               style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
               />
@@ -116,6 +117,7 @@ function SignInPage({ userID, setUserID, active=true }) {
               width={width < tabletBreakpoint ? heatmapTabletSize.width : heatmapDesktopSize.width}
               height={width < tabletBreakpoint ? heatmapTabletSize.height : heatmapDesktopSize.height}
               url={heatmap}
+              objectFit="contain"
             />}
             item2 = {
               <div>
@@ -143,17 +145,18 @@ function SignInPage({ userID, setUserID, active=true }) {
                 width={width < tabletBreakpoint ? cardTabletSize.width : cardDesktopSize.width}
                 height={width < tabletBreakpoint ? cardTabletSize.height : cardDesktopSize.height}
                 url={card}
+                objectFit="contain"
               />}
               view={view}
               style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
             />
 
             <BentoPanel
-              overlayMarginBottom="550px"
               item1={<Image
                 width={width < tabletBreakpoint ? cardTabletSize.width : cardDesktopSize.width}
                 height={width < tabletBreakpoint ? cardTabletSize.height : cardDesktopSize.height}
                 url={cardEditor}
+                objectFit="contain"
               />}
               item2={<div>
                 <Subheader text="Add images, colors and more to your flashcards with our integrated editor" />
