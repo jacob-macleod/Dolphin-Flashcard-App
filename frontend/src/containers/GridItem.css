@@ -1,6 +1,6 @@
 .grid-item {
-    padding: 20px;
+    padding-top: 32px;
+    padding-bottom: 32px;
     font-size: 30px;
     text-align: center;
-    width: 100%;
   }
