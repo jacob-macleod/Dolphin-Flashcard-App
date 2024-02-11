@@ -105,7 +105,7 @@ function SignInPage({ userID, setUserID, active=true }) {
                 {signInButton}</div>}
               item2 = {<Image
                 width={width < tabletBreakpoint ? goalsTabletSize.width : goalsDesktopSize.width}
-                height={width < tabletBreakpoint ? goalsTabletSize.height : goalsDesktopSize.height}
+                height={"auto"}
                 url={goals}
                 objectFit="contain"/>}
               view={view}
@@ -114,7 +114,7 @@ function SignInPage({ userID, setUserID, active=true }) {
             <BentoPanel
             item1 = {<Image
               width={width < tabletBreakpoint ? heatmapTabletSize.width : heatmapDesktopSize.width}
-              height={width < tabletBreakpoint ? heatmapTabletSize.height : heatmapDesktopSize.height}
+              height={"auto"}
               url={heatmap}
               objectFit="contain"
             />}
@@ -151,7 +151,7 @@ function SignInPage({ userID, setUserID, active=true }) {
             <BentoPanel
               item1={<Image
                 width={width < tabletBreakpoint ? cardTabletSize.width : cardDesktopSize.width}
-                height={width < tabletBreakpoint ? cardTabletSize.height : cardDesktopSize.height}
+                height={"auto"}
                 url={cardEditor}
                 objectFit="contain"
               />}
