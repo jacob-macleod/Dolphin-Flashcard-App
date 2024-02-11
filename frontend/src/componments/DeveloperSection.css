@@ -45,7 +45,7 @@
 }
 
 .open-source-footer {
-    width: calc(100% - 120px);
+    width: 100%;
     height: fit-content;
     background: var(--Lightest-Prototype, #E7E7EB);
     display: inline-flex;
