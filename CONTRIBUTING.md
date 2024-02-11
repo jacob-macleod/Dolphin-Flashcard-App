@@ -45,7 +45,7 @@ Enter the following commands:
 
 * `cd frontend`
 * `npm install <everything in node_requirements.txt>` where `<everything in node_requirements.txt>` is the contents of the file, copy and pasted
-* `npm serve`
+* `npm start`
 
 The React app will be accessible at `http://localhost:3000`.
 
