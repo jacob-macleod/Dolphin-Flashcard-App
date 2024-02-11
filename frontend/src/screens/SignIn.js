@@ -109,7 +109,6 @@ function SignInPage({ userID, setUserID, active=true }) {
                 url={goals}
                 objectFit="contain"/>}
               view={view}
-              style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
               />
 
             <BentoPanel
@@ -129,7 +128,6 @@ function SignInPage({ userID, setUserID, active=true }) {
               </div>
             }
             view={view}
-            style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
             />
 
             <BentoPanel
@@ -148,7 +146,6 @@ function SignInPage({ userID, setUserID, active=true }) {
                 objectFit="contain"
               />}
               view={view}
-              style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
             />
 
             <BentoPanel
@@ -166,7 +163,6 @@ function SignInPage({ userID, setUserID, active=true }) {
                 {signInButton}
               </div>}
               view={view}
-              style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
             />
           </GridItem>
         <DeveloperSection />
