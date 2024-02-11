@@ -1,6 +1,6 @@
 .developer-section-container {
     left: 0px;
-    width: 100%;
+    width: 100vw;
     height: fit-content;
     position: absolute;
     bottom: 0px;
