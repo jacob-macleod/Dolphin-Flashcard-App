@@ -88,10 +88,12 @@ function SignInPage({ userID, setUserID, active=true }) {
             width: "80%",
             margin: "auto",
           }}>
-            <Image width="35px" height="40px"/>
-            <Header text="Ready to start your learning journey?" />
-            <Paragraph text="Dolphin flashcards is a totally brand-new flashcard app - with one goal: to be better than anyone else on the market. Sign in for free to become part of it." />
-            {signInButton}
+            <div style={{width: "50%", minWidth: "400px", maxWidth: "700px", margin: "auto"}}>
+              <Image width="35px" height="40px"/>
+              <Header text="Ready to start your learning journey?" />
+              <Paragraph text="Dolphin flashcards is a totally brand-new flashcard app - with one goal: to be better than anyone else on the market. Sign in for free to become part of it." />
+              {signInButton}
+            </div>
 
             <BentoPanel
               item1 = {<div>
