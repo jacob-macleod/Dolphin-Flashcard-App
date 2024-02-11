@@ -8,7 +8,6 @@
 .background{
     width: 100vw;
     height: 100vh;
-    backdrop-filter: blur(50px);
     -webkit-filter: blur(50px);
     -moz-filter: blur(50px);
     -o-filter: blur(50px);
