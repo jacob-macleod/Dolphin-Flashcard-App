@@ -96,7 +96,7 @@ function SignInPage({ userID, setUserID, active=true }) {
             margin: "auto",
           }}>
             <div style={{width: "75%", minWidth: "250px", maxWidth: "700px", margin: "auto", marginBottom: "32px"}}>
-              <Image width="35px" height="40px" width="40px" minWidth="40px"/>
+              <Image height="40px" width="40px" minWidth="40px"/>
               <Header text="Ready to start your learning journey?" />
               <Paragraph text="Dolphin flashcards is a totally brand-new flashcard app - with one goal: to be better than anyone else on the market. Sign in for free to become part of it." />
               {signInButton}
