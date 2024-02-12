@@ -2,6 +2,7 @@ import React from 'react';
 
 function Image({
     width="50px",
+    minWidth="50px",
     height="50px",
     url="/favicon.ico",
     borderRadius="0px",
@@ -23,6 +24,7 @@ function Image({
     return (
         <img className={className} src={url} alt="Logo" style={{
             width: width,
+            minWidth: minWidth,
             height: height,
             borderRadius: borderRadius,
             paddingBottom: paddingBottom,
