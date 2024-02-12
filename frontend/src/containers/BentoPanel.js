@@ -25,7 +25,7 @@ function BentoPanel({ item1, item2, view, style={}, overlayMarginBottom }) {
         </WhiteOverlay>
     :
     <WhiteOverlay style={{marginBottom: overlayMarginBottom}}>
-        <div style={{padding: "16px", paddingBottom: "0px"}}>
+        <div style={{padding: "0px", paddingBottom: "0px"}}>
             {item1}
             {item2}
         </div>
