@@ -28,12 +28,19 @@ function SignInPage({ userID, setUserID, active=true }) {
   const tabletBreakpoint = 1200;
   const [view, setView] = useState(width < mobileBreakpoint ? "mobile" : "desktop");
 
-  const goalsDesktopSize = {width: "465px", height: "465px"};
+  /*const goalsDesktopSize = {width: "465px", height: "465px"};
   const goalsTabletSize = {width: "310px", height: "310px"};
   const heatmapDesktopSize = {width: "560px", height: "355px"};
   const heatmapTabletSize = {width: "373px", height: "237px"};
   const cardDesktopSize = {width: "558px", height: "373px"};
-  const cardTabletSize = {width: "372px", height: "249px"};
+  const cardTabletSize = {width: "372px", height: "249px"};*/
+
+  const goalsDesktopSize = {width: "80%", height: "465px"};
+  const goalsTabletSize = {width: "80%", height: "310px"};
+  const heatmapDesktopSize = {width: "80%", height: "355px"};
+  const heatmapTabletSize = {width: "80%", height: "237px"};
+  const cardDesktopSize = {width: "80%", height: "373px"};
+  const cardTabletSize = {width: "80%", height: "249px"};
 
 
   useEffect(() => {
@@ -105,16 +112,17 @@ function SignInPage({ userID, setUserID, active=true }) {
                 {signInButton}</div>}
               item2 = {<Image
                 width={width < tabletBreakpoint ? goalsTabletSize.width : goalsDesktopSize.width}
-                height={"auto"}
+                height={"100%"}
                 url={goals}
-                objectFit="contain"/>}
+                objectFit="contain"
+                marginTop="16px"/>}
               view={view}
               />
 
             <BentoPanel
             item1 = {<Image
               width={width < tabletBreakpoint ? heatmapTabletSize.width : heatmapDesktopSize.width}
-              height={"auto"}
+              height={"100%"}
               url={heatmap}
               objectFit="contain"
             />}

@@ -10,6 +10,7 @@ function Image({
     paddingRight="10px",
     paddingBottom="0px",
     marginBottom="0px",
+    marginTop="0px",
     objectFit="fill"
 }) {
 
@@ -27,6 +28,7 @@ function Image({
             paddingBottom: paddingBottom,
             paddingRight: paddingRight,
             marginBottom: marginBottom,
+            marginTop: marginTop,
             objectFit: objectFit
         }} onClick={handleClick}/>
     );
