@@ -28,12 +28,19 @@ function SignInPage({ userID, setUserID, active=true }) {
   const tabletBreakpoint = 1200;
   const [view, setView] = useState(width < mobileBreakpoint ? "mobile" : "desktop");
 
-  const goalsDesktopSize = {width: "465px", height: "465px"};
+  /*const goalsDesktopSize = {width: "465px", height: "465px"};
   const goalsTabletSize = {width: "310px", height: "310px"};
   const heatmapDesktopSize = {width: "560px", height: "355px"};
   const heatmapTabletSize = {width: "373px", height: "237px"};
   const cardDesktopSize = {width: "558px", height: "373px"};
-  const cardTabletSize = {width: "372px", height: "249px"};
+  const cardTabletSize = {width: "372px", height: "249px"};*/
+
+  const goalsDesktopSize = {width: "80%", height: "465px"};
+  const goalsTabletSize = {width: "80%", height: "310px"};
+  const heatmapDesktopSize = {width: "80%", height: "355px"};
+  const heatmapTabletSize = {width: "80%", height: "237px"};
+  const cardDesktopSize = {width: "80%", height: "373px"};
+  const cardTabletSize = {width: "80%", height: "249px"};
 
 
   useEffect(() => {
@@ -88,7 +95,7 @@ function SignInPage({ userID, setUserID, active=true }) {
             width: "80%",
             margin: "auto",
           }}>
-            <div style={{width: "50%", minWidth: "400px", maxWidth: "700px", margin: "auto"}}>
+            <div style={{width: "75%", minWidth: "250px", maxWidth: "700px", margin: "auto", marginBottom: "32px"}}>
               <Image width="35px" height="40px"/>
               <Header text="Ready to start your learning journey?" />
               <Paragraph text="Dolphin flashcards is a totally brand-new flashcard app - with one goal: to be better than anyone else on the market. Sign in for free to become part of it." />
@@ -105,17 +112,17 @@ function SignInPage({ userID, setUserID, active=true }) {
                 {signInButton}</div>}
               item2 = {<Image
                 width={width < tabletBreakpoint ? goalsTabletSize.width : goalsDesktopSize.width}
-                height={width < tabletBreakpoint ? goalsTabletSize.height : goalsDesktopSize.height}
+                height={"100%"}
                 url={goals}
-                objectFit="contain"/>}
+                objectFit="contain"
+                marginTop="16px"/>}
               view={view}
-              style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
               />
 
             <BentoPanel
             item1 = {<Image
               width={width < tabletBreakpoint ? heatmapTabletSize.width : heatmapDesktopSize.width}
-              height={width < tabletBreakpoint ? heatmapTabletSize.height : heatmapDesktopSize.height}
+              height={"100%"}
               url={heatmap}
               objectFit="contain"
             />}
@@ -129,7 +136,6 @@ function SignInPage({ userID, setUserID, active=true }) {
               </div>
             }
             view={view}
-            style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
             />
 
             <BentoPanel
@@ -148,13 +154,13 @@ function SignInPage({ userID, setUserID, active=true }) {
                 objectFit="contain"
               />}
               view={view}
-              style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
+              style={{paddingBottom: "32px"}}
             />
 
             <BentoPanel
               item1={<Image
                 width={width < tabletBreakpoint ? cardTabletSize.width : cardDesktopSize.width}
-                height={width < tabletBreakpoint ? cardTabletSize.height : cardDesktopSize.height}
+                height={"auto"}
                 url={cardEditor}
                 objectFit="contain"
               />}
@@ -166,7 +172,6 @@ function SignInPage({ userID, setUserID, active=true }) {
                 {signInButton}
               </div>}
               view={view}
-              style={{width: "50%", padding: "16px", paddingLeft: "32px"}}
             />
           </GridItem>
         <DeveloperSection />
