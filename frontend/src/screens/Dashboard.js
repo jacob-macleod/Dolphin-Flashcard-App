@@ -6,12 +6,27 @@ import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import Header from '../componments/Header';
 import SidePanel from '../containers/SidePanel';
+import Heading4 from '../componments/Heading4';
+import Heading5 from '../componments/Heading5';
+import WhiteOverlay from '../componments/WhiteOverlay';
+import { getCookie } from '../api/Authentication';
+import { calculateStreak } from '../api/Api';
 import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
 
 function Dashboard() {
   const title = "Dashboard";
+  const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
+  const panelTitleStyle = {
+    padding: "8px"
+  }
+  const overlayStyle = {
+    marginLeft: "16px",
+    marginRight: "0px",
+    width: "90%"
+  }
+
   return (
     <div style={{top: "0px;"}}>
       <Helmet>
@@ -22,13 +37,23 @@ function Dashboard() {
         </meta>
       </Helmet>
 
-      <GridContainer>
+      <GridContainer layout={"240px 30vw auto"}>
         <SidePanel />
-        <GridItem>
-          <Header text="Main Panel" />
+        <GridItem style={{padding: "0px"}}>
+          <Heading4 text={userWelcomeText} />
+
+          <WhiteOverlay style={overlayStyle}
+            children={
+              <>
+              <Heading5 text="Streak" style={panelTitleStyle} />
+              <Header text={calculateStreak(getCookie("userID"))} />
+              </>
+            }
+          />
+          
         </GridItem>
 
-        <GridItem>
+        <GridItem style={{padding: "0px"}}>
           <Header text="Third panel" />
         </GridItem>
       </GridContainer>
