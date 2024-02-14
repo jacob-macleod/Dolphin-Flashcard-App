@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -18,6 +18,7 @@ import '../componments/Bold.css';
 function Dashboard() {
   const title = "Dashboard";
   const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
+  const [streak, setStreak] = useState("-")
   const panelTitleStyle = {
     padding: "8px"
   }
@@ -26,6 +27,10 @@ function Dashboard() {
     marginRight: "0px",
     width: "90%"
   }
+
+  useEffect(() => {
+    calculateStreak(getCookie("userID"), setStreak)
+  }, []);
 
   return (
     <div style={{top: "0px;"}}>
@@ -46,7 +51,7 @@ function Dashboard() {
             children={
               <>
               <Heading5 text="Streak" style={panelTitleStyle} />
-              <Header text={calculateStreak(getCookie("userID"))} />
+              <Header text={streak} />
               </>
             }
           />

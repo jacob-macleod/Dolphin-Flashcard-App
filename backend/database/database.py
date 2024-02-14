@@ -17,7 +17,7 @@ class Database:
 
     def get(self, path):
         """ Get data from database """
-        self.db.get(path)
+        return self.db.get(path)
 
     def save(self, path, data) :
         """ Save data to a path """

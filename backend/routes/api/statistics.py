@@ -168,7 +168,7 @@ def get_heatmap() :
 
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
 def calculate_streak() :
-    """ Calculate the user's streak, and increase it if needed
+    """ Calculate the user's streak, and increase it if needed, then return it
         json should be included with the request as the following:
         {
             "userID": "my id"
@@ -176,6 +176,7 @@ def calculate_streak() :
         ?increase=true can be added to the streak to increase it if needed
      """
     # Check the request json
+    print ("Started")
     expected_format = {
             "userID": "",
         }
@@ -202,5 +203,5 @@ def calculate_streak() :
     if difference == -1 and request.args.get("increase") == "true":
         db.increment("/users/" + user_id + "/statistics/streak", 1)
         db.save("/users/" + user_id + "/statistics/lastStreak", today)
-
-    return jsonify({"success": True}, 200)
+    print ("Returning")
+    return jsonify({"streak": db.get("/users/" + user_id + "/statistics/streak")}, 200)
