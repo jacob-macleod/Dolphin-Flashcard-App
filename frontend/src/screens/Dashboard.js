@@ -4,6 +4,7 @@ import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
+import DelayedElement from '../componments/DelayedElement';
 import Header from '../componments/Header';
 import SidePanel from '../containers/SidePanel';
 import Heading4 from '../componments/Heading4';
@@ -18,7 +19,7 @@ import '../componments/Bold.css';
 function Dashboard() {
   const title = "Dashboard";
   const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
-  const [streak, setStreak] = useState("-")
+  const [streak, setStreak] = useState(null)
   const panelTitleStyle = {
     padding: "8px"
   }
@@ -51,11 +52,10 @@ function Dashboard() {
             children={
               <>
               <Heading5 text="Streak" style={panelTitleStyle} />
-              <Header text={streak} />
+              <DelayedElement child={<Header text={streak} />} childValue={streak} />
               </>
             }
           />
-          
         </GridItem>
 
         <GridItem style={{padding: "0px"}}>
