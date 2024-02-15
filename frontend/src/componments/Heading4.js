@@ -1,10 +1,11 @@
 import React from 'react';
 import './Heading4.css';
 
-function Heading4({ text, style={} }) {
+function Heading4({ text, style={}, color="black"}) {
+    const className = color=="black" ? "heading4-black" : "heading4-blue";
 
     return (
-        <p className='heading4' style={style}>{text}</p>
+        <p className={className} style={style}>{text}</p>
     );
 }
 

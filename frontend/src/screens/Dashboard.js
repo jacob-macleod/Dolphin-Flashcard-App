@@ -1,17 +1,15 @@
-import {React, useState, useEffect} from 'react';
+import {React} from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
-import DelayedElement from '../componments/DelayedElement';
 import Header from '../componments/Header';
 import SidePanel from '../containers/SidePanel';
 import Heading4 from '../componments/Heading4';
-import Heading5 from '../componments/Heading5';
-import WhiteOverlay from '../componments/WhiteOverlay';
+import StreakWidget from '../containers/StreakWidget';
+import GoalsWidget from '../containers/GoalsWidget';
 import { getCookie } from '../api/Authentication';
-import { calculateStreak } from '../api/Api';
 import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
@@ -19,19 +17,6 @@ import '../componments/Bold.css';
 function Dashboard() {
   const title = "Dashboard";
   const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
-  const [streak, setStreak] = useState(null)
-  const panelTitleStyle = {
-    padding: "8px"
-  }
-  const overlayStyle = {
-    marginLeft: "16px",
-    marginRight: "0px",
-    width: "90%"
-  }
-
-  useEffect(() => {
-    calculateStreak(getCookie("userID"), setStreak)
-  }, []);
 
   return (
     <div style={{top: "0px;"}}>
@@ -47,15 +32,8 @@ function Dashboard() {
         <SidePanel />
         <GridItem style={{padding: "0px"}}>
           <Heading4 text={userWelcomeText} />
-
-          <WhiteOverlay style={overlayStyle}
-            children={
-              <>
-              <Heading5 text="Streak" style={panelTitleStyle} />
-              <DelayedElement child={<Header text={streak} />} childValue={streak} />
-              </>
-            }
-          />
+          <StreakWidget />
+          <GoalsWidget />
         </GridItem>
 
         <GridItem style={{padding: "0px"}}>

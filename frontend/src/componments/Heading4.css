@@ -1,5 +1,17 @@
-.heading4{
+.heading4-black{
     color: #222829;
+    font-size: 21px;
+    font-weight: bold;
+    font-style: normal;
+    font-family: Roboto;
+    display: flex;
+    justify-content: left;
+    margin: 0px;
+    padding: 16px;
+}
+
+.heading4-blue {
+    color: #5D54C3;
     font-size: 21px;
     font-weight: bold;
     font-style: normal;
