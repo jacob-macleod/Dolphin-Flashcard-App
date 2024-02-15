@@ -28,7 +28,7 @@ function Dashboard() {
         </meta>
       </Helmet>
 
-      <GridContainer layout={"240px 30vw auto"}>
+      <GridContainer layout={"240px 400px auto"}>
         <SidePanel />
         <GridItem style={{padding: "0px"}}>
           <Heading4 text={userWelcomeText} />

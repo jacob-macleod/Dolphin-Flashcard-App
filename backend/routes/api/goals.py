@@ -2,6 +2,11 @@
 from classes.date import Date
 from database.database import database as db
 from routes.api.card_management import hash_to_numeric
+from flask import Blueprint, request, jsonify
+from routes.api.regex_patterns import DATE_REGEX, NUMBER
+from verification.api_error_checking import check_request_json
+
+goal_routes = Blueprint('goal_routes', __name__)
 
 def update_goal_stats(user_id, xp_increment):
     """Update the user's goal stats
@@ -28,32 +33,48 @@ def update_goal_stats(user_id, xp_increment):
     # Save the new goal data
     db.save("/users/" + user_id + "/goals/", goals)
 
-def update_goal_status(user_id) :
+@goal_routes.route("/api/update-goal-status", methods=["POST"])
+def update_goal_status() :
     """ Update the status of a goal (in process, completed or failed)"""
+    expected_format = {
+        "userID": "",
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
     date = Date()
     now = date.get_current_date()
     goals = db.get("/users/" + user_id + "/goals/")
 
     for goal in goals:
-        if goal[goal]["status"] == "in progress" :
+        if goals[goal]["status"] == "in progress" :
             # Check if the goal should be completed
-            if goal[goal]["type"] == "XP" :
-                if int(goal[goal]["data"]["starting_xp"]) >= int(goal[goal]["data"]["goal_xp"]) :
-                    goal[goal]["status"] = "completed"
-            elif goal[goal]["type"] == "Card" :
-                if int(goal[goal]["data"]["cards_revised_so_far"]) >= int(goal[goal]["data"]["cards_to_revise"]) :
-                    goal[goal]["status"] = "completed"
-            
+            if goals[goal]["type"] == "XP" :
+                if int(goals[goal]["data"]["starting_xp"]) >= int(goals[goal]["data"]["goal_xp"]) :
+                    goals[goal]["status"] = "completed"
+            elif goals[goal]["type"] == "Card" :
+                if int(goals[goal]["data"]["cards_revised_so_far"]) >= int(goals[goal]["data"]["cards_to_revise"]) :
+                    goals[goal]["status"] = "completed"
+
             # Check if goal should be failed - if now is after end date (and it is still in progress)
             # Now and end date are both strings in dd/mm/yyyy format
-            if date.compare_dates(now, goal[goal]["end_date"]) > 0 :
-                goal[goal]["status"] = "failed"
-                goal[goal]["fail_date"] = now
+            if date.compare_dates(now, goals[goal]["end_date"]) > 0 :
+                goals[goal]["status"] = "failed"
+                goals[goal]["fail_date"] = now
 
     # Save the new goal data
     db.save("/users/" + user_id + "/goals/", goals)
+    return jsonify(goals), 200
 
-def create_xp_goal(user_id, goal_xp, end_date) :
+@goal_routes.route("/api/create-xp-goal", methods=["POST"])
+def create_xp_goal() :
     """ Create an XP goal for the user
      XP goals have:
      - ID
@@ -67,7 +88,31 @@ def create_xp_goal(user_id, goal_xp, end_date) :
         - starting XP
         - desired XP
     This is the same as a card goal except for the data section
+
+    Example request:
+    {
+        "userID": "my-id",
+        "goalXP": "100",
+        endDate: "01/01/2022" (in dd/mm/yyyy format)
+    }
     """
+    expected_format = {
+        "userID": "",
+        "goalXP": NUMBER,
+        "endDate": DATE_REGEX
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
+    goal_xp = request.json.get("goalXP")
+    end_date = request.json.get("endDate")
 
     date = Date()
     goal_xp = str(goal_xp)
@@ -92,6 +137,7 @@ def create_xp_goal(user_id, goal_xp, end_date) :
             }
         }
     )
+    return jsonify({"success": "Goal created successfully"}), 200
 
 def create_card_goal(user_id, desired_cards_to_revise, end_date) :
     """ Create a card goal for the user

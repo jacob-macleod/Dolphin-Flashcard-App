@@ -2,22 +2,17 @@ import {React, useState, useEffect} from 'react';
 import Heading5 from '../componments/Heading5';
 import Button from '../componments/Button';
 import WhiteOverlay from '../componments/WhiteOverlay';
-import ProgressIndicator from '../componments/ProgressIndicator';
-import { calculateStreak } from '../api/Api';
+import Goal from '../componments/Goal';
+import { updateGoals } from '../api/Api';
 import { getCookie } from '../api/Authentication';
 import '../App.css';
+import DelayedElement from '../componments/DelayedElement';
 
 function GoalsWidget () {
-    const [streak, setStreak] = useState(null)
-    const [totalXP, setTotalXP] = useState("6093")
-    const [weeklyXP, setWeeklyXP] = useState("72")
+    const [goals, setGoals] = useState(null);
 
     const panelTitleStyle = {
         padding: "8px"
-      }
-      const panelTitleStyle2 = {
-        padding: "0px",
-        width: "100%"
       }
       const overlayStyle = {
         marginLeft: "16px",
@@ -26,14 +21,23 @@ function GoalsWidget () {
       }
 
       useEffect(() => {
-        calculateStreak(getCookie("userID"), setStreak)
+        updateGoals(getCookie("userID"), setGoals);
       }, []);
 
     return <>
     <WhiteOverlay style={overlayStyle}>
         <Heading5 text="Goals" style={panelTitleStyle} />
         <Button text="+ New Goal" style={{}} />
-        <ProgressIndicator />
+        {goals && Object.keys(goals).map(goalId => {
+                const goal = goals[goalId];
+                return (
+                    <DelayedElement
+                        key={goalId}
+                        child={<Goal start={goal.data.starting_xp} end={goal.data.goal_xp} title={goal.title} dueDate={goal.end_date}/>}
+                        childValue={goals}
+                    />
+                );
+            })}
     </WhiteOverlay>
     </>
 }

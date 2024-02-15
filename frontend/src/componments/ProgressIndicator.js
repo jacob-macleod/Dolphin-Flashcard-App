@@ -3,11 +3,13 @@ import './ProgressIndicator.css';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-function ProgressIndicator() {
+function ProgressIndicator({start, end}) {
+
+    
     return (<>
-        <div style={{width: "100px", height: "100px"}}>
+        <div style={{width: "96px", height: "96px", padding: "16px"}}>
             <CircularProgressbarWithChildren
-                value={60}
+                value={(start/end)*100}
                 strokeWidth={12}
                 styles={buildStyles({
                     pathColor: `#32519E`,
@@ -17,7 +19,7 @@ function ProgressIndicator() {
                     textFontFamily: "Roboto",
                 })}
             >
-                <p class="text">30/50</p>
+                <p class="text">{start}/{end}</p>
             </CircularProgressbarWithChildren>
         </div>
         </>
