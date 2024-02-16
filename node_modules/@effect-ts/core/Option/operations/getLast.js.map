@@ -1,0 +1,1 @@
+{"version":3,"file":"getLast.js","mappings":";;;;;;;AAIA;;AAEA;;AAEM,SAAUA,OAAV,CACJ,GAAGC,KADC,EACQ;AAEZ,SAAO,iBAAK,uCAAL,EAAwCA,KAAxC,CAAP;AACD","names":["getLast","items"],"sourceRoot":"","sources":["../../_src/Option/operations/getLast.ts"],"sourcesContent":[null]}

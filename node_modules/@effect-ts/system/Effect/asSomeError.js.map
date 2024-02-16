@@ -1,0 +1,1 @@
+{"version":3,"file":"asSomeError.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;AAGM,SAAUA,WAAV,CAA+BC,IAA/B,EAAsDC,OAAtD,EAAsE;AAC1E,SAAO,yBAAUD,IAAV,EAAgBE,CAAC,CAACC,IAAlB,EAAwBF,OAAxB,CAAP;AACD","names":["asSomeError","self","__trace","O","some"],"sourceRoot":"","sources":["../_src/Effect/asSomeError.ts"],"sourcesContent":[null]}

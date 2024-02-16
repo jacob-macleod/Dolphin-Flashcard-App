@@ -1,0 +1,1 @@
+{"version":3,"file":"conditionals.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGA,MAAMA,MAAM,gBAAGC,GAAG,CAACC,YAAJ,CAAiBC,oBAAjB,CAAf;;AACA,MAAMC,OAAO,gBAAGH,GAAG,CAACI,aAAJ,CAAkBF,oBAAlB,CAAhB","names":["branch","DSL","conditionalF","Covariant","branch_","conditionalF_"],"sourceRoot":"","sources":["../../_src/Either/dsls/conditionals.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"die.js","mappings":";;;;;;;AAEA;;AACA;;AAHA;;AAMA;;;;AAIM,SAAUA,GAAV,CAAcC,CAAd,EAAwB;AAC5B,SAAcC,OAAP,IAAkC,gCAAmB,cAAUD,CAAV,CAAnB,EAAiCC,OAAjC,CAAzC;AACD","names":["die","e","promise"],"sourceRoot":"","sources":["../_src/Promise/die.ts"],"sourcesContent":[null]}

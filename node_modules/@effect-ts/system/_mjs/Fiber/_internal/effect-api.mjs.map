@@ -1,0 +1,1 @@
+{"version":3,"file":"effect-api.mjs","mappings":"AAAA;AAEA,cAAc,cAAd;AACA,SACEA,OADF,EAEEC,UAFF,EAGEC,WAHF,EAIEC,YAJF,EAKEC,QALF,QAMO,+BANP","names":["forEach","forEachPar","forEachPar_","forEachUnit_","forEach_"],"sourceRoot":"","sources":["../../../_src/Fiber/_internal/effect-api.ts"],"sourcesContent":[null]}

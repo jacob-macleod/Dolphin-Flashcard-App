@@ -1,0 +1,1 @@
+{"version":3,"file":"leftover.js","mappings":";;;;;;;AAGA;;AACA;;;;;;AAEM,SAAUA,QAAV,CACJC,CADI,EACU;AAEd,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACC,KAAH,CAASJ,CAAT,CAAX,CAAP;AACD","names":["leftover","c","C","Sink","CH","write"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/leftover.ts"],"sourcesContent":[null]}

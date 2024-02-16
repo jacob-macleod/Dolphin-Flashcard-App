@@ -1,0 +1,1 @@
+{"version":3,"file":"fromIterableM.js","mappings":";;;;;;;AAEA;;AAGA;;AACA;;AANA;;AAQA;;;AAGM,SAAUA,aAAV,CACJC,QADI,EACiC;AAErC,SAAO,2BAAW,4BAAWA,QAAX,CAAX,EAAiCC,eAAjC,CAAP;AACD","names":["fromIterableM","iterable","identity"],"sourceRoot":"","sources":["../../_src/Stream/Stream/fromIterableM.ts"],"sourcesContent":[null]}

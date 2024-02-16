@@ -1,0 +1,69 @@
+{
+  "name": "ts-pattern",
+  "version": "4.3.0",
+  "description": " The exhaustive Pattern Matching library for TypeScript.",
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.umd.js",
+  "scripts": {
+    "build": "rimraf dist && microbundle && sh ./scripts/generate-cts.sh",
+    "dev": "microbundle watch",
+    "prepublishOnly": "npm run test && npm run build",
+    "test": "jest",
+    "clear-test": "jest --clearCache",
+    "perf": "tsc --project tests/tsconfig.json --noEmit --extendedDiagnostics",
+    "fmt": "prettier ./src/** ./tests/** -w",
+    "check": "tsc --strict --noEmit --extendedDiagnostics"
+  },
+  "files": [
+    "dist/**/*",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
+  },
+  "keywords": [
+    "pattern",
+    "matching",
+    "pattern-matching",
+    "typescript",
+    "match-with",
+    "match",
+    "switch",
+    "adt"
+  ],
+  "author": "Gabriel Vergnaud",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gvergnaud/ts-pattern/issues"
+  },
+  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.4.5",
+    "microbundle": "^0.15.1",
+    "prettier": "^2.5.1",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.8.3"
+  }
+}

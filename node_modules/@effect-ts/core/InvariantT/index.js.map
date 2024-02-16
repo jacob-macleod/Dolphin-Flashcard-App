@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","mappings":";;;;;;;;AAEA;;AAGA;;;;;;AALA;AAYM,SAAUA,KAAV,CAAqCC,CAArC,EAAyC;AAC7C,SACEC,CADK,IAEqEA,CAF5E;AAGD;;AAOK,SAAUC,WAAV,CAA2CF,CAA3C,EAA+C;AACnD,SACEC,CADK,IAEyEA,CAFhF;AAGD","names":["monad","_","M","applicative"],"sourceRoot":"","sources":["../_src/InvariantT/index.ts"],"sourcesContent":[null]}

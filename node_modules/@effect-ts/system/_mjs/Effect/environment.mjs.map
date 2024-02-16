@@ -1,0 +1,1 @@
+{"version":3,"file":"environment.mjs","mappings":"AAAA;AAEA,SAASA,MAAT,QAAuB,YAAvB;AAEA;;;;AAGA,OAAM,SAAUC,WAAV,CAAyBC,OAAzB,EAAyC;AAC7C,SAAOF,MAAM,CAAEG,CAAD,IAAUA,CAAX,EAAcD,OAAd,CAAb;AACD","names":["access","environment","__trace","_"],"sourceRoot":"","sources":["../../_src/Effect/environment.ts"],"sourcesContent":[null]}

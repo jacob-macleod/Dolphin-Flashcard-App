@@ -1,0 +1,1 @@
+{"version":3,"file":"Applicative.mjs","mappings":"AAGA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,SAAT,QAA0B,iBAA1B;AACA,SAASC,YAAT,QAA6B,oBAA7B;AAEA,OAAO,MAAMC,WAAW,GAAiD,EACvE,GAAGF,SADoE;AAEvE,KAAGC;AAFoE,CAAlE","names":["P","Covariant","IdentityBoth","Applicative"],"sourceRoot":"","sources":["../../../_src/Option/instances/Applicative.ts"],"sourcesContent":[null]}

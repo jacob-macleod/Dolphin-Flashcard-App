@@ -1,0 +1,1 @@
+{"version":3,"file":"fromEffect.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;AAEA;;;;;;AANA;;AAQA;;;AAGM,SAAUA,UAAV,CAA8BC,EAA9B,EAAmD;AACvD,SAAoC,wCAApBC,CAAC,UAAD,CAAJD,EAAI,EAAWE,CAAC,CAACC,IAAb,CAAoB,CAApC;AACD","names":["fromEffect","fa","T","O","some"],"sourceRoot":"","sources":["../../_src/Stream/Stream/fromEffect.ts"],"sourcesContent":[null]}

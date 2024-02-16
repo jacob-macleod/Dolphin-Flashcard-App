@@ -1,0 +1,1 @@
+{"version":3,"file":"unfoldChunk.js","mappings":";;;;;;;AAKA;;AAEA;;;;;;AAEA;;;AAGM,SAAUA,WAAV,CACJC,CADI,EAEJC,CAFI,EAE4C;AAEhD,SAAO,gCAAaD,CAAb,EAAiBA,CAAD,IAAOE,CAAC,CAACC,OAAF,CAAUF,CAAC,CAACD,CAAD,CAAX,CAAvB,CAAP;AACD","names":["unfoldChunk","s","f","T","succeed"],"sourceRoot":"","sources":["../../_src/Stream/Stream/unfoldChunk.ts"],"sourcesContent":[null]}

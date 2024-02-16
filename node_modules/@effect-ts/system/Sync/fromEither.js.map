@@ -1,0 +1,1 @@
+{"version":3,"file":"fromEither.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,UAAV,CAA2BC,CAA3B,EAAkD;AACtD,SAAO,kBAAO,uBAAYA,CAAZ,CAAP,EAAuBC,CAAC,CAACC,IAAF,CAAOC,UAAP,EAAaC,aAAb,CAAvB,CAAP;AACD","names":["fromEither","f","E","fold","fail","succeed"],"sourceRoot":"","sources":["../_src/Sync/fromEither.ts"],"sourcesContent":[null]}

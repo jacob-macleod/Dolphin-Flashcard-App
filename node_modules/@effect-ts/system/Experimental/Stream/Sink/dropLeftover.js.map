@@ -1,0 +1,1 @@
+{"version":3,"file":"dropLeftover.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;AAKM,SAAUA,YAAV,CACJC,IADI,EACoC;AAExC,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACC,KAAH,CAASJ,IAAI,CAACK,OAAd,CAAX,CAAP;AACD","names":["dropLeftover","self","C","Sink","CH","drain","channel"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/dropLeftover.ts"],"sourcesContent":[null]}

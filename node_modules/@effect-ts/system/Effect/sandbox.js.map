@@ -1,0 +1,1 @@
+{"version":3,"file":"sandbox.js","mappings":";;;;;;;AAGA;;AAEA;;AAEA;;;AAGM,SAAUA,OAAV,CACJC,EADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,uBAAYD,EAAZ,EAAgBE,UAAhB,EAAsBC,aAAtB,EAA+BF,OAA/B,CAAP;AACD","names":["sandbox","fa","__trace","fail","succeed"],"sourceRoot":"","sources":["../_src/Effect/sandbox.ts"],"sourcesContent":[null]}

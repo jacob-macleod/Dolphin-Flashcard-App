@@ -1,0 +1,1 @@
+{"version":3,"file":"collectSome.mjs","mappings":"AAAA;AAEA,SAASA,QAAT,QAAyB,0BAAzB;AAEA,SAASC,QAAT,QAAyB,eAAzB;AAGA;;;;AAGA,OAAM,SAAUC,WAAV,CACJC,IADI,EAC4B;AAEhC,SAAOF,QAAQ,CAACE,IAAD,EAAOH,QAAP,CAAf;AACD","names":["identity","collect_","collectSome","self"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/collectSome.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"struct.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;AAKO,MAAMA,MAAM,gBAAGC,GAAG,CAACC,OAAJ,CAAYC,sBAAZ,CAAf","names":["struct","DSL","structF","Applicative"],"sourceRoot":"","sources":["../../_src/Either/dsls/struct.ts"],"sourcesContent":[null]}

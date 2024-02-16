@@ -139,7 +139,8 @@ def create_xp_goal() :
     )
     return jsonify({"success": "Goal created successfully"}), 200
 
-def create_card_goal(user_id, desired_cards_to_revise, end_date) :
+@goal_routes.route("/api/create-card-goal", methods=["POST"])
+def create_card_goal() :
     """ Create a card goal for the user
     Card goals have:
      - ID
@@ -153,6 +154,23 @@ def create_card_goal(user_id, desired_cards_to_revise, end_date) :
         - starting XP
         - desired cards to revise
     """
+    expected_format = {
+        "userID": "",
+        "cardsToRevise": NUMBER,
+        "endDate": DATE_REGEX
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
+    desired_cards_to_revise = request.json.get("cardsToRevise")
+    end_date = request.json.get("endDate")
 
     desired_cards_to_revise = str(desired_cards_to_revise)
     goal_type = "Card"
@@ -174,3 +192,4 @@ def create_card_goal(user_id, desired_cards_to_revise, end_date) :
             }
         }
     )
+    return jsonify({"success": "Goal created successfully"}), 200

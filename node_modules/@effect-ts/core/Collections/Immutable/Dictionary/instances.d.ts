@@ -1,0 +1,22 @@
+import type { URI } from "../../../Prelude/index.js";
+import * as P from "../../../Prelude/index.js";
+export declare const Covariant: P.Covariant<[URI<"Dictionary", {}>], P.Auto>;
+export declare const CovariantWithIndex: P.CovariantWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const ForEach: P.ForEach<[URI<"Dictionary", {}>], P.Auto>;
+export declare const ForEachWithIndex: P.ForEachWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Reduce: P.Reduce<[URI<"Dictionary", {}>], P.Auto>;
+export declare const ReduceRight: P.ReduceRight<[URI<"Dictionary", {}>], P.Auto>;
+export declare const ReduceWithIndex: P.ReduceWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const ReduceRightWithIndex: P.ReduceRightWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const FoldMap: P.FoldMap<[URI<"Dictionary", {}>], P.Auto>;
+export declare const FoldMapWithIndex: P.FoldMapWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Foldable: P.Foldable<[URI<"Dictionary", {}>], P.Auto>;
+export declare const FoldableWithIndex: P.FoldableWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Wiltable: P.Wiltable<[URI<"Dictionary", {}>], P.Auto>;
+export declare const WiltableWithIndex: P.WiltableWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Witherable: P.Witherable<[URI<"Dictionary", {}>], P.Auto>;
+export declare const WitherableWithIndex: P.WitherableWithIndex<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Compact: P.Compact<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Separate: P.Separate<[URI<"Dictionary", {}>], P.Auto>;
+export declare const Compactable: P.Compactable<[URI<"Dictionary", {}>], P.Auto>;
+//# sourceMappingURL=instances.d.ts.map

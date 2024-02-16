@@ -1,0 +1,1 @@
+{"version":3,"file":"interrupt.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;AACA;;AALA;;AAQA;;;;AAIM,SAAUA,SAAV,CAA0BC,OAA1B,EAAgD;AACpD,SAAO,kBAAOC,gBAAP,EAAiBC,EAAD,IAAQ,gCAAmB,+BAAkBA,EAAlB,CAAnB,EAA0CF,OAA1C,CAAxB,CAAP;AACD","names":["interrupt","promise","fiberId","id"],"sourceRoot":"","sources":["../_src/Promise/interrupt.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"interrupt.d.ts","sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Channel/api/interrupt.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,KAAK,CAAC,MAAM,4BAA4B,CAAA;AACpD,OAAO,KAAK,CAAC,MAAM,YAAY,CAAA;AAE/B,wBAAgB,SAAS,CACvB,OAAO,EAAE,CAAC,CAAC,OAAO,GACjB,CAAC,CAAC,OAAO,CAAC,OAAO,EAAE,OAAO,EAAE,OAAO,EAAE,OAAO,EAAE,KAAK,EAAE,KAAK,EAAE,KAAK,CAAC,CAEpE"}

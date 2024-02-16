@@ -1,0 +1,1 @@
+{"version":3,"file":"empty.mjs","mappings":"AAAA;AAEA,SAASA,OAAT,QAAwB,0BAAxB;AACA,OAAO,KAAKC,IAAZ,MAAsB,mBAAtB;AAEA,SAASC,MAAT,QAAuB,mBAAvB;AAEA;;;;AAGA,OAAO,MAAMC,KAAK,gBAAe,IAAID,MAAJ,eAAWF,OAAO,CAACC,IAAI,CAACG,GAAN,CAAlB,CAA1B","names":["succeed","Pull","Stream","empty","end"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/empty.ts"],"sourcesContent":[null]}

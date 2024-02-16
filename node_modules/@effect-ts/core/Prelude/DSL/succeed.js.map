@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.js","mappings":";;;;;;;AAEA;;AAFA;AAsBM,SAAUA,QAAV,CACJC,CADI,EACwC;AAE5C,SAAWC,CAAJ,IAAaD,CAAC,CAACE,GAAF,CAAM,qBAASD,CAAT,CAAN,EAAmBD,CAAC,CAACG,GAAF,EAAnB,CAApB;AACD","names":["succeedF","F","a","map","any"],"sourceRoot":"","sources":["../../_src/Prelude/DSL/succeed.ts"],"sourcesContent":[null]}

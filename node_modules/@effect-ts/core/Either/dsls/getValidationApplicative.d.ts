@@ -1,0 +1,2 @@
+export declare const getValidationApplicative: <Z>(A: import("../../Associative/definition.js").Associative<Z>) => import("../../Prelude/index.js").Applicative<[import("../../Prelude/index.js").URI<"Either", {}>], import("../definition.js").V & import("../../Prelude/index.js").Fix<"E", Z>>;
+//# sourceMappingURL=getValidationApplicative.d.ts.map

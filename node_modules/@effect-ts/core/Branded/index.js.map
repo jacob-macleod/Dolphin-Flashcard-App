@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","mappings":";;;;;;;;AAEA;;AAFA;AAIO,MAAMA,MAAM,gBAAkBC,MAAM,EAApC;AAQP;;;;;;;AAGM,SAAUC,WAAV,CACJC,IADI,EACwB;AAE5B;AACA,SAAOA,IAAP;AACD","names":["_brand","Symbol","makeBranded","self"],"sourceRoot":"","sources":["../_src/Branded/index.ts"],"sourcesContent":[null]}

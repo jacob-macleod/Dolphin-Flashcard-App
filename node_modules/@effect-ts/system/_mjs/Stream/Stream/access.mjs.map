@@ -1,0 +1,1 @@
+{"version":3,"file":"access.mjs","mappings":"AAGA,SAASA,WAAT,QAA4B,mBAA5B;AACA,SAASC,IAAT,QAAqB,WAArB;AAEA;;;;AAGA,OAAM,SAAUC,MAAV,CAAuBC,CAAvB,EAAqC;AACzC,SAAOF,IAAI,CAACD,WAAW,EAAZ,EAAmBG,CAAnB,CAAX;AACD","names":["environment","map_","access","f"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/access.ts"],"sourcesContent":[null]}

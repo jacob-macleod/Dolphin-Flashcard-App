@@ -1,0 +1,1 @@
+{"version":3,"file":"isSuccess.js","mappings":";;;;;;;AAGA;;AAEA;;;AAGM,SAAUA,SAAV,CAA6BC,IAA7B,EAAoDC,OAApD,EAAoE;AACxE,SAAO,iBACLD,IADK,EAEL,MAAM,KAFD,EAGL,MAAM,IAHD,EAILC,OAJK,CAAP;AAMD","names":["isSuccess","self","__trace"],"sourceRoot":"","sources":["../_src/Effect/isSuccess.ts"],"sourcesContent":[null]}

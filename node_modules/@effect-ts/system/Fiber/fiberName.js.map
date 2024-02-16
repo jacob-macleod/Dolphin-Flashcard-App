@@ -1,0 +1,1 @@
+{"version":3,"file":"fiberName.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;;;;;AAJA;;AAMA;;;AAGO,MAAMA,SAAS,gBAAG,IAAIC,cAAJ,CAA8BC,CAAC,CAACC,IAAhC,EAAsCC,gBAAtC,EAAgDA,gBAAhD,CAAlB","names":["fiberName","Runtime","O","none","identity"],"sourceRoot":"","sources":["../_src/Fiber/fiberName.ts"],"sourcesContent":[null]}

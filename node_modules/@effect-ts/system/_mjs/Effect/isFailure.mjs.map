@@ -1,0 +1,1 @@
+{"version":3,"file":"isFailure.mjs","mappings":"AAGA,SAASA,KAAT,QAAsB,YAAtB;AAEA;;;;AAGA,OAAM,SAAUC,SAAV,CAA6BC,IAA7B,EAAoDC,OAApD,EAAoE;AACxE,SAAOH,KAAK,CACVE,IADU,EAEV,MAAM,IAFI,EAGV,MAAM,KAHI,EAIVC,OAJU,CAAZ;AAMD","names":["fold_","isFailure","self","__trace"],"sourceRoot":"","sources":["../../_src/Effect/isFailure.ts"],"sourcesContent":[null]}

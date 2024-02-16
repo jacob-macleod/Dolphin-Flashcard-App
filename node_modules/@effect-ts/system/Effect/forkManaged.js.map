@@ -1,0 +1,1 @@
+{"version":3,"file":"forkManaged.js","mappings":";;;;;;;AAGA;;AAGA;;AAEA;;;;;AAKM,SAAUA,WAAV,CACJC,IADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,gBAAK,0BAAUD,IAAV,CAAL,EAAsBC,OAAtB,CAAP;AACD","names":["forkManaged","self","__trace"],"sourceRoot":"","sources":["../_src/Effect/forkManaged.ts"],"sourcesContent":[null]}

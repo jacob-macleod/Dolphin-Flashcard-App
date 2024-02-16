@@ -1,0 +1,1 @@
+{"version":3,"file":"interrupt.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;AAMM,SAAUA,SAAV,CACJC,OADI,EACc;AAElB,SAAOC,CAAC,CAACC,SAAF,CAAYC,EAAE,CAACJ,SAAH,CAAaC,OAAb,CAAZ,CAAP;AACD","names":["interrupt","fiberId","C","failCause","CS"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Channel/api/interrupt.ts"],"sourcesContent":[null]}

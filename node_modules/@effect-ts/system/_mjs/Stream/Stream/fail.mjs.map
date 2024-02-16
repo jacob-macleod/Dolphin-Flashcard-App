@@ -1,0 +1,1 @@
+{"version":3,"file":"fail.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AAEA,SAASC,UAAT,QAA2B,kBAA3B;AAEA;;;;AAGA,OAAM,SAAUC,IAAV,CAAkBC,CAAlB,EAAsB;AAC1B,SAAOF,UAAU,CAACD,CAAC,CAACE,IAAF,CAAOC,CAAP,CAAD,CAAjB;AACD","names":["T","fromEffect","fail","e"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/fail.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"descriptor.mjs","mappings":"AAAA;AAEA,SAASA,cAAT,EAAyBC,OAAzB,QAAwC,YAAxC;AAEA;;;;AAGA,OAAO,MAAMC,UAAU,gBAAGF,cAAc,CAACC,OAAD,CAAjC","names":["descriptorWith","succeed","descriptor"],"sourceRoot":"","sources":["../../_src/Effect/descriptor.ts"],"sourcesContent":[null]}

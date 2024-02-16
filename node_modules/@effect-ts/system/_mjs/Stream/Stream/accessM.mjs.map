@@ -1,0 +1,1 @@
+{"version":3,"file":"accessM.mjs","mappings":"AAIA,SAASA,WAAT,QAA4B,mBAA5B;AACA,SAASC,KAAT,QAAsB,YAAtB;AAEA;;;;AAGA,OAAM,SAAUC,OAAV,CAA2BC,CAA3B,EAAyD;AAC7D,SAAOF,KAAK,CAACD,WAAW,EAAZ,EAAmBG,CAAnB,CAAZ;AACD","names":["environment","mapM_","accessM","f"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/accessM.ts"],"sourcesContent":[null]}

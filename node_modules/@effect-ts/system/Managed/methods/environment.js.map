@@ -1,0 +1,1 @@
+{"version":3,"file":"environment.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,WAAV,CAAyBC,OAAzB,EAAyC;AAC7C,SAAO,4BAAWC,CAAC,CAACF,WAAF,EAAX,EAA+BC,OAA/B,CAAP;AACD","names":["environment","__trace","T"],"sourceRoot":"","sources":["../../_src/Managed/methods/environment.ts"],"sourcesContent":[null]}

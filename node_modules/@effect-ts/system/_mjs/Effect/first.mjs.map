@@ -1,0 +1,1 @@
+{"version":3,"file":"first.mjs","mappings":"AAGA,SAASA,MAAT,QAAuB,YAAvB;AAEA;;;;;AAIA,OAAM,SAAUC,KAAV,CAAmBC,OAAnB,EAAmC;AACvC,SAAOF,MAAM,CAAEG,CAAD,IAA+BA,CAAC,CAACC,GAAF,CAAM,CAAN,CAAhC,EAA0CF,OAA1C,CAAb;AACD","names":["access","first","__trace","_","get"],"sourceRoot":"","sources":["../../_src/Effect/first.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"cause.js","mappings":";;;;;;;AAGA;;AACA;;AAGA;;;;AAIM,SAAUA,KAAV,CACJC,MADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,uBAAYD,MAAZ,EAAoBE,aAApB,EAA6B,MAAM,mBAAQC,YAAR,CAAnC,EAAmDF,OAAnD,CAAP;AACD","names":["cause","effect","__trace","succeed","empty"],"sourceRoot":"","sources":["../_src/Effect/cause.ts"],"sourcesContent":[null]}

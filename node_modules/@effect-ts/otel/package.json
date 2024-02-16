@@ -1,0 +1,47 @@
+{
+  "name": "@effect-ts/otel",
+  "version": "0.15.1",
+  "license": "MIT",
+  "repository": "https://github.com/Effect-TS/otel.git",
+  "peerDependencies": {
+    "@effect-ts/core": "^0.60.2",
+    "@opentelemetry/api": "^1.4.0",
+    "@opentelemetry/core": "^1.13.0",
+    "@opentelemetry/sdk-trace-base": "^1.13.0"
+  },
+  "main": "./index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [],
+  "exports": {
+    ".": {
+      "import": "./_mjs/index.mjs",
+      "require": "./index.js"
+    },
+    "./Processor": {
+      "import": "./_mjs/Processor/index.mjs",
+      "require": "./Processor/index.js"
+    },
+    "./Processor/Simple": {
+      "import": "./_mjs/Processor/Simple/index.mjs",
+      "require": "./Processor/Simple/index.js"
+    },
+    "./Span": {
+      "import": "./_mjs/Span/index.mjs",
+      "require": "./Span/index.js"
+    },
+    "./Tracer": {
+      "import": "./_mjs/Tracer/index.mjs",
+      "require": "./Tracer/index.js"
+    },
+    "./TracerProvider": {
+      "import": "./_mjs/TracerProvider/index.mjs",
+      "require": "./TracerProvider/index.js"
+    },
+    "./*": {
+      "import": "./_mjs/*.mjs",
+      "require": "./*.js"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"isDone.js","mappings":";;;;;;;AAEA;;AAFA;;AAKA;;;;AAIM,SAAUA,MAAV,CAAuBC,OAAvB,EAA6C;AACjD,SAAO,uBAAY,MAAMA,OAAO,CAACC,KAAR,CAAcC,GAAd,CAAkBC,IAAlB,KAA2B,MAA7C,CAAP;AACD","names":["isDone","promise","state","get","_tag"],"sourceRoot":"","sources":["../_src/Promise/isDone.ts"],"sourcesContent":[null]}

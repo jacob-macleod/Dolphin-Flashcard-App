@@ -1,0 +1,1 @@
+{"version":3,"file":"empty.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGO,MAAMA,KAAK,gBAAGC,SAAS,CAACC,SAAV,eAAoBC,EAAE,CAACH,KAAH,EAApB,CAAd","names":["empty","FromChunk","fromChunk","CK"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/empty.ts"],"sourcesContent":[null]}

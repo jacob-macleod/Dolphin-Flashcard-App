@@ -1,0 +1,1 @@
+{"version":3,"file":"collectSome.js","mappings":";;;;;;;AAIA;;;;;;AAEA;;;AAGM,SAAUA,WAAV,CACJC,IADI,EAC6B;AAEjC,SAAOC,OAAO,CAACC,QAAR,CAAiBF,IAAjB,EAAwBG,CAAD,IAAOA,CAA9B,CAAP;AACD","names":["collectSome","self","Collect","collect_","a"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/collectSome.ts"],"sourcesContent":[null]}

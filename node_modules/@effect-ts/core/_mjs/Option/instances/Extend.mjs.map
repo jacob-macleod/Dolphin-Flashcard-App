@@ -1,0 +1,1 @@
+{"version":3,"file":"Extend.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,0BAAnB;AAGA,OAAO,KAAKC,CAAZ,MAAmB,yBAAnB;AAEA,OAAO,MAAMC,MAAM,GAA4C;AAC7DC,QAAM,EAAEH,CAAC,CAACG;AADmD,CAAxD","names":["O","P","Extend","extend"],"sourceRoot":"","sources":["../../../_src/Option/instances/Extend.ts"],"sourcesContent":[null]}

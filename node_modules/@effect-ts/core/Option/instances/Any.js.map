@@ -1,0 +1,1 @@
+{"version":3,"file":"Any.js","mappings":";;;;;;;AAEA;;AAGA;;;;;;AALA;AAOO,MAAMA,GAAG,GAAyC;AACvDC,KAAG,EAAE,MAAMC,CAAC,CAACC,IAAF,CAAO,EAAP;AAD4C,CAAlD","names":["Any","any","O","some"],"sourceRoot":"","sources":["../../_src/Option/instances/Any.ts"],"sourcesContent":[null]}

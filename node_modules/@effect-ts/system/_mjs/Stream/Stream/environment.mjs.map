@@ -1,0 +1,1 @@
+{"version":3,"file":"environment.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AAEA,SAASC,UAAT,QAA2B,kBAA3B;AAEA;;;;AAGA,OAAM,SAAUC,WAAV,GAAqB;AACzB,SAAOD,UAAU,CAACD,CAAC,CAACE,WAAF,EAAD,CAAjB;AACD","names":["T","fromEffect","environment"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/environment.ts"],"sourcesContent":[null]}

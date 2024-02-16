@@ -1,0 +1,1 @@
+{"version":3,"file":"onSecond.mjs","mappings":"AAGA,SAASA,WAAT,QAA4B,mBAA5B;AACA,SAASC,IAAT,QAAqB,WAArB;AAEA;;;;;;AAKA,OAAM,SAAUC,QAAV,CAA4BC,IAA5B,EAAmDC,OAAnD,EAAmE;AACvE,SAAOH,IAAI,CAACD,WAAW,EAAZ,EAAmBG,IAAnB,EAAyBC,OAAzB,CAAX;AACD","names":["environment","zip_","onSecond","self","__trace"],"sourceRoot":"","sources":["../../_src/Effect/onSecond.ts"],"sourcesContent":[null]}

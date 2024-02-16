@@ -1,0 +1,1 @@
+{"version":3,"file":"validate-tsconfig.d.ts","sourceRoot":"","sources":["../src/validate-tsconfig.ts"],"names":[],"mappings":"AAGA,OAAO,EAAgB,EAAE,EAAE,MAAM,qBAAqB,CAAA;AACtD,OAAO,EAAY,EAAE,EAAQ,CAAC,EAAU,MAAM,4BAA4B,CAAA;AAK1E,eAAO,MAAM,gBAAgB,kUAoD5B,CAAA;;AAsBD,qBAAa,oBAAqB,SAAQ,0BAA+B;IAAE,QAAQ,CAAC,KAAK,EAAE,GAAG,CAAA;CAAE,CAAC;CAAG"}

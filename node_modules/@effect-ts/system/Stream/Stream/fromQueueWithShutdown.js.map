@@ -1,0 +1,1 @@
+{"version":3,"file":"fromQueueWithShutdown.js","mappings":";;;;;;;AAEA;;AAEA;;AACA;;;;;;AALA;;AAOA;;;AAGM,SAAUA,qBAAV,CACJC,KADI,EAC2C;AAE/C,SAAO,mCAAe,0BAAUA,KAAV,CAAf,EAAiCC,CAAC,CAACC,QAAF,CAAWF,KAAX,CAAjC,CAAP;AACD","names":["fromQueueWithShutdown","queue","Q","shutdown"],"sourceRoot":"","sources":["../../_src/Stream/Stream/fromQueueWithShutdown.ts"],"sourcesContent":[null]}

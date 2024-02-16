@@ -1,0 +1,1 @@
+{"version":3,"file":"dieMessage.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,UAAT,QAA2B,kBAA3B;AAEA;;;;AAGA,OAAM,SAAUC,UAAV,CAAqBC,GAArB,EAAgC;AACpCF,YAAU,CAACD,CAAC,CAACE,UAAF,CAAaC,GAAb,CAAD,CAAV;AACD","names":["T","fromEffect","dieMessage","msg"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/dieMessage.ts"],"sourcesContent":[null]}

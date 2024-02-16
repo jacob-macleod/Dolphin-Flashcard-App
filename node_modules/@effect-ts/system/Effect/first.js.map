@@ -1,0 +1,1 @@
+{"version":3,"file":"first.js","mappings":";;;;;;;AAGA;;AAEA;;;;AAIM,SAAUA,KAAV,CAAmBC,OAAnB,EAAmC;AACvC,SAAO,kBAAQC,CAAD,IAA+BA,CAAC,CAACC,GAAF,CAAM,CAAN,CAAtC,EAAgDF,OAAhD,CAAP;AACD","names":["first","__trace","_","get"],"sourceRoot":"","sources":["../_src/Effect/first.ts"],"sourcesContent":[null]}

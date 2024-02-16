@@ -1,0 +1,1 @@
+{"version":3,"file":"scopeWith.js","mappings":";;;;;;;AAIA;;AAGA;;;;AAIM,SAAUA,SAAV,CACJC,CADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,0BAAgBC,CAAD,IAAOF,CAAC,CAACE,CAAC,CAACC,KAAH,CAAvB,EAAkCF,OAAlC,CAAP;AACD","names":["scopeWith","f","__trace","d","scope"],"sourceRoot":"","sources":["../_src/Effect/scopeWith.ts"],"sourcesContent":[null]}

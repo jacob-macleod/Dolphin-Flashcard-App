@@ -1,0 +1,67 @@
+{
+  "name": "next-contentlayer",
+  "version": "0.3.4",
+  "type": "module",
+  "main": "./dist/index-cjs.cjs",
+  "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index-cjs.cjs"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "packge.json": [
+        "./package.json"
+      ],
+      ".": [
+        "./dist"
+      ],
+      "hooks": [
+        "./dist/hooks"
+      ]
+    }
+  },
+  "files": [
+    "./dist/**/*.{cjs,js,ts,map}",
+    "./src",
+    "./package.json"
+  ],
+  "scripts": {
+    "prepack": "sed '/^import\\|^export/d' dist/index-cjs.js > dist/index-cjs.cjs; cp src/hooks/jsx-runtime.cjs dist/hooks/jsx-runtime.cjs"
+  },
+  "dependencies": {
+    "@contentlayer/core": "0.3.4",
+    "@contentlayer/utils": "0.3.4"
+  },
+  "peerDependencies": {
+    "contentlayer": "0.3.4",
+    "next": "^12 || ^13",
+    "react": "*",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "next": "^13.4.7",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.1"
+  },
+  "author": "schickling",
+  "homepage": "https://github.com/contentlayerdev/contentlayer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/contentlayerdev/contentlayer.git"
+  },
+  "bug": {
+    "url": "https://github.com/contentlayerdev/contentlayer/issues"
+  }
+}

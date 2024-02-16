@@ -1,0 +1,1 @@
+{"version":3,"file":"isSuccess.mjs","mappings":"AAGA,SAASA,KAAT,QAAsB,YAAtB;AAEA;;;;AAGA,OAAM,SAAUC,SAAV,CAA6BC,IAA7B,EAAoDC,OAApD,EAAoE;AACxE,SAAOH,KAAK,CACVE,IADU,EAEV,MAAM,KAFI,EAGV,MAAM,IAHI,EAIVC,OAJU,CAAZ;AAMD","names":["fold_","isSuccess","self","__trace"],"sourceRoot":"","sources":["../../_src/Effect/isSuccess.ts"],"sourcesContent":[null]}

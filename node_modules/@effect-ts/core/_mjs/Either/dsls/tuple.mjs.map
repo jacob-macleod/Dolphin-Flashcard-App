@@ -1,0 +1,1 @@
+{"version":3,"file":"tuple.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,GAAZ,MAAqB,6BAArB;AACA,SAASC,WAAT,QAA4B,kBAA5B;AAEA,OAAO,MAAMC,KAAK,gBAAGF,GAAG,CAACG,MAAJ,CAAWF,WAAX,CAAd","names":["DSL","Applicative","tuple","tupleF"],"sourceRoot":"","sources":["../../../_src/Either/dsls/tuple.ts"],"sourcesContent":[null]}

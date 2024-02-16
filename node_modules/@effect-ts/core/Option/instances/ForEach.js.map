@@ -1,0 +1,1 @@
+{"version":3,"file":"ForEach.js","mappings":";;;;;;;AAGA;;AACA;;AACA;;;;;;AAEO,MAAMA,OAAO,GAA6C,EAC/D,GAAGC,oBAD4D;AAE/DC,UAAQ,EAARA;AAF+D,CAA1D","names":["ForEach","Covariant","forEachF"],"sourceRoot":"","sources":["../../_src/Option/instances/ForEach.ts"],"sourcesContent":[null]}

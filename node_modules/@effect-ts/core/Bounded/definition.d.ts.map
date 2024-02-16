@@ -1,0 +1,1 @@
+{"version":3,"file":"definition.d.ts","sourceRoot":"","sources":["../_src/Bounded/definition.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,GAAG,EAAE,MAAM,iBAAiB,CAAA;AAE1C,MAAM,WAAW,OAAO,CAAC,CAAC,CAAE,SAAQ,GAAG,CAAC,CAAC,CAAC;IACxC,QAAQ,CAAC,GAAG,EAAE,CAAC,CAAA;IACf,QAAQ,CAAC,MAAM,EAAE,CAAC,CAAA;CACnB"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"complete.js","mappings":";;;;;;;AAGA;;AAGA;;;;;;;AAOM,SAAUA,QAAV,CAAyBC,CAAzB,EAAoC;AACxC,SAAQC,OAAD,IAA4B,YAAGA,OAAH,EAAYD,CAAZ,CAAnC;AACD","names":["complete","e","promise"],"sourceRoot":"","sources":["../_src/Promise/complete.ts"],"sourcesContent":[null]}

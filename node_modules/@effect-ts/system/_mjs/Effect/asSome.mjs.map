@@ -1,0 +1,1 @@
+{"version":3,"file":"asSome.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,oBAAnB;AAEA,SAASC,IAAT,QAAqB,WAArB;AAEA;;;;AAGA,OAAM,SAAUC,MAAV,CAA0BC,EAA1B,EAA+CC,OAA/C,EAA+D;AACnE,SAAOH,IAAI,CAACE,EAAD,EAAKH,CAAC,CAACK,IAAP,EAAaD,OAAb,CAAX;AACD","names":["O","map_","asSome","fa","__trace","some"],"sourceRoot":"","sources":["../../_src/Effect/asSome.ts"],"sourcesContent":[null]}

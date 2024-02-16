@@ -1,0 +1,1 @@
+{"version":3,"file":"complete.mjs","mappings":"AAGA,SAASA,EAAT,QAAmB,kBAAnB;AAGA;;;;;;;;AAOA,OAAM,SAAUC,QAAV,CAAyBC,CAAzB,EAAoC;AACxC,SAAQC,OAAD,IAA4BH,EAAE,CAACG,OAAD,CAAF,CAAYD,CAAZ,CAAnC;AACD","names":["to","complete","e","promise"],"sourceRoot":"","sources":["../../_src/Promise/complete.ts"],"sourcesContent":[null]}

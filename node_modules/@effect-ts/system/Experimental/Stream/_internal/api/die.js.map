@@ -1,0 +1,1 @@
+{"version":3,"file":"die.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,GAAV,CAAcC,CAAd,EAAwB;AAC5B,SAAO,IAAIC,CAAC,CAACC,MAAN,CAAaC,EAAE,CAACJ,GAAH,CAAOC,CAAP,CAAb,CAAP;AACD","names":["die","u","C","Stream","CH"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/die.ts"],"sourcesContent":[null]}

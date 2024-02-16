@@ -1,0 +1,1 @@
+{"version":3,"file":"index.mjs","mappings":"AAAA;AAQA,OAAM,SAAUA,GAAV,CAAcC,CAAd,EAAuB;AAC3B,MAAI,CAACC,MAAM,CAACC,SAAP,CAAiBF,CAAjB,CAAL,EAA0B;AACxB,UAAM,IAAIG,KAAJ,CAAU,gBAAV,CAAN;AACD;;AACD,SAAOH,CAAP;AACD","names":["Int","n","Number","isInteger","Error"],"sourceRoot":"","sources":["../../../_src/Testing/Int/index.ts"],"sourcesContent":[null]}

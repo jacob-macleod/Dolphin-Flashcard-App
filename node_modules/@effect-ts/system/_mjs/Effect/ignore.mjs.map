@@ -1,0 +1,1 @@
+{"version":3,"file":"ignore.mjs","mappings":"AAAA;AAEA,SAASA,SAAT,QAA0B,uBAA1B;AAEA,SAASC,KAAT,QAAsB,YAAtB;AAEA;;;;AAGA,OAAM,SAAUC,MAAV,CAA0BC,IAA1B,EAAiDC,OAAjD,EAAiE;AACrE,SAAOH,KAAK,CAACE,IAAD,EAAOH,SAAP,EAAkBA,SAAlB,EAA6BI,OAA7B,CAAZ;AACD","names":["constVoid","fold_","ignore","self","__trace"],"sourceRoot":"","sources":["../../_src/Effect/ignore.ts"],"sourcesContent":[null]}

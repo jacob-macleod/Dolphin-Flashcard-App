@@ -1,0 +1,1 @@
+{"version":3,"file":"isSuccess.mjs","mappings":"AAGA,SAASA,KAAT,QAAsB,YAAtB;AAEA;;;;AAGA,OAAM,SAAUC,SAAV,CAA6BC,IAA7B,EAAgD;AACpD,SAAOF,KAAK,CACVE,IADU,EAEV,MAAM,KAFI,EAGV,MAAM,IAHI,CAAZ;AAKD","names":["fold_","isSuccess","self"],"sourceRoot":"","sources":["../../_src/Sync/isSuccess.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","mappings":";;;;;;;AAEA;;;;;;AAFA;AAwDM,SAAUA,uBAAV,CACJC,CADI,EAEJC,CAFI,EAEqB;AAEzB,SAAoE;AAClEC,OAAG,EAAGC,CAAD,IAAOH,CAAC,CAACE,GAAF,CAAMD,CAAC,CAACC,GAAF,CAAMC,CAAN,CAAN;AADsD,GAApE;AAGD","names":["getCovariantComposition","F","G","map","f"],"sourceRoot":"","sources":["../../_src/Prelude/Covariant/index.ts"],"sourcesContent":[null]}

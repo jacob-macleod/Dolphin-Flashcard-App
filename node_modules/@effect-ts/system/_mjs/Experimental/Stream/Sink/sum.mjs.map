@@ -1,0 +1,1 @@
+{"version":3,"file":"sum.mjs","mappings":"AAGA,OAAO,KAAKA,QAAZ,MAA0B,gBAA1B;AAEA;;;;AAGA,OAAM,SAAUC,GAAV,GAAa;AACjB,SAAOD,QAAQ,CAACE,QAAT,CAAuC,CAAvC,EAA0C,CAACC,CAAD,EAAIC,CAAJ,KAAUD,CAAC,GAAGC,CAAxD,CAAP;AACD","names":["FoldLeft","sum","foldLeft","a","b"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Sink/sum.ts"],"sourcesContent":[null]}

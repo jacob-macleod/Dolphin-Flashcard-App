@@ -1,0 +1,1 @@
+{"version":3,"file":"runLast.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,EAAZ,MAAoB,mBAApB;AAEA,SAASC,IAAT,QAAqB,WAArB;AAEA;;;;;AAIA,OAAM,SAAUC,OAAV,CAA2BC,IAA3B,EAAgD;AACpD,SAAOF,IAAI,CAACE,IAAD,EAAOH,EAAE,CAACI,IAAH,EAAP,CAAX;AACD","names":["SK","run_","runLast","self","last"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/runLast.ts"],"sourcesContent":[null]}

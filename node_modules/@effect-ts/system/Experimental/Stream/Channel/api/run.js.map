@@ -1,0 +1,1 @@
+{"version":3,"file":"run.js","mappings":";;;;;;;AAGA;;AAEA;;;;;;AACA;;;AAGM,SAAUA,GAAV,CACJC,IADI,EACgE;AAEpE,SAAOC,CAAC,CAACC,MAAF,CAASC,UAAU,CAACC,UAAX,CAAsBJ,IAAtB,CAAT,CAAP;AACD","names":["run","self","M","useNow","RunManaged","runManaged"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Channel/api/run.ts"],"sourcesContent":[null]}

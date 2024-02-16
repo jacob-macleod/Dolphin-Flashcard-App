@@ -1,0 +1,1 @@
+{"version":3,"file":"IdentityFlatten.mjs","mappings":"AAGA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,GAAT,QAAoB,WAApB;AACA,SAASC,kBAAT,QAAmC,0BAAnC;AAEA,OAAO,MAAMC,eAAe,GAAqD,EAC/E,GAAGF,GAD4E;AAE/E,KAAGC;AAF4E,CAA1E","names":["P","Any","AssociativeFlatten","IdentityFlatten"],"sourceRoot":"","sources":["../../../_src/Option/instances/IdentityFlatten.ts"],"sourcesContent":[null]}

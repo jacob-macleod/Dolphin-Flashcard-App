@@ -1,0 +1,1 @@
+{"version":3,"file":"suspend.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,OAAV,CACJC,CADI,EACuC;AAE3C,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACJ,OAAH,CAAW,MAAMC,CAAC,GAAGI,OAArB,CAAX,CAAP;AACD","names":["suspend","f","C","Sink","CH","channel"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/suspend.ts"],"sourcesContent":[null]}

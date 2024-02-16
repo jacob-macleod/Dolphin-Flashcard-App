@@ -1,0 +1,1 @@
+{"version":3,"file":"index.mjs","mappings":"AAAA;AAEA,OAAO,uBAAP;AAGA,OAAO,KAAKA,CAAZ,MAAmB,sBAAnB;AAOA,OAAM,SAAUC,KAAV,CAAqCC,CAArC,EAAyC;AAC7C,SACEC,CADK,IAEqEA,CAF5E;AAGD;AAOD,OAAM,SAAUC,WAAV,CAA2CF,CAA3C,EAA+C;AACnD,SACEC,CADK,IAEyEA,CAFhF;AAGD","names":["P","monad","_","M","applicative"],"sourceRoot":"","sources":["../../_src/InvariantT/index.ts"],"sourcesContent":[null]}

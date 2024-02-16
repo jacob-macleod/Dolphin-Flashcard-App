@@ -1,0 +1,1 @@
+{"version":3,"file":"empty.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,EAAZ,MAAoB,mDAApB;AACA,OAAO,KAAKC,SAAZ,MAA2B,iBAA3B;AAEA;;;;AAGA,OAAO,MAAMC,KAAK,gBAAGD,SAAS,CAACE,SAAV,eAAoBH,EAAE,CAACE,KAAH,EAApB,CAAd","names":["CK","FromChunk","empty","fromChunk"],"sourceRoot":"","sources":["../../../../../_src/Experimental/Stream/_internal/api/empty.ts"],"sourcesContent":[null]}

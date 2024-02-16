@@ -1,0 +1,1 @@
+{"version":3,"file":"IdentityFlatten.js","mappings":";;;;;;;AAGA;;AACA;;AACA;;;;;;AAEO,MAAMA,eAAe,GAAqD,EAC/E,GAAGC,QAD4E;AAE/E,KAAGC;AAF4E,CAA1E","names":["IdentityFlatten","Any","AssociativeFlatten"],"sourceRoot":"","sources":["../../_src/Option/instances/IdentityFlatten.ts"],"sourcesContent":[null]}

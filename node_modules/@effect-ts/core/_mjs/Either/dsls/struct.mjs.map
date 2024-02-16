@@ -1,0 +1,1 @@
+{"version":3,"file":"struct.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,GAAZ,MAAqB,6BAArB;AACA,SAASC,WAAT,QAA4B,kBAA5B;AAEA,OAAO,MAAMC,MAAM,gBAAGF,GAAG,CAACG,OAAJ,CAAYF,WAAZ,CAAf","names":["DSL","Applicative","struct","structF"],"sourceRoot":"","sources":["../../../_src/Either/dsls/struct.ts"],"sourcesContent":[null]}

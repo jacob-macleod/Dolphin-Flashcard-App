@@ -1,0 +1,1 @@
+{"version":3,"file":"getAndSet.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,EAAZ,MAAoB,0CAApB;AACA,SAASC,MAAT,QAAuB,cAAvB;AAEA;;;;;AAIA,OAAO,MAAMC,SAAS,GAAOC,CAAJ,IAAaF,MAAM,CAAQG,CAAD,IAAOJ,EAAE,CAACK,KAAH,CAASD,CAAT,EAAYD,CAAZ,CAAd,CAArC","names":["Tp","modify","getAndSet","a","v","tuple"],"sourceRoot":"","sources":["../../_src/FiberRef/getAndSet.ts"],"sourcesContent":[null]}

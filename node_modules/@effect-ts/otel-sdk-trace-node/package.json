@@ -1,0 +1,31 @@
+{
+  "name": "@effect-ts/otel-sdk-trace-node",
+  "version": "0.15.1",
+  "license": "MIT",
+  "repository": "https://github.com/Effect-TS/otel.git",
+  "dependencies": {
+    "@effect-ts/otel": "^0.15.1"
+  },
+  "peerDependencies": {
+    "@effect-ts/core": "^0.60.2",
+    "@opentelemetry/api": "^1.4.0",
+    "@opentelemetry/core": "^1.13.0",
+    "@opentelemetry/sdk-trace-base": "^1.13.0",
+    "@opentelemetry/sdk-trace-node": "^1.13.0"
+  },
+  "main": "./index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [],
+  "exports": {
+    ".": {
+      "import": "./_mjs/index.mjs",
+      "require": "./index.js"
+    },
+    "./*": {
+      "import": "./_mjs/*.mjs",
+      "require": "./*.js"
+    }
+  }
+}

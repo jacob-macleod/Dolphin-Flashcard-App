@@ -1,0 +1,1 @@
+{"version":3,"file":"union.mjs","mappings":"AAKA;;;;;AAKA,OAAM,SAAUA,OAAV,CACJC,CADI,EACqB;AAEzB,SAAOA,CAAP;AACD;AAED;;;;;;AAKA,OAAM,SAAUC,KAAV,CACJD,CADI,EACE;AAEN,SAAOA,CAAP;AACD","names":["unionFn","_","union"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/union.ts"],"sourcesContent":[null]}

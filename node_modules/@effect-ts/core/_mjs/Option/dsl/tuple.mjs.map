@@ -1,0 +1,1 @@
+{"version":3,"file":"tuple.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,WAAT,QAA4B,8BAA5B;AACA,SAASC,KAAT,QAAsB,wBAAtB;AAEA,OAAO,MAAMC,KAAK,gBAAGH,CAAC,CAACI,MAAF,CAAS,EAAE,GAAGF,KAAL;AAAY,KAAGD;AAAf,CAAT,CAAd","names":["P","Applicative","Monad","tuple","tupleF"],"sourceRoot":"","sources":["../../../_src/Option/dsl/tuple.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"uncause.js","mappings":";;;;;;;AAGA;;AACA;;AAGA;;;;;;;AAOM,SAAUA,OAAV,CACJC,MADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,kBAAOD,MAAP,EAAgBE,CAAD,IAAQ,oBAAQA,CAAR,IAAaC,UAAb,GAAoB,gBAAKD,CAAL,CAA3C,EAAqDD,OAArD,CAAP;AACD","names":["uncause","effect","__trace","a","unit"],"sourceRoot":"","sources":["../_src/Effect/uncause.ts"],"sourcesContent":[null]}

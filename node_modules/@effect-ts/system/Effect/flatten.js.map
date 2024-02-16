@@ -1,0 +1,1 @@
+{"version":3,"file":"flatten.js","mappings":";;;;;;;AAEA;;AACA;;AAHA;;AAMA;;;;;AAKM,SAAUA,OAAV,CACJC,MADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,kBAAOD,MAAP,EAAeE,eAAf,EAAyBD,OAAzB,CAAP;AACD","names":["flatten","effect","__trace","identity"],"sourceRoot":"","sources":["../_src/Effect/flatten.ts"],"sourcesContent":[null]}

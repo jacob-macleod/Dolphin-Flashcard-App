@@ -1,0 +1,1 @@
+{"version":3,"file":"read.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,8BAAnB;AACA,OAAO,KAAKC,CAAZ,MAAmB,aAAnB;AAEA,OAAM,SAAUC,IAAV,GAAc;AASlB,SAAOD,CAAC,CAACE,UAAF,CAAaH,CAAC,CAACI,IAAf,CAAP;AACD","names":["O","C","read","readOrFail","none"],"sourceRoot":"","sources":["../../../../../_src/Experimental/Stream/Channel/api/read.ts"],"sourcesContent":[null]}

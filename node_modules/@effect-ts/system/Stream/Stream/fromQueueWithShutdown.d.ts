@@ -1,0 +1,7 @@
+import * as Q from "../../Queue/index.js";
+import type { Stream } from "./definitions.js";
+/**
+ * Creates a stream from a {@link XQueue} of values. The queue will be shutdown once the stream is closed.
+ */
+export declare function fromQueueWithShutdown<R, E, O>(queue: Q.XQueue<never, R, unknown, E, never, O>): Stream<R, E, O>;
+//# sourceMappingURL=fromQueueWithShutdown.d.ts.map

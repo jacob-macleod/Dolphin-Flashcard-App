@@ -1,0 +1,1 @@
+{"version":3,"file":"Compactable.js","mappings":";;;;;;;AAEA;;AAGA;;AACA;;;;;;AANA;AAQO,MAAMA,WAAW,GAAiD;AACvEC,SAAO,EAAEC,CAAC,CAACC,OAD4D;AAEvEC,UAAQ,EAARA;AAFuE,CAAlE","names":["Compactable","compact","O","flatten","separate"],"sourceRoot":"","sources":["../../_src/Option/instances/Compactable.ts"],"sourcesContent":[null]}

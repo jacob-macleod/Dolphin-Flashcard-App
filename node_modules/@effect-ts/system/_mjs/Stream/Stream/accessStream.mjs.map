@@ -1,0 +1,1 @@
+{"version":3,"file":"accessStream.mjs","mappings":"AAAA;AAEA,SAASA,MAAT,QAAuB,aAAvB;AAEA,SAASC,WAAT,QAA4B,mBAA5B;AAEA;;;;AAGA,OAAM,SAAUC,YAAV,CACJC,CADI,EACyB;AAE7B,SAAOH,MAAM,CAACC,WAAW,EAAZ,EAAmBE,CAAnB,CAAb;AACD","names":["chain_","environment","accessStream","f"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/accessStream.ts"],"sourcesContent":[null]}

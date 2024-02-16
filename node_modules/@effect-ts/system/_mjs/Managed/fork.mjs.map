@@ -1,0 +1,1 @@
+{"version":3,"file":"fork.mjs","mappings":"AAAA;AAEA,SAASA,WAAW,IAAIC,IAAxB,QAAoC,4BAApC","names":["managedFork","fork"],"sourceRoot":"","sources":["../../_src/Managed/fork.ts"],"sourcesContent":[null]}

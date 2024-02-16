@@ -1,0 +1,1 @@
+{"version":3,"file":"operations.js","mappings":";;;;;;;AAEA;;AAFA;AAKM,SAAUA,eAAV,CAA6BC,CAA7B,EAAiD;AACrD,SAAgC;AAC9BC,WAAO,EAAED,CADqB;AAE9BE,WAAO,EAAE,CAACC,CAAD,EAAIC,CAAJ,KAAUJ,CAAC,CAACI,CAAD,EAAID,CAAJ;AAFU,GAAhC;AAID","names":["makeCommutative","f","combine","commute","x","y"],"sourceRoot":"","sources":["../_src/Commutative/operations.ts"],"sourcesContent":[null]}

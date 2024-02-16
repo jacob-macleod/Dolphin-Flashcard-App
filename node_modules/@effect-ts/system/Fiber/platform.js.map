@@ -1,0 +1,1 @@
+{"version":3,"file":"platform.js","mappings":";;;;;;;AAMM,MAAOA,QAAP,CAAe;AACnBC,cACSC,KADT,EAeG;AAdM;AAeL;;AAjBe","names":["Platform","constructor","value"],"sourceRoot":"","sources":["../_src/Fiber/platform.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"tuple.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;;;;;AAJA;AAMO,MAAMA,KAAK,gBAAGC,CAAC,CAACC,MAAF,CAAS,EAAE,GAAGC,YAAL;AAAY,KAAGC;AAAf,CAAT,CAAd","names":["tuple","P","tupleF","Monad","Applicative"],"sourceRoot":"","sources":["../../_src/Option/dsl/tuple.ts"],"sourcesContent":[null]}

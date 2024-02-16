@@ -1,0 +1,1 @@
+{"version":3,"file":"onLeft.mjs","mappings":"AAGA,SAASA,WAAT,QAA4B,mBAA5B;AACA,SAASC,WAAT,QAA4B,YAA5B;AAEA;;;;;;AAKA,OAAM,SAAUC,MAAV,CAAoBC,OAApB,EAAoC;AACxC,SAAiBC,IAAV,IACLH,WAAW,CAACG,IAAD,EAAOJ,WAAW,EAAlB,EAAyBG,OAAzB,CADb;AAED","names":["environment","joinEither_","onLeft","__trace","self"],"sourceRoot":"","sources":["../../_src/Effect/onLeft.ts"],"sourcesContent":[null]}

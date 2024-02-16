@@ -1,0 +1,1 @@
+{"version":3,"file":"getAndUpdate.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAIA;;;;AAIO,MAAMA,YAAY,GAAOC,CAAJ,IAC1B,oBAAcC,CAAD,IAAOC,EAAE,CAACC,KAAH,CAASF,CAAT,EAAYD,CAAC,CAACC,CAAD,CAAb,CAApB,CADK","names":["getAndUpdate","f","v","Tp","tuple"],"sourceRoot":"","sources":["../_src/FiberRef/getAndUpdate.ts"],"sourcesContent":[null]}

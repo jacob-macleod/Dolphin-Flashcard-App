@@ -1,0 +1,1 @@
+{"version":3,"file":"unsandbox.mjs","mappings":"AAGA,SAASA,OAAT,QAAwB,oBAAxB;AAEA,SAASC,cAAT,QAA+B,qBAA/B;AAEA;;;;;;;AAMA,OAAM,SAAUC,SAAV,CAA6BC,EAA7B,EAAyDC,OAAzD,EAAyE;AAC7E,SAAOH,cAAc,CAACE,EAAD,EAAKH,OAAL,EAAcI,OAAd,CAArB;AACD","names":["flatten","mapErrorCause_","unsandbox","fa","__trace"],"sourceRoot":"","sources":["../../_src/Effect/unsandbox.ts"],"sourcesContent":[null]}

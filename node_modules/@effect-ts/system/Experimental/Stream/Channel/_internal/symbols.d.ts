@@ -1,0 +1,22 @@
+import "../../../../Operator/index.js";
+export declare const _ChannelTypeId: unique symbol;
+export declare type _ChannelTypeId = typeof _ChannelTypeId;
+export declare const _Env: unique symbol;
+export declare type _Env = typeof _Env;
+export declare const _InErr: unique symbol;
+export declare type _InErr = typeof _InErr;
+export declare const _InElem: unique symbol;
+export declare type _InElem = typeof _InElem;
+export declare const _InDone: unique symbol;
+export declare type _InDone = typeof _InDone;
+export declare const _OutErr: unique symbol;
+export declare type _OutErr = typeof _OutErr;
+export declare const _OutErr2: unique symbol;
+export declare type _OutErr2 = typeof _OutErr2;
+export declare const _OutElem: unique symbol;
+export declare type _OutElem = typeof _OutElem;
+export declare const _OutDone: unique symbol;
+export declare type _OutDone = typeof _OutDone;
+export declare const _OutDone2: unique symbol;
+export declare type _OutDone2 = typeof _OutDone2;
+//# sourceMappingURL=symbols.d.ts.map

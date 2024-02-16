@@ -1,4 +1,4 @@
-import {React} from 'react';
+import {React, useState} from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -6,6 +6,7 @@ import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import Header from '../componments/Header';
 import SidePanel from '../containers/SidePanel';
+import NewGoalPopup from '../containers/NewGoalPopup';
 import Heading4 from '../componments/Heading4';
 import StreakWidget from '../containers/StreakWidget';
 import GoalsWidget from '../containers/GoalsWidget';
@@ -17,6 +18,7 @@ import '../componments/Bold.css';
 function Dashboard() {
   const title = "Dashboard";
   const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
+  const [newGoalPopupVisible, setNewGoalPopupVisible] = useState(false);
 
   return (
     <div style={{top: "0px;"}}>
@@ -27,13 +29,14 @@ function Dashboard() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
+      <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} />
 
       <GridContainer layout={"240px 400px auto"}>
         <SidePanel />
         <GridItem style={{padding: "0px"}}>
           <Heading4 text={userWelcomeText} />
           <StreakWidget />
-          <GoalsWidget />
+          <GoalsWidget setNewGoalPopupVisible={setNewGoalPopupVisible} newGoalPopupVisible={newGoalPopupVisible}/>
         </GridItem>
 
         <GridItem style={{padding: "0px"}}>

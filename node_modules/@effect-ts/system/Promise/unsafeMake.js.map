@@ -1,0 +1,1 @@
+{"version":3,"file":"unsafeMake.js","mappings":";;;;;;;AAGA;;AACA;;AACA;;AAEM,SAAUA,UAAV,CAA2BC,OAA3B,EAA2C;AAC/C,SAAO,IAAIC,gBAAJ,CAAkB,IAAIC,sBAAJ,CAAoB,IAAIC,cAAJ,CAAY,EAAZ,CAApB,CAAlB,EAAwD,CAACH,OAAD,CAAxD,CAAP;AACD","names":["unsafeMake","fiberId","Promise","AtomicReference","Pending"],"sourceRoot":"","sources":["../_src/Promise/unsafeMake.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"succeedWith.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,WAAV,CACJC,MADI,EACW;AAEf,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACJ,WAAH,CAAeC,MAAf,CAAX,CAAP;AACD","names":["succeedWith","effect","C","Sink","CH"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/succeedWith.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"getFirst.mjs","mappings":"AAIA,SAASA,IAAT,QAAqB,0BAArB;AAEA,SAASC,gBAAT,QAAiC,wBAAjC;AAEA,OAAM,SAAUC,QAAV,CACJ,GAAGC,KADC,EACQ;AAEZ,SAAOH,IAAI,CAACC,gBAAgB,EAAjB,CAAJ,CAAyCE,KAAzC,CAAP;AACD","names":["fold","getFirstIdentity","getFirst","items"],"sourceRoot":"","sources":["../../../_src/Option/operations/getFirst.ts"],"sourcesContent":[null]}

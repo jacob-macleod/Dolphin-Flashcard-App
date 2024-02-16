@@ -1,0 +1,1 @@
+{"version":3,"file":"interruptAs.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAOA;;;;AAIM,SAAUA,WAAV,CAAsBC,EAAtB,EAAiC;AACrC,SAAcC,OAAP,IACL,gCAAmB,+BAAkBD,EAAlB,CAAnB,EAA0CC,OAA1C,CADF;AAED","names":["interruptAs","id","promise"],"sourceRoot":"","sources":["../_src/Promise/interruptAs.ts"],"sourcesContent":[null]}

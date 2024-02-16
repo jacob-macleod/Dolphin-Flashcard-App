@@ -1,0 +1,1 @@
+{"version":3,"file":"definitions.mjs","mappings":"AAAA;AAEA,SAASA,OAAT,QAAwB,sBAAxB;AAUA;;;;AAGA,OAAM,SAAUC,QAAV,CAAsBC,IAAtB,EAA4C;AAChD,SAAO;AACLA;AADK,GAAP;AAGD","names":["ShowURI","makeShow","show"],"sourceRoot":"","sources":["../../_src/Show/definitions.ts"],"sourcesContent":[null]}

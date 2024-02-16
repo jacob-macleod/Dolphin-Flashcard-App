@@ -1,0 +1,1 @@
+{"version":3,"file":"runCollect.js","mappings":";;;;;;;AAMA;;AACA;;;;;;AAEM,SAAUA,UAAV,CACJC,IADI,EACkE;AAEtE,SAAOC,GAAG,CAACC,GAAJ,CAAQC,WAAW,CAACC,WAAZ,CAAwBJ,IAAxB,CAAR,CAAP;AACD","names":["runCollect","self","Run","run","DoneCollect","doneCollect"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Channel/api/runCollect.ts"],"sourcesContent":[null]}

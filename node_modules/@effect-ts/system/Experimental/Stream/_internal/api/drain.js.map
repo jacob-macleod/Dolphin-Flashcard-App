@@ -1,0 +1,1 @@
+{"version":3,"file":"drain.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;;AAIM,SAAUA,KAAV,CAAyBC,IAAzB,EAAgD;AACpD,SAAO,IAAIC,CAAC,CAACC,MAAN,CAAaC,EAAE,CAACJ,KAAH,CAASC,IAAI,CAACI,OAAd,CAAb,CAAP;AACD","names":["drain","self","C","Stream","CH","channel"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/drain.ts"],"sourcesContent":[null]}

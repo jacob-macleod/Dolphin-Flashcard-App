@@ -1,0 +1,1 @@
+{"version":3,"file":"interrupt.d.ts","sourceRoot":"","sources":["../_src/Fiber/interrupt.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,CAAC,MAAM,uBAAuB,CAAA;AAC1C,OAAO,KAAK,KAAK,KAAK,MAAM,WAAW,CAAA;AAEvC;;;;GAIG;AACH,wBAAgB,SAAS,CAAC,CAAC,EAAE,CAAC,EAAE,KAAK,EAAE,KAAK,CAAC,KAAK,CAAC,CAAC,EAAE,CAAC,CAAC,kEAEvD"}

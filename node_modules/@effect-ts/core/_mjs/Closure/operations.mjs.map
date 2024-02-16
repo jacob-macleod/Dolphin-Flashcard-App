@@ -1,0 +1,1 @@
+{"version":3,"file":"operations.mjs","mappings":"AAAA;AAEA,SAASA,QAAT,QAAyB,sBAAzB;AAGA,OAAM,SAAUC,WAAV,CAAyBC,CAAzB,EAA6C;AACjD,SAAgB;AACdC,WAAO,EAAED;AADK,GAAhB;AAGD","names":["instance","makeClosure","f","combine"],"sourceRoot":"","sources":["../../_src/Closure/operations.ts"],"sourcesContent":[null]}

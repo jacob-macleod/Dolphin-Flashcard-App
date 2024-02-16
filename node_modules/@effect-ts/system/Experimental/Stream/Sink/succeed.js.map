@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,OAAV,CAAqBC,CAArB,EAAyB;AAC7B,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACJ,OAAH,CAAWC,CAAX,CAAX,CAAP;AACD","names":["succeed","z","C","Sink","CH"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/succeed.ts"],"sourcesContent":[null]}

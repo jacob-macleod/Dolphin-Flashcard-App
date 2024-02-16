@@ -1,0 +1,1 @@
+{"version":3,"file":"finalizer.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,kBAAnB;AAIA,OAAO,MAAMC,aAAa,GAAc,MAAMD,CAAC,CAACE,IAAzC","names":["T","noopFinalizer","unit"],"sourceRoot":"","sources":["../../../_src/Managed/ReleaseMap/finalizer.ts"],"sourcesContent":[null]}

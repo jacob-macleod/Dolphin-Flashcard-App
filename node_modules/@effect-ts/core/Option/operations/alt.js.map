@@ -1,0 +1,1 @@
+{"version":3,"file":"alt.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;;;;;AAJA;AAMO,MAAMA,GAAG,gBAAGC,CAAC,CAACC,OAAF,CAAU,EAAE,GAAGC,oBAAL;AAAgB,KAAGC;AAAnB,CAAV,CAAZ","names":["alt","P","orElseF","Covariant","AssociativeEither"],"sourceRoot":"","sources":["../../_src/Option/operations/alt.ts"],"sourcesContent":[null]}

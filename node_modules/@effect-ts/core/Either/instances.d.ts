@@ -1,0 +1,21 @@
+import type { URI } from "../Prelude/index.js";
+import * as P from "../Prelude/index.js";
+import type { V } from "./definition.js";
+import * as E from "./operations/index.js";
+export declare const Any: P.Any<[URI<"Either", {}>], V>;
+export declare const AssociativeBoth: P.AssociativeBoth<[URI<"Either", {}>], V>;
+export declare const AssociativeEither: P.AssociativeEither<[URI<"Either", {}>], V>;
+export declare const AssociativeFlatten: P.AssociativeFlatten<[URI<"Either", {}>], V>;
+export declare const Covariant: P.Covariant<[URI<"Either", {}>], V>;
+export declare const Applicative: P.Applicative<[URI<"Either", {}>], V>;
+export declare const Monad: P.Monad<[URI<"Either", {}>], V>;
+export declare const Fail: P.FX.Fail<[URI<"Either", {}>], V>;
+export declare const Run: P.FX.Run<[URI<"Either", {}>], V>;
+export declare const ForEach: P.ForEach<[URI<"Either", {}>], V>;
+export declare const FoldMap: P.FoldMap<[URI<"Either", {}>], V>;
+export declare const Reduce: P.Reduce<[URI<"Either", {}>], V>;
+export declare const ReduceRight: P.ReduceRight<[URI<"Either", {}>], V>;
+export declare const Foldable: P.Foldable<[URI<"Either", {}>], V>;
+export declare const ChainRec: P.ChainRec<[URI<"Either", {}>], P.Auto>;
+export declare const chainRec: <A, B, K, Q, W, X, I, S, R, E>(f: (a: A) => E.Either<E, E.Either<A, B>>) => (a: A) => E.Either<E, B>;
+//# sourceMappingURL=instances.d.ts.map

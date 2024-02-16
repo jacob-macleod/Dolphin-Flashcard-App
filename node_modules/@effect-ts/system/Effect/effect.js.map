@@ -1,0 +1,1 @@
+{"version":3,"file":"effect.js","mappings":";;;;;;;;AAGA;;AAGO,MAAMA,SAAS,GAAG,QAAlB;;;AAkBD,MAAgBC,IAAhB,CAAoB;AAW1B;;;;;;;AAGM,SAAUC,WAAV,CAA+BC,IAA/B,EAAoD;AACxD;AACA,SAAOA,IAAP;AACD","names":["EffectURI","Base","instruction","self"],"sourceRoot":"","sources":["../_src/Effect/effect.ts"],"sourcesContent":[null]}

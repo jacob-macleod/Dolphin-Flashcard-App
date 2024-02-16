@@ -1,0 +1,1 @@
+{"version":3,"file":"collectWhileSome.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAOA;;;AAGM,SAAUA,gBAAV,CACJC,IADI,EAC4B;AAEhC,SAAO,uCAAiBA,IAAjB,EAAuBC,eAAvB,CAAP;AACD","names":["collectWhileSome","self","identity"],"sourceRoot":"","sources":["../../_src/Stream/Stream/collectWhileSome.ts"],"sourcesContent":[null]}

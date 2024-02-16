@@ -1,0 +1,1 @@
+{"version":3,"file":"fail.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,IAAV,CAAkBC,KAAlB,EAA0B;AAC9B,SAAO,IAAIC,CAAC,CAACC,MAAN,CAAaC,EAAE,CAACJ,IAAH,CAAQC,KAAR,CAAb,CAAP;AACD","names":["fail","error","C","Stream","CH"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/fail.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"isFailure.mjs","mappings":"AAGA,SAASA,KAAT,QAAsB,YAAtB;AAEA;;;;AAGA,OAAM,SAAUC,SAAV,CAA6BC,IAA7B,EAAgD;AACpD,SAAOF,KAAK,CACVE,IADU,EAEV,MAAM,IAFI,EAGV,MAAM,KAHI,CAAZ;AAKD","names":["fold_","isFailure","self"],"sourceRoot":"","sources":["../../_src/Sync/isFailure.ts"],"sourcesContent":[null]}

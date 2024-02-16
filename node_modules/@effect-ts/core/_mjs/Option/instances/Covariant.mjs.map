@@ -1,0 +1,1 @@
+{"version":3,"file":"Covariant.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,0BAAnB;AAGA,OAAO,KAAKC,CAAZ,MAAmB,yBAAnB;AAEA,OAAO,MAAMC,SAAS,GAA+C;AACnEC,KAAG,EAAEH,CAAC,CAACG;AAD4D,CAA9D","names":["O","P","Covariant","map"],"sourceRoot":"","sources":["../../../_src/Option/instances/Covariant.ts"],"sourcesContent":[null]}

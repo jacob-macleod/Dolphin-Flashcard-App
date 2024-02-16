@@ -1,0 +1,1 @@
+{"version":3,"file":"index.mjs","mappings":"AAAA;AAEA,OAAO,uBAAP;AAEA,OAAO,MAAMA,MAAM,gBAAkBC,MAAM,EAApC;AAQP;;;;AAGA,OAAM,SAAUC,WAAV,CACJC,IADI,EACwB;AAE5B;AACA,SAAOA,IAAP;AACD","names":["_brand","Symbol","makeBranded","self"],"sourceRoot":"","sources":["../../_src/Branded/index.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"ReleaseMap.d.ts","sourceRoot":"","sources":["../../_src/Managed/ReleaseMap/ReleaseMap.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,KAAK,CAAC,MAAM,eAAe,CAAA;AACvC,OAAO,KAAK,EAAE,KAAK,EAAE,MAAM,YAAY,CAAA;AAEvC,qBAAa,UAAU;IACT,QAAQ,CAAC,GAAG,EAAE,CAAC,CAAC,GAAG,CAAC,KAAK,CAAC;gBAAjB,GAAG,EAAE,CAAC,CAAC,GAAG,CAAC,KAAK,CAAC;CACvC"}

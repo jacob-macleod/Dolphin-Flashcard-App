@@ -1,0 +1,1 @@
+{"version":3,"file":"AssociativeBoth.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,0BAAnB;AAGA,OAAO,KAAKC,CAAZ,MAAmB,yBAAnB;AAEA,OAAO,MAAMC,eAAe,GAAqD;AAC/EC,MAAI,EAAEH,CAAC,CAACI;AADuE,CAA1E","names":["O","P","AssociativeBoth","both","zip"],"sourceRoot":"","sources":["../../../_src/Option/instances/AssociativeBoth.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"environment.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;AAGM,SAAUA,WAAV,GAAqB;AACzB,SAAOC,UAAU,CAACC,UAAX,CAAsBC,CAAC,CAACH,WAAF,EAAtB,CAAP;AACD","names":["environment","FromEffect","fromEffect","T"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/environment.ts"],"sourcesContent":[null]}

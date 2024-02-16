@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;AAMM,MAAOA,aAAP,SAA6BC,uBAA7B,CAAqD;AACzDC,cAAYC,CAAZ,EAAsB;AACpB,UAAMA,CAAN;AACD;;AAHwD","names":["AtomicBoolean","AtomicReference","constructor","b"],"sourceRoot":"","sources":["../../_src/Support/AtomicBoolean/index.ts"],"sourcesContent":[null]}

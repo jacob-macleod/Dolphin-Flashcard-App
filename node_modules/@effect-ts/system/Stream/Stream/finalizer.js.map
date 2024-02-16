@@ -1,0 +1,1 @@
+{"version":3,"file":"finalizer.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAMA;;;AAGM,SAAUA,SAAV,CAAuBA,SAAvB,EAAmD;AACvD,SAAO,uBAASC,CAAC,CAACC,IAAX,EAAkBC,CAAD,IAAOH,SAAxB,CAAP;AACD","names":["finalizer","T","unit","_"],"sourceRoot":"","sources":["../../_src/Stream/Stream/finalizer.ts"],"sourcesContent":[null]}

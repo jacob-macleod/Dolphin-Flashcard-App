@@ -1,0 +1,1 @@
+{"version":3,"file":"runtime.d.ts","sourceRoot":"","sources":["../../_src/Managed/methods/runtime.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,CAAC,MAAM,yBAAyB,CAAA;AAE5C,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,eAAe,CAAA;AAE5C;;;;GAIG;AACH,wBAAgB,OAAO,CAAC,CAAC,EACvB,OAAO,CAAC,EAAE,MAAM,GACf,OAAO,CAAC,CAAC,EAAE,KAAK,EAAE,CAAC,CAAC,aAAa,CAAC,CAAC,EAAE,OAAO,CAAC,CAAC,CAEhD"}

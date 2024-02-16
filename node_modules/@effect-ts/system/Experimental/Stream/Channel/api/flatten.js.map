@@ -1,0 +1,1 @@
+{"version":3,"file":"flatten.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;;AAIM,SAAUA,OAAV,CAeJC,IAfI,EAuBH;AAUD,SAAOC,CAAC,CAACC,MAAF,CAASF,IAAT,EAAeG,eAAf,CAAP;AACD","names":["flatten","self","C","chain_","identity"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Channel/api/flatten.ts"],"sourcesContent":[null]}

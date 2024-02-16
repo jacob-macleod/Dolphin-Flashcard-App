@@ -1,0 +1,1 @@
+{"version":3,"file":"parallelErrors.d.ts","sourceRoot":"","sources":["../_src/Effect/parallelErrors.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,aAAa,CAAA;AAGzC;;GAEG;AACH,wBAAgB,cAAc,CAAC,CAAC,EAAE,CAAC,EAAE,CAAC,EACpC,IAAI,EAAE,MAAM,CAAC,CAAC,EAAE,CAAC,EAAE,CAAC,CAAC,EACrB,OAAO,CAAC,EAAE,MAAM,GACf,MAAM,CAAC,CAAC,EAAE,SAAS,CAAC,EAAE,EAAE,CAAC,CAAC,CAe5B"}

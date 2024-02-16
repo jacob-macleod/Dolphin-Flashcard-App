@@ -1,0 +1,1 @@
+{"version":3,"file":"fromEffect.js","mappings":";;;;;;;AAGA;;AACA;;;;;;AAEA;;;AAGM,SAAUA,UAAV,CACJC,CADI,EACgB;AAEpB,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACJ,UAAH,CAAcC,CAAd,CAAX,CAAP;AACD","names":["fromEffect","b","C","Sink","CH"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/fromEffect.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"isFailure.js","mappings":";;;;;;;AAGA;;AAEA;;;AAGM,SAAUA,SAAV,CAA6BC,IAA7B,EAAgD;AACpD,SAAO,iBACLA,IADK,EAEL,MAAM,IAFD,EAGL,MAAM,KAHD,CAAP;AAKD","names":["isFailure","self"],"sourceRoot":"","sources":["../_src/Sync/isFailure.ts"],"sourcesContent":[null]}

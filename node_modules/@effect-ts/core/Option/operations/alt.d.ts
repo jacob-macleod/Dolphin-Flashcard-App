@@ -1,0 +1,2 @@
+export declare const alt: <K2, Q2, W2, X2, I2, S2, R2, E2, B>(fb: () => import("@effect-ts/system/Option/core.js").Option<B>) => <K, Q, W, X, I, S, R, E, A>(fa: import("@effect-ts/system/Option/core.js").Option<A>) => import("@effect-ts/system/Option/core.js").Option<B | A>;
+//# sourceMappingURL=alt.d.ts.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"makeManaged.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;AACA;;AALA;;AAOA;;;AAGM,SAAUA,WAAV,GAAqB;AACzB,SAAO,sBAAU,kBAAOC,gBAAP,EAAiBC,EAAD,IAAQ,oBAAaA,EAAb,CAAxB,CAAV,CAAP;AACD","names":["makeManaged","fiberId","id"],"sourceRoot":"","sources":["../_src/Promise/makeManaged.ts"],"sourcesContent":[null]}

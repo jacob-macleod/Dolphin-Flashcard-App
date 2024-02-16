@@ -1,0 +1,1 @@
+{"version":3,"file":"ForEach.mjs","mappings":"AAGA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,QAAT,QAAyB,4BAAzB;AACA,SAASC,SAAT,QAA0B,iBAA1B;AAEA,OAAO,MAAMC,OAAO,GAA6C,EAC/D,GAAGD,SAD4D;AAE/DD;AAF+D,CAA1D","names":["P","forEachF","Covariant","ForEach"],"sourceRoot":"","sources":["../../../_src/Option/instances/ForEach.ts"],"sourcesContent":[null]}

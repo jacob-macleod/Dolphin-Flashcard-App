@@ -1,0 +1,1 @@
+{"version":3,"file":"promise.mjs","mappings":"AAMA,OAAM,MAAOA,OAAP,CAAc;AAClBC,cACWC,KADX,EAEWC,UAFX,EAEyC;AAD9B;AACA;AACP;;AAJc","names":["Promise","constructor","state","blockingOn"],"sourceRoot":"","sources":["../../_src/Promise/promise.ts"],"sourcesContent":[null]}

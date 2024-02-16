@@ -1,0 +1,1 @@
+{"version":3,"file":"operations.js","mappings":";;;;;;;AAEA;;AAFA;AAKM,SAAUA,WAAV,CACJC,QADI,EAEJC,OAFI,EAGJC,OAHI,EAGsB;AAE1B,SAAgB;AACdD,WADc;AAEdD,YAFc;AAGdE;AAHc,GAAhB;AAKD","names":["makeInverse","identity","combine","inverse"],"sourceRoot":"","sources":["../_src/Inverse/operations.ts"],"sourcesContent":[null]}

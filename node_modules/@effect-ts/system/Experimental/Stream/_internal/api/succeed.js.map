@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;AAGM,SAAUA,OAAV,CAAqBC,CAArB,EAAyB;AAC7B,SAAOC,SAAS,CAACC,SAAV,CAAoBC,EAAE,CAACC,MAAH,CAAUJ,CAAV,CAApB,CAAP;AACD","names":["succeed","o","FromChunk","fromChunk","CK","single"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/succeed.ts"],"sourcesContent":[null]}

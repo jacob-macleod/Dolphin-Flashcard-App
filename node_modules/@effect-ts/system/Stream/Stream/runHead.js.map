@@ -1,0 +1,1 @@
+{"version":3,"file":"runHead.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;;AAIM,SAAUA,OAAV,CAA2BC,IAA3B,EAAgD;AACpD,SAAO,eAAKA,IAAL,EAAWC,EAAE,CAACC,IAAH,EAAX,CAAP;AACD","names":["runHead","self","SK","head"],"sourceRoot":"","sources":["../../_src/Stream/Stream/runHead.ts"],"sourcesContent":[null]}

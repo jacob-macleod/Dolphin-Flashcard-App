@@ -1,0 +1,1 @@
+{"version":3,"file":"makeAs.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAMA;;;AAGM,SAAUA,MAAV,CAAuBC,OAAvB,EAAuC;AAC3C,SAAO,uBAAY,MAAM,4BAAiBA,OAAjB,CAAlB,CAAP;AACD","names":["makeAs","fiberId"],"sourceRoot":"","sources":["../_src/Promise/makeAs.ts"],"sourcesContent":[null]}

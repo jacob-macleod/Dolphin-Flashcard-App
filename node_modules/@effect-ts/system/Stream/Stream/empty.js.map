@@ -1,0 +1,1 @@
+{"version":3,"file":"empty.js","mappings":";;;;;;;AAEA;;AACA;;AAEA;;;;;;AALA;;AAOA;;;AAGO,MAAMA,KAAK,gBAAe,IAAIC,mBAAJ,eAAW,sBAAQC,IAAI,CAACC,GAAb,CAAX,CAA1B","names":["empty","Stream","Pull","end"],"sourceRoot":"","sources":["../../_src/Stream/Stream/empty.ts"],"sourcesContent":[null]}

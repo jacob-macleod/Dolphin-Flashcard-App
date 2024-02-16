@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,aAAnB;AAEA,OAAM,SAAUC,OAAV,CACJC,CADI,EACA;AAEJ,SAAOF,CAAC,CAACG,GAAF,CAAMD,CAAN,CAAP;AACD","names":["C","succeed","z","end"],"sourceRoot":"","sources":["../../../../../_src/Experimental/Stream/Channel/api/succeed.ts"],"sourcesContent":[null]}

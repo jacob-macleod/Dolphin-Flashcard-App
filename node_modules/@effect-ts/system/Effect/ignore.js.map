@@ -1,0 +1,1 @@
+{"version":3,"file":"ignore.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAMA;;;AAGM,SAAUA,MAAV,CAA0BC,IAA1B,EAAiDC,OAAjD,EAAiE;AACrE,SAAO,iBAAMD,IAAN,EAAYE,gBAAZ,EAAuBA,gBAAvB,EAAkCD,OAAlC,CAAP;AACD","names":["ignore","self","__trace","constVoid"],"sourceRoot":"","sources":["../_src/Effect/ignore.ts"],"sourcesContent":[null]}

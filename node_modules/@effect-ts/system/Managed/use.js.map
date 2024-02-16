@@ -1,0 +1,1 @@
+{"version":3,"file":"use.js","mappings":";;;;;;;;;;;;;AAEA;;AAFA;;AAMA;;;;;AAKM,SAAUA,GAAV,CAA4BC,CAA5B,EAA8DC,OAA9D,EAA8E;AAClF,SAAcC,IAAP,IACL,8BAAKA,IAAL,EAAWF,CAAX,EAAcC,OAAd,CADF;AAED","names":["use","f","__trace","self"],"sourceRoot":"","sources":["../_src/Managed/use.ts"],"sourcesContent":[null]}

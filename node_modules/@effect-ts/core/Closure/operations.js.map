@@ -1,0 +1,1 @@
+{"version":3,"file":"operations.js","mappings":";;;;;;;AAEA;;AAFA;AAKM,SAAUA,WAAV,CAAyBC,CAAzB,EAA6C;AACjD,SAAgB;AACdC,WAAO,EAAED;AADK,GAAhB;AAGD","names":["makeClosure","f","combine"],"sourceRoot":"","sources":["../_src/Closure/operations.ts"],"sourcesContent":[null]}

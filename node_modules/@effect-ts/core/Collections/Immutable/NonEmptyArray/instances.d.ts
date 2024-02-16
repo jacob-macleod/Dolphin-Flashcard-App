@@ -1,0 +1,20 @@
+import type { URI } from "../../../Prelude/index.js";
+import * as P from "../../../Prelude/index.js";
+export declare const Any: P.Any<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const AssociativeBoth: P.AssociativeBoth<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const AssociativeFlatten: P.AssociativeFlatten<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const Covariant: P.Covariant<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const Applicative: P.Applicative<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const Monad: P.Monad<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const ForEach: P.ForEach<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const ForEachWithIndex: P.ForEachWithIndex<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const Extend: P.Extend<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const Reduce: P.Reduce<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const ReduceWithIndex: P.ReduceWithIndex<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const ReduceRightWithIndex: P.ReduceRightWithIndex<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const ReduceRight: P.ReduceRight<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const FoldMap: P.FoldMap<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const FoldMapWithIndex: P.FoldMapWithIndex<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const Foldable: P.Foldable<[URI<"NonEmptyArray", {}>], P.Auto>;
+export declare const FoldableWithIndex: P.FoldableWithIndex<[URI<"NonEmptyArray", {}>], P.Auto>;
+//# sourceMappingURL=instances.d.ts.map

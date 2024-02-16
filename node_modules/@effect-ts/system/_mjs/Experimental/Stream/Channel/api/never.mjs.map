@@ -1,0 +1,1 @@
+{"version":3,"file":"never.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,8BAAnB;AACA,OAAO,KAAKC,CAAZ,MAAmB,aAAnB;AAEA,OAAO,MAAMC,KAAK,gBAChBD,CAAC,CAACE,UAAF,CAAaH,CAAC,CAACE,KAAf,CADK","names":["T","C","never","fromEffect"],"sourceRoot":"","sources":["../../../../../_src/Experimental/Stream/Channel/api/never.ts"],"sourcesContent":[null]}

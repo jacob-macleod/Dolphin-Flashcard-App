@@ -1,0 +1,1 @@
+{"version":3,"file":"suspend.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;AAKM,SAAUA,OAAV,CAA2BC,CAA3B,EAAmD;AACvD,SAAO,IAAIC,mBAAJ,CAAWC,CAAC,CAACH,OAAF,CAAU,MAAMC,CAAC,GAAGG,IAApB,CAAX,CAAP;AACD","names":["suspend","f","Stream","M","proc"],"sourceRoot":"","sources":["../../_src/Stream/Stream/suspend.ts"],"sourcesContent":[null]}

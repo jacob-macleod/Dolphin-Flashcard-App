@@ -1,0 +1,1 @@
+{"version":3,"file":"index.mjs","mappings":"AAAA;AAEA,OAAO,6BAAP;AAEA,OAAO,MAAMA,eAAe,gBAAGC,MAAM,EAA9B;AAGP,OAAM,MAAOC,SAAP,CAAgB;AAEpBC,cAAqBC,KAArB,EAA6B;AAAR;AADZ,mBAA2BJ,eAA3B;AACwB;;AAFb","names":["VersionedTypeId","Symbol","Versioned","constructor","value"],"sourceRoot":"","sources":["../../../../_src/Transactional/STM/Versioned/index.ts"],"sourcesContent":[null]}

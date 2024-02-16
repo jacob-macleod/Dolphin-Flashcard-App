@@ -1,0 +1,1 @@
+{"version":3,"file":"unfold.js","mappings":";;;;;;;AAIA;;AACA;;;;;;AAEA;;;AAGM,SAAUA,MAAV,CAAuBC,CAAvB,EAA6BC,CAA7B,EAAoE;AACxE,SAAO,sBAAQD,CAAR,EAAYA,CAAD,IAAOE,CAAC,CAACC,OAAF,CAAUF,CAAC,CAACD,CAAD,CAAX,CAAlB,CAAP;AACD","names":["unfold","s","f","T","succeed"],"sourceRoot":"","sources":["../../_src/Stream/Stream/unfold.ts"],"sourcesContent":[null]}

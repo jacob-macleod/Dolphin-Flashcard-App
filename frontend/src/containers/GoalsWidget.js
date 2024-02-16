@@ -8,8 +8,12 @@ import { getCookie } from '../api/Authentication';
 import '../App.css';
 import DelayedElement from '../componments/DelayedElement';
 
-function GoalsWidget () {
+function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible}) {
     const [goals, setGoals] = useState(null);
+
+    function showNewGoalPopup() {
+        setNewGoalPopupVisible(true);
+    }
 
     const panelTitleStyle = {
         padding: "8px"
@@ -22,18 +26,21 @@ function GoalsWidget () {
 
       useEffect(() => {
         updateGoals(getCookie("userID"), setGoals);
-      }, []);
+      }, [newGoalPopupVisible])
 
     return <>
     <WhiteOverlay style={overlayStyle}>
         <Heading5 text="Goals" style={panelTitleStyle} />
-        <Button text="+ New Goal" style={{}} />
+        <Button text="+ New Goal" style={{}} onClick={showNewGoalPopup} />
         {goals && Object.keys(goals).map(goalId => {
                 const goal = goals[goalId];
                 return (
                     <DelayedElement
                         key={goalId}
-                        child={<Goal start={goal.data.starting_xp} end={goal.data.goal_xp} title={goal.title} dueDate={goal.end_date}/>}
+                        child={
+                          goal.type === "XP" ? <Goal start={goal.data.starting_xp} end={goal.data.goal_xp} title={goal.title} dueDate={goal.end_date}/>
+                          : <Goal start={goal.data.cards_revised_so_far} end={goal.data.cards_to_revise} title={goal.title} dueDate={goal.end_date}/>
+                        }
                         childValue={goals}
                     />
                 );

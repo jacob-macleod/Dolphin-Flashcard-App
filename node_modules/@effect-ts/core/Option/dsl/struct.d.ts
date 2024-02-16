@@ -1,0 +1,3 @@
+import * as P from "../../Prelude/index.js";
+export declare const struct: <NER extends Record<string, import("@effect-ts/system/Option/core.js").Option<unknown>>, K = any, Q = any, W = any, X = any, I = any, S = any, R = any, E = any>(r: import("@effect-ts/system/Utils/index.js").EnforceNonEmptyRecord<NER> & Record<string, import("@effect-ts/system/Option/core.js").Option<unknown>>) => import("@effect-ts/system/Option/core.js").Option<{ [K_1 in keyof NER]: P.Infer<[P.URI<"Option", {}>], P.Auto, "A", NER[K_1]>; }>;
+//# sourceMappingURL=struct.d.ts.map

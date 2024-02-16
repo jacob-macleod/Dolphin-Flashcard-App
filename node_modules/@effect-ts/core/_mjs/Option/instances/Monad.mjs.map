@@ -1,0 +1,1 @@
+{"version":3,"file":"Monad.mjs","mappings":"AAGA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,SAAT,QAA0B,iBAA1B;AACA,SAASC,eAAT,QAAgC,uBAAhC;AAEA,OAAO,MAAMC,KAAK,GAA2C,EAC3D,GAAGF,SADwD;AAE3D,KAAGC;AAFwD,CAAtD","names":["P","Covariant","IdentityFlatten","Monad"],"sourceRoot":"","sources":["../../../_src/Option/instances/Monad.ts"],"sourcesContent":[null]}

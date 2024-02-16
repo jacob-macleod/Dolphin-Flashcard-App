@@ -1,0 +1,1 @@
+{"version":3,"file":"count.mjs","mappings":"AAGA,OAAO,KAAKA,QAAZ,MAA0B,gBAA1B;AAEA;;;;AAGA,OAAM,SAAUC,KAAV,GAAe;AACnB,SAAOD,QAAQ,CAACE,QAAT,CAAwC,CAAxC,EAA2C,CAACC,CAAD,EAAIC,CAAJ,KAAUD,CAAC,GAAG,CAAzD,CAAP;AACD","names":["FoldLeft","count","foldLeft","s","_"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Sink/count.ts"],"sourcesContent":[null]}

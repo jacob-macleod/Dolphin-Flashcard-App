@@ -1,0 +1,41 @@
+{
+  "name": "imagescript",
+  "version": "1.2.18",
+  "description": "zero-dependency javascript image manipulation",
+  "main": "ImageScript.js",
+  "types": "ImageScript.d.ts",
+  "scripts": {
+    "test": "node ./tests/run.js",
+    "coverage": "nyc --reporter=html npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matmen/ImageScript.git"
+  },
+  "keywords": [
+    "image",
+    "image processing",
+    "image manipulation",
+    "png",
+    "jpeg",
+    "jpg",
+    "scale",
+    "resize",
+    "crop",
+    "webp",
+    "svg",
+    "bitmap",
+    "gif",
+    "picture",
+    "thumbnail"
+  ],
+  "author": "Mathis Mensing <mathis@matmen.dev>",
+  "license": "(AGPL-3.0-or-later OR MIT)",
+  "bugs": {
+    "url": "https://github.com/matmen/ImageScript/issues"
+  },
+  "homepage": "https://github.com/matmen/ImageScript#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

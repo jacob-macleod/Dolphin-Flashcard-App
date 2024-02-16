@@ -1,0 +1,1 @@
+{"version":3,"file":"scopeWith.mjs","mappings":"AAIA,SAASA,cAAT,QAA+B,YAA/B;AAGA;;;;;AAIA,OAAM,SAAUC,SAAV,CACJC,CADI,EAEJC,OAFI,EAEY;AAEhB,SAAOH,cAAc,CAAEI,CAAD,IAAOF,CAAC,CAACE,CAAC,CAACC,KAAH,CAAT,EAAoBF,OAApB,CAArB;AACD","names":["descriptorWith","scopeWith","f","__trace","d","scope"],"sourceRoot":"","sources":["../../_src/Effect/scopeWith.ts"],"sourcesContent":[null]}

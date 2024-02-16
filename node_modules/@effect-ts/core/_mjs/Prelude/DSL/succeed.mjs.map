@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.mjs","mappings":"AAAA;AAEA,SAASA,QAAT,QAAyB,0BAAzB;AAoBA,OAAM,SAAUC,QAAV,CACJC,CADI,EACwC;AAE5C,SAAWC,CAAJ,IAAaD,CAAC,CAACE,GAAF,CAAMJ,QAAQ,CAACG,CAAD,CAAd,EAAmBD,CAAC,CAACG,GAAF,EAAnB,CAApB;AACD","names":["constant","succeedF","F","a","map","any"],"sourceRoot":"","sources":["../../../_src/Prelude/DSL/succeed.ts"],"sourcesContent":[null]}

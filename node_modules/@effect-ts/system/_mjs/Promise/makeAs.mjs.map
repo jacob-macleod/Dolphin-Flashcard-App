@@ -1,0 +1,1 @@
+{"version":3,"file":"makeAs.mjs","mappings":"AAAA;AAEA,SAASA,WAAT,QAA4B,oBAA5B;AAEA,SAASC,UAAT,QAA2B,kBAA3B;AAEA;;;;AAGA,OAAM,SAAUC,MAAV,CAAuBC,OAAvB,EAAuC;AAC3C,SAAOH,WAAW,CAAC,MAAMC,UAAU,CAAOE,OAAP,CAAjB,CAAlB;AACD","names":["succeedWith","unsafeMake","makeAs","fiberId"],"sourceRoot":"","sources":["../../_src/Promise/makeAs.ts"],"sourcesContent":[null]}

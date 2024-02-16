@@ -1,0 +1,1 @@
+{"version":3,"file":"apply.js","mappings":";;;;;;;AAMA;;AAEA;;;;;;;;AAQM,SAAUA,KAAV,CACJC,IADI,EAC2D;AAE/D,SAAO,IAAIC,mBAAJ,CAAoBD,IAApB,CAAP;AACD","names":["apply","proc","Stream"],"sourceRoot":"","sources":["../../_src/Stream/Stream/apply.ts"],"sourcesContent":[null]}

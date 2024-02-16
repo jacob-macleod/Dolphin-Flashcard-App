@@ -1,0 +1,1 @@
+{"version":3,"file":"none.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,qBAAnB;AACA,SAASC,OAAT,QAAwB,YAAxB;AAGA;;;;AAGA,OAAO,MAAMC,IAAI,gBAAyBD,OAAO,CAACD,CAAC,CAACE,IAAH,CAA1C","names":["O","succeed","none"],"sourceRoot":"","sources":["../../_src/Effect/none.ts"],"sourcesContent":[null]}

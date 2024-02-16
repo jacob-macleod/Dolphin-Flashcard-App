@@ -1,0 +1,1 @@
+{"version":3,"file":"getFirst.js","mappings":";;;;;;;AAIA;;AAEA;;AAEM,SAAUA,QAAV,CACJ,GAAGC,KADC,EACQ;AAEZ,SAAO,iBAAK,yCAAL,EAAyCA,KAAzC,CAAP;AACD","names":["getFirst","items"],"sourceRoot":"","sources":["../../_src/Option/operations/getFirst.ts"],"sourcesContent":[null]}

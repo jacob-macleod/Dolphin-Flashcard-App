@@ -1,0 +1,1 @@
+{"version":3,"file":"makeIdentity.mjs","mappings":"AAAA;AAEA,SAASA,QAAT,QAAyB,sBAAzB;AAGA;;;;AAGA,OAAM,SAAUC,YAAV,CAA0BC,QAA1B,EAAuCC,EAAvC,EAA4D;AAChE,SAAgB;AACdC,WAAO,EAAED,EADK;AAEdD;AAFc,GAAhB;AAID;AAED,cAAc,kBAAd","names":["instance","makeIdentity","identity","op","combine"],"sourceRoot":"","sources":["../../_src/Identity/makeIdentity.ts"],"sourcesContent":[null]}

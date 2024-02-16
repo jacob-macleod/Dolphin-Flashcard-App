@@ -1,0 +1,84 @@
+{
+  "name": "contentlayer",
+  "version": "0.3.4",
+  "bin": "./bin/cli.cjs",
+  "type": "module",
+  "engines": {
+    "node": ">=14.18"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    "./source-files": "./dist/source-files/index.js",
+    "./source-files/schema": "./dist/source-files/schema/index.js",
+    "./source-remote-files": "./dist/source-remote-files/index.js",
+    "./client": "./dist/client/index.js",
+    "./utils": "./dist/utils/index.js",
+    "./utils/node": "./dist/utils/node/index.js",
+    "./core": "./dist/core/index.js"
+  },
+  "_typesVersions": "Not needed anymore once this issue is closed https://github.com/microsoft/TypeScript/issues/33079",
+  "typesVersions": {
+    "*": {
+      "packge.json": [
+        "./package.json"
+      ],
+      "source-files": [
+        "./dist/source-files"
+      ],
+      "source-files/schema": [
+        "./dist/source-files/schema"
+      ],
+      "source-remote-files": [
+        "./dist/source-remote-files"
+      ],
+      "client": [
+        "./dist/client"
+      ],
+      "dynamic": [
+        "./dist/dynamic"
+      ],
+      "utils": [
+        "./dist/utils"
+      ],
+      "utils/node": [
+        "./dist/utils/node"
+      ],
+      "core": [
+        "./dist/core"
+      ]
+    }
+  },
+  "files": [
+    "./bin/cli.cjs",
+    "./dist/**/*.{js,ts,map}",
+    "./src",
+    "./package.json"
+  ],
+  "scripts": {
+    "#postinstall": "This is executed in packages which install `contentlayer`",
+    "postinstall": "node ./bin/cli.cjs postinstall || echo 'No Contentlayer build found.'",
+    "#_bundle-cli": "Currently unused. See https://github.com/contentlayerdev/contentlayer/issues/67",
+    "_bundle-cli": "esbuild ./dist/cli/index.js --bundle --platform=node --format=esm --external:esbuild --external:@esbuild-plugins/node-resolve --outfile=dist/cli/bundle.js --main-fields=module,main --metafile=meta.json --banner:js=\"import { createRequire as topLevelCreateRequire } from 'module'; const require = topLevelCreateRequire(import.meta.url); const __dirname = '__SET_BY_ESBUILD__';\""
+  },
+  "dependencies": {
+    "@contentlayer/cli": "0.3.4",
+    "@contentlayer/client": "0.3.4",
+    "@contentlayer/core": "0.3.4",
+    "@contentlayer/source-files": "0.3.4",
+    "@contentlayer/source-remote-files": "0.3.4",
+    "@contentlayer/utils": "0.3.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  },
+  "author": "schickling",
+  "homepage": "https://github.com/contentlayerdev/contentlayer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/contentlayerdev/contentlayer.git"
+  },
+  "bug": {
+    "url": "https://github.com/contentlayerdev/contentlayer/issues"
+  }
+}

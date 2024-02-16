@@ -1,0 +1,1 @@
+{"version":3,"file":"unsandbox.js","mappings":";;;;;;;AAGA;;AAEA;;AAEA;;;;;;AAMM,SAAUA,SAAV,CAA6BC,EAA7B,EAAyDC,OAAzD,EAAyE;AAC7E,SAAO,mCAAeD,EAAf,EAAmBE,cAAnB,EAA4BD,OAA5B,CAAP;AACD","names":["unsandbox","fa","__trace","flatten"],"sourceRoot":"","sources":["../_src/Effect/unsandbox.ts"],"sourcesContent":[null]}

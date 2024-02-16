@@ -1,0 +1,1 @@
+{"version":3,"file":"flattenIterables.d.ts","sourceRoot":"","sources":["../../_src/Stream/Stream/flattenIterables.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,kBAAkB,CAAA;AAI9C;;;GAGG;AACH,wBAAgB,gBAAgB,CAAC,CAAC,EAAE,CAAC,EAAE,EAAE,EACvC,IAAI,EAAE,MAAM,CAAC,CAAC,EAAE,CAAC,EAAE,QAAQ,CAAC,EAAE,CAAC,CAAC,GAC/B,MAAM,CAAC,CAAC,EAAE,CAAC,EAAE,EAAE,CAAC,CAElB"}

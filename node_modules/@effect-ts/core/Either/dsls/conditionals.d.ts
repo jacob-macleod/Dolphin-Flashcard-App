@@ -1,0 +1,7 @@
+/**
+ * Conditionals
+ */
+declare const branch: <X extends import("@effect-ts/system/Either/core.js").Either<any, any>, Y extends import("@effect-ts/system/Either/core.js").Either<any, any>>(onTrue: () => X, onFalse: () => Y) => (predicate: boolean) => import("@effect-ts/system/Either/core.js").Either<import("../../Prelude/index.js").Infer<[import("../../Prelude/index.js").URI<"Either", {}>], import("../definition.js").V, "E", X | Y>, import("../../Prelude/index.js").Infer<[import("../../Prelude/index.js").URI<"Either", {}>], import("../definition.js").V, "A", X | Y>>;
+declare const branch_: <X extends import("@effect-ts/system/Either/core.js").Either<any, any>, Y extends import("@effect-ts/system/Either/core.js").Either<any, any>>(predicate: boolean, onTrue: () => X, onFalse: () => Y) => import("@effect-ts/system/Either/core.js").Either<import("../../Prelude/index.js").Infer<[import("../../Prelude/index.js").URI<"Either", {}>], import("../definition.js").V, "E", X | Y>, import("../../Prelude/index.js").Infer<[import("../../Prelude/index.js").URI<"Either", {}>], import("../definition.js").V, "A", X | Y>>;
+export { branch as if, branch_ as if_ };
+//# sourceMappingURL=conditionals.d.ts.map

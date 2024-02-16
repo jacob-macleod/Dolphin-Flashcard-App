@@ -1,0 +1,1 @@
+{"version":3,"file":"never.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;AAMO,MAAMA,KAAK,gBAAiBC,UAAU,CAACC,UAAX,CAAsBC,CAAC,CAACH,KAAxB,CAA5B","names":["never","FromEffect","fromEffect","T"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/never.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"source.mjs","mappings":"AAMA,SAASA,MAAT,QAAuB,mBAAvB;AAEA,OAAM,SAAUC,MAAV,CACJC,aADI,EACoE;AAExE,SAAO,IAAIF,MAAJ,CAAWE,aAAX,CAAP;AACD","names":["Stream","source","managedSource"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/source.ts"],"sourcesContent":[null]}

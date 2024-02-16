@@ -1,0 +1,1 @@
+{"version":3,"file":"getLast.mjs","mappings":"AAIA,SAASA,IAAT,QAAqB,0BAArB;AAEA,SAASC,eAAT,QAAgC,uBAAhC;AAEA,OAAM,SAAUC,OAAV,CACJ,GAAGC,KADC,EACQ;AAEZ,SAAOH,IAAI,CAACC,eAAe,EAAhB,CAAJ,CAAwCE,KAAxC,CAAP;AACD","names":["fold","getLastIdentity","getLast","items"],"sourceRoot":"","sources":["../../../_src/Option/operations/getLast.ts"],"sourcesContent":[null]}

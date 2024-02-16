@@ -1,0 +1,1 @@
+{"version":3,"file":"suspend.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAMA;;;AAGM,SAAUA,OAAV,CAA2BC,CAA3B,EAAsDC,OAAtD,EAAsE;AAC1E,SAAO,2BAAa,mBAAc,MAAMD,CAAC,GAAGE,MAAxB,EAAgCD,OAAhC,CAAb,CAAP;AACD","names":["suspend","f","__trace","effect"],"sourceRoot":"","sources":["../../_src/Managed/methods/suspend.ts"],"sourcesContent":[null]}

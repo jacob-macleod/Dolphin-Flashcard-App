@@ -1,0 +1,1 @@
+{"version":3,"file":"IdentityBoth.js","mappings":";;;;;;;AAGA;;AACA;;AACA;;;;;;AAEO,MAAMA,YAAY,GAAkD,EACzE,GAAGC,QADsE;AAEzE,KAAGC;AAFsE,CAApE","names":["IdentityBoth","Any","AssociativeBoth"],"sourceRoot":"","sources":["../../_src/Option/instances/IdentityBoth.ts"],"sourcesContent":[null]}

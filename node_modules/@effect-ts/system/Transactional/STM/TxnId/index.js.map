@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","mappings":";;;;;;;;AAEA;;AAEA;;AAJA;AAQO,MAAMA,UAAU,gBAAG,IAAIC,oBAAJ,CAAiB,CAAjB,CAAnB;;;AAED,SAAUC,SAAV,GAAmB;AACvB,SAAOF,UAAU,CAACG,eAAX,EAAP;AACD","names":["txnCounter","AtomicNumber","makeTxnId","incrementAndGet"],"sourceRoot":"","sources":["../../../_src/Transactional/STM/TxnId/index.ts"],"sourcesContent":[null]}

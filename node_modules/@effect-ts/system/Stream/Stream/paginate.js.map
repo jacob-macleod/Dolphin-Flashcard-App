@@ -1,0 +1,1 @@
+{"version":3,"file":"paginate.js","mappings":";;;;;;;AAIA;;AAEA;;;;;;AAEA;;;;;AAKM,SAAUA,QAAV,CACJC,CADI,EAEJC,CAFI,EAEmC;AAEvC,SAAO,0BAAUD,CAAV,EAAcA,CAAD,IAAOE,CAAC,CAACC,OAAF,CAAUF,CAAC,CAACD,CAAD,CAAX,CAApB,CAAP;AACD","names":["paginate","s","f","T","succeed"],"sourceRoot":"","sources":["../../_src/Stream/Stream/paginate.ts"],"sourcesContent":[null]}

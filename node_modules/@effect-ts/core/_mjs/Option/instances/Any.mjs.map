@@ -1,0 +1,1 @@
+{"version":3,"file":"Any.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,0BAAnB;AAGA,OAAO,KAAKC,CAAZ,MAAmB,yBAAnB;AAEA,OAAO,MAAMC,GAAG,GAAyC;AACvDC,KAAG,EAAE,MAAMH,CAAC,CAACI,IAAF,CAAO,EAAP;AAD4C,CAAlD","names":["O","P","Any","any","some"],"sourceRoot":"","sources":["../../../_src/Option/instances/Any.ts"],"sourcesContent":[null]}

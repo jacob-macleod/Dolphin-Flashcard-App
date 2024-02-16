@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,6CAAnB;AAEA,SAASC,SAAT,QAA0B,iBAA1B;AAEA;;;;AAGA,OAAM,SAAUC,OAAV,CAAqBC,CAArB,EAAyB;AAC7B,SAAOF,SAAS,CAACD,CAAC,CAACI,MAAF,CAASD,CAAT,CAAD,CAAhB;AACD","names":["A","fromChunk","succeed","a","single"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/succeed.ts"],"sourcesContent":[null]}

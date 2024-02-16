@@ -1,0 +1,1 @@
+{"version":3,"file":"onFirst.mjs","mappings":"AAGA,SAASA,WAAT,QAA4B,mBAA5B;AACA,SAASC,IAAT,QAAqB,WAArB;AAEA;;;;;;AAKA,OAAM,SAAUC,OAAV,CAA2BC,IAA3B,EAAkDC,OAAlD,EAAkE;AACtE,SAAOH,IAAI,CAACE,IAAD,EAAOH,WAAW,EAAlB,EAAyBI,OAAzB,CAAX;AACD","names":["environment","zip_","onFirst","self","__trace"],"sourceRoot":"","sources":["../../_src/Effect/onFirst.ts"],"sourcesContent":[null]}

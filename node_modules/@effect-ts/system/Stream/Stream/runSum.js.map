@@ -1,0 +1,1 @@
+{"version":3,"file":"runSum.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;;AAIM,SAAUA,MAAV,CAAuBC,IAAvB,EAAiD;AACrD,SAAO,eAAKA,IAAL,EAAWC,EAAE,CAACC,GAAd,CAAP;AACD","names":["runSum","self","SK","sum"],"sourceRoot":"","sources":["../../_src/Stream/Stream/runSum.ts"],"sourcesContent":[null]}

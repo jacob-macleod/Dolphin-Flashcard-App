@@ -1,0 +1,1 @@
+{"version":3,"file":"compact.d.ts","sourceRoot":"","sources":["../../../../_src/Collections/Immutable/Chunk/api/compact.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,MAAM,EAAE,MAAM,6BAA6B,CAAA;AACzD,OAAO,KAAK,KAAK,KAAK,MAAM,YAAY,CAAA;AAGxC;;GAEG;AACH,wBAAgB,OAAO,CAAC,CAAC,EAAE,EAAE,EAAE,KAAK,CAAC,KAAK,CAAC,MAAM,CAAC,CAAC,CAAC,CAAC,GAAG,KAAK,CAAC,KAAK,CAAC,CAAC,CAAC,CAErE"}

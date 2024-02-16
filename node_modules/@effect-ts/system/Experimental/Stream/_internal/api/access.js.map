@@ -1,0 +1,1 @@
+{"version":3,"file":"access.js","mappings":";;;;;;;AAGA;;AACA;;;;;;AAEA;;;AAGM,SAAUA,MAAV,CAAuBC,CAAvB,EAAqC;AACzC,SAAOC,GAAG,CAACC,IAAJ,CAASC,WAAW,CAACC,WAAZ,EAAT,EAAuCJ,CAAvC,CAAP;AACD","names":["access","f","Map","map_","Environment","environment"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/access.ts"],"sourcesContent":[null]}

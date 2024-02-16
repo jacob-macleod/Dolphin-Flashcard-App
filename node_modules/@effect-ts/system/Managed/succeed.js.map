@@ -1,0 +1,1 @@
+{"version":3,"file":"succeed.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,OAAV,CAAqBC,CAArB,EAA2BC,OAA3B,EAA2C;AAC/C,SAAO,4BAAWC,CAAC,CAACH,OAAF,CAAUC,CAAV,CAAX,EAAyBC,OAAzB,CAAP;AACD","names":["succeed","a","__trace","T"],"sourceRoot":"","sources":["../_src/Managed/succeed.ts"],"sourcesContent":[null]}

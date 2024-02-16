@@ -1,0 +1,1 @@
+{"version":3,"file":"asUnit.js","mappings":";;;;;;;AAEA;;AAFA;;AAKA;;;AAGM,SAAUA,MAAV,CAA0BC,IAA1B,EAAiDC,OAAjD,EAAiE;AACrE,SAAO,kBAAOD,IAAP,EAAa,MAAME,UAAnB,EAAyBD,OAAzB,CAAP;AACD","names":["asUnit","self","__trace","unit"],"sourceRoot":"","sources":["../_src/Effect/asUnit.ts"],"sourcesContent":[null]}

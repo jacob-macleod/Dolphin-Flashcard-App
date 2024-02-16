@@ -1,0 +1,43 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.cross = cross;
+exports.cross_ = cross_;
+
+var A = /*#__PURE__*/_interopRequireWildcard( /*#__PURE__*/require("../../../../Collections/Immutable/Array/index.js"));
+
+var Tp = /*#__PURE__*/_interopRequireWildcard( /*#__PURE__*/require("../../../../Collections/Immutable/Tuple/index.js"));
+
+var CrossWith = /*#__PURE__*/_interopRequireWildcard( /*#__PURE__*/require("./crossWith.js"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// ets_tracing: off
+
+/**
+ * Composes this stream with the specified stream to create a cartesian product of elements.
+ * The `that` stream would be run multiple times, for every element in the `this` stream.
+ */
+function cross_(...[s1, s2, ...streams]) {
+  const init = CrossWith.crossWith_(s1, s2, Tp.tuple); // @ts-expect-error
+
+  return A.reduce_(streams, init, (acc, v) => // @ts-expect-error
+  CrossWith.crossWith_(acc, v, (a, b) => Tp.append_(a, b)));
+}
+/**
+ * Composes this stream with the specified stream to create a cartesian product of elements.
+ * The `that` stream would be run multiple times, for every element in the `this` stream.
+ *
+ * @ets_data_first cross_
+ */
+
+
+function cross(...[s1, ...streams]) {
+  return self => // @ts-expect-error
+  cross_(self, s1, ...streams);
+}
+//# sourceMappingURL=cross.js.map

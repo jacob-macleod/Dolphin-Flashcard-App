@@ -1,0 +1,1 @@
+{"version":3,"file":"fail.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,IAAV,CAAkBC,CAAlB,EAAsB;AAC1B,SAAO,IAAIC,CAAC,CAACC,IAAN,CAAWC,EAAE,CAACJ,IAAH,CAAQC,CAAR,CAAX,CAAP;AACD","names":["fail","e","C","Sink","CH"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/fail.ts"],"sourcesContent":[null]}

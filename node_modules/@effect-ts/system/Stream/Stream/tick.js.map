@@ -1,0 +1,1 @@
+{"version":3,"file":"tick.js","mappings":";;;;;;;AAGA;;AAEA;;;;;;AAEA;;;AAGM,SAAUA,IAAV,CAAeC,QAAf,EAA+B;AACnC,SAAO,sCAAgB,MAAMC,SAAtB,EAAiCC,EAAE,CAACC,MAAH,CAAUH,QAAV,CAAjC,CAAP;AACD","names":["tick","interval","undefined","SC","spaced"],"sourceRoot":"","sources":["../../_src/Stream/Stream/tick.ts"],"sourcesContent":[null]}

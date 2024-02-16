@@ -1,0 +1,1 @@
+{"version":3,"file":"AssociativeFlatten.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,0BAAnB;AAGA,OAAO,KAAKC,CAAZ,MAAmB,yBAAnB;AAEA,OAAO,MAAMC,kBAAkB,GAAwD;AACrFC,SAAO,EAAEH,CAAC,CAACG;AAD0E,CAAhF","names":["O","P","AssociativeFlatten","flatten"],"sourceRoot":"","sources":["../../../_src/Option/instances/AssociativeFlatten.ts"],"sourcesContent":[null]}

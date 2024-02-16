@@ -1,0 +1,1 @@
+{"version":3,"file":"onFirst.js","mappings":";;;;;;;AAGA;;AACA;;AAEA;;;;;AAKM,SAAUA,OAAV,CAA2BC,IAA3B,EAAkDC,OAAlD,EAAkE;AACtE,SAAO,eAAKD,IAAL,EAAW,+BAAX,EAA6BC,OAA7B,CAAP;AACD","names":["onFirst","self","__trace"],"sourceRoot":"","sources":["../_src/Effect/onFirst.ts"],"sourcesContent":[null]}

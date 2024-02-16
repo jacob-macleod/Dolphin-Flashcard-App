@@ -1,0 +1,1 @@
+{"version":3,"file":"dieMessage.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,UAAV,CAAqBC,GAArB,EAAgC;AACpC,8BAAWC,CAAC,CAACF,UAAF,CAAaC,GAAb,CAAX;AACD","names":["dieMessage","msg","T"],"sourceRoot":"","sources":["../../_src/Stream/Stream/dieMessage.ts"],"sourcesContent":[null]}

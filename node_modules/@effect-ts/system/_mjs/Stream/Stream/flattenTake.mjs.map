@@ -1,0 +1,1 @@
+{"version":3,"file":"flattenTake.mjs","mappings":"AAIA,SAASA,aAAT,QAA8B,qBAA9B;AACA,SAASC,iBAAT,QAAkC,yBAAlC;AAEA;;;;AAGA,OAAM,SAAUC,WAAV,CACJC,IADI,EAC+B;AAEnC,SAAOH,aAAa,CAACC,iBAAiB,CAACE,IAAD,CAAlB,CAApB;AACD","names":["flattenChunks","flattenExitOption","flattenTake","self"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/flattenTake.ts"],"sourcesContent":[null]}

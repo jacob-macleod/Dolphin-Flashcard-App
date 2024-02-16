@@ -1,0 +1,1 @@
+{"version":3,"file":"right.js","mappings":";;;;;;;AAGA;;AAEA;;AACA;;;;;;AAEA;;;AAGM,SAAUA,KAAV,CAA8BC,IAA9B,EAAkE;AACtE,SAAO,+BAAa,yBAAUA,IAAV,EAAgBC,CAAC,CAACC,IAAlB,CAAb,EAAsCD,CAAC,CAACE,IAAxC,CAAP;AACD","names":["right","self","O","some","none"],"sourceRoot":"","sources":["../../_src/Stream/Stream/right.ts"],"sourcesContent":[null]}

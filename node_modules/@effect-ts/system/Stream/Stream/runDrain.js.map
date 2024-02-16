@@ -1,0 +1,1 @@
+{"version":3,"file":"runDrain.js","mappings":";;;;;;;AAEA;;AACA;;AAEA;;;;;;AALA;;AAOA;;;AAGM,SAAUA,QAAV,CAA4BC,IAA5B,EAAiD;AACrD,SAEE,sBAASC,CAAD,IAAOC,CAAC,CAACC,IAAjB,EADAH,IACA,CAFF;AAID","names":["runDrain","self","_","T","unit"],"sourceRoot":"","sources":["../../_src/Stream/Stream/runDrain.ts"],"sourcesContent":[null]}

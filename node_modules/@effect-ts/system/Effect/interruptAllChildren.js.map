@@ -1,0 +1,1 @@
+{"version":3,"file":"interruptAllChildren.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAMA;;;;AAIM,SAAUA,oBAAV,CAAwCC,IAAxC,EAA+DC,OAA/D,EAA+E;AACnF,SAAO,yCAAkBD,IAAlB,EAAwBE,mBAAxB,EAAsCD,OAAtC,CAAP;AACD","names":["interruptAllChildren","self","__trace","interruptAll"],"sourceRoot":"","sources":["../_src/Effect/interruptAllChildren.ts"],"sourcesContent":[null]}

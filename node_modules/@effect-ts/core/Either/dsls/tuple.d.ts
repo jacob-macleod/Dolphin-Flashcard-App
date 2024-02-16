@@ -1,0 +1,4 @@
+export declare const tuple: <T extends import("@effect-ts/system/Either/core.js").Either<any, unknown>[], K = any, Q = any, W = any, X = any, I = any, S = any, R = any, E = never>(...t: T & {
+    readonly 0: import("@effect-ts/system/Either/core.js").Either<any, unknown>;
+}) => import("@effect-ts/system/Either/core.js").Either<import("../../Prelude/index.js").Infer<[import("../../Prelude/index.js").URI<"Either", {}>], import("../definition.js").V, "E", T[number]>, { [K_1 in keyof T]: [T[K_1]] extends [import("@effect-ts/system/Either/core.js").Either<any, infer A>] ? A : never; }>;
+//# sourceMappingURL=tuple.d.ts.map

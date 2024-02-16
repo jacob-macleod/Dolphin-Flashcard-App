@@ -1,0 +1,1 @@
+{"version":3,"file":"make.mjs","mappings":"AAAA;AAEA,SAASA,MAAT,QAAuB,oBAAvB;AACA,SAASC,OAAT,QAAwB,uBAAxB;AACA,SAASC,MAAT,QAAuB,cAAvB;AAEA;;;;AAGA,OAAM,SAAUC,IAAV,GAAc;AAClB,SAAOH,MAAM,CAACC,OAAD,EAAWG,EAAD,IAAQF,MAAM,CAAOE,EAAP,CAAxB,CAAb;AACD","names":["chain_","fiberId","makeAs","make","id"],"sourceRoot":"","sources":["../../_src/Promise/make.ts"],"sourcesContent":[null]}

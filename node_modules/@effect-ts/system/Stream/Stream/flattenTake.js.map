@@ -1,0 +1,1 @@
+{"version":3,"file":"flattenTake.js","mappings":";;;;;;;AAIA;;AACA;;AAEA;;;AAGM,SAAUA,WAAV,CACJC,IADI,EAC+B;AAEnC,SAAO,kCAAc,0CAAkBA,IAAlB,CAAd,CAAP;AACD","names":["flattenTake","self"],"sourceRoot":"","sources":["../../_src/Stream/Stream/flattenTake.ts"],"sourcesContent":[null]}

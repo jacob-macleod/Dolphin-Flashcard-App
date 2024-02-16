@@ -1,0 +1,1 @@
+{"version":3,"file":"second.mjs","mappings":"AAAA;AAEA,SAASA,MAAT,QAAuB,YAAvB;AAEA;;;;;AAIA,OAAM,SAAUC,MAAV,CAAoBC,OAApB,EAAoC;AACxC,SAAOF,MAAM,CAAEG,CAAD,IAAqBA,CAAtB,EAAyBD,OAAzB,CAAb;AACD","names":["access","second","__trace","a"],"sourceRoot":"","sources":["../../_src/Effect/second.ts"],"sourcesContent":[null]}

@@ -1,0 +1,23 @@
+"use strict";
+'use client';
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SidebarCollapse = void 0;
+const jsx_runtime_1 = require("react/jsx-runtime");
+const react_1 = require("react");
+const hi_1 = require("react-icons/hi");
+const tailwind_merge_1 = require("tailwind-merge");
+const merge_deep_1 = require("../../helpers/merge-deep");
+const Tooltip_1 = require("../Tooltip");
+const SidebarContext_1 = require("./SidebarContext");
+const SidebarItemContext_1 = require("./SidebarItemContext");
+const SidebarCollapse = ({ children, className, icon: Icon, label, chevronIcon: ChevronIcon = hi_1.HiChevronDown, renderChevronIcon, open = false, theme: customTheme = {}, ...props }) => {
+    const id = (0, react_1.useId)();
+    const [isOpen, setOpen] = (0, react_1.useState)(open);
+    const { theme: rootTheme, isCollapsed } = (0, SidebarContext_1.useSidebarContext)();
+    const theme = (0, merge_deep_1.mergeDeep)(rootTheme.collapse, customTheme);
+    (0, react_1.useEffect)(() => setOpen(open), [open]);
+    const Wrapper = ({ children }) => ((0, jsx_runtime_1.jsx)("li", { children: isCollapsed && !isOpen ? ((0, jsx_runtime_1.jsx)(Tooltip_1.Tooltip, { content: label, placement: "right", children: children })) : (children) }));
+    return ((0, jsx_runtime_1.jsxs)(Wrapper, { children: [(0, jsx_runtime_1.jsxs)("button", { id: `flowbite-sidebar-collapse-${id}`, onClick: () => setOpen(!isOpen), title: label, type: "button", className: (0, tailwind_merge_1.twMerge)(theme.button, className), ...props, children: [Icon && ((0, jsx_runtime_1.jsx)(Icon, { "aria-hidden": true, "data-testid": "flowbite-sidebar-collapse-icon", className: (0, tailwind_merge_1.twMerge)(theme.icon.base, theme.icon.open[isOpen ? 'on' : 'off']) })), isCollapsed ? ((0, jsx_runtime_1.jsx)("span", { className: "sr-only", children: label })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("span", { "data-testid": "flowbite-sidebar-collapse-label", className: theme.label.base, children: label }), renderChevronIcon ? (renderChevronIcon(theme, isOpen)) : ((0, jsx_runtime_1.jsx)(ChevronIcon, { "aria-hidden": true, className: (0, tailwind_merge_1.twMerge)(theme.label.icon.base, theme.label.icon.open[isOpen ? 'on' : 'off']) }))] }))] }), (0, jsx_runtime_1.jsx)("ul", { "aria-labelledby": `flowbite-sidebar-collapse-${id}`, hidden: !isOpen, className: theme.list, children: (0, jsx_runtime_1.jsx)(SidebarItemContext_1.SidebarItemContext.Provider, { value: { isInsideCollapse: true }, children: children }) })] }));
+};
+exports.SidebarCollapse = SidebarCollapse;
+exports.SidebarCollapse.displayName = 'Sidebar.Collapse';

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","mappings":";;;;;;;AAEA;;AAFA;AAWM,SAAUA,QAAV,CAAsBC,IAAtB,EAA4C;AAChD,SAAO;AAAEA;AAAF,GAAP;AACD","names":["makeHash","hash"],"sourceRoot":"","sources":["../_src/Hash/index.ts"],"sourcesContent":[null]}

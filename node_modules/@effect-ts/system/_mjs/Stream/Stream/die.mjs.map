@@ -1,0 +1,1 @@
+{"version":3,"file":"die.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AAEA,SAASC,UAAT,QAA2B,kBAA3B;AAEA;;;;AAGA,OAAM,SAAUC,GAAV,CAAcC,CAAd,EAAwB;AAC5B,SAAOF,UAAU,CAACD,CAAC,CAACE,GAAF,CAAMC,CAAN,CAAD,CAAjB;AACD","names":["T","fromEffect","die","e"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/die.ts"],"sourcesContent":[null]}

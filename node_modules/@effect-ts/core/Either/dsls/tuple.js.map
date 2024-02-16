@@ -1,0 +1,1 @@
+{"version":3,"file":"tuple.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;AAKO,MAAMA,KAAK,gBAAGC,GAAG,CAACC,MAAJ,CAAWC,sBAAX,CAAd","names":["tuple","DSL","tupleF","Applicative"],"sourceRoot":"","sources":["../../_src/Either/dsls/tuple.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"apply.mjs","mappings":"AAMA,SAASA,MAAT,QAAuB,mBAAvB;AAEA;;;;;;;;;AAQA,OAAM,SAAUC,KAAV,CACJC,IADI,EAC2D;AAE/D,SAAO,IAAIF,MAAJ,CAAoBE,IAApB,CAAP;AACD","names":["Stream","apply","proc"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/apply.ts"],"sourcesContent":[null]}

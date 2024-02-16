@@ -1,0 +1,1 @@
+{"version":3,"file":"sequence.mjs","mappings":"AAAA;AAEA,SAASA,SAAT,QAA0B,iCAA1B;AACA,SAASC,OAAT,QAAwB,0BAAxB;AAEA,OAAO,MAAMC,QAAQ,gBAAGF,SAAS,CAACC,OAAD,CAA1B","names":["sequenceF","ForEach","sequence"],"sourceRoot":"","sources":["../../../_src/Option/operations/sequence.ts"],"sourcesContent":[null]}

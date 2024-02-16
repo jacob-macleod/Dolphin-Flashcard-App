@@ -1,0 +1,1 @@
+{"version":3,"file":"finalizer.d.ts","sourceRoot":"","sources":["../../_src/Stream/Stream/finalizer.ts"],"names":[],"mappings":"AAEA,OAAO,KAAK,CAAC,MAAM,wBAAwB,CAAA;AAE3C,OAAO,KAAK,EAAE,GAAG,EAAE,MAAM,kBAAkB,CAAA;AAE3C;;GAEG;AACH,wBAAgB,SAAS,CAAC,CAAC,EAAE,SAAS,EAAE,CAAC,CAAC,GAAG,CAAC,CAAC,EAAE,OAAO,CAAC,GAAG,GAAG,CAAC,CAAC,EAAE,OAAO,CAAC,CAE1E"}

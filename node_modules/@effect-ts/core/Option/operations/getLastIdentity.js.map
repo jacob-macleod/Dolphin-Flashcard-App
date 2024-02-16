@@ -1,0 +1,1 @@
+{"version":3,"file":"getLastIdentity.js","mappings":";;;;;;;AAEA;;AAGA;;AACA;;;;;;AANA;;AAQA;;;;;;;;;;AAUM,SAAUA,eAAV,GAAyB;AAC7B,SAAO,4BAAgB,6CAAhB,EAAyCC,CAAC,CAACC,IAA3C,CAAP;AACD","names":["getLastIdentity","O","none"],"sourceRoot":"","sources":["../../_src/Option/operations/getLastIdentity.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"isDone.mjs","mappings":"AAAA;AAEA,SAASA,WAAT,QAA4B,oBAA5B;AAGA;;;;;AAIA,OAAM,SAAUC,MAAV,CAAuBC,OAAvB,EAA6C;AACjD,SAAOF,WAAW,CAAC,MAAME,OAAO,CAACC,KAAR,CAAcC,GAAd,CAAkBC,IAAlB,KAA2B,MAAlC,CAAlB;AACD","names":["succeedWith","isDone","promise","state","get","_tag"],"sourceRoot":"","sources":["../../_src/Promise/isDone.ts"],"sourcesContent":[null]}

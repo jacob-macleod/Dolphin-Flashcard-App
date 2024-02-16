@@ -1,0 +1,1 @@
+{"version":3,"file":"getWitherable.js","mappings":";;;;;;;AAIA;;AACA;;;;;;AAEA;;;AAGM,SAAUA,aAAV,CAA2BC,CAA3B,EAAyC;AAC7C,QAAMC,QAAQ,GAAG,gCAAYD,CAAZ,CAAjB;AACA,SAAmE;AACjEC;AADiE,GAAnE;AAGD","names":["getWitherable","M","compactF"],"sourceRoot":"","sources":["../../_src/Either/operations/getWitherable.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../_src/Transactional/STM/Versioned/index.ts"],"names":[],"mappings":"AAEA,OAAO,4BAA4B,CAAA;AAEnC,eAAO,MAAM,eAAe,eAAW,CAAA;AACvC,oBAAY,eAAe,GAAG,OAAO,eAAe,CAAA;AAEpD,qBAAa,SAAS,CAAC,CAAC;IAEV,QAAQ,CAAC,KAAK,EAAE,CAAC;IAD7B,QAAQ,CAAC,OAAO,EAAE,eAAe,CAAkB;gBAC9B,KAAK,EAAE,CAAC;CAC9B"}

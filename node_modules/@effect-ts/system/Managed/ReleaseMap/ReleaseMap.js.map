@@ -1,0 +1,1 @@
+{"version":3,"file":"ReleaseMap.js","mappings":";;;;;;;AAKM,MAAOA,UAAP,CAAiB;AACrBC,cAAqBC,GAArB,EAAsC;AAAjB;AAAqB;;AADrB","names":["ReleaseMap","constructor","ref"],"sourceRoot":"","sources":["../../_src/Managed/ReleaseMap/ReleaseMap.ts"],"sourcesContent":[null]}

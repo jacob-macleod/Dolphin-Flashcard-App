@@ -1,0 +1,1 @@
+{"version":3,"file":"index.mjs","mappings":"AAAA;AAEA,OAAM,MAAOA,KAAP,CAAY;AAChBC,cAAqBC,KAArB,EAAwCC,QAAxC,EAA2D;AAAtC;AAAmB;AAAuB;;AAD/C","names":["Stack","constructor","value","previous"],"sourceRoot":"","sources":["../../_src/Stack/index.ts"],"sourcesContent":[null]}

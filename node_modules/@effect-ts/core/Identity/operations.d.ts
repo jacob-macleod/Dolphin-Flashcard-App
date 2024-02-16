@@ -1,0 +1,48 @@
+import type { Associative } from "../Associative/index.js";
+import type { Bounded } from "../Bounded/index.js";
+import type { Endomorphism } from "../Function/index.js";
+import type { IdentityURI } from "../Modules/index.js";
+import type { Derive } from "../Prelude/Derive/index.js";
+import type { URI, URIS } from "../Prelude/HKT/index.js";
+import type { Identity } from "./definition.js";
+/**
+ * Derive `Identity`
+ */
+export declare function deriveIdentity<F extends URIS, A>(D: Derive<F, [URI<IdentityURI>]>, I: Identity<A>): Identity<F extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<F[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", F[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", F[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, Next extends [any, ...infer Next] ? import("../Prelude/HKT/hkt.js").URItoKind<Next[0]["_C"], import("../Prelude/HKT/base.js").Auto, import("../Prelude/HKT/fix.js").OrFix<"K", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"Q", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"W", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"X", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"I", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"S", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"R", Next[0]["_C"], unknown>, import("../Prelude/HKT/fix.js").OrFix<"E", Next[0]["_C"], unknown>, any>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[Next[0]["_F"]] : A>[F[0]["_F"]] : A>;
+/**
+ * Fold `Identity` through an array
+ */
+export declare function fold<A>(M: Identity<A>): (as: ReadonlyArray<A>) => A;
+/**
+ * The dual of a `Identity`, obtained by swapping the arguments of `concat`.
+ */
+export declare function inverted<A>(M: Identity<A>): Identity<A>;
+/**
+ * `Identity` for endomorphisms
+ */
+export declare function endomorphism<A = never>(): Identity<Endomorphism<A>>;
+/**
+ * `Identity` for function combination
+ */
+export declare function func<M>(M: Identity<M>): <A = never>() => Identity<(a: A) => M>;
+/**
+ * `Identity` that returns last `Max` of elements
+ */
+export declare function max<A>(B: Bounded<A>): Identity<A>;
+/**
+ * `Identity` that returns last `Min` of elements
+ */
+export declare function min<A>(B: Bounded<A>): Identity<A>;
+/**
+ * Given a struct of `Identity` returns a `Identity` for the struct
+ */
+export declare function struct<O extends Record<string, any>>(identities: {
+    [K in keyof O]: Identity<O[K]>;
+}): Identity<O>;
+/**
+ * Given a tuple of `Identity` returns a `Identity` for the tuple
+ */
+export declare function tuple<T extends ReadonlyArray<Identity<any>>>(...identities: T): Identity<{
+    [K in keyof T]: T[K] extends Associative<infer A> ? A : never;
+}>;
+//# sourceMappingURL=operations.d.ts.map

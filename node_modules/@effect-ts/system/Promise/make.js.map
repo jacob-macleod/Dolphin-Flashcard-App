@@ -1,0 +1,1 @@
+{"version":3,"file":"make.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;AAJA;;AAMA;;;AAGM,SAAUA,IAAV,GAAc;AAClB,SAAO,kBAAOC,gBAAP,EAAiBC,EAAD,IAAQ,oBAAaA,EAAb,CAAxB,CAAP;AACD","names":["make","fiberId","id"],"sourceRoot":"","sources":["../_src/Promise/make.ts"],"sourcesContent":[null]}

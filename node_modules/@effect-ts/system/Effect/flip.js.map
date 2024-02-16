@@ -1,0 +1,1 @@
+{"version":3,"file":"flip.js","mappings":";;;;;;;AAEA;;AAEA;;AACA;;AALA;;AAOA;;;;AAIM,SAAUA,IAAV,CAAwBC,IAAxB,EAA+CC,OAA/C,EAA+D;AACnE,SAAO,mBAAOD,IAAP,EAAaE,aAAb,EAAsBC,UAAtB,EAA4BF,OAA5B,CAAP;AACD","names":["flip","self","__trace","succeed","fail"],"sourceRoot":"","sources":["../_src/Effect/flip.ts"],"sourcesContent":[null]}

@@ -1,0 +1,1 @@
+{"version":3,"file":"Fail.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,0BAAnB;AAGA,OAAO,KAAKC,CAAZ,MAAmB,yBAAnB;AAEA,OAAO,MAAMC,IAAI,GAA6C;AAC5DC,MAAI,EAAE,MAAMH,CAAC,CAACI;AAD8C,CAAvD","names":["O","P","Fail","fail","none"],"sourceRoot":"","sources":["../../../_src/Option/instances/Fail.ts"],"sourcesContent":[null]}

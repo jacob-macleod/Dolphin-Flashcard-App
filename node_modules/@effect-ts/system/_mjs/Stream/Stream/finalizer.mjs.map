@@ -1,0 +1,1 @@
+{"version":3,"file":"finalizer.mjs","mappings":"AAAA;AAEA,OAAO,KAAKA,CAAZ,MAAmB,yBAAnB;AACA,SAASC,QAAT,QAAyB,eAAzB;AAGA;;;;AAGA,OAAM,SAAUC,SAAV,CAAuBA,SAAvB,EAAmD;AACvD,SAAOD,QAAQ,CAACD,CAAC,CAACG,IAAH,EAAUC,CAAD,IAAOF,SAAhB,CAAf;AACD","names":["T","bracket_","finalizer","unit","_"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/finalizer.ts"],"sourcesContent":[null]}

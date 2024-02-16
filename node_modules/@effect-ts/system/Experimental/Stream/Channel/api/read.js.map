@@ -1,0 +1,1 @@
+{"version":3,"file":"read.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;AAKM,SAAUA,IAAV,GAAc;AASlB,SAAOC,CAAC,CAACC,UAAF,CAAaC,CAAC,CAACC,IAAf,CAAP;AACD","names":["read","C","readOrFail","O","none"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/Channel/api/read.ts"],"sourcesContent":[null]}

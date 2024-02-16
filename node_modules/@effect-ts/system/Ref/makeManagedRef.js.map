@@ -1,0 +1,1 @@
+{"version":3,"file":"makeManagedRef.js","mappings":";;;;;;;AAEA;;AACA;;AAEA;;;;;;AALA;;AAQA;;;AAGM,SAAUA,cAAV,CAA4BC,CAA5B,EAAgC;AACpC,SAA4BC,UAAU,CAACA,UAAX,CAAbC,GAAG,CAACC,OAAJ,CAAHH,CAAG,CAAa,CAA5B;AACD","names":["makeManagedRef","a","fromEffect","api","makeRef"],"sourceRoot":"","sources":["../_src/Ref/makeManagedRef.ts"],"sourcesContent":[null]}

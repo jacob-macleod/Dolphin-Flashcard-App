@@ -1,0 +1,1 @@
+{"version":3,"file":"die.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;AAGM,SAAUA,GAAV,CAAiBC,CAAjB,EAAqB;AACzB,SAAOC,SAAS,CAACC,SAAV,CAAoBC,EAAE,CAACJ,GAAH,CAAOC,CAAP,CAApB,CAAP;AACD","names":["die","e","FailCause","failCause","CS"],"sourceRoot":"","sources":["../../../_src/Experimental/Stream/Sink/die.ts"],"sourcesContent":[null]}

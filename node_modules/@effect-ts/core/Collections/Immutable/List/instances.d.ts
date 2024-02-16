@@ -1,0 +1,25 @@
+import type { URI } from "../../../Prelude/index.js";
+import * as P from "../../../Prelude/index.js";
+export declare const Any: P.Any<[URI<"List", {}>], P.Auto>;
+export declare const AssociativeBothZip: P.AssociativeBoth<[URI<"List", {}>], P.Auto>;
+export declare const AssociativeFlatten: P.AssociativeFlatten<[URI<"List", {}>], P.Auto>;
+export declare const Covariant: P.Covariant<[URI<"List", {}>], P.Auto>;
+export declare const Monad: P.Monad<[URI<"List", {}>], P.Auto>;
+export declare const Applicative: P.Applicative<[URI<"List", {}>], P.Auto>;
+export declare const ApplyZip: P.Apply<[URI<"List", {}>], P.Auto>;
+export declare const ForEach: P.ForEach<[URI<"List", {}>], P.Auto>;
+export declare const Wiltable: P.Wiltable<[URI<"List", {}>], P.Auto>;
+export declare const Witherable: P.Witherable<[URI<"List", {}>], P.Auto>;
+export declare const Compact: P.Compact<[URI<"List", {}>], P.Auto>;
+export declare const Separate: P.Separate<[URI<"List", {}>], P.Auto>;
+export declare const Reduce: P.Reduce<[URI<"List", {}>], P.Auto>;
+export declare const ReduceRight: P.ReduceRight<[URI<"List", {}>], P.Auto>;
+export declare const FoldMap: P.FoldMap<[URI<"List", {}>], P.Auto>;
+export declare const Foldable: P.Foldable<[URI<"List", {}>], P.Auto>;
+export declare const Filter: P.Filter<[URI<"List", {}>], P.Auto>;
+export declare const FilterMap: P.FilterMap<[URI<"List", {}>], P.Auto>;
+export declare const Partition: P.Partition<[URI<"List", {}>], P.Auto>;
+export declare const PartitionMap: P.PartitionMap<[URI<"List", {}>], P.Auto>;
+export declare const Filterable: P.Filterable<[URI<"List", {}>], P.Auto>;
+export declare const Collection: P.Collection<[URI<"List", {}>], P.Auto>;
+//# sourceMappingURL=instances.d.ts.map

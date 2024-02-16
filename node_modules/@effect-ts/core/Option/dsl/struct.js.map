@@ -1,0 +1,1 @@
+{"version":3,"file":"struct.js","mappings":";;;;;;;AAEA;;AACA;;AACA;;;;;;AAJA;AAMO,MAAMA,MAAM,gBAAGC,CAAC,CAACC,OAAF,CAAU,EAAE,GAAGC,YAAL;AAAY,KAAGC;AAAf,CAAV,CAAf","names":["struct","P","structF","Monad","Applicative"],"sourceRoot":"","sources":["../../_src/Option/dsl/struct.ts"],"sourcesContent":[null]}

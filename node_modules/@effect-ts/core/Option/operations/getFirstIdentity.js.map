@@ -1,0 +1,1 @@
+{"version":3,"file":"getFirstIdentity.js","mappings":";;;;;;;AAEA;;AAGA;;AACA;;;;;;AANA;;AAQA;;;;;;;;;;AAUM,SAAUA,gBAAV,GAA0B;AAC9B,SAAO,4BAAgB,+CAAhB,EAA0CC,CAAC,CAACC,IAA5C,CAAP;AACD","names":["getFirstIdentity","O","none"],"sourceRoot":"","sources":["../../_src/Option/operations/getFirstIdentity.ts"],"sourcesContent":[null]}

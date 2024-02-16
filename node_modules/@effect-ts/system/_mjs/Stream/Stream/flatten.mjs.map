@@ -1,0 +1,1 @@
+{"version":3,"file":"flatten.mjs","mappings":"AAAA;AAEA,SAASA,QAAT,QAAyB,0BAAzB;AACA,SAASC,KAAT,QAAsB,aAAtB;AAGA;;;;;AAIA,OAAO,MAAMC,OAAO,gBAEaD,KAAK,CAACD,QAAD,CAF/B","names":["identity","chain","flatten"],"sourceRoot":"","sources":["../../../_src/Stream/Stream/flatten.ts"],"sourcesContent":[null]}

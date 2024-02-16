@@ -1,0 +1,25 @@
+{
+  "name": "@contentlayer/cli",
+  "version": "0.3.4",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist/**/*.{js,ts,map}",
+    "./src",
+    "./package.json"
+  ],
+  "scripts": {
+    "test": "echo No tests yet"
+  },
+  "dependencies": {
+    "@contentlayer/core": "0.3.4",
+    "@contentlayer/utils": "0.3.4",
+    "clipanion": "^3.2.1",
+    "typanion": "^3.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.2"
+  },
+  "license": "MIT"
+}

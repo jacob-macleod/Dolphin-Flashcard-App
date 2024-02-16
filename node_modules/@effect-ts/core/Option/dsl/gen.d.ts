@@ -1,0 +1,3 @@
+import * as P from "../../Prelude/index.js";
+export declare const gen: <Eff extends P.GenHKT<import("@effect-ts/system/Option/core.js").Option<any>, any>, AEff>(f: (i: <K, Q, W, X, I, S, R, E, A>(_: import("@effect-ts/system/Option/core.js").Option<A>) => P.GenHKT<import("@effect-ts/system/Option/core.js").Option<A>, A>) => Generator<Eff, AEff, any>) => import("@effect-ts/system/Option/core.js").Option<AEff>;
+//# sourceMappingURL=gen.d.ts.map

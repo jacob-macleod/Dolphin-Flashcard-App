@@ -1,0 +1,1 @@
+{"version":3,"file":"forever.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAMA;;;AAGM,SAAUA,OAAV,CACJC,MADI,EAEJC,OAFI,EAEY;AAEhB,SAAO,kBAAOD,MAAP,EAAe,MAAM,qBAAUE,cAAV,EAAoBH,OAAO,CAACC,MAAD,CAA3B,CAArB,EAA2DC,OAA3D,CAAP;AACD","names":["forever","effect","__trace","yieldNow"],"sourceRoot":"","sources":["../_src/Effect/forever.ts"],"sourcesContent":[null]}

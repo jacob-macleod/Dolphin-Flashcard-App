@@ -1,0 +1,1 @@
+{"version":3,"file":"sleep.js","mappings":";;;;;;;AAEA;;AAFA;;AAIA;;;AAGM,SAAUA,KAAV,CAAgBC,EAAhB,EAA4BC,OAA5B,EAA4C;AAChD,SAAO,kBAAWD,EAAX,EAAeC,OAAf,CAAP;AACD","names":["sleep","ms","__trace"],"sourceRoot":"","sources":["../_src/Effect/sleep.ts"],"sourcesContent":[null]}

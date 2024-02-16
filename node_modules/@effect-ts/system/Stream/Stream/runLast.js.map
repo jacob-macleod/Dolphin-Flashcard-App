@@ -1,0 +1,1 @@
+{"version":3,"file":"runLast.js","mappings":";;;;;;;AAEA;;AAEA;;;;;;AAJA;;AAMA;;;;AAIM,SAAUA,OAAV,CAA2BC,IAA3B,EAAgD;AACpD,SAAO,eAAKA,IAAL,EAAWC,EAAE,CAACC,IAAH,EAAX,CAAP;AACD","names":["runLast","self","SK","last"],"sourceRoot":"","sources":["../../_src/Stream/Stream/runLast.ts"],"sourcesContent":[null]}

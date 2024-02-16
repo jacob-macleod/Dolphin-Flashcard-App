@@ -1,0 +1,1 @@
+{"version":3,"file":"failWith.js","mappings":";;;;;;;AAEA;;AACA;;;;;;AAHA;;AAKA;;;AAGM,SAAUA,QAAV,CAAsBC,KAAtB,EAAoC;AACxC,SAAO,IAAIC,CAAC,CAACC,MAAN,CAAaC,EAAE,CAACJ,QAAH,CAAYC,KAAZ,CAAb,CAAP;AACD","names":["failWith","error","C","Stream","CH"],"sourceRoot":"","sources":["../../../../_src/Experimental/Stream/_internal/api/failWith.ts"],"sourcesContent":[null]}

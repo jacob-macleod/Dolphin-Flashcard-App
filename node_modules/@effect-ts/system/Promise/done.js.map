@@ -1,0 +1,1 @@
+{"version":3,"file":"done.js","mappings":";;;;;;;AAEA;;AAEA;;AAJA;;AAOA;;;;AAIM,SAAUA,IAAV,CAAqBC,CAArB,EAAkC;AACtC,SAAQC,OAAD,IAA4B,gCAAmB,gBAAWD,CAAX,CAAnB,EAAkCC,OAAlC,CAAnC;AACD","names":["done","e","promise"],"sourceRoot":"","sources":["../_src/Promise/done.ts"],"sourcesContent":[null]}

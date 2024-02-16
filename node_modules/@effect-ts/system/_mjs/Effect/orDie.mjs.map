@@ -1,0 +1,1 @@
+{"version":3,"file":"orDie.mjs","mappings":"AAGA,SAASA,UAAT,QAA2B,iBAA3B;AAEA;;;;;AAIA,OAAM,SAAUC,KAAV,CAAyBC,MAAzB,EAAkDC,OAAlD,EAAkE;AACtE,SAAOH,UAAU,CAACE,MAAD,EAAUE,CAAD,IAAUA,CAAnB,EAAsBD,OAAtB,CAAjB;AACD","names":["orDieWith_","orDie","effect","__trace","e"],"sourceRoot":"","sources":["../../_src/Effect/orDie.ts"],"sourcesContent":[null]}
