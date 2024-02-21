@@ -26,7 +26,7 @@ jobs:
         run: |
           sudo apt install nodejs npm
           npm install -g create-react-app
-          npm install react react-dom react-scripts web-vitals react-helmet react-router-dom firebase react-firebase-hooks react-circular-progressbar react-loading-icons
+          npm install
       - name: Build the React App for Deployment
         run: |
           cd frontend

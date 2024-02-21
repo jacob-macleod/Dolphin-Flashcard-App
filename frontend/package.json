@@ -14,7 +14,8 @@
     "react-loading-icons": "^1.1.0",
     "react-router-dom": "^6.22.0",
     "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-circular-progressbar": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

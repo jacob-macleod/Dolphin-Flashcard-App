@@ -4,7 +4,6 @@ import Heading3 from '../componments/Heading3';
 import Paragraph from '../componments/Paragraph';
 import Button from '../componments/Button';
 import { createXpGoal, createCardGoal } from '../api/Api';
-import 'react-datepicker/dist/react-datepicker.css'; // Import the date picker styles
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
