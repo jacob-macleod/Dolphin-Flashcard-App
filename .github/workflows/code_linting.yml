@@ -32,10 +32,14 @@ jobs:
   lint-frontend:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Install node
       run: |
         sudo apt install nodejs npm
         npm install -g create-react-app
+
     - name: Lint the frontend code
       run: |
         cd frontend
