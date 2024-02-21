@@ -1,0 +1,39 @@
+name: Pytest Check
+
+on: 
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  pytest-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Use the appropriate Python version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt # Assuming you have a requirements file
+          # You may need additional steps if pytest isn't installed already
+
+      - name: Run pytest
+        run: |
+          python3 -m venv env
+          source env/bin/activate
+          pip install -r requirements.txt
+          pip3 install pytest
+          pytest testing/
+          - name: Install node
+          run: |
+            sudo apt install nodejs npm
+            npm install -g create-react-app
+      - name: Lint the frontend code
+        run: |
+          cd frontend
+          npm run build
