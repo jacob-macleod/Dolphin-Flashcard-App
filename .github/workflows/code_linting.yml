@@ -29,11 +29,14 @@ jobs:
           pip install -r requirements.txt
           pip3 install pytest
           pytest testing/
-          - name: Install node
-          run: |
-            sudo apt install nodejs npm
-            npm install -g create-react-app
-      - name: Lint the frontend code
-        run: |
-          cd frontend
-          npm run build
+  lint-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install node
+      run: |
+        sudo apt install nodejs npm
+        npm install -g create-react-app
+    - name: Lint the frontend code
+      run: |
+        cd frontend
+        npm run build
