@@ -7,6 +7,7 @@ import GridItem from '../containers/GridItem';
 import Header from '../componments/Header';
 import SidePanel from '../containers/SidePanel';
 import NewGoalPopup from '../containers/NewGoalPopup';
+import EditGoalPopup from '../containers/EditGoalPopup';
 import Heading4 from '../componments/Heading4';
 import StreakWidget from '../containers/StreakWidget';
 import GoalsWidget from '../containers/GoalsWidget';
@@ -19,6 +20,7 @@ function Dashboard() {
   const title = "Dashboard";
   const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
   const [newGoalPopupVisible, setNewGoalPopupVisible] = useState(false);
+  const [editGoalPopupVisible, setEditGoalPopupVisible] = useState(false);
 
   return (
     <div style={{top: "0px;"}}>
@@ -30,13 +32,21 @@ function Dashboard() {
         </meta>
       </Helmet>
       <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} />
+      <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} />
 
       <GridContainer layout={"240px 400px auto"}>
         <SidePanel />
         <GridItem style={{padding: "0px"}}>
           <Heading4 text={userWelcomeText} />
           <StreakWidget />
-          <GoalsWidget setNewGoalPopupVisible={setNewGoalPopupVisible} newGoalPopupVisible={newGoalPopupVisible}/>
+
+          <GoalsWidget
+            setNewGoalPopupVisible={setNewGoalPopupVisible}
+            newGoalPopupVisible={newGoalPopupVisible}
+            setEditGoalPopupVisible={setEditGoalPopupVisible}
+            editGoalPopupVisible={editGoalPopupVisible}
+          />
+
         </GridItem>
 
         <GridItem style={{padding: "0px"}}>

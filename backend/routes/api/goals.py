@@ -236,3 +236,44 @@ def edit_card_goal():
     db.save(goal_path, goal_data)
 
     return jsonify({"success": "Goal updated successfully"}), 200
+
+@goal_routes.route("/api/edit-xp-goal", methods=["POST"])
+def edit_xp_goal():
+    """ Edit an existing XP goal for the user """
+    expected_format = {
+        "userID": "",
+        "goalID": "",
+        "newEndDate": DATE_REGEX,
+        "newTitle": "",
+        "newGoalXP": NUMBER
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
+    goal_id = request.json.get("goalID")
+    new_end_date = request.json.get("newEndDate")
+    new_title = request.json.get("newTitle")
+    new_goal_xp = request.json.get("newGoalXP")
+
+    goal_path = "/users/" + user_id + "/goals/" + goal_id + "/"
+    goal_data = db.get(goal_path)
+
+    if goal_data is None:
+        return jsonify({"error": "Goal not found"}), 404
+
+    # Update the goal data
+    goal_data["end_date"] = new_end_date
+    goal_data["title"] = new_title
+    goal_data["data"]["goal_xp"] = str(new_goal_xp)
+
+    # Save the updated goal data
+    db.save(goal_path, goal_data)
+
+    return jsonify({"success": "Goal updated successfully"}), 200

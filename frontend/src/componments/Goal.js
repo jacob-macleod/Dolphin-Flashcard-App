@@ -5,7 +5,7 @@ import Heading5 from './Heading5';
 import './Link.css';
 import './Goal.css';
 
-function Goal({ start, end, title, dueDate }) {
+function Goal({ start, end, title, dueDate, clickEvent }) {
     function formatDate(date, format) {
         const map = {
             mm: date.getMonth() + 1,
@@ -48,7 +48,7 @@ function Goal({ start, end, title, dueDate }) {
             <div className="textContainer">
                 <BoldParagraph text={title} />
                 <Heading5 text={calculateTimeLeft()} />
-                <a className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px"}}>Edit</a>
+                <a className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px"}} onClick={clickEvent}>Edit</a>
             </div>
         </div>
     );

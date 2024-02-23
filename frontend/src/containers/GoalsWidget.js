@@ -8,11 +8,15 @@ import { getCookie } from '../api/Authentication';
 import '../App.css';
 import DelayedElement from '../componments/DelayedElement';
 
-function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible}) {
+function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopupVisible, setEditGoalPopupVisible}) {
     const [goals, setGoals] = useState(null);
 
     function showNewGoalPopup() {
         setNewGoalPopupVisible(true);
+    }
+
+    function showEditGoalPopup() {
+        setEditGoalPopupVisible(true);
     }
 
     const panelTitleStyle = {
@@ -38,8 +42,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible}) {
                     <DelayedElement
                         key={goalId}
                         child={
-                          goal.type === "XP" ? <Goal start={goal.data.starting_xp} end={goal.data.goal_xp} title={goal.title} dueDate={goal.end_date}/>
-                          : <Goal start={goal.data.cards_revised_so_far} end={goal.data.cards_to_revise} title={goal.title} dueDate={goal.end_date}/>
+                          goal.type === "XP" ? <Goal start={goal.data.starting_xp} end={goal.data.goal_xp} title={goal.title} dueDate={goal.end_date} clickEvent={showEditGoalPopup}/>
+                          : <Goal start={goal.data.cards_revised_so_far} end={goal.data.cards_to_revise} title={goal.title} dueDate={goal.end_date} clickEvent={showEditGoalPopup}/>
                         }
                         childValue={goals}
                     />
