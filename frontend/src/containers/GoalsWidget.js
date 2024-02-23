@@ -42,8 +42,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
                     <DelayedElement
                         key={goalId}
                         child={
-                          goal.type === "XP" ? <Goal start={goal.data.starting_xp} end={goal.data.goal_xp} title={goal.title} dueDate={goal.end_date} clickEvent={showEditGoalPopup}/>
-                          : <Goal start={goal.data.cards_revised_so_far} end={goal.data.cards_to_revise} title={goal.title} dueDate={goal.end_date} clickEvent={showEditGoalPopup}/>
+                          goal.type === "XP" ? <Goal data={goal} clickEvent={showEditGoalPopup}/>
+                          : <Goal data={goal} clickEvent={showEditGoalPopup}/>
                         }
                         childValue={goals}
                     />

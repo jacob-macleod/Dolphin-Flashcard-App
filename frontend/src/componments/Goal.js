@@ -5,7 +5,27 @@ import Heading5 from './Heading5';
 import './Link.css';
 import './Goal.css';
 
-function Goal({ start, end, title, dueDate, clickEvent }) {
+function Goal({ data, clickEvent }) {
+    var start = "";
+    var end = "";
+
+    // If the goal is a card goal
+    if (data.type == "XP") {
+        start = data.data.starting_xp;
+        end = data.data.goal_xp;
+    } else {
+        start = data.data.cards_revised_so_far;
+        end = data.data.cards_to_revise;
+    }
+    const title = data.title;
+    const dueDate = data.end_date;
+    console.log(data);
+    console.log(start);
+    console.log(end);
+    console.log(title);
+    console.log(dueDate);
+    console.log("---------------------");
+
     function formatDate(date, format) {
         const map = {
             mm: date.getMonth() + 1,
