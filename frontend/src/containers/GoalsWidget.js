@@ -3,7 +3,7 @@ import Heading5 from '../componments/Heading5';
 import Button from '../componments/Button';
 import WhiteOverlay from '../componments/WhiteOverlay';
 import Goal from '../componments/Goal';
-import { updateGoals } from '../api/Api';
+import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 import '../App.css';
 import DelayedElement from '../componments/DelayedElement';
@@ -15,8 +15,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
         setNewGoalPopupVisible(true);
     }
 
-    function showEditGoalPopup(goal) {
-        setEditGoalPopupVisible(goal);
+    function showEditGoalPopup(goal, id) {
+        setEditGoalPopupVisible({id: id, contents: {goal}});
     }
 
     const panelTitleStyle = {
@@ -29,8 +29,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
       }
 
       useEffect(() => {
-        updateGoals(getCookie("userID"), setGoals);
-      }, [newGoalPopupVisible])
+        apiManager.updateGoals(getCookie("userID"), setGoals);
+      }, [newGoalPopupVisible, editGoalPopupVisible]);
 
     return <>
     <WhiteOverlay style={overlayStyle}>
@@ -42,8 +42,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
                     <DelayedElement
                         key={goalId}
                         child={
-                          goal.type === "XP" ? <Goal data={goal} clickEvent={() => showEditGoalPopup(goal)}/>
-                          : <Goal data={goal} clickEvent={() => showEditGoalPopup(goal)}/>
+                          goal.type === "XP" ? <Goal data={goal} clickEvent={() => showEditGoalPopup(goal, goalId)}/>
+                          : <Goal data={goal}clickEvent={() => showEditGoalPopup(goal, goalId)}/>
                         }
                         childValue={goals}
                     />

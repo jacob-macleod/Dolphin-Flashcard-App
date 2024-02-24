@@ -3,7 +3,7 @@ import DelayedElement from '../componments/DelayedElement';
 import Heading5 from '../componments/Heading5';
 import WhiteOverlay from '../componments/WhiteOverlay';
 import Header from '../componments/Header';
-import { calculateStreak } from '../api/Api';
+import apiManager from '../api/Api';
 import Heading4 from '../componments/Heading4';
 import { getCookie } from '../api/Authentication';
 import '../App.css';
@@ -27,7 +27,7 @@ function StreakWidget () {
       }
 
       useEffect(() => {
-        calculateStreak(getCookie("userID"), setStreak)
+        apiManager.calculateStreak(getCookie("userID"), setStreak)
       }, []);
 
     return <>

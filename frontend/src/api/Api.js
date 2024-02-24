@@ -1,146 +1,102 @@
 import serverURL from './config';
 
-export function calculateStreak(userID, setStreak) {
-    const endpoint = serverURL + 'calculate-streak';
-    const data = {
-        userID: userID // Use the provided userID
-    }; // JSON payload
+// Singleton class
+class ApiManager {
+    constructor() {
+        if (!ApiManager.instance) {
+            ApiManager.instance = this;
+        }
+        return ApiManager.instance;
+    }
 
-    console.log("Getting");
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*', // Allow requests from any origin
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Specify allowed methods
-            'Access-Control-Allow-Headers': 'Content-Type'
-            // Add any other headers if required
-        },
-        body: JSON.stringify(data) // Convert data to JSON string
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Returned");
-            return response.json(); // Parse JSON response
+    fetchData (data, url, successCallback) {
+        fetch(serverURL + url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Specify allowed methods
+                'Access-Control-Allow-Headers': 'Content-Type'
+                // Add any other headers if required
+            },
+            body: JSON.stringify(data) // Convert data to JSON string
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // Parse JSON response
+            }
+            throw new Error('Network response was not ok.');
+        })
+        .then(successCallback)
+        .catch(error => {
+            console.error('There was an error:', error);
+        });
+    }
+
+    calculateStreak(userID, setStreak) {
+        const data = {
+            userID: userID
+        };
+        const url = 'calculate-streak';
+
+        this.fetchData(data, url, ([streak, status]) => {
+            if (status === 200) {
+                // Set streak using the provided setStreak function
+                setStreak(streak.streak);
+            }
+        });
+    }
+
+    updateGoals(userID, setGoals) {
+        const data = {
+            userID: userID
+        };
+        const url = 'update-goal-status';
+
+        this.fetchData(data, url, goals => {
+            setGoals(goals);
+        });
+    }
+
+    createXpGoal(userID, goalXp, endDate, setStatus) {
+        const url = 'create-xp-goal';
+        const data = {
+            userID: userID,
+            goalXP: goalXp,
+            endDate: endDate
+        };
+
+        this.fetchData(data, url, status => {
+            setStatus(status);
+        });
+    }
+
+    createCardGoal(userID, numOfCards, endDate, setStatus) {
+        const url = 'create-card-goal';
+        const data = {
+            userID: userID,
+            cardsToRevise: numOfCards,
+            endDate: endDate
+        };
+
+        this.fetchData(data, url, status => {
+            setStatus(status);
+        });
+    }
+
+    editCardGoal(userID, goalID, newEndDate, newTitle, newCardsToRevise, setPopupVisible) {
+        const url = 'edit-card-goal';
+        const data = {
+            userID: userID,
+            goalID: goalID,
+            newEndDate: newEndDate,
+            newTitle: newTitle,
+            newCardsToRevise: newCardsToRevise
         }
-        throw new Error('Network response was not ok.');
-    })
-    .then(([streak, status]) => {
-        if (status === 200) {
-            setStreak(streak.streak); // Set streak using the provided setStreak function
-        } else {
-            // Handle non-200 status code if needed
-        }
-    })
-    .catch(error => {
-        console.error('There was an error:', error);
-        // Handle error here
-    });
+
+        this.fetchData(data, url, setPopupVisible.bind(null, false));
+    }
 }
 
-export function updateGoals(userID, setGoals) {
-    const endpoint = serverURL + 'update-goal-status';
-    const data = {
-        userID: userID // Use the provided userID
-    }; // JSON payload
-
-    console.log("Getting");
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*', // Allow requests from any origin
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Specify allowed methods
-            'Access-Control-Allow-Headers': 'Content-Type'
-            // Add any other headers if required
-        },
-        body: JSON.stringify(data) // Convert data to JSON string
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Returned");
-            return response.json(); // Parse JSON response
-        }
-        throw new Error('Network response was not ok.');
-    })
-    .then(goals => {
-        setGoals(goals); // Set goals using the provided setGoals function
-    })
-    .catch(error => {
-        console.error('There was an error:', error);
-        // Handle error here
-    });
-}
-
-export function createXpGoal(userID, goalXp, endDate, setStatus) {
-    const endpoint = serverURL + 'create-xp-goal';
-    const data = {
-        userID: userID,
-        goalXP: goalXp,
-        endDate: endDate
-    }; // JSON payload
-
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*', // Allow requests from any origin
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Specify allowed methods
-            'Access-Control-Allow-Headers': 'Content-Type'
-            // Add any other headers if required
-        },
-        body: JSON.stringify(data) // Convert data to JSON string
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); // Parse JSON response
-        }
-        console.log(response);
-        console.log(response.json());
-        throw new Error('Network response was not ok.');
-    })
-    .then(status => {
-        setStatus(status); // Set goals using the provided setGoals function
-    })
-    .catch(error => {
-        console.error('There was an error:', error);
-        // Handle error here
-    });
-}
-
-export function createCardGoal(userID, numOfCards, endDate, setStatus) {
-    const endpoint = serverURL + 'create-card-goal';
-    const data = {
-        userID: userID,
-        cardsToRevise: numOfCards,
-        endDate: endDate
-    }; // JSON payload
-    console.log (data);
-
-    fetch(endpoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*', // Allow requests from any origin
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Specify allowed methods
-            'Access-Control-Allow-Headers': 'Content-Type'
-            // Add any other headers if required
-        },
-        body: JSON.stringify(data) // Convert data to JSON string
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); // Parse JSON response
-        }
-        console.log(response);
-        console.log(response.json());
-        throw new Error('Network response was not ok.');
-    })
-    .then(status => {
-        setStatus(status); // Set goals using the provided setGoals function
-    })
-    .catch(error => {
-        console.error('There was an error:', error);
-        // Handle error here
-    });
-}
+const apiManager = new ApiManager();
+export default apiManager;

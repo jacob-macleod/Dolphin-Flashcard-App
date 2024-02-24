@@ -3,7 +3,7 @@ import GhostButton from '../componments/GhostButton';
 import Heading3 from '../componments/Heading3';
 import Paragraph from '../componments/Paragraph';
 import Button from '../componments/Button';
-import { createXpGoal, createCardGoal } from '../api/Api';
+import apiManager from '../api/Api';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
@@ -62,13 +62,13 @@ function NewGoalPopup({ visible, setVisible }) {
         if (option == "xp") {
             // If values have been set
             if (value != "" && date != "none") {
-                createXpGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
+                apiManager.createXpGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
         } else {
             if (value != "" && date != "none") {
-                createCardGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
+                apiManager.createCardGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }

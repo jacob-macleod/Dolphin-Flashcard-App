@@ -212,9 +212,10 @@ def edit_card_goal():
         return jsonify(
             {"error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
-    print ("Parsed")
+
     user_id = request.json.get("userID")
     goal_id = request.json.get("goalID")
+    print (goal_id)
     new_end_date = request.json.get("newEndDate")
     new_title = request.json.get("newTitle")
     new_cards_to_revise = request.json.get("newCardsToRevise")
@@ -225,13 +226,11 @@ def edit_card_goal():
     if goal_data is None:
         return jsonify({"error": "Goal not found"}), 404
 
-    print ("updating")
     # Update the goal data
     goal_data["end_date"] = new_end_date
     goal_data["title"] = new_title
     goal_data["data"]["cards_to_revise"] = str(new_cards_to_revise)
 
-    print ("Saved")
     # Save the updated goal data
     db.save(goal_path, goal_data)
 

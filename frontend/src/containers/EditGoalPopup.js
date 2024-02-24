@@ -3,7 +3,7 @@ import GhostButton from '../componments/GhostButton';
 import Heading3 from '../componments/Heading3';
 import Paragraph from '../componments/Paragraph';
 import Button from '../componments/Button';
-import { createXpGoal, createCardGoal } from '../api/Api';
+import apiManager from '../api/Api';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
@@ -15,6 +15,7 @@ function EditGoalPopup({ visible, setVisible }) {
     const [value, setValue] = useState("");
     const [title, setTitle] = useState("");
     const [goalStatus, setGoalStatus] = useState(null);
+    const id = visible.id;
 
     const onDateChange = (event) => {
        setDate(event.target.value);
@@ -34,18 +35,20 @@ function EditGoalPopup({ visible, setVisible }) {
     // When the popup is made visible
     useEffect(() => {
         if (visible != false) {
+            // Get the goal
+            const goal = visible.contents.goal;
             // Set the goal title
-            setTitle(visible.title);
+            setTitle(goal.title);
             // Set the goal type
-            setOption(visible.type.toLowerCase());
+            setOption(goal.type.toLowerCase());
             // Set the goal quantity
-            if (visible.data.cards_to_revise == undefined) {
-                setValue(visible.data.goal_xp);
+            if (goal.data.cards_to_revise == undefined) {
+                setValue(goal.data.goal_xp);
             } else {
-                setValue(visible.data.cards_to_revise);
+                setValue(goal.data.cards_to_revise);
             }
             // Set the goal deadline
-            setDate(formatDateToJavascriptFormat(visible.end_date));
+            setDate(formatDateToJavascriptFormat(goal.end_date));
         }
     }, [visible]);
 
@@ -103,13 +106,21 @@ function EditGoalPopup({ visible, setVisible }) {
         if (option == "xp") {
             // If values have been set
             if (value != "" && date != "none") {
-                createXpGoal(getCookie("userID"), value, formatDateToPythonFormat(date), setGoalStatus);
+                alert ("Editing XP goal");
+                //apiManager.createXpGoal(getCookie("userID"), value, formatDateToPythonFormat(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
         } else {
             if (value != "" && date != "none") {
-                createCardGoal(getCookie("userID"), value, formatDateToPythonFormat(date), setGoalStatus);
+                apiManager.editCardGoal(
+                    getCookie("userID"),
+                    id,
+                    formatDateToPythonFormat(date),
+                    title,
+                    value,
+                    setVisible
+                );
                 setValue("");
                 setDate("none");
             }
