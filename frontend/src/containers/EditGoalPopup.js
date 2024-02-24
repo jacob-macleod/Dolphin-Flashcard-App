@@ -4,6 +4,7 @@ import Heading3 from '../componments/Heading3';
 import Paragraph from '../componments/Paragraph';
 import Button from '../componments/Button';
 import apiManager from '../api/Api';
+import DelayedElement from '../componments/DelayedElement';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
@@ -15,6 +16,7 @@ function EditGoalPopup({ visible, setVisible }) {
     const [value, setValue] = useState("");
     const [title, setTitle] = useState("");
     const [goalStatus, setGoalStatus] = useState(null);
+    const [loadingIcon, setLoadingIcon] = useState(false);
     const id = visible.id;
 
     const onDateChange = (event) => {
@@ -35,6 +37,8 @@ function EditGoalPopup({ visible, setVisible }) {
     // When the popup is made visible
     useEffect(() => {
         if (visible != false) {
+            // Hide the loading icon
+            setLoadingIcon(false);
             // Get the goal
             const goal = visible.contents.goal;
             // Set the goal title
@@ -114,6 +118,8 @@ function EditGoalPopup({ visible, setVisible }) {
                     value,
                     setVisible
                 );
+                // Show the loading icon
+                setLoadingIcon(null);
                 setValue("");
                 setDate("none");
             }
@@ -127,6 +133,8 @@ function EditGoalPopup({ visible, setVisible }) {
                     value,
                     setVisible
                 );
+                // Show the loading icon
+                setLoadingIcon(null);
                 setValue("");
                 setDate("none");
             }
@@ -158,6 +166,10 @@ function EditGoalPopup({ visible, setVisible }) {
                 <div style={{display: "flex"}}>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} />
                     <Button text="Set Goal" onClick={createGoal} />
+                </div>
+
+                <div style={{display: "flex", justifyContent: "center", height: "50px"}}>
+                    <DelayedElement childValue={loadingIcon} child={<></>}/>
                 </div>
             </div>
         </div>
