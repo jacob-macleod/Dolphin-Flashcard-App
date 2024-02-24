@@ -15,8 +15,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
         setNewGoalPopupVisible(true);
     }
 
-    function showEditGoalPopup() {
-        setEditGoalPopupVisible(true);
+    function showEditGoalPopup(goal) {
+        setEditGoalPopupVisible(goal);
     }
 
     const panelTitleStyle = {
@@ -42,8 +42,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
                     <DelayedElement
                         key={goalId}
                         child={
-                          goal.type === "XP" ? <Goal data={goal} clickEvent={showEditGoalPopup}/>
-                          : <Goal data={goal} clickEvent={showEditGoalPopup}/>
+                          goal.type === "XP" ? <Goal data={goal} clickEvent={() => showEditGoalPopup(goal)}/>
+                          : <Goal data={goal} clickEvent={() => showEditGoalPopup(goal)}/>
                         }
                         childValue={goals}
                     />

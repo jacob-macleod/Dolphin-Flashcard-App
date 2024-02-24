@@ -8,10 +8,12 @@ import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
 function EditGoalPopup({ visible, setVisible }) {
+    // visible is either false, or stores the goal data
     const [quantity, setQuantity] = useState("Amount of XP");
     const [option, setOption] = useState('xp');
     const [date, setDate] = useState("none");
     const [value, setValue] = useState("");
+    const [title, setTitle] = useState("");
     const [goalStatus, setGoalStatus] = useState(null);
 
     const onDateChange = (event) => {
@@ -29,7 +31,31 @@ function EditGoalPopup({ visible, setVisible }) {
         }
     };
 
-    function formatDate(dateString) {
+    // When the popup is made visible
+    useEffect(() => {
+        if (visible != false) {
+            // Set the goal title
+            setTitle(visible.title);
+            // Set the goal type
+            setOption(visible.type.toLowerCase());
+            // Set the goal quantity
+            if (visible.data.cards_to_revise == undefined) {
+                setValue(visible.data.goal_xp);
+            } else {
+                setValue(visible.data.cards_to_revise);
+            }
+            // Set the goal deadline
+            setDate(formatDateToJavascriptFormat(visible.end_date));
+        }
+    }, [visible]);
+
+    // When the title is chaned using the input box
+    const onTitleChange = (event) => {
+        setTitle(event.target.value);
+    }
+
+    // Format a date into dd/mm/yyyy
+    function formatDateToPythonFormat(dateString) {
         // Split the date string into an array of year, month, and day
         const [year, month, day] = dateString.split('-');
     
@@ -43,6 +69,21 @@ function EditGoalPopup({ visible, setVisible }) {
     
         // Return the formatted date string in the "dd/mm/yyyy" format
         return `${formattedDay}/${formattedMonth}/${formattedYear}`;
+    }
+
+    function formatDateToJavascriptFormat(inputDate) {
+        // Split the input string based on the '/' delimiter
+        const parts = inputDate.split('/');
+        
+        // Rearrange the parts to get the desired format
+        const year = parts[2];
+        const month = parts[1].padStart(2, '0'); // Ensure two-digit month
+        const day = parts[0].padStart(2, '0'); // Ensure two-digit day
+    
+        // Join the parts using the '-' delimiter
+        const formattedDate = `${year}-${month}-${day}`;
+        
+        return formattedDate;
     }
 
     const today = new Date().toISOString().split('T')[0];
@@ -62,22 +103,18 @@ function EditGoalPopup({ visible, setVisible }) {
         if (option == "xp") {
             // If values have been set
             if (value != "" && date != "none") {
-                createXpGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
+                createXpGoal(getCookie("userID"), value, formatDateToPythonFormat(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
         } else {
             if (value != "" && date != "none") {
-                createCardGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
+                createCardGoal(getCookie("userID"), value, formatDateToPythonFormat(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
         }
     }
-    // Handler function to update the option state when a new option is selected
-    const handleOptionChange = (event) => {
-        setOption(event.target.value);
-    };
 
     return (
         visible === false ? null :
@@ -86,11 +123,8 @@ function EditGoalPopup({ visible, setVisible }) {
                 <Heading3 text="Edit goal:" />
 
                 <div className="input-container">
-                    <Paragraph text="Type of goal: " style={{ display: "flex", alignItems: "center" }} />
-                    <select className="dropdown" value={option} onChange={handleOptionChange}>
-                        <option value="xp" className="option">XP Goal</option>
-                        <option value="flashcards" className="option">Flashcard Goal</option>
-                    </select>
+                    <Paragraph text="Enter new title: " style={{ display: "flex", alignItems: "center" }} />
+                    <input type="text" className="input" value={title} onChange={onTitleChange}/>
                 </div>
 
                 <div className="input-container">

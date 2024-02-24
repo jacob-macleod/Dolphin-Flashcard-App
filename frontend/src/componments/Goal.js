@@ -19,12 +19,6 @@ function Goal({ data, clickEvent }) {
     }
     const title = data.title;
     const dueDate = data.end_date;
-    console.log(data);
-    console.log(start);
-    console.log(end);
-    console.log(title);
-    console.log(dueDate);
-    console.log("---------------------");
 
     function formatDate(date, format) {
         const map = {
