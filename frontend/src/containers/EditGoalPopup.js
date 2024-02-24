@@ -106,8 +106,14 @@ function EditGoalPopup({ visible, setVisible }) {
         if (option == "xp") {
             // If values have been set
             if (value != "" && date != "none") {
-                alert ("Editing XP goal");
-                //apiManager.createXpGoal(getCookie("userID"), value, formatDateToPythonFormat(date), setGoalStatus);
+                apiManager.editXpGoal(
+                    getCookie("userID"),
+                    id,
+                    formatDateToPythonFormat(date),
+                    title,
+                    value,
+                    setVisible
+                );
                 setValue("");
                 setDate("none");
             }

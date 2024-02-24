@@ -96,6 +96,19 @@ class ApiManager {
 
         this.fetchData(data, url, setPopupVisible.bind(null, false));
     }
+
+    editXpGoal(userID, goalID, newEndDate, newTitle, newGoalXP, setPopupVisible) {
+        const url = 'edit-xp-goal';
+        const data = {
+            userID: userID,
+            goalID: goalID,
+            newEndDate: newEndDate,
+            newTitle: newTitle,
+            newGoalXP: newGoalXP
+        }
+
+        this.fetchData(data, url, setPopupVisible.bind(null, false));
+    }
 }
 
 const apiManager = new ApiManager();
