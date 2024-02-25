@@ -276,3 +276,29 @@ def edit_xp_goal():
     db.save(goal_path, goal_data)
 
     return jsonify({"success": "Goal updated successfully"}), 200
+
+@goal_routes.route("/api/delete-goal", methods=["DELETE"])
+def delete_goal():
+    """ Edit an existing XP goal for the user """
+    expected_format = {
+        "userID": "",
+        "goalID": ""
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
+    goal_id = request.json.get("goalID")
+
+    goal_path = "/users/" + user_id + "/goals/" + goal_id + "/"
+
+    # Save the updated goal data
+    db.save(goal_path, {})
+
+    return jsonify({"success": "Goal deleted successfully"}), 200

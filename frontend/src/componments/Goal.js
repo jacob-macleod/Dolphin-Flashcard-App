@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import apiManager from '../api/Api';
+import { getCookie } from '../api/Authentication';
 import ProgressIndicator from './ProgressIndicator';
 import BoldParagraph from './BoldParagraph';
 import Heading5 from './Heading5';
+import Image from './Image';
+import deleteIcon from '../static/delete-icon.svg';
 import './Link.css';
 import './Goal.css';
 
-function Goal({ data, clickEvent }) {
+function Goal({ data, id, clickEvent }) {
     var start = "";
     var end = "";
+    const iconWidth = "16px";
+    const iconHeight = "130px";
 
     // If the goal is a card goal
     if (data.type == "XP") {
@@ -64,6 +70,9 @@ function Goal({ data, clickEvent }) {
                 <Heading5 text={calculateTimeLeft()} />
                 <a className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px"}} onClick={clickEvent}>Edit</a>
             </div>
+            <Image width={iconWidth} height={iconHeight} url={deleteIcon} onClick={() => {apiManager.deleteGoal(
+                getCookie("userID"), id, () => {window.location.reload()}
+            )}}/>
         </div>
     );
 }

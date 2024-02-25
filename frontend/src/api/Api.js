@@ -9,9 +9,9 @@ class ApiManager {
         return ApiManager.instance;
     }
 
-    fetchData (data, url, successCallback) {
+    fetchData (data, url, successCallback, method="POST") {
         fetch(serverURL + url, {
-            method: 'POST',
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*', // Allow requests from any origin
@@ -108,6 +108,19 @@ class ApiManager {
         }
 
         this.fetchData(data, url, setPopupVisible.bind(null, false));
+    }
+
+    deleteGoal(userID, goalID, reloadPage) {
+        const url = 'delete-goal';
+        const data = {
+            userID: userID,
+            goalID: goalID
+        }
+        console.log(data);
+        this.fetchData(data, url, status => {
+            reloadPage();
+        }, "DELETE");
+    
     }
 }
 

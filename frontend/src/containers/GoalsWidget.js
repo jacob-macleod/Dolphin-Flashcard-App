@@ -36,19 +36,23 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
     <WhiteOverlay style={overlayStyle}>
         <Heading5 text="Goals" style={panelTitleStyle} />
         <Button text="+ New Goal" style={{}} onClick={showNewGoalPopup} />
-        {goals && Object.keys(goals).map(goalId => {
-                const goal = goals[goalId];
-                return (
-                    <DelayedElement
-                        key={goalId}
-                        child={
-                          goal.type === "XP" ? <Goal data={goal} clickEvent={() => showEditGoalPopup(goal, goalId)}/>
-                          : <Goal data={goal}clickEvent={() => showEditGoalPopup(goal, goalId)}/>
-                        }
-                        childValue={goals}
-                    />
-                );
-            })}
+        {goals && Object.keys(goals).length > 0 ? (
+          Object.keys(goals).map(goalId => {
+              const goal = goals[goalId];
+              return (
+                  <DelayedElement
+                      key={goalId}
+                      child={
+                          goal.type === "XP" ? <Goal data={goal} id={goalId} clickEvent={() => showEditGoalPopup(goal, goalId)}/>
+                          : <Goal data={goal} id={goalId} clickEvent={() => showEditGoalPopup(goal, goalId)}/>
+                      }
+                      childValue={goals}
+                  />
+              );
+          })
+      ) : (
+          <Heading5 text="You haven't made any goals yet!" style={{padding: "16px"}}/>
+      )}
     </WhiteOverlay>
     </>
 }
