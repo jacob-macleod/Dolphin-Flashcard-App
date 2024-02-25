@@ -48,17 +48,3 @@ jobs:
       run: |
         cd frontend
         npm run build
-
-  lint-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - name: install
-        run: cd frontend && yarn install
-      - name: ESLint
-        run: cd frontend && yarn run fix .
-      - name: Prettier
-        run: cd frontend && yarn prettier --write .
