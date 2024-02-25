@@ -24,12 +24,12 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
       - name: Install node
         run: |
+          cd frontend
           sudo apt install nodejs npm
           npm install -g create-react-app
           npm install
       - name: Build the React App for Deployment
         run: |
-          cd frontend
           npm run build
           rm -rf frontend/node_modules
       - name: Build the Docker image
