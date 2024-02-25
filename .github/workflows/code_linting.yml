@@ -46,4 +46,5 @@ jobs:
 
     - name: Lint the frontend code
       run: |
+        cd frontend
         npm run build
