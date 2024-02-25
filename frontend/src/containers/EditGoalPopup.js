@@ -15,7 +15,7 @@ function EditGoalPopup({ visible, setVisible }) {
     const [date, setDate] = useState("none");
     const [value, setValue] = useState("");
     const [title, setTitle] = useState("");
-    const [goalStatus, setGoalStatus] = useState(null);
+    const [goalStatus] = useState(null);
     const [loadingIcon, setLoadingIcon] = useState(false);
     const id = visible.id;
 
@@ -36,7 +36,7 @@ function EditGoalPopup({ visible, setVisible }) {
 
     // When the popup is made visible
     useEffect(() => {
-        if (visible != false) {
+        if (visible !== false) {
             // Hide the loading icon
             setLoadingIcon(false);
             // Get the goal
@@ -46,7 +46,7 @@ function EditGoalPopup({ visible, setVisible }) {
             // Set the goal type
             setOption(goal.type.toLowerCase());
             // Set the goal quantity
-            if (goal.data.cards_to_revise == undefined) {
+            if (goal.data.cards_to_revise === undefined) {
                 setValue(goal.data.goal_xp);
             } else {
                 setValue(goal.data.cards_to_revise);
@@ -104,12 +104,12 @@ function EditGoalPopup({ visible, setVisible }) {
         if (goalStatus != null) {
             setVisible(false);
         }
-    }, [goalStatus]);
+    }, [goalStatus, setVisible]);
 
     function createGoal() {
-        if (option == "xp") {
+        if (option === "xp") {
             // If values have been set
-            if (value != "" && date != "none") {
+            if (value !== "" && date !== "none") {
                 apiManager.editXpGoal(
                     getCookie("userID"),
                     id,
@@ -124,7 +124,7 @@ function EditGoalPopup({ visible, setVisible }) {
                 setDate("none");
             }
         } else {
-            if (value != "" && date != "none") {
+            if (value !== "" && date !== "none") {
                 apiManager.editCardGoal(
                     getCookie("userID"),
                     id,

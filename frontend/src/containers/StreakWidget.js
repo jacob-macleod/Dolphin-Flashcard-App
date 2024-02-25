@@ -10,8 +10,8 @@ import '../App.css';
 
 function StreakWidget () {
     const [streak, setStreak] = useState(null)
-    const [totalXP, setTotalXP] = useState("6093")
-    const [weeklyXP, setWeeklyXP] = useState("72")
+    const [totalXP] = useState("6093")
+    const [weeklyXP] = useState("72")
 
     const panelTitleStyle = {
         padding: "8px"

@@ -56,18 +56,18 @@ function NewGoalPopup({ visible, setVisible }) {
         if (goalStatus != null) {
             setVisible(false);
         }
-    }, [goalStatus]);
+    }, [goalStatus, setVisible]);
 
     function createGoal() {
-        if (option == "xp") {
+        if (option === "xp") {
             // If values have been set
-            if (value != "" && date != "none") {
+            if (value !== "" && date !== "none") {
                 apiManager.createXpGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
         } else {
-            if (value != "" && date != "none") {
+            if (value !== "" && date !== "none") {
                 apiManager.createCardGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
                 setValue("");
                 setDate("none");

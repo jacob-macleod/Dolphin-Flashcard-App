@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 import ProgressIndicator from './ProgressIndicator';
@@ -16,7 +16,7 @@ function Goal({ data, id, clickEvent }) {
     const iconHeight = "130px";
 
     // If the goal is a card goal
-    if (data.type == "XP") {
+    if (data.type === "XP") {
         start = data.data.starting_xp;
         end = data.data.goal_xp;
     } else {
@@ -25,17 +25,6 @@ function Goal({ data, id, clickEvent }) {
     }
     const title = data.title;
     const dueDate = data.end_date;
-
-    function formatDate(date, format) {
-        const map = {
-            mm: date.getMonth() + 1,
-            dd: date.getDate(),
-            yy: date.getFullYear().toString().slice(-2),
-            yyyy: date.getFullYear()
-        }
-    
-        return format.replace(/mm|dd|yy|yyy/gi, matched => map[matched])
-    }
 
     const calculateTimeLeft = () => {
         const dueDateParts = dueDate.split('/');
@@ -68,7 +57,7 @@ function Goal({ data, id, clickEvent }) {
             <div className="textContainer">
                 <BoldParagraph text={title} />
                 <Heading5 text={calculateTimeLeft()} />
-                <a className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px"}} onClick={clickEvent}>Edit</a>
+                <p className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px", margin: "0px"}} onClick={clickEvent}>Edit</p>
             </div>
             <Image width={iconWidth} height={iconHeight} url={deleteIcon} onClick={() => {apiManager.deleteGoal(
                 getCookie("userID"), id, () => {window.location.reload()}
