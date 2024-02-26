@@ -53,12 +53,12 @@ function Dashboard() {
 
         <GridItem style={{padding: "0px"}}>
 
-          <WhiteOverlay style={{width: "max-content", marginTop: "72px"}}>
+          <WhiteOverlay style={{width: "100%", marginTop: "72px"}}>
             <Heatmap />
           </WhiteOverlay>
 
           <WhiteOverlay style={{height: "336px"}}>
-            <Heading5 style={{padding: "16px"}} text="Recently studies sets coming soon..." />
+            <Heading5 style={{padding: "16px"}} text="Recently studied sets coming soon..." />
           </WhiteOverlay>
         </GridItem>
       </GridContainer>
