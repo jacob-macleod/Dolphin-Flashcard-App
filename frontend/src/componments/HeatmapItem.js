@@ -58,14 +58,36 @@ function HeatmapItem({days, startDate, endDate}) {
         console.log(dayData);
     }, [dayData]);
 
+    // Helper function to get the starting day of the month
+    function getStartingDayOfMonth(dateString) {
+        const [day, month, year] = dateString.split("-");
+        const date = new Date(`${year}-${month}-01`);
+        return date.getDay(); // Returns 0 for Sunday, 1 for Monday, etc.
+    }
+      
     function renderTableHeaders(dayData) {
+        // Check if dayData is null
+        if (!dayData) {
+            return null;
+        }
+
         // Initialize an empty array to store the table header elements
         let tableHeaders = [];
         let tableRows = [];
 
         // Iterate through each item in dayData
         let count = 0;
+        var startingDayOfMonth = getStartingDayOfMonth(Object.keys(dayData)[0]) - 1; // Adjusted to start from Monday 
+        var addedStartPadding = false;
         for (const item in dayData) {
+            // Add padding to the start
+            if (addedStartPadding == false) {
+                for (var i=0; i<startingDayOfMonth; i++) {
+                    tableRows.push(<th key={count}></th>);
+                    count ++;
+                }
+                addedStartPadding = true;
+            }
             // Extract the day and data value from the item
             const day = item.charAt(0); // Extract the first character (day)
             const dataValue = dayData[item]; // Get the data value
