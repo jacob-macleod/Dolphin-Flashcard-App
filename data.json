@@ -1,1 +1,17 @@
-{}
+{
+    "": {
+        "users": {
+            "1231": {
+                "userID": "1231",
+                "name": "Jayme, Klein",
+                "statistics": {
+                    "streak": "0",
+                    "totalXP": "0",
+                    "weeklyXP": "0",
+                    "lastStreak": "03/03/2024"
+                },
+                "heatmapData": {}
+            }
+        }
+    }
+}
