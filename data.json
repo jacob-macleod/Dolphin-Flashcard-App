@@ -1,1 +1,18 @@
-{}
+{
+    "users": {
+        "1": {
+            "userID": "1",
+            "name": "Dummy",
+            "statistics": {
+                "streak": "0",
+                "totalXP": "0",
+                "weeklyXP": "0",
+                "lastStreak": "02/03/2024"
+            },
+            "heatmapData": {}
+        },
+        "2": {},
+        "3": {}
+    },
+    "flashcards": {}
+}
