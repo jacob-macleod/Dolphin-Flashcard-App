@@ -11,6 +11,7 @@ from routes.api.authentication import create_account, serve_credentials
 from json import loads, dumps
 from requests import get, post
 from main import server_addr
+from api_routes import Routes
 
 headers = {
     'Content-Type': 'application/json'
@@ -166,17 +167,45 @@ class TestApi(unittest.TestCase):
         self.assertTrue(result, 'Invalid json format for keys and sub keys.')
 
     # Authentication
-
-    def test_create_account(self) -> None:
-        dummy = {
+    def test_create_account_valid(self) -> None:
+        """
+        Valid account
+        """
+        valid_dummy = {
             "userID": "1",
             "displayName": "Dummy"
         }
 
-        response = self.post_api('/api/create-account', dummy)
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT['url'], valid_dummy)
         response_json = response[0]
-        self.assertTrue(response_json['success'], 'Invalid return for "create_account" method.'
-                                                  f'Should be True but was {response_json['success']}')
+        self.assertTrue(expr=response_json['success'],
+                        msg='Dummy account creation should be successful.')
+
+    def test_create_account_empty(self) -> None:
+        """
+        Empty userID / displayName
+        """
+        error_dummy = {
+            "userID": "",
+            "displayName": ""
+        }
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT['url'], error_dummy)
+        response_json = response[0]
+        self.assertFalse(expr=response_json['success'],
+                         msg='Should not create a nameless user.')
+
+    def test_create_account_invalid(self) -> None:
+        """
+        Empty json data
+        """
+        empty_dummy = {}
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT['url'], empty_dummy)
+        self.assertEqual(first=response['error'],
+                         second="Your supplied json keys do not match the expected format. "
+                                "The request should be in the format: {'userID': '', 'displayName': ''}",
+                         msg='Should not create an empty user.')
 
     def test_serve_credentials(self) -> None:
         # TODO: Must test serve_credentials endpoint
@@ -185,8 +214,11 @@ class TestApi(unittest.TestCase):
 
     # Card Management
 
-    def test_create_flashcard(self) -> None:
-        data = {
+    def test_create_flashcard_valid(self) -> None:
+        """
+        Valid flashcard
+        """
+        valid_data = {
             "userID": "1",
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
@@ -206,10 +238,85 @@ class TestApi(unittest.TestCase):
             ]
         }
 
-        response = self.post_api('/api/create-flashcard', data=data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=valid_data)
         response_json = response[0]
-        self.assertTrue(response_json['success'], 'Invalid return for "create_flashcard" method.'
-                                                  f'Should be True but was {response_json['success']}')
+        self.assertTrue(expr=response_json['success'],
+                        msg=f'Should be True but was {response_json['success']}')
+
+    def test_create_flashcard_non_existent_userid(self) -> None:
+        """
+        Non-existent userID
+        """
+        invalid_data = {
+            "userID": "-1",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "cards": [
+                {
+                    "front": "Front 1",
+                    "back": "Back 1",
+                    "reviewStatus": "0.0",
+                    "lastReview": "01/01/1969"
+                },
+                {
+                    "front": "Front 2",
+                    "back": "Back 2",
+                    "reviewStatus": "0.0",
+                    "lastReview": "01/01/1969"
+                }
+            ]
+        }
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
+        response_json = response[0]
+        self.assertFalse(response_json['success'],
+                         msg='Should not create a flashcard for an user that does not exist.')
+
+    def test_create_flashcard_empty_userid(self) -> None:
+        """
+        Empty userID
+        """
+        invalid_data = {
+            "userID": "",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "cards": [
+                {
+                    "front": "Front 1",
+                    "back": "Back 1",
+                    "reviewStatus": "0.0",
+                    "lastReview": "01/01/1969"
+                },
+                {
+                    "front": "Front 2",
+                    "back": "Back 2",
+                    "reviewStatus": "0.0",
+                    "lastReview": "01/01/1969"
+                }
+            ]
+        }
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
+        response_json = response[0]
+        self.assertFalse(response_json['success'],
+                         msg='Should not create a flashcard for an user that does not exist.')
+
+    def test_create_flashcard_empty_cards(self) -> None:
+        """
+        Empty cards field
+        """
+        invalid_data = {
+            "userID": "-1",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "cards": []
+        }
+        # Should this be possible?
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
+        response_json = response[0]
+        self.assertFalse(response_json['success'],
+                         msg='Should not create a flashcard for an user that does not exist.')
 
     def test_get_flashcard(self) -> None:
         # TODO: Must test get_flashcard endpoint
