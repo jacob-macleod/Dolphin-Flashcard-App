@@ -2,8 +2,10 @@
 import json
 from database.database_abstract import DatabaseAbstract
 
+
 class LocalDatabase(DatabaseAbstract):
     """ Write to local files for development """
+
     def __init__(self, filename="data.json"):
         self.filename = filename
         try:
@@ -36,7 +38,12 @@ class LocalDatabase(DatabaseAbstract):
 
         # Traverse the JSON structure according to the given path
         for key in keys:
-            current = current[key]
+            # If the key exists, move to the next level of the JSON structure
+            if key in current.keys() :
+                current = current[key]
+            else:
+                # If the key does not exist, return None
+                return None
 
         return current
 
@@ -48,6 +55,16 @@ class LocalDatabase(DatabaseAbstract):
         """
         if string[-1] == "/":
             return string[:-1]
+        return string
+
+    def _remove_starting_slash(self, string: str):
+        """Remove the starting slash from a string
+
+        Args:
+            string (str): The string to remove the starting slash from
+        """
+        if string[0] == "/":
+            return string[1:]
         return string
 
     def write(self):
@@ -66,12 +83,14 @@ class LocalDatabase(DatabaseAbstract):
         """
         self._load_from_file()
         path = self._remove_trailing_slash(path)
+        path = self._remove_starting_slash(path)
         return self._traverse_path(path)
 
     def save(self, path, data):
         """ Update data in self.json_data based on the path """
         self._load_from_file()
         path = self._remove_trailing_slash(path)
+        path = self._remove_starting_slash(path)
         keys = path.split("/")
         current = self.json_data
 
@@ -83,8 +102,9 @@ class LocalDatabase(DatabaseAbstract):
         current[keys[-1]] = data
         self.write()
 
-    def increment(self, path, increment_amount) :
+    def increment(self, path, increment_amount):
         """ Increment a number stored as a string from a path in the database """
-        print ("Incrementing " + path + " by " + str(increment_amount))
+        print("Incrementing " + path + " by " + str(increment_amount))
+
 
 db = LocalDatabase()
