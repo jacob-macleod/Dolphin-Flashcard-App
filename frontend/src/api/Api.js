@@ -116,11 +116,20 @@ class ApiManager {
             userID: userID,
             goalID: goalID
         }
-        console.log(data);
         this.fetchData(data, url, status => {
             reloadPage();
         }, "DELETE");
     
+    }
+
+    getHeatmap(userID, setHeatmap) {
+        const url = 'get-heatmap';
+        const data = {
+            userID: userID
+        };
+        this.fetchData(data, url, heatmapData => {
+            setHeatmap(heatmapData);
+        })
     }
 }
 

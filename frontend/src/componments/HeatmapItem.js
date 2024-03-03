@@ -58,10 +58,6 @@ function HeatmapItem({days, startDate, endDate, month}) {
         setDayData(generateDataArray());
     }, [days, endDate, startDate]);
 
-    React.useEffect(() => {
-        console.log(dayData);
-    }, [dayData]);
-
     // Helper function to get the starting day of the month
     function getStartingDayOfMonth(dateString) {
         const month = dateString.split("-")[1];
