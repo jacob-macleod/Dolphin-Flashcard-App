@@ -36,7 +36,12 @@ class LocalDatabase(DatabaseAbstract):
 
         # Traverse the JSON structure according to the given path
         for key in keys:
-            current = current[key]
+            # If the key exists, move to the next level of the JSON structure
+            if key in current.keys() :
+                current = current[key]
+            else:
+                # If the key does not exist, return None
+                return None
 
         return current
 
