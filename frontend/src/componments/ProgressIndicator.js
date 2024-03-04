@@ -19,7 +19,7 @@ function ProgressIndicator({start, end}) {
                     textFontFamily: "Roboto",
                 })}
             >
-                <p class="text">{start}/{end}</p>
+                <p className="text">{start}/{end}</p>
             </CircularProgressbarWithChildren>
         </div>
         </>

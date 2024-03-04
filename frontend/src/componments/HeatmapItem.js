@@ -84,6 +84,16 @@ function HeatmapItem({days, startDate, endDate, month}) {
         return highestValue;
     }
 
+    function generateRandomString(length) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            result += characters.charAt(randomIndex);
+        }
+        return result;
+    }    
+
     const noStreakIcon = <div className='image-wrapper'><Image url={xIcon} width='12px' height='12px' paddingRight='0px'/></div>;
     const highestStreakValue = getHighestValue();
     function renderTableHeaders(dayData) {
@@ -104,7 +114,7 @@ function HeatmapItem({days, startDate, endDate, month}) {
             // Add padding to the start
             if (addedStartPadding === false) {
                 for (var i=0; i<startingDayOfMonth; i++) {
-                    tableRows.push(<th key={count} className='table-item'></th>);
+                    tableRows.push(<th key={generateRandomString(5)} className='table-item'></th>);
                     count ++;
                 }
                 addedStartPadding = true;
@@ -116,9 +126,9 @@ function HeatmapItem({days, startDate, endDate, month}) {
             const relativeStreakSize = parseInt(dataValue) / highestStreakValue;
             // Append the correct item to the array
             if (dataValue === "0") {
-                tableRows.push(<th key={day} className='table-item'>{noStreakIcon}</th>);
+                tableRows.push(<th key={generateRandomString(5)} className='table-item'>{noStreakIcon}</th>);
             } else {
-                tableRows.push(<th key={day} className='table-item'>
+                tableRows.push(<th key={generateRandomString(5)} className='table-item'>
                     <div className={
                         relativeStreakSize < 0.2 ? "low-streak" :
                         relativeStreakSize < 0.5 ? "medium-streak" :
@@ -132,7 +142,7 @@ function HeatmapItem({days, startDate, endDate, month}) {
             // If 7 items have been added or it's the last item
             if (count === 7 || Object.keys(dayData).indexOf(item) === Object.keys(dayData).length - 1) {
                 // Add the table row to tableHeaders
-                tableHeaders.push(<tr key={count} className='table-row'>{tableRows}</tr>);
+                tableHeaders.push(<tr key={generateRandomString(5)} className='table-row'>{tableRows}</tr>);
                 tableRows = [];
                 count = 0;
             }
@@ -141,22 +151,24 @@ function HeatmapItem({days, startDate, endDate, month}) {
     }
 
     return (
-        <div class="heatmap-item-container">
+        <div className="heatmap-item-container">
             <Paragraph text={month} style={{
                 marginTop: "4px",
                 marginBottom: "4px",
             }}/>
             <table>
-                <tr className='table-row'>
-                    <th className='table-item'><Heading5 color='black' text="M"/></th>
-                    <th className='table-item'><Heading5 color='black' text="T"/></th>
-                    <th className='table-item'><Heading5 color='black' text="W"/></th>
-                    <th className='table-item'><Heading5 color='black' text="T"/></th>
-                    <th className='table-item'><Heading5 color='black' text="F"/></th>
-                    <th className='table-item'><Heading5 color='black' text="S"/></th>
-                    <th className='table-item'><Heading5 color='black' text="S"/></th>
+                <tbody>
+                <tr key={generateRandomString(5)} className='table-row'>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="M"/></th>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="T"/></th>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="W"/></th>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="T"/></th>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="F"/></th>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="S"/></th>
+                    <th key={generateRandomString(5)} className='table-item'><Heading5 color='black' text="S"/></th>
                 </tr>
                 {renderTableHeaders(dayData)}
+                </tbody>
             </table>
         </div>
     );

@@ -25,7 +25,7 @@ function Dashboard() {
   const [editGoalPopupVisible, setEditGoalPopupVisible] = useState(false);
 
   return (
-    <div style={{top: "0px;"}}>
+    <div style={{top: "0px"}}>
       <Helmet>
         <title>{ title }</title>
         <meta
