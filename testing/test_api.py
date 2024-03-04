@@ -20,13 +20,14 @@ headers = {
 
 class TestApi(unittest.TestCase):
 
-    def get_api(self, route: str, ) -> dict:
+    def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime
         """
 
         response = get(f'http://localhost:{server_addr[1]}{route}',
-                       headers=headers)
+                       headers=headers,
+                       data=dumps(data))
 
         self.assertNotEqual(response.status_code, 500,
                             f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
@@ -54,24 +55,24 @@ class TestApi(unittest.TestCase):
 
         # Test with a valid request
         result = check_request_json(
-            {
-                "key1": "",
-                "key2": ""},
-            {
-                "key1": "",
-                "key2": ""}
+                {
+                    "key1": "",
+                    "key2": ""},
+                {
+                    "key1": "",
+                    "key2": ""}
         )
 
         self.assertTrue(result)
 
         # Test with a valid request but keys have different values
         result = check_request_json(
-            {
-                "key1": "val1",
-                "key2": "value2"},
-            {
-                "key1": "",
-                "key2": ""}
+                {
+                    "key1": "val1",
+                    "key2": "value2"},
+                {
+                    "key1": "",
+                    "key2": ""}
         )
 
         self.assertEqual(result, "Value for 'val1' does not match the expected pattern ''",
@@ -79,37 +80,37 @@ class TestApi(unittest.TestCase):
 
         # Test with a valid request but keys are in different order
         result = check_request_json(
-            {
-                "key2": "",
-                "key1": ""},
-            {
-                "key1": "",
-                "key2": ""}
+                {
+                    "key2": "",
+                    "key1": ""},
+                {
+                    "key1": "",
+                    "key2": ""}
         )
         self.assertEqual(result, 'Your supplied json keys do not match the expected format',
                          'Your supplied json keys do not match the expected format')
 
         # Test with valid keys and some extra ones
         result = check_request_json(
-            {
-                "key1": "",
-                "key2": "",
-                "key3": ""},
-            {
-                "key1": "",
-                "key2": ""}
+                {
+                    "key1": "",
+                    "key2": "",
+                    "key3": ""},
+                {
+                    "key1": "",
+                    "key2": ""}
         )
         self.assertEqual(result, 'Your supplied json keys do not match the expected format',
                          'Your supplied json keys do not match the expected format')
 
         # Test with invalid keys
         result = check_request_json(
-            {
-                "key3": "",
-                "key4": ""},
-            {
-                "key1": "",
-                "key2": ""}
+                {
+                    "key3": "",
+                    "key4": ""},
+                {
+                    "key1": "",
+                    "key2": ""}
         )
 
         self.assertEqual(result, 'Your supplied json keys do not match the expected format',
@@ -117,14 +118,14 @@ class TestApi(unittest.TestCase):
 
         # Test with valid regex pattern
         expected_format = {
-            "name": "",
-            "age": r'\d+',
+            "name" : "",
+            "age"  : r'\d+',
             "email": r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
         }
 
         request_data = {
-            "name": "John Doe",
-            "age": "30",
+            "name" : "John Doe",
+            "age"  : "30",
             "email": "john@example.com",
         }
         result = check_request_json(expected_format, request_data)
@@ -132,8 +133,8 @@ class TestApi(unittest.TestCase):
 
         # Test with invalid regex pattern
         expected_format = {
-            "name": "",
-            "age": r'\d{3}',
+            "name" : "",
+            "age"  : r'\d{3}',
             "email": r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
         }
 
@@ -142,23 +143,23 @@ class TestApi(unittest.TestCase):
                          msg="Value for '\\d{3}' does not match the expected pattern '30'")
 
         expected_format = {
-            "name": "",
-            "age": "",
-            "email": "",
+            "name"   : "",
+            "age"    : "",
+            "email"  : "",
             "address": {
-                "street": "",
-                "city": "",
+                "street"  : "",
+                "city"    : "",
                 "postcode": ""
             }
         }
 
         request_data = {
-            "name": "",
-            "age": "",
-            "email": "",
+            "name"   : "",
+            "age"    : "",
+            "email"  : "",
             "address": {
-                "street": "",
-                "city": "",
+                "street"  : "",
+                "city"    : "",
                 "postcode": ""
             }
         }
@@ -172,7 +173,7 @@ class TestApi(unittest.TestCase):
         Valid account
         """
         valid_dummy = {
-            "userID": "1",
+            "userID"     : "1",
             "displayName": "Dummy"
         }
 
@@ -186,7 +187,7 @@ class TestApi(unittest.TestCase):
         Empty userID / displayName
         """
         error_dummy = {
-            "userID": "",
+            "userID"     : "",
             "displayName": ""
         }
 
@@ -207,33 +208,27 @@ class TestApi(unittest.TestCase):
                                 "The request should be in the format: {'userID': '', 'displayName': ''}",
                          msg='Should not create an empty user.')
 
-    def test_serve_credentials(self) -> None:
-        # TODO: Must test serve_credentials endpoint
-        # I need to setup a firebase locally
-        pass
-
     # Card Management
-
     def test_create_flashcard_valid(self) -> None:
         """
         Valid flashcard
         """
         valid_data = {
-            "userID": "1",
-            "flashcardName": "My new set",
+            "userID"              : "1",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": [
+            "cards"               : [
                 {
-                    "front": "Front 1",
-                    "back": "Back 1",
+                    "front"       : "Front 1",
+                    "back"        : "Back 1",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 },
                 {
-                    "front": "Front 2",
-                    "back": "Back 2",
+                    "front"       : "Front 2",
+                    "back"        : "Back 2",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 }
             ]
         }
@@ -248,21 +243,21 @@ class TestApi(unittest.TestCase):
         Non-existent userID
         """
         invalid_data = {
-            "userID": "-1",
-            "flashcardName": "My new set",
+            "userID"              : "-1",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": [
+            "cards"               : [
                 {
-                    "front": "Front 1",
-                    "back": "Back 1",
+                    "front"       : "Front 1",
+                    "back"        : "Back 1",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 },
                 {
-                    "front": "Front 2",
-                    "back": "Back 2",
+                    "front"       : "Front 2",
+                    "back"        : "Back 2",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 }
             ]
         }
@@ -277,21 +272,21 @@ class TestApi(unittest.TestCase):
         Empty userID
         """
         invalid_data = {
-            "userID": "",
-            "flashcardName": "My new set",
+            "userID"              : "",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": [
+            "cards"               : [
                 {
-                    "front": "Front 1",
-                    "back": "Back 1",
+                    "front"       : "Front 1",
+                    "back"        : "Back 1",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 },
                 {
-                    "front": "Front 2",
-                    "back": "Back 2",
+                    "front"       : "Front 2",
+                    "back"        : "Back 2",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 }
             ]
         }
@@ -306,21 +301,53 @@ class TestApi(unittest.TestCase):
         Empty cards field
         """
         invalid_data = {
-            "userID": "-1",
-            "flashcardName": "My new set",
+            "userID"              : "-1",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": []
+            "cards"               : []
         }
-        # Should this be possible?
+
+        # TODO: Should this be possible?
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
         self.assertFalse(response_json['success'],
                          msg='Should not create a flashcard for an user that does not exist.')
 
-    def test_get_flashcard(self) -> None:
-        # TODO: Must test get_flashcard endpoint
-        pass
+    def test_get_flashcard_valid(self) -> None:
+        data = {
+            "userID"       : "1",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
+        self.assertIsInstance(response, dict, f"Should return a dict flashcard, but returned {type(response)}")
+
+    def test_get_flashcard_non_existent_userid(self) -> None:
+        data = {
+            "userID"       : "-2",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
+        self.assertIsNone(response, "Should return nothing for a non-existent userID.")
+
+    def test_get_flashcard_invalid_data(self) -> None:
+        """
+        Invalid 'user' key, should be 'userID'
+        """
+        data = {
+            "user"         : "1",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
+        self.assertIsInstance(response, dict, f"Should be a dict, but was {response}")
+
+        self.assertEqual(response['error'],
+                         "Your supplied json keys do not match the expected format."
+                         " The request should be in the format: {'userID': '', 'flashcardName': ''}",
+                         "Invalid return from get-flashcard endpoint, json keys must be valid.")
 
     def test_get_today_cards(self) -> None:
         # TODO: Must test get_today_cards endpoint
