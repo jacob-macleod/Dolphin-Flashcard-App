@@ -20,12 +20,13 @@ headers = {
 
 class TestApi(unittest.TestCase):
 
-    def get_api(self, route: str, ) -> dict:
+    def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime
         """
 
         response = get(f'http://localhost:{server_addr[1]}{route}',
+                       data=dumps(data),
                        headers=headers)
 
         self.assertNotEqual(response.status_code, 500,
@@ -181,7 +182,7 @@ class TestApi(unittest.TestCase):
         self.assertTrue(expr=response_json['success'],
                         msg='Dummy account creation should be successful.')
 
-    def test_create_account_empty(self) -> None:
+    def test_create_account_empty_data(self) -> None:
         """
         Empty userID / displayName
         """
@@ -195,7 +196,7 @@ class TestApi(unittest.TestCase):
         self.assertFalse(expr=response_json['success'],
                          msg='Should not create a nameless user.')
 
-    def test_create_account_invalid(self) -> None:
+    def test_create_account_empty_json(self) -> None:
         """
         Empty json data
         """
@@ -207,13 +208,7 @@ class TestApi(unittest.TestCase):
                                 "The request should be in the format: {'userID': '', 'displayName': ''}",
                          msg='Should not create an empty user.')
 
-    def test_serve_credentials(self) -> None:
-        # TODO: Must test serve_credentials endpoint
-        # I need to setup a firebase locally
-        pass
-
     # Card Management
-
     def test_create_flashcard_valid(self) -> None:
         """
         Valid flashcard
@@ -270,7 +265,7 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
         self.assertFalse(response_json['success'],
-                         msg='Should not create a flashcard for an user that does not exist.')
+                         msg='Should not create a flashcard for a non-existent userID')
 
     def test_create_flashcard_empty_userid(self) -> None:
         """
@@ -299,7 +294,7 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
         self.assertFalse(response_json['success'],
-                         msg='Should not create a flashcard for an user that does not exist.')
+                         msg='Should not create a flashcard for an empty userID.')
 
     def test_create_flashcard_empty_cards(self) -> None:
         """
@@ -311,23 +306,112 @@ class TestApi(unittest.TestCase):
             "flashcardDescription": "This is\nmy description",
             "cards": []
         }
-        # Should this be possible?
+        # TODO: Should this be possible?
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
         self.assertFalse(response_json['success'],
                          msg='Should not create a flashcard for an user that does not exist.')
 
-    def test_get_flashcard(self) -> None:
-        # TODO: Must test get_flashcard endpoint
-        pass
+    def test_get_flashcard_valid(self) -> None:
+        """
+        Valid data for get-flashcard
+        Existing user
+        Existing flashcard
+        """
+        valid_data = {
+            "userID": "1",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
+                                valid_data)
+
+        self.assertIsInstance(obj=response,
+                              cls=dict,
+                              msg="Unexpected return from get_flashcard endpoint. "
+                                  f"Should be a 'dict', but was {type(response)}")
+
+    def test_get_flashcard_empty_data(self) -> None:
+        """
+        Empty data for get-flashcard
+        Non-existent userID
+        Non-existent flashcard
+        """
+        valid_data = {
+            "userID": "",
+            "flashcardName": ""
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
+                                valid_data)
+
+        self.assertIsNone(obj=response,
+                          msg="Unexpected return from get_flashcard endpoint. "
+                              f"Should be None, but was {type(response)}")
+
+    def test_get_flashcard_empty_json(self) -> None:
+        """
+        Empty json for get-flashcard
+        """
+        valid_data = {}
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
+                                valid_data)
+
+        self.assertIsNone(obj=response,
+                          msg="Unexpected return from get_flashcard endpoint. "
+                              f"Should be None, but was {type(response)}")
+
+    def test_get_flashcard_invalid_flashcard_name(self) -> None:
+        """
+        Invalid data for get-flashcard
+        Existing userID
+        Non-existent flashcard
+        """
+        valid_data = {
+            "userID": "1",
+            "flashcardName": "non-existent"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
+                                valid_data)
+
+        self.assertIsNone(obj=response,
+                          msg="Unexpected return from get_flashcard endpoint. "
+                              f"Should be None, but was {type(response)}")
 
     def test_get_today_cards(self) -> None:
-        # TODO: Must test get_today_cards endpoint
-        pass
+        """
+        Valid data for get_today_cards
+        """
+        valid_data = {
+            "userID": "1"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], valid_data)
+        self.assertIsInstance(obj=response,
+                              cls=list,
+                              msg="Unexpected return from get_today_cards endpoint.\n"
+                                  f"Should be list, but was {type(response)}.")
+
+    def test_get_today_cards_invalid_userid(self) -> None:
+        """
+        Valid data for get_today_cards
+        """
+        valid_data = {
+            "userID": "0"
+        }
+
+        # TODO: Should "User has no flashcards" be the right response for a non-existent user?
+
+        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], valid_data)
+        self.assertEqual(response[0],
+                         'User has no flashcards',
+                         msg=f"Unexpected return from get_today_cards.\n"
+                             f"Should be 'User has no flashcards' but was {response[0]}")
 
     # Statistics
-
     def test_calculate_card_stats(self) -> None:
         # TODO: Must test calculate_card_stats endpoint
         pass

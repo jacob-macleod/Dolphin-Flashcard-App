@@ -1,14 +1,5 @@
 {
     "users": {
-        "userID": "",
-        "name": "",
-        "statistics": {
-            "streak": "0",
-            "totalXP": "0",
-            "weeklyXP": "0",
-            "lastStreak": "03/03/2024"
-        },
-        "heatmapData": {},
         "1": {
             "userID": "1",
             "name": "Dummy",
@@ -47,20 +38,7 @@
                     "flashcardID": "53247975812034509491484041336208527259375627317574189579622642545922337011888",
                     "flashcardName": "My new set",
                     "flashcardDescription": "This is\nmy description",
-                    "cards": [
-                        {
-                            "front": "Front 1",
-                            "back": "Back 1",
-                            "reviewStatus": "0.0",
-                            "lastReview": "01/01/1969"
-                        },
-                        {
-                            "front": "Front 2",
-                            "back": "Back 2",
-                            "reviewStatus": "0.0",
-                            "lastReview": "01/01/1969"
-                        }
-                    ]
+                    "cards": []
                 }
             }
         },
