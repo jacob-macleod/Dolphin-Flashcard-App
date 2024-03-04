@@ -50,6 +50,21 @@ class TestApi(unittest.TestCase):
 
         return loads(response.text)
 
+    def test_example(self) -> None:
+        """
+        Brief description
+        """
+        data = {
+            "key1": "value1",
+            "key2": "value2"
+        }
+
+        # TODO: Warning / Question tho who is coding the backend
+
+        response = True
+
+        self.assertTrue(response, 'Should be True, but was {}'.format(response))
+
     def test_check_request_json(self) -> None:
         # Check the check_request_json function works as expected
 
@@ -118,14 +133,14 @@ class TestApi(unittest.TestCase):
 
         # Test with valid regex pattern
         expected_format = {
-            "name": "",
-            "age": r'\d+',
+            "name" : "",
+            "age"  : r'\d+',
             "email": r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
         }
 
         request_data = {
-            "name": "John Doe",
-            "age": "30",
+            "name" : "John Doe",
+            "age"  : "30",
             "email": "john@example.com",
         }
         result = check_request_json(expected_format, request_data)
@@ -133,8 +148,8 @@ class TestApi(unittest.TestCase):
 
         # Test with invalid regex pattern
         expected_format = {
-            "name": "",
-            "age": r'\d{3}',
+            "name" : "",
+            "age"  : r'\d{3}',
             "email": r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
         }
 
@@ -143,23 +158,23 @@ class TestApi(unittest.TestCase):
                          msg="Value for '\\d{3}' does not match the expected pattern '30'")
 
         expected_format = {
-            "name": "",
-            "age": "",
-            "email": "",
+            "name"   : "",
+            "age"    : "",
+            "email"  : "",
             "address": {
-                "street": "",
-                "city": "",
+                "street"  : "",
+                "city"    : "",
                 "postcode": ""
             }
         }
 
         request_data = {
-            "name": "",
-            "age": "",
-            "email": "",
+            "name"   : "",
+            "age"    : "",
+            "email"  : "",
             "address": {
-                "street": "",
-                "city": "",
+                "street"  : "",
+                "city"    : "",
                 "postcode": ""
             }
         }
@@ -173,7 +188,7 @@ class TestApi(unittest.TestCase):
         Valid account
         """
         valid_dummy = {
-            "userID": "1",
+            "userID"     : "1",
             "displayName": "Dummy"
         }
 
@@ -187,7 +202,7 @@ class TestApi(unittest.TestCase):
         Empty userID / displayName
         """
         error_dummy = {
-            "userID": "",
+            "userID"     : "",
             "displayName": ""
         }
 
@@ -214,27 +229,27 @@ class TestApi(unittest.TestCase):
         """
         Valid flashcard
         """
-        valid_data = {
-            "userID": "1",
-            "flashcardName": "My new set",
+        data = {
+            "userID"              : "1",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": [
+            "cards"               : [
                 {
-                    "front": "Front 1",
-                    "back": "Back 1",
+                    "front"       : "Front 1",
+                    "back"        : "Back 1",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 },
                 {
-                    "front": "Front 2",
-                    "back": "Back 2",
+                    "front"       : "Front 2",
+                    "back"        : "Back 2",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 }
             ]
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=valid_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=data)
         response_json = response[0]
         self.assertTrue(expr=response_json['success'],
                         msg=f'Should be True but was {response_json['success']}')
@@ -243,27 +258,27 @@ class TestApi(unittest.TestCase):
         """
         Non-existent userID
         """
-        invalid_data = {
-            "userID": "-1",
-            "flashcardName": "My new set",
+        indata = {
+            "userID"              : "-1",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": [
+            "cards"               : [
                 {
-                    "front": "Front 1",
-                    "back": "Back 1",
+                    "front"       : "Front 1",
+                    "back"        : "Back 1",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 },
                 {
-                    "front": "Front 2",
-                    "back": "Back 2",
+                    "front"       : "Front 2",
+                    "back"        : "Back 2",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 }
             ]
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=indata)
         response_json = response[0]
         self.assertFalse(response_json['success'],
                          msg='Should not create a flashcard for an user that does not exist.')
@@ -272,27 +287,27 @@ class TestApi(unittest.TestCase):
         """
         Empty userID
         """
-        invalid_data = {
-            "userID": "",
-            "flashcardName": "My new set",
+        indata = {
+            "userID"              : "",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": [
+            "cards"               : [
                 {
-                    "front": "Front 1",
-                    "back": "Back 1",
+                    "front"       : "Front 1",
+                    "back"        : "Back 1",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 },
                 {
-                    "front": "Front 2",
-                    "back": "Back 2",
+                    "front"       : "Front 2",
+                    "back"        : "Back 2",
                     "reviewStatus": "0.0",
-                    "lastReview": "01/01/1969"
+                    "lastReview"  : "01/01/1969"
                 }
             ]
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=indata)
         response_json = response[0]
         self.assertFalse(response_json['success'],
                          msg='Should not create a flashcard for an user that does not exist.')
@@ -301,15 +316,15 @@ class TestApi(unittest.TestCase):
         """
         Empty cards field
         """
-        invalid_data = {
-            "userID": "-1",
-            "flashcardName": "My new set",
+        indata = {
+            "userID"              : "-1",
+            "flashcardName"       : "My new set",
             "flashcardDescription": "This is\nmy description",
-            "cards": []
+            "cards"               : []
         }
         # Should this be possible?
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=indata)
         response_json = response[0]
         self.assertFalse(response_json['success'],
                          msg='Should not create a flashcard for an user that does not exist.')
@@ -320,13 +335,13 @@ class TestApi(unittest.TestCase):
         Existing user
         Existing flashcard
         """
-        valid_data = {
-            "userID": "1",
+        data = {
+            "userID"       : "1",
             "flashcardName": "My new set"
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
-                                valid_data)
+                                data)
 
         self.assertIsInstance(obj=response,
                               cls=dict,
@@ -339,13 +354,13 @@ class TestApi(unittest.TestCase):
         Non-existent userID
         Non-existent flashcard
         """
-        valid_data = {
-            "userID": "",
+        data = {
+            "userID"       : "",
             "flashcardName": ""
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
-                                valid_data)
+                                data)
 
         self.assertIsNone(obj=response,
                           msg="Unexpected return from get_flashcard endpoint. "
@@ -355,10 +370,10 @@ class TestApi(unittest.TestCase):
         """
         Empty json for get-flashcard
         """
-        valid_data = {}
+        data = {}
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
-                                valid_data)
+                                data)
 
         self.assertIsNone(obj=response,
                           msg="Unexpected return from get_flashcard endpoint. "
@@ -370,17 +385,18 @@ class TestApi(unittest.TestCase):
         Existing userID
         Non-existent flashcard
         """
-        valid_data = {
-            "userID": "1",
+        data = {
+            "userID"       : "1",
             "flashcardName": "non-existent"
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'],
-                                valid_data)
+                                data)
 
         self.assertIsNone(obj=response,
                           msg="Unexpected return from get_flashcard endpoint. "
                               f"Should be None, but was {type(response)}")
+
     def test_get_flashcard_valid(self) -> None:
         data = {
             "userID"       : "1",
@@ -399,7 +415,7 @@ class TestApi(unittest.TestCase):
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
         self.assertIsNone(response, "Should return nothing for a non-existent userID.")
 
-    def test_get_flashcard_invalid_data(self) -> None:
+    def test_get_flashcard_indata(self) -> None:
         """
         Invalid 'user' key, should be 'userID'
         """
@@ -416,15 +432,15 @@ class TestApi(unittest.TestCase):
                          " The request should be in the format: {'userID': '', 'flashcardName': ''}",
                          "Invalid return from get-flashcard endpoint, json keys must be valid.")
 
-    def test_get_today_cards(self) -> None:
+    def test_get_today_cards_valid_userid(self) -> None:
         """
         Valid data for get_today_cards
         """
-        valid_data = {
+        data = {
             "userID": "1"
         }
 
-        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], valid_data)
+        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], data)
         self.assertIsInstance(obj=response,
                               cls=list,
                               msg="Unexpected return from get_today_cards endpoint.\n"
@@ -434,32 +450,228 @@ class TestApi(unittest.TestCase):
         """
         Valid data for get_today_cards
         """
-        valid_data = {
+        data = {
             "userID": "0"
         }
 
         # TODO: Should "User has no flashcards" be the right response for a non-existent user?
 
-        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], valid_data)
+        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], data)
         self.assertEqual(response[0],
                          'User has no flashcards',
                          msg=f"Unexpected return from get_today_cards.\n"
                              f"Should be 'User has no flashcards' but was {response[0]}")
 
+    def test_get_today_cards_invalid_json_key(self) -> None:
+        """
+        Invalid json key for get_today_cards
+        """
+        data = {
+            "user": "0"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_TODAY_CARDS['url'], data)
+        self.assertEqual(first=response[0],
+                         second="Your supplied json keys do not match the expected format."
+                                " The request should be in the format: {'userID': ''}",
+                         msg="Unexpected return from get_today_cards.\n"
+                             "Invalid json keys should return an error.")
+
     # Statistics
+    def test_calculate_card_stats_valid(self) -> None:
+        """
+        Completely valid data for get_today_cards
+        """
 
-    def test_calculate_card_stats(self) -> None:
-        # TODO: Must test calculate_card_stats endpoint
-        pass
+        data = {
+            "userID"      : "1",
+            "cardStatus"  : "right",
+            "cardStreak"  : "3",
+            "currentIndex": "4",
+            "lastReview"  : "09/01/2024",
+            "maxIndex"    : "20",
+            "reviewStatus": "8.0"
+        }
 
-    def test_update_heatmap(self) -> None:
-        # TODO: Must test update_heatmap endpoint
-        pass
+        response = self.post_api(Routes.ROUTE_CALCULATE_CARD_STATS['url'], data=data)
 
-    def test_get_heatmap(self) -> None:
-        # TODO: Must test get_heatmap endpoint
-        pass
+        self.assertIsInstance(obj=response,
+                              cls=dict,
+                              msg="Return should be a dictionary, but was {}".format(type(response)))
 
-    def test_(self) -> None:
-        # TODO: Must test calculate_streak endpoint
-        pass
+    def test_calculate_card_stats_invalid_userid(self) -> None:
+        """
+        Invalid userid for calculate_card_stats
+        """
+
+        data = {
+            "userID"      : "-1",
+            "cardStatus"  : "right",
+            "cardStreak"  : "3",
+            "currentIndex": "4",
+            "lastReview"  : "09/01/2024",
+            "maxIndex"    : "20",
+            "reviewStatus": "8.0"
+        }
+
+        response = self.post_api(Routes.ROUTE_CALCULATE_CARD_STATS['url'], data=data)
+
+        self.assertIsInstance(obj=response,
+                              cls=dict,
+                              msg="Return should be a dictionary, but was {}".format(type(response)))
+
+    def test_calculate_card_stats_invalid_json_key(self) -> None:
+        """
+        Invalid json key user
+        """
+
+        data = {
+            "user"        : "-1",
+            "cardStatus"  : "right",
+            "cardStreak"  : "3",
+            "currentIndex": "4",
+            "lastReview"  : "09/01/2024",
+            "maxIndex"    : "20",
+            "reviewStatus": "8.0"
+        }
+
+        response = self.post_api(Routes.ROUTE_CALCULATE_CARD_STATS['url'], data=data)
+
+        self.assertIn(member='error',
+                      container=response,
+                      msg="Return should be an error, but was {}".format(response))
+
+    def test_calculate_card_stats_negative_numbers(self) -> None:
+        """
+        Negative numbers for calculate_card_stats
+        """
+
+        data = {
+            "userID"      : "1",
+            "cardStatus"  : "right",
+            "cardStreak"  : "-3",
+            "currentIndex": "-4",
+            "lastReview"  : "09/01/2024",
+            "maxIndex"    : "-20",
+            "reviewStatus": "-8.0"
+        }
+
+        response = self.post_api(Routes.ROUTE_CALCULATE_CARD_STATS['url'], data=data)
+
+        self.assertIn(member='error',
+                      container=response,
+                      msg="Return should be an error, but was {}".format(response))
+
+    def test_update_heatmap_valid(self) -> None:
+        """
+        Valid data
+        """
+        data = {
+            "userID": "1"
+        }
+
+        response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], data=data)
+        self.assertIsInstance(obj=response, cls=dict, msg=f"Return should be a dict, but was {type(response)}")
+
+    def test_update_heatmap_invalid_userid(self) -> None:
+        """
+        Invalid userID
+        """
+        data = {
+            "userID": "-1"
+        }
+
+        # TODO: Should be possible to update a heatmap from an unexistent user?
+
+        response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], data=data)
+        self.assertNotIsInstance(obj=response, cls=dict, msg=f"Return should NOT be a dict, but was {type(response)}")
+
+    def test_update_heatmap_invalid_json_key(self) -> None:
+        """
+        Invalid key on json
+        """
+        data = {
+            "userID" : "1",
+            "testKey": "testValue"
+        }
+
+        response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], data=data)
+        self.assertIn(member='error', container=response, msg="Should not be possible to pass an invalid key.")
+
+    def test_get_heatmap_valid(self) -> None:
+        """
+        Valid data
+        """
+        data = {
+            "userID": "1"
+        }
+
+        response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], data=data)
+        self.assertIsInstance(obj=response, cls=dict, msg=f"Return should be a dict, but was {type(response)}")
+
+    def test_get_heatmap_invalid_userid(self) -> None:
+        """
+        Invalid userID
+        """
+        data = {
+            "userID": "-1"
+        }
+
+        # TODO: Should be possible to get a heatmap from an unexistent user?
+
+        response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], data=data)
+        self.assertNotIsInstance(obj=response, cls=dict, msg=f"Return should NOT be a dict, but was {type(response)}")
+
+    def test_get_heatmap_invalid_json_key(self) -> None:
+        """
+        Invalid key on json
+        """
+        data = {
+            "userID" : "1",
+            "testKey": "testValue"
+        }
+
+        response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], data=data)
+        self.assertIn(member='error', container=response, msg="Should not be possible to pass an invalid key.")
+
+    def test_calculate_streak_valid(self) -> None:
+        """
+        Valid data
+        """
+
+        data = {
+            "userID": "1"
+        }
+
+        response = self.post_api(Routes.ROUTE_CALCULATE_STREAK['url'], data=data)
+
+        self.assertIsInstance(obj=response, cls=list, msg=f"Return should be a dict, but was {type(response)}")
+        self.assertGreaterEqual(len(response), 1, msg="Should have at least one response message, but had zero")
+        self.assertTrue(response[0]['success'], 'Return should be True for a valid request')
+
+    def test_calculate_streak_invalid_userid(self) -> None:
+        """
+        Invalid userid
+        """
+
+        data = {
+            "userID": "-1"
+        }
+
+        # TODO: Should it be possible to calculate a streak for a non-existent user?
+
+        response = self.post_api(Routes.ROUTE_CALCULATE_STREAK['url'], data=data)
+        self.assertIsInstance(obj=response, cls=dict, msg=f"Return should be a dict, but was {type(response)}")
+
+    def test_calculate_streak_invalid_json_key(self) -> None:
+        """
+        Invalid json key "user"
+        """
+
+        data = {
+            "user": "1"
+        }
+
+        response = self.post_api(Routes.ROUTE_CALCULATE_STREAK['url'], data=data)
+        self.assertIn(member='error', container=response,
+                      msg="Return should be an error message, but was {}".format(type(response)))
