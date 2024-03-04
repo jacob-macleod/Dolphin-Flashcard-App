@@ -9,9 +9,27 @@ import './Heatmap.css';
 
 function Heatmap() {
     const [year, setYear] = useState("2024");
+    const [currentYearClicked, setCurrentYearClicked] = useState(true);
+    const [lastYearClicked, setLastYearClicked] = useState(false);
+    const [yearBeforeLastClicked, setYearBeforeLastClicked] = useState(false);
     const yearWidth = "36px";
     const [heatmapData, setHeatmapData] = useState(null);
 
+    function chooseYear(year) {
+        if (year === "currentYear") {
+            setCurrentYearClicked(true);
+            setLastYearClicked(false);
+            setYearBeforeLastClicked(false);
+        } else if (year === "lastYear") {
+            setCurrentYearClicked(false);
+            setLastYearClicked(true);
+            setYearBeforeLastClicked(false);
+        } else if (year === "yearBeforeLast") {
+            setCurrentYearClicked(false);
+            setLastYearClicked(false);
+            setYearBeforeLastClicked(true);
+        }
+    }
     const monthNames = [
         "January",
         "February",
@@ -56,9 +74,18 @@ function Heatmap() {
                     </div>
                 } childValue={heatmapData} />
                 <div className='button-panel'>
-                    <MenuItem clicked={true} text="2024" width={yearWidth} />
-                    <MenuItem text="2023" width={yearWidth} onClick={() => {setYear("2023")}}/>
-                    <MenuItem text="2022" width={yearWidth} />
+
+                    <div onClick={() => {setYear("2024"); chooseYear("currentYear")}}>
+                        <MenuItem clicked={currentYearClicked} text="2024" width={yearWidth} />
+                    </div>
+
+                    <div onClick={() => {setYear("2023"); chooseYear("lastYear")}}>
+                        <MenuItem clicked={lastYearClicked} text="2023" width={yearWidth}/>
+                    </div>
+
+                    <div onClick={() => {setYear("2022"); chooseYear("yearBeforeLast")}}>
+                        <MenuItem clicked={yearBeforeLastClicked} text="2022" width={yearWidth} />
+                    </div>
                 </div>
             </div>
         </>
