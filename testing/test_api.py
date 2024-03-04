@@ -26,8 +26,8 @@ class TestApi(unittest.TestCase):
         """
 
         response = get(f'http://localhost:{server_addr[1]}{route}',
-                       data=dumps(data),
-                       headers=headers)
+                       headers=headers,
+                       data=dumps(data))
 
         self.assertNotEqual(response.status_code, 500,
                             f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
@@ -182,7 +182,7 @@ class TestApi(unittest.TestCase):
         self.assertTrue(expr=response_json['success'],
                         msg='Dummy account creation should be successful.')
 
-    def test_create_account_empty_data(self) -> None:
+    def test_create_account_empty(self) -> None:
         """
         Empty userID / displayName
         """
@@ -196,7 +196,7 @@ class TestApi(unittest.TestCase):
         self.assertFalse(expr=response_json['success'],
                          msg='Should not create a nameless user.')
 
-    def test_create_account_empty_json(self) -> None:
+    def test_create_account_invalid(self) -> None:
         """
         Empty json data
         """
@@ -209,6 +209,7 @@ class TestApi(unittest.TestCase):
                          msg='Should not create an empty user.')
 
     # Card Management
+
     def test_create_flashcard_valid(self) -> None:
         """
         Valid flashcard
@@ -265,7 +266,7 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
         self.assertFalse(response_json['success'],
-                         msg='Should not create a flashcard for a non-existent userID')
+                         msg='Should not create a flashcard for an user that does not exist.')
 
     def test_create_flashcard_empty_userid(self) -> None:
         """
@@ -294,7 +295,7 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
         self.assertFalse(response_json['success'],
-                         msg='Should not create a flashcard for an empty userID.')
+                         msg='Should not create a flashcard for an user that does not exist.')
 
     def test_create_flashcard_empty_cards(self) -> None:
         """
@@ -306,7 +307,7 @@ class TestApi(unittest.TestCase):
             "flashcardDescription": "This is\nmy description",
             "cards": []
         }
-        # TODO: Should this be possible?
+        # Should this be possible?
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], data=invalid_data)
         response_json = response[0]
@@ -380,6 +381,40 @@ class TestApi(unittest.TestCase):
         self.assertIsNone(obj=response,
                           msg="Unexpected return from get_flashcard endpoint. "
                               f"Should be None, but was {type(response)}")
+    def test_get_flashcard_valid(self) -> None:
+        data = {
+            "userID"       : "1",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
+        self.assertIsInstance(response, dict, f"Should return a dict flashcard, but returned {type(response)}")
+
+    def test_get_flashcard_non_existent_userid(self) -> None:
+        data = {
+            "userID"       : "-2",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
+        self.assertIsNone(response, "Should return nothing for a non-existent userID.")
+
+    def test_get_flashcard_invalid_data(self) -> None:
+        """
+        Invalid 'user' key, should be 'userID'
+        """
+        data = {
+            "user"         : "1",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], data=data)
+        self.assertIsInstance(response, dict, f"Should be a dict, but was {response}")
+
+        self.assertEqual(response['error'],
+                         "Your supplied json keys do not match the expected format."
+                         " The request should be in the format: {'userID': '', 'flashcardName': ''}",
+                         "Invalid return from get-flashcard endpoint, json keys must be valid.")
 
     def test_get_today_cards(self) -> None:
         """
@@ -412,6 +447,7 @@ class TestApi(unittest.TestCase):
                              f"Should be 'User has no flashcards' but was {response[0]}")
 
     # Statistics
+
     def test_calculate_card_stats(self) -> None:
         # TODO: Must test calculate_card_stats endpoint
         pass
