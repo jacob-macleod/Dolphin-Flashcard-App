@@ -9,6 +9,7 @@ from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
+
 def hash_to_numeric(input_string):
     """ Hash a string, convert it to a number, then return a string version of the number
         Importantly, this is deterministic - the same value will be returned
@@ -24,7 +25,7 @@ def hash_to_numeric(input_string):
 
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
-def create_flashcard() :
+def create_flashcard():
     """ Create or edit a flashcard set for the user.
         Flashcards have a front, back, review status and last review date
         Example request:
@@ -50,18 +51,18 @@ def create_flashcard() :
     """
     # Check the request json
     expected_format = {
-            "userID": "",
-            "flashcardName": "",
-            "flashcardDescription": "",
-            "cards": [
-                {
-                    "front":"",
-                    "back": "",
-                    "reviewStatus": REVIEW_STATUS_REGEX,
-                    "lastReview": DATE_REGEX
-                }
-            ]
-        }
+        "userID": "",
+        "flashcardName": "",
+        "flashcardDescription": "",
+        "cards": [
+            {
+                "front": "",
+                "back": "",
+                "reviewStatus": REVIEW_STATUS_REGEX,
+                "lastReview": DATE_REGEX
+            }
+        ]
+    }
 
     result = check_request_json(
         expected_format,
@@ -69,10 +70,11 @@ def create_flashcard() :
     )
     if result is not True:
         return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
-    try :
+    try:
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
         flashcard_description = request.json.get("flashcardDescription")
@@ -82,21 +84,23 @@ def create_flashcard() :
 
         if db.get("/users/" + user_id + "/flashcards/" + flashcard_id) is None:
             db.save("/users/" + user_id + "/flashcards/" + flashcard_id,
-                {
-                    "flashcardID": flashcard_id,
-                    "flashcardName": flashcard_name,
-                    "flashcardDescription": flashcard_description,
-                    "cards": cards
-                }
-            )
+                    {
+                        "flashcardID": flashcard_id,
+                        "flashcardName": flashcard_name,
+                        "flashcardDescription": flashcard_description,
+                        "cards": cards
+                    }
+                    )
 
-        return jsonify({"success": True}, 200)
+        return jsonify({
+            "success": True}, 200)
     except Exception as e:
         # Return the error as a json object
         return jsonify(e), 500
 
+
 @card_management_routes.route("/api/get-flashcard", methods=["GET"])
-def get_flashcard() :
+def get_flashcard():
     """ Get a flashcard based on the name and user ID
         Add json to request as in:
         {
@@ -106,19 +110,20 @@ def get_flashcard() :
     """
     # Check the request json
     expected_format = {
-            "userID": "",
-            "flashcardName": ""
-        }
+        "userID": "",
+        "flashcardName": ""
+    }
     result = check_request_json(
         expected_format,
         request.json
     )
     if result is not True:
         return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
-    try :
+    try:
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
         flashcard_id = hash_to_numeric(user_id + flashcard_name)
@@ -129,8 +134,9 @@ def get_flashcard() :
         # Return the error as a json object
         return jsonify(e), 500
 
+
 @card_management_routes.route("/api/get-today-cards", methods=["GET"])
-def get_today_cards() :
+def get_today_cards():
     """ Get all the flashcards to be learned today for a user
         Requests include soley a json including userID
         Example request:
@@ -144,15 +150,16 @@ def get_today_cards() :
     """
     # Check the request json
     expected_format = {
-            "userID": ""
-        }
+        "userID": ""
+    }
     result = check_request_json(
         expected_format,
         request.json
     )
     if result is not True:
         return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
     user_id = request.json.get("userID")
@@ -193,7 +200,7 @@ def get_today_cards() :
                     actively_studying += 1
                     count = actively_studying
                     limit = card_presets["activelyStudying"]
-                else :
+                else:
                     recapping += 1
                     count = recapping
                     limit = card_presets["recapping"]
