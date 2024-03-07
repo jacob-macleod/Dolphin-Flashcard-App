@@ -155,6 +155,7 @@ function HeatmapItem({days, startDate, endDate, month}) {
             <Paragraph text={month} style={{
                 marginTop: "4px",
                 marginBottom: "4px",
+                fontWeight: "700"
             }}/>
             <table>
                 <tbody>
