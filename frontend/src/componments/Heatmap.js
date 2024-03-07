@@ -8,7 +8,7 @@ import { getCookie } from '../api/Authentication';
 import './Heatmap.css';
 
 function Heatmap() {
-    const [year, setYear] = useState("2024");
+    const [year, setYear] = useState(getYearWithIncrement(0));
     const [currentYearClicked, setCurrentYearClicked] = useState(true);
     const [lastYearClicked, setLastYearClicked] = useState(false);
     const [yearBeforeLastClicked, setYearBeforeLastClicked] = useState(false);
@@ -30,6 +30,13 @@ function Heatmap() {
             setYearBeforeLastClicked(true);
         }
     }
+
+    function getYearWithIncrement(increment) {
+        const currentYear = new Date().getFullYear();
+        const resultYear = currentYear + increment;
+        return resultYear.toString();
+    }
+
     const monthNames = [
         "January",
         "February",
@@ -75,16 +82,16 @@ function Heatmap() {
                 } childValue={heatmapData} />
                 <div className='button-panel'>
 
-                    <div onClick={() => {setYear("2024"); chooseYear("currentYear")}}>
-                        <MenuItem clicked={currentYearClicked} text="2024" width={yearWidth} />
+                    <div onClick={() => {setYear(getYearWithIncrement(0)); chooseYear("currentYear")}}>
+                        <MenuItem clicked={currentYearClicked} text={getYearWithIncrement(0)} width={yearWidth} />
                     </div>
 
-                    <div onClick={() => {setYear("2023"); chooseYear("lastYear")}}>
-                        <MenuItem clicked={lastYearClicked} text="2023" width={yearWidth}/>
+                    <div onClick={() => {setYear(getYearWithIncrement(-1)); chooseYear("lastYear")}}>
+                        <MenuItem clicked={lastYearClicked} text={getYearWithIncrement(-1)} width={yearWidth}/>
                     </div>
 
-                    <div onClick={() => {setYear("2022"); chooseYear("yearBeforeLast")}}>
-                        <MenuItem clicked={yearBeforeLastClicked} text="2022" width={yearWidth} />
+                    <div onClick={() => {setYear(getYearWithIncrement(-2)); chooseYear("yearBeforeLast")}}>
+                        <MenuItem clicked={yearBeforeLastClicked} text={getYearWithIncrement(-2)} width={yearWidth} />
                     </div>
                 </div>
             </div>
