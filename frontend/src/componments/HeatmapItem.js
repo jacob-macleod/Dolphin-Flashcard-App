@@ -120,7 +120,6 @@ function HeatmapItem({days, startDate, endDate, month}) {
                 addedStartPadding = true;
             }
             // Extract the day and data value from the item
-            const day = item.charAt(0); // Extract the first character (day)
             const dataValue = dayData[item]; // Get the data value
             
             const relativeStreakSize = parseInt(dataValue) / highestStreakValue;
