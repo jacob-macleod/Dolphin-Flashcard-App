@@ -176,6 +176,7 @@ function SignInPage({ userID, setUserID, active=true }) {
                 {signInButton}
               </div>}
               view={view}
+              overlayMarginBottom={"442px"}
             />
           </GridItem>
         <DeveloperSection />

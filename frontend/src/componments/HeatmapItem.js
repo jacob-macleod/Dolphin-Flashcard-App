@@ -94,7 +94,9 @@ function HeatmapItem({days, startDate, endDate, month}) {
         return result;
     }    
 
-    const noStreakIcon = <div className='image-wrapper'><Image url={xIcon} width='12px' height='12px' paddingRight='0px'/></div>;
+    const noStreakIcon = <div className='image-wrapper'>
+        <Image url={xIcon} width='12px' height='12px' minWidth='12px' paddingRight='0px'/>
+    </div>;
     const highestStreakValue = getHighestValue();
     function renderTableHeaders(dayData) {
         // Check if dayData is null

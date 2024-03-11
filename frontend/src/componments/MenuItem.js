@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import Image from './Image';
 import './MenuItem.css';
 
-function MenuItem({ text, clicked=false, src, imgUrl="", width="178px"}) {
+function MenuItem({ text, clicked=false, src, imgUrl="", width="178px", margin=null}) {
 
     return (
         <div
             className={clicked ? "menu-item-clicked" : "menu-item"}
-            style={{display: "inline-flex", width: width}}>
+            style={{display: "inline-flex", width: width, margin: margin}}>
             {imgUrl === "" ? null :<Image
                 width="16px"
                 height="16px"
+                minWidth='16px'
                 url={imgUrl}
                 className="menu-icon"
             />}

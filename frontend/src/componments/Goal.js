@@ -59,7 +59,7 @@ function Goal({ data, id, clickEvent }) {
                 <Heading5 text={calculateTimeLeft()} />
                 <p className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px", margin: "0px"}} onClick={clickEvent}>Edit</p>
             </div>
-            <Image width={iconWidth} height={iconHeight} url={deleteIcon} onClick={() => {apiManager.deleteGoal(
+            <Image width={iconWidth} height={iconHeight} minWidth={iconWidth} url={deleteIcon} onClick={() => {apiManager.deleteGoal(
                 getCookie("userID"), id, () => {window.location.reload()}
             )}}/>
         </div>

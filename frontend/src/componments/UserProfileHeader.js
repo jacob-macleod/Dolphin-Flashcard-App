@@ -14,15 +14,15 @@ function UserProfileHeader({ setAccountDropdownVisibility, accountDropdownVisibi
 
     return (
         <div style={{display: "inline-flex", alignContent: "center", alignItems: "center", padding: "16px"}}>
-            <Image width={iconSize} height={iconSize} />
+            <Image width={iconSize} height={iconSize} minWidth={iconSize}/>
             <Heading5 text={getCookie("userName")} style={{
                 paddingLeft: "8px",
                 paddingRight: "8px",
                 display: "inline-flex",
                 alignItems: "center",
             }}/>
-            <Image width={dropdownArrowSize} height={dropdownArrowSize} url={dropdownArrow} onClick={handleClick} paddingRight='8px'/>
-            <Image width={iconSize} height={iconSize} url={getCookie("profileImage")} borderRadius="50%" paddingRight='0px'/>
+            <Image width={dropdownArrowSize} height={dropdownArrowSize} minWidth={dropdownArrowSize} url={dropdownArrow} onClick={handleClick} paddingRight='8px'/>
+            <Image width={iconSize} height={iconSize} minWidth={iconSize} url={getCookie("profileImage")} borderRadius="50%" paddingRight='0px'/>
         </div>
     );
 }
