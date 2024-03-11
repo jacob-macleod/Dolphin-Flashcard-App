@@ -9,7 +9,6 @@ from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
-
 def hash_to_numeric(input_string):
     """ Hash a string, convert it to a number, then return a string version of the number
         Importantly, this is deterministic - the same value will be returned

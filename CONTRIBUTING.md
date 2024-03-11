@@ -44,8 +44,8 @@ The frontend will always communicate with the deployed api server `http://dolphi
 Enter the following commands:
 
 * `cd frontend`
-* `npm install <everything in node_requirements.txt>` where `<everything in node_requirements.txt>` is the contents of the file, copy and pasted
-* `npm start`
+* `npm install` which will install everything in `frontend/package.json`
+* `npm serve`
 
 The React app will be accessible at `http://localhost:3000`.
 
@@ -111,7 +111,7 @@ Follow these steps:
 Whichever method you use, you can develop the frontend independently of the backend by referring to the relevant section. Or, you can run them together, like in production. To do this, enter the following commands:
 
 * `cd frontend`
-* `npm install <everything in node_requirements.txt>` where `<everything in node_requirements.txt>` is the contents of the file, copy and pasted
+* `npm install` which will install everything in `frontend/package.json`
 * `npm run build`
 
 This will build the React app to `frontend/build`. Then, the server will serve the static files in that folder. Therefore, the backend server must be running first.

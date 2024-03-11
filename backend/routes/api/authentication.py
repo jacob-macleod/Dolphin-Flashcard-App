@@ -9,7 +9,6 @@ from verification.api_error_checking import check_request_json
 authentication_routes = Blueprint('api_routes', __name__)
 CORS(authentication_routes)
 
-
 # Check if the request is coming from local traffic
 def is_local_request():
     """ Check if the requets is from local traffic """

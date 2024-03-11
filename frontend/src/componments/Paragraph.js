@@ -1,9 +1,9 @@
 import React from 'react';
 import './Paragraph.css'
 
-function Paragraph({ text }) {
+function Paragraph({ text, style={} }) {
     return (
-        <p className="paragraph">
+        <p className="paragraph" style={style}>
             {text}
         </p>
     );

@@ -22,11 +22,6 @@ def append_items_to_array(dictionary, result=[]):
     for key, value in dictionary.items():
         if isinstance(value, dict):
             append_items_to_array(value, result)
-        # If value is actually a list - happens when a list of values is sent through json
-        # For example when creating multiple flashcards
-        elif isinstance(value, list) :
-            for item in value:
-                append_items_to_array(item)
         else:
             result.append(value)
     return result

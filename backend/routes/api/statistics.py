@@ -9,15 +9,13 @@ from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, NUMBER, C
 
 statistics_routes = Blueprint('statistics_routes', __name__)
 
-
-def increase_xp(user_id, increment_amount):
+def increase_xp(user_id, increment_amount) :
     """ Increase the user's XP by 10 """
     db.increment("/users/" + user_id + "/statistics/totalXP", increment_amount)
     db.increment("/users/" + user_id + "/statistics/weeklyXP", increment_amount)
 
-
 @statistics_routes.route("/api/calculate-card-stats", methods=["POST"])
-def calculate_card_stats():
+def calculate_card_stats() :
     """ Used when a user is revising a set of cards.
         For each card, calculate the next card to look at,
         And the new card review times and review statuses
@@ -35,22 +33,21 @@ def calculate_card_stats():
     """
     # Check the request json
     expected_format = {
-        "userID": "",
-        "cardStatus": CARD_STATUS,
-        "cardStreak": NUMBER,
-        "currentIndex": NUMBER,
-        "lastReview": DATE_REGEX,
-        "maxIndex": NUMBER,
-        "reviewStatus": REVIEW_STATUS_REGEX
-    }
+            "userID": "",
+            "cardStatus": CARD_STATUS,
+            "cardStreak": NUMBER,
+            "currentIndex": NUMBER,
+            "lastReview": DATE_REGEX,
+            "maxIndex": NUMBER,
+            "reviewStatus": REVIEW_STATUS_REGEX
+        }
     result = check_request_json(
         expected_format,
         request.json
     )
     if result is not True:
         return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
     user_id = request.json.get("userID")
@@ -78,14 +75,14 @@ def calculate_card_stats():
     if card_status == "right":
         card.increment_index()
         card.increment_review_status()
-    elif card.status == "easy":
+    elif card.status == "easy" :
         card.increment_index()
         card.easy_button()
     else:
         card.reset_card()
 
     # When review_status is small, it's close to 10. The bigger it is, the smaller xp_increase is
-    xp_increase = round(10 - (1 - (int(float(review_status)) / 100)))
+    xp_increase = round(10 - (1-(int(float(review_status)) / 100)))
     thread = threading.Thread(target=increase_xp, args=(user_id, xp_increase))
     thread.start()
 
@@ -99,9 +96,8 @@ def calculate_card_stats():
         "cardStreak": card.streak
     })
 
-
 @statistics_routes.route("/api/update-heatmap", methods=["POST"])
-def update_heatmap():
+def update_heatmap() :
     """ Called when streak is updated
         Requests should have json in the following format:
     {
@@ -110,16 +106,15 @@ def update_heatmap():
      """
     # Check the request json
     expected_format = {
-        "userID": "",
-    }
+            "userID": "",
+        }
     result = check_request_json(
         expected_format,
         request.json
     )
     if result is not True:
         return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
+            {"error": result + ". The request should be in the format: " + str(expected_format)}
         ), 400
 
     user_id = request.json.get("userID")
@@ -128,7 +123,7 @@ def update_heatmap():
     today = date.get_current_date().replace('/', '-')
 
     # Heatmap has a date as the key, and the value is the number of cards reviewed that day
-    if heatmap is not None:
+    if heatmap is not None :
         item_found = False
         for item in heatmap:
             if item == today:
@@ -140,15 +135,14 @@ def update_heatmap():
         if not item_found:
             heatmap[today] = "1"
     # If the heatmap has not been created yet
-    else:
+    else :
         heatmap = {}
         heatmap[(today)] = "1"
     db.save("/users/" + user_id + "/heatmapData", heatmap)
     return jsonify(heatmap)
 
-
 @statistics_routes.route("/api/get-heatmap", methods=["POST"])
-def get_heatmap():
+def get_heatmap() :
     """ Get the user's heatmap data
         Requests should have json in the following format:
     {
@@ -211,6 +205,4 @@ def calculate_streak():
     if difference == -1 and request.args.get("increase") == "true":
         db.increment("/users/" + user_id + "/statistics/streak", 1)
         db.save("/users/" + user_id + "/statistics/lastStreak", today)
-
-    return jsonify({
-        "success": True}, 200)
+    return jsonify({"streak": db.get("/users/" + user_id + "/statistics/streak")}, 200)

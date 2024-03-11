@@ -2,10 +2,8 @@
 import json
 from database.database_abstract import DatabaseAbstract
 
-
 class LocalDatabase(DatabaseAbstract):
     """ Write to local files for development """
-
     def __init__(self, filename="data.json"):
         self.filename = filename
         try:

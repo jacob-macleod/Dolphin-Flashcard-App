@@ -1,19 +1,31 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
-import Header from '../componments/Header';
+import Heading5 from '../componments/Heading5';
 import SidePanel from '../containers/SidePanel';
+import NewGoalPopup from '../containers/NewGoalPopup';
+import EditGoalPopup from '../containers/EditGoalPopup';
+import Heading4 from '../componments/Heading4';
+import StreakWidget from '../containers/StreakWidget';
+import GoalsWidget from '../containers/GoalsWidget';
+import WhiteOverlay from '../componments/WhiteOverlay';
+import Heatmap from '../componments/Heatmap';
+import { getCookie } from '../api/Authentication';
 import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
 
 function Dashboard() {
   const title = "Dashboard";
+  const userWelcomeText = "Hello there, " + getCookie("userName") + ".";
+  const [newGoalPopupVisible, setNewGoalPopupVisible] = useState(false);
+  const [editGoalPopupVisible, setEditGoalPopupVisible] = useState(false);
+
   return (
-    <div style={{top: "0px;"}}>
+    <div style={{top: "0px"}}>
       <Helmet>
         <title>{ title }</title>
         <meta
@@ -21,15 +33,33 @@ function Dashboard() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
+      <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} />
+      <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} />
 
-      <GridContainer>
+      <GridContainer layout={"240px 400px auto"}>
         <SidePanel />
-        <GridItem>
-          <Header text="Main Panel" />
+        <GridItem style={{padding: "0px"}}>
+          <Heading4 text={userWelcomeText} />
+          <StreakWidget />
+
+          <GoalsWidget
+            setNewGoalPopupVisible={setNewGoalPopupVisible}
+            newGoalPopupVisible={newGoalPopupVisible}
+            setEditGoalPopupVisible={setEditGoalPopupVisible}
+            editGoalPopupVisible={editGoalPopupVisible}
+          />
+
         </GridItem>
 
-        <GridItem>
-          <Header text="Third panel" />
+        <GridItem style={{padding: "0px"}}>
+
+          <WhiteOverlay style={{width: "100%", marginTop: "72px"}}>
+            <Heatmap />
+          </WhiteOverlay>
+
+          <WhiteOverlay style={{height: "336px"}}>
+            <Heading5 style={{padding: "16px"}} text="Recently studied sets coming soon..." />
+          </WhiteOverlay>
         </GridItem>
       </GridContainer>
     <BlobBackground />

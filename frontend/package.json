@@ -6,11 +6,15 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@uiw/react-heat-map": "^2.2.2",
     "firebase": "^10.8.0",
+    "mkdirp": "^3.0.1",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-helmet": "^6.1.0",
+    "react-loading-icons": "^1.1.0",
     "react-router-dom": "^6.22.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
@@ -19,7 +23,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .ts,.tsx ./src",
+    "fix": "yarn format && yarn lint:fix",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+    "fix:eslint": "eslint src --ext .js,.ts,.jsx,.tsx --fix",
+    "fix:prettier": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
@@ -38,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
   }
 }
