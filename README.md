@@ -21,12 +21,18 @@ This app is designed to improve simiar apps like Quizlet and Anki by implementin
 
 **Contributors are welcome!** More information is in `CONTRIBUTING.md`
 
+![the dolphin landing page](https://raw.githubusercontent.com/jacob-macleod/Dolphin-Flashcard-App/main/image_2024-03-11_205932151.png)
+
 ##  2. <a name='USPsandPointsofDifferentiation'></a>USPs and Points of Differentiation
 * Flashcard app with nice UI
 * Spaced Repetition
 * Gamified with lots of "juice"
 
 Anki solely fills the second point, while Quizlet serves the first point. None fully cover all points. This would provide a unique opportunity for this app 
+
+<details>
+
+<summary>See the planned features</summary>
 
 ##  3. <a name='BroadOverview-1'></a>Broad Overview
 A broad overview of the planned features to be made
@@ -61,6 +67,8 @@ A broad overview of the planned features to be made
 * If they want to edit it, they can first clone it
 * Users can find flashcards made by other users on a separate search tab
 * Users can be given access to flashcard by the owner
+
+</details>
 
 ##  4. <a name='Contributors'></a>Contributors
 Contributors are welcome!
