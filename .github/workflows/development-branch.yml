@@ -34,7 +34,7 @@ jobs:
           npm run build
           rm -rf frontend/node_modules
       - name: Build the Docker image
-        run: docker build -t jacobmacleod/flashcard-app:latest .
+        run: docker build -t jacobmacleod/flashcard-app:development_$(cat version.txt) .
       - name: Log in to Docker Hub and push image
         run: |
           docker login -u jacobmacleod -p $DOCKER_PASSWORD
