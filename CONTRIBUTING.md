@@ -19,6 +19,8 @@ Welcome to this guide! Read more to learn how to contribute. For quick reference
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+The project uses feature branches, which are made from the development branch
+
 <details>
 
 <summary>Learn how the code works</summary>
@@ -120,7 +122,7 @@ This will build the React app to `frontend/build`. Then, the server will serve t
 
 When contributing, follow these general guidelines:
 
-* Do your work in a branch, then create a pull request when you're ready
+* Do your work in a branch from the development branch, then create a pull request when you're ready
 * Add comments in issues to show what you're working on
 * Try to follow the coding style and conventions established in the project
 * Try to write unit tests, if you can - this may depend on what, in particular, you're coding. The backend tests are in `testing/`

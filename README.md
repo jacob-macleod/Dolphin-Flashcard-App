@@ -73,6 +73,8 @@ A broad overview of the planned features to be made
 ##  4. <a name='Contributors'></a>Contributors
 Contributors are welcome!
 
+The project uses feature branches, which are made from the development branch. It is important to keep to this rule!
+
 For more information, please go to `CONTRIBUTNG.MD`. API documentation is avaliable at `docs/`
 
 ##  5. <a name='Serversetup'></a>Server setup
