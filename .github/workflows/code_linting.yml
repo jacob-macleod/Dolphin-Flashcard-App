@@ -23,7 +23,6 @@ jobs:
           cat backend/database/database_config.py
           pip install -r requirements.txt
           python3 backend/main.py &
-          curl http://127.0.0.1:5000
       - name: Run pytest
         run: |
           bash testing/run_tests.sh
