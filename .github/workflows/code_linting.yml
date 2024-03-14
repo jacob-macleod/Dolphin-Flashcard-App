@@ -22,7 +22,7 @@ jobs:
           echo "type='local'" > backend/database/database_config.py
           cat backend/database/database_config.py
           python3 /home/jacob/Development/Python/Flashcard-App/backend/main.py &
-          curl http://127.0.0.1/api/create-account
+          curl http://127.0.0.1:5000
       - name: Run pytest
         run: |
           bash testing/run_tests.sh
