@@ -17,17 +17,13 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-# Set the database to local
-os.popen("ls")
-print ("RUNNING")
-
 class TestApi(unittest.TestCase):
     def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime
         """
 
-        response = get(f'http://localhost:{server_addr[1]}{route}',
+        response = get(f'http://127.0.0.1:{server_addr[1]}{route}',
                        headers=headers,
                        data=dumps(data))
 
@@ -42,7 +38,7 @@ class TestApi(unittest.TestCase):
         Simple get method to not repeat "post" everytime
         """
 
-        response = post(f'http://localhost:{server_addr[1]}{route}',
+        response = post(f'http://127.0.0.1:{server_addr[1]}{route}',
                         data=dumps(data),
                         headers=headers)
 
