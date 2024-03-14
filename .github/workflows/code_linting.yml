@@ -21,6 +21,7 @@ jobs:
         run: |
           echo "type='local'" > backend/database/database_config.py
           cat backend/database/database_config.py
+          curl http://127.0.0.1//api/create-account
       - name: Run pytest
         run: |
           bash testing/run_tests.sh
