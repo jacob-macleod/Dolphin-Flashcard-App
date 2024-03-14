@@ -17,9 +17,11 @@ headers = {
     'Content-Type': 'application/json'
 }
 
+# Set the database to local
+os.popen("ls")
+print ("RUNNING")
 
 class TestApi(unittest.TestCase):
-
     def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime

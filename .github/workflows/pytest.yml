@@ -21,9 +21,9 @@ jobs:
         run: |
           pip install -r requirements.txt # Assuming you have a requirements file
           # You may need additional steps if pytest isn't installed already
-
       - name: Run pytest
         run: |
+          echo "type='local'" > backend/database/database_config.py
           python3 -m venv env
           source env/bin/activate
           pip install -r requirements.txt
