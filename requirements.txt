@@ -5,3 +5,4 @@ requests_toolbelt==0.10.1
 pylint
 flask-cors
 pytest
+setuptools

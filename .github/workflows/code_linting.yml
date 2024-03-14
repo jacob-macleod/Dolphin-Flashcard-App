@@ -17,10 +17,6 @@ jobs:
         with:
           python-version: '3.x' # Use the appropriate Python version
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt # Assuming you have a requirements file
-          # You may need additional steps if pytest isn't installed already
       - name: Setup database config
         run: |
           echo "type='local'" > backend/database/database_config.py
