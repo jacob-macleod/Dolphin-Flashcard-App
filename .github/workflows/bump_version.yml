@@ -16,4 +16,4 @@ jobs:
 
       - name: Bump the version
         id: mr_title
-        run: bash bump_version.sh ${{ github.event.pull_request.title }}"
+        run: bash bump_version.sh ${{ github.event.pull_request.title }}
