@@ -1,7 +1,7 @@
 name: Get MR Title
 
 on:
-  pull_request
+  push
 
 jobs:
   get_title:
@@ -11,8 +11,4 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Get MR Title
-        id: mr_title
-        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
-
-      - name: Print MR Title
-        run: echo "MR Title: ${{ steps.mr_title.outputs.title }}"
+        run: echo "Hello world"
