@@ -1,9 +1,8 @@
 name: Get MR Title
 
 on:
-  pull_request:
-    branches-ignore:
-      - notest
+  pull_request
+
 jobs:
   get_title:
     runs-on: ubuntu-latest
