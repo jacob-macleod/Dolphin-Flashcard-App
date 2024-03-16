@@ -1,11 +1,12 @@
 name: Get MR Title
 
-on:
-  push
 
-jobs:
-  get_title:
+on: [push, pull_request]
+
+jobs:  
+  test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
