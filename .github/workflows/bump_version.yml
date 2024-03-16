@@ -21,12 +21,12 @@ jobs:
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "jacob-macleod"
-          git fetch origin ${{ github.head_ref }}
-          git checkout ${{ github.head_ref }}
+          git fetch origin development
+          git checkout development
           git add version.txt
           git commit -m "Bumped version"
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: ${{ github.head_ref }}
+          branch: development
