@@ -2,11 +2,10 @@ name: Get MR Title
 
 on:
   pull_request:
-    types: [opened]
-
+    branches:
+      - development
 jobs:
   get_title:
-    if: ${{ github.event.pull_request.base.ref == 'development' && github.event.pull_request.head.ref =~ '^feature/' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
