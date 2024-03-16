@@ -18,6 +18,8 @@ jobs:
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "jacob-macleod"
+          git fetch origin development
+          git checkout development
           git add version.txt
           git commit -m "Bumped version"
           echo "https://jacob-macleod:${ACCESS_TOKEN_GITHUB}@github.com/jacob-macleod/Dolphin-Flashcard-App.git"
