@@ -1,0 +1,37 @@
+name: Get MR Title
+
+
+on:
+  pull_request_target:
+    types:
+      - closed
+
+jobs:  
+  bump_version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: 'write'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup github
+        run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "jacob-macleod"
+          git fetch origin development
+          git checkout development
+      - name: Bump the version
+        run: bash bump_version.sh "${{ github.event.pull_request.title }}"
+
+      - name: Commit the change
+        run: |
+          git add version.txt
+          git commit -m "Bumped version"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: development

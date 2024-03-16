@@ -17,18 +17,15 @@ jobs:
         with:
           python-version: '3.x' # Use the appropriate Python version
 
-      - name: Install dependencies
+      - name: Setup database config
         run: |
-          pip install -r requirements.txt # Assuming you have a requirements file
-          # You may need additional steps if pytest isn't installed already
-
+          echo "type='local'" > backend/database/database_config.py
+          cat backend/database/database_config.py
+          pip install -r requirements.txt
+          python3 backend/main.py &
       - name: Run pytest
         run: |
-          python3 -m venv env
-          source env/bin/activate
-          pip install -r requirements.txt
-          pip3 install pytest
-          pytest testing/
+          bash testing/run_tests.sh
 
   attempt-build:
     runs-on: ubuntu-latest
