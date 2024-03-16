@@ -14,15 +14,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Bump the version
-        run: bash bump_version.sh "${{ github.event.pull_request.title }}"
-
-      - name: Commit the change
+      - name: Setup github
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "jacob-macleod"
           git fetch origin development
           git checkout development
+      - name: Bump the version
+        run: bash bump_version.sh "${{ github.event.pull_request.title }}"
+
+      - name: Commit the change
+        run: |
           git add version.txt
           git commit -m "Bumped version"
 
