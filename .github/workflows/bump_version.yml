@@ -20,4 +20,6 @@ jobs:
           git config --global user.name "jacob-macleod"
           git add version.txt
           git commit -m "Bumped version"
-          git push origin $GITHUB_HEAD_REF -p $ACCESS_TOKEN_GITHUB -u jacob-macleod
+          echo "https://jacob-macleod:${ACCESS_TOKEN_GITHUB}@github.com/jacob-macleod/Dolphin-Flashcard-App.git"
+          git push -u "https://jacob-macleod:${ACCESS_TOKEN_GITHUB}@github.com/jacob-macleod/Dolphin-Flashcard-App.git" origin $GITHUB_HEAD_REF
+
