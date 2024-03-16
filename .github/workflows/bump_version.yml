@@ -1,0 +1,20 @@
+name: Get MR Title
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  get_title:
+    if: ${{ github.event.pull_request.base.ref == 'development' && github.event.pull_request.head.ref =~ '^feature/' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Get MR Title
+        id: mr_title
+        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
+
+      - name: Print MR Title
+        run: echo "MR Title: ${{ steps.mr_title.outputs.title }}"
