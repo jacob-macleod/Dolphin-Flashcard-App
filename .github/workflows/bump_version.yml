@@ -4,7 +4,7 @@ name: Get MR Title
 on: [pull_request]
 
 jobs:  
-  test:
+  bump_version:
     runs-on: ubuntu-latest
     permissions:
       contents: write
