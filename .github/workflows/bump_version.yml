@@ -14,6 +14,6 @@ jobs:
       - name: Test message
         run: echo "Hello world"
 
-      - name: Get MR Title
+      - name: Bump the version
         id: mr_title
-        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
+        run: bash bump_version.sh ${{ github.event.pull_request.title }}"
