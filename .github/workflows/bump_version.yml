@@ -14,4 +14,9 @@ jobs:
       - name: Test message
         run: echo "Hello world"
 
+      - name: Get MR Title
+        id: mr_title
+        run: echo "::set-output name=title::${{ github.event.pull_request.title }}"
 
+      - name: Print MR Title
+        run: echo "MR Title: ${{ steps.mr_title.outputs.title }}"
