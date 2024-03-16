@@ -6,7 +6,10 @@ on: [pull_request]
 jobs:  
   test:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: 'write'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
