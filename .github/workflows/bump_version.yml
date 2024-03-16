@@ -16,6 +16,8 @@ jobs:
 
       - name: Push the change
         run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "jacob-macleod"
           git add version.txt
           git commit -m "Bumped version"
           git push origin $GITHUB_HEAD_REF -p $ACCESS_TOKEN_GITHUB -u jacob-macleod
