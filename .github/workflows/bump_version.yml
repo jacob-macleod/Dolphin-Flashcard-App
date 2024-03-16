@@ -10,10 +10,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
-      - name: Test message
-        run: echo "Hello world"
 
       - name: Bump the version
-        id: mr_title
         run: bash bump_version.sh "${{ github.event.pull_request.title }}"
+
+      - name: Push the change
+        run: |
+          git add version.txt
+          git commit -m "Bumped version"
+          git push origin $GITHUB_HEAD_REF
