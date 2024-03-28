@@ -1,15 +1,17 @@
 #!/bin/bash
+init_file=backend/__init__.py
 
 # Check if version.txt exists
-if [ ! -f version.txt ]; then
-    echo "Error: version.txt not found"
+if [ ! -f $init_file ]; then
+    echo "Error: $init_file not found"
     exit 1
 fi
 
 # Read current version from version.txt
-current_version=$(cat version.txt)
+entered_version=$(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "$init_file" | awk -F '"' '{print $2}')
+current_version=$(git describe --tags --abbrev=0)
 
-echo "Bumping version with pull request name '$1'"
+echo "Checking version $current_version has been updated correctly according to pull request name '$1'"
 
 # Parse MAJOR, MINOR, and PATCH from current version
 IFS='.' read -r -a version_parts <<< "$current_version"
@@ -30,6 +32,11 @@ else
 fi
 
 # Update version.txt with the new version
-echo "$major.$minor.$patch" > version.txt
+new_version="$major.$minor.$patch"
 
-echo "Version bumped to $major.$minor.$patch"
+echo $new_version
+echo $entered_version
+
+if [ "$entered_version" == "$current_version" ]; then echo "You haven't updated the version in $init_file from $entered_version to $new_version"; exit 1; fi
+if [ "$entered_version" != "$new_version" ]; then echo "You haven't updated the version in $init_file correctly from $current_version to $new_version"; exit 1; fi
+if [ "$entered_version" == "$new_version" ]; then echo "You have successfully updated the version to $entered_version"; exit 0; fi

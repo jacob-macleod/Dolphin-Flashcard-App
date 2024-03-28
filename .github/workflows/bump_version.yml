@@ -1,10 +1,7 @@
 name: Get MR Title
 
-
-on:
-  pull_request_target:
-    types:
-      - closed
+on:  
+  pull_request
 
 jobs:  
   bump_version:
@@ -21,17 +18,14 @@ jobs:
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "jacob-macleod"
-          git fetch origin development
-          git checkout development
+          git config pull.rebase false
+          git fetch origin
+          git pull origin ${{ github.head_ref || github.ref_name }} --allow-unrelated-histories
+
       - name: Bump the version
         run: bash bump_version.sh "${{ github.event.pull_request.title }}"
 
-      - name: Commit the change
+      - name: Push the new tags
         run: |
-          git add version.txt
-          git commit -m "Bumped version"
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          branch: development
+          git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}')
+          git push --tags --force
