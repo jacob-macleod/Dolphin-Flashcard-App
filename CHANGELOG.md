@@ -22,6 +22,24 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [1.3.1] - 2024-03-28
+
+### Added
+
+- N/A
+
+### Fixed
+
+- N/A
+
+### Changed
+
+- Edited README.md
+
+### Removed
+
+- N/A
+
 ## [1.3.0] - 2024-03-28
 
 ### Added
