@@ -19,7 +19,7 @@ jobs:
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "jacob-macleod"
-          git fetch origin
+          git pull origin ${{ github.head_ref || github.ref_name }} 
 
       - name: Bump the version
         run: bash bump_version.sh "${{ github.event.pull_request.title }}"
