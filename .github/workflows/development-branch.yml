@@ -19,7 +19,7 @@ jobs:
           git config --global user.name "jacob-macleod"
           git fetch origin
           git config pull.rebase false
-          git pull origin development --allow_unrelated_histories
+          git pull origin development --allow-unrelated-histories
       - name: Set up Firebase credentials
         run: |
           echo "$FIREBASE_KEY" > credentials.json
