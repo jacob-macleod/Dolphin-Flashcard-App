@@ -1,10 +1,8 @@
 name: Get MR Title
 
 
-on: 
-  push:
-    branches-ignore:
-      - main
+on:  
+  pull_request:
 
 jobs:  
   bump_version:
