@@ -45,7 +45,7 @@ jobs:
       - name: Log in to Docker Hub and push image
         run: |
           docker login -u jacobmacleod -p $DOCKER_PASSWORD
-          docker push jacobmacleod/flashcard-app:development_$(cat version.txt)
+          docker push jacobmacleod/flashcard-app:development_$(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}')
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
