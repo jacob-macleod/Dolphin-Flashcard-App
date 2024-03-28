@@ -28,10 +28,8 @@ jobs:
 
       - name: Push the new tags
         run: |
-          if [[ $(git describe --tags --abbrev=0) != $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}') ]] then;
-            git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}');
-            git push --tags;
-          fi
+          git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}')
+          git push --tags --force
   
       #- name: Push changes
       #  uses: ad-m/github-push-action@master
