@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Setup github
+        run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "jacob-macleod"
+          git fetch origin
+          git config pull.rebase false
+          git pull origin development --allow_unrelated_histories
       - name: Set up Firebase credentials
         run: |
           echo "$FIREBASE_KEY" > credentials.json
