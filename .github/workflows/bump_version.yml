@@ -3,6 +3,8 @@ name: Get MR Title
 
 on:  
   pull_request:
+    branches:
+    - pipeline-update
 
 jobs:  
   bump_version:
