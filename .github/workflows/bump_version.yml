@@ -19,10 +19,11 @@ jobs:
         run: |
           git config --global user.email "$EMAIL_GITHUB"
           git config --global user.name "jacob-macleod"
+          git fetch origin
       - name: Test
         run: |
           git tag -l
-
+          git describe --tags
       - name: Bump the version
         run: bash bump_version.sh "${{ github.event.pull_request.title }}"
 
