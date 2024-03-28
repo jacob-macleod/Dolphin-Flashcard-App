@@ -5,7 +5,6 @@ on:
     branches-ignore:
       - main
 
-
 jobs:
   pytest-check:
     runs-on: ubuntu-latest
