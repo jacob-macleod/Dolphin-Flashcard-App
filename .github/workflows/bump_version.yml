@@ -2,7 +2,6 @@ name: Get MR Title
 
 
 on:  
-  push:
   pull_request:
     branches:
       - development
