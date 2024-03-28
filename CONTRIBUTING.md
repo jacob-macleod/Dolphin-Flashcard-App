@@ -123,6 +123,13 @@ This will build the React app to `frontend/build`. Then, the server will serve t
 When contributing, follow these general guidelines:
 
 * Do your work in a branch from the development branch, then create a pull request when you're ready
+  * In your pull requests, prefix the title with `PATCH:`, `MAJOR:`, or `MINOR:`
+  * Update the version in `backend/__init__.py`:
+    * If you're making a patch, increment the right hand side number by one
+    * If you're making a minor change, increment the middle number by one
+    * If you're making a major change, increment the left hand side number by one
+  * This follows the [semantic versioning standard](https://semver.org)
+  * Write about the changes you've made in `CHANGELOG.md`, following the standard there
 * Add comments in issues to show what you're working on
 * Try to follow the coding style and conventions established in the project
 * Try to write unit tests, if you can - this may depend on what, in particular, you're coding. The backend tests are in `testing/`
