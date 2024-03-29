@@ -26,7 +26,7 @@ jobs:
       - name: Install node
         run: |
           apt-get update -y && apt-get upgrade -y
-          apt install nodejs npm -y
+          apt install nodejs npm docker -y
           cd frontend
           npm install -g create-react-app
           npm install
