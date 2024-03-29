@@ -131,6 +131,26 @@ class ApiManager {
             setHeatmap(heatmapData);
         })
     }
+
+    getWeeklyXp(userID, setWeeklyXp) {
+        const url = 'get-weekly-xp';
+        const data = {
+            userID: userID
+        };
+        this.fetchData(data, url, weeklyXp => {
+            setWeeklyXp(weeklyXp);
+        });
+    }
+
+    getTotalXp(userID, setTotalXP) {
+        const url = 'get-total-xp';
+        const data = {
+            userID: userID
+        };
+        this.fetchData(data, url, totalXp => {
+            setTotalXP(totalXp);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

@@ -57,9 +57,6 @@ function Dashboard() {
     setView(
       width < mobileBreakpoint ? "mobile"
       : width < tabletBreakpoint ? "tablet" : "desktop");
-    console.log(width < mobileBreakpoint ? "mobile"
-    : width < tabletBreakpoint ? "tablet" : "desktop")
-    console.log(" width " + width)
   }, [width]);
 
 
