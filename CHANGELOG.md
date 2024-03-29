@@ -22,6 +22,24 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [1.4.0] - 2024-03-29
+
+### Added
+
+- Added get_weekly_xp and get_total_xp methods to API
+
+### Fixed
+
+- N/A
+
+### Changed
+
+- Added proper responsiveness for mobile and tablet devices on dashboard page
+
+### Removed
+
+- N/A
+
 ## [1.3.1] - 2024-03-28
 
 ### Added
