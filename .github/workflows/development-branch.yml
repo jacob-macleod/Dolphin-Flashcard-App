@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Setup github
+        run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "jacob-macleod"
+          git fetch origin
+          git config pull.rebase false
+          git pull origin development --allow-unrelated-histories
       - name: Set up Firebase credentials
         run: |
           echo "$FIREBASE_KEY" > credentials.json
@@ -34,11 +41,11 @@ jobs:
           npm run build
           rm -rf frontend/node_modules
       - name: Build the Docker image
-        run: docker build -t jacobmacleod/flashcard-app:latest .
+        run: docker build -t jacobmacleod/flashcard-app:development_$(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}') .
       - name: Log in to Docker Hub and push image
         run: |
           docker login -u jacobmacleod -p $DOCKER_PASSWORD
-          docker push jacobmacleod/flashcard-app:development_$(cat version.txt)
+          docker push jacobmacleod/flashcard-app:development_$(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}')
         env:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 

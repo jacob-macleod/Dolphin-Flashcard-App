@@ -1,5 +1,14 @@
 {
     "users": {
+        "userID": "",
+        "name": "",
+        "statistics": {
+            "streak": "0",
+            "totalXP": "0",
+            "weeklyXP": "0",
+            "lastStreak": "14/03/2024"
+        },
+        "heatmapData": {},
         "1": {
             "userID": "1",
             "name": "Dummy",
@@ -7,67 +16,15 @@
                 "streak": "0",
                 "totalXP": "0",
                 "weeklyXP": "0",
-                "lastStreak": "03/03/2024"
+                "lastStreak": "14/03/2024"
             },
             "heatmapData": {
-                "04-03-2024": "2"
-            },
-            "flashcards": {
-                "109048371178679571656833207928626960824600184952382683242495299362286693266526": {
-                    "flashcardID": "109048371178679571656833207928626960824600184952382683242495299362286693266526",
-                    "flashcardName": "My new set",
-                    "flashcardDescription": "This is\nmy description",
-                    "cards": [
-                        {
-                            "front": "Front 1",
-                            "back": "Back 1",
-                            "reviewStatus": "0.0",
-                            "lastReview": "01/01/1969"
-                        },
-                        {
-                            "front": "Front 2",
-                            "back": "Back 2",
-                            "reviewStatus": "0.0",
-                            "lastReview": "01/01/1969"
-                        }
-                    ]
-                }
+                "14-03-2024": "10"
             }
         },
         "-1": {
-            "flashcards": {
-                "53247975812034509491484041336208527259375627317574189579622642545922337011888": {
-                    "flashcardID": "53247975812034509491484041336208527259375627317574189579622642545922337011888",
-                    "flashcardName": "My new set",
-                    "flashcardDescription": "This is\nmy description",
-                    "cards": []
-                }
-            },
             "heatmapData": {
-                "04-03-2024": "2"
-            }
-        },
-        "": {
-            "flashcards": {
-                "80146394209890122051208108675648808906504678108653440503157954578668264426016": {
-                    "flashcardID": "80146394209890122051208108675648808906504678108653440503157954578668264426016",
-                    "flashcardName": "My new set",
-                    "flashcardDescription": "This is\nmy description",
-                    "cards": [
-                        {
-                            "front": "Front 1",
-                            "back": "Back 1",
-                            "reviewStatus": "0.0",
-                            "lastReview": "01/01/1969"
-                        },
-                        {
-                            "front": "Front 2",
-                            "back": "Back 2",
-                            "reviewStatus": "0.0",
-                            "lastReview": "01/01/1969"
-                        }
-                    ]
-                }
+                "14-03-2024": "10"
             }
         }
     }
