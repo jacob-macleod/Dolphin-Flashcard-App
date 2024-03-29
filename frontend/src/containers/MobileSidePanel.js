@@ -17,7 +17,7 @@ function MobileSidePanel ({visible, setVisible}) {
         setVisible(false);
     };
 
-    return  visible==true ? <div className="side-panel">
+    return  visible==true ? <div className="side-panel-mobile">
             <p className="link" style={{fontSize: mediumTextMobile}} onClick={clickEvent}>Close</p>
             <MenuItem text="Dashboard" src="/dashboard" clicked={true} imgUrl={dashboard_icon_white}/>
             <MenuItem text="Flashcards" src="/flashcards" imgUrl={flashcard_icon}/>
