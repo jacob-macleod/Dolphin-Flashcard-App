@@ -25,8 +25,8 @@ jobs:
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
       - name: Install node
         run: |
-          apt-get update && apt-get upgrade
-          apt install nodejs npm
+          apt-get update -y && apt-get upgrade -y
+          apt install nodejs npm -y
           cd frontend
           npm install -g create-react-app
           npm install
