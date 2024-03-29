@@ -23,16 +23,15 @@ jobs:
           git fetch origin
           git pull origin ${{ github.head_ref || github.ref_name }} --allow-unrelated-histories
 
-      - name: Exit if development branch
+      - name: Bump the version if development branch
         run: |
-          if [[ ${{ github.head_ref || github.ref_name }} == development ]]; then
-          gh run cancel ${{ github.run_id }};
-          gh run watch ${{ github.run_id }}; fi
-
-      - name: Bump the version
-        run: bash bump_version.sh "${{ github.event.pull_request.title }}"
+          if [[ ${{ github.head_ref || github.ref_name }} != development ]]; then
+          bash bump_version.sh "${{ github.event.pull_request.title }}";
+          fi
 
       - name: Push the new tags
         run: |
-          git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}')
-          git push --tags --force
+          if [[ ${{ github.head_ref || github.ref_name }} != development ]]; then
+          git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}');
+          git push --tags --force;
+          fi
