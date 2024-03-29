@@ -1,0 +1,7 @@
+.profileBanner {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
