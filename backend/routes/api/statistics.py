@@ -167,6 +167,57 @@ def get_heatmap() :
     heatmap = db.get("/users/" + user_id + "/heatmapData")
     return jsonify(heatmap)
 
+@statistics_routes.route("/api/get-weekly-xp", methods=["POST"])
+def get_weekly_xp() :
+    """ Get the user's heatmap data
+        Requests should have json in the following format:
+    {
+        "userID": "my id"
+    }
+    """
+    # Check the request json
+    expected_format = {
+        "userID": "",
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
+    weekly_xp = db.get("/users/" + user_id + "/statistics/weeklyXP")
+    return jsonify(weekly_xp)
+
+@statistics_routes.route("/api/get-total-xp", methods=["POST"])
+def get_total_xp() :
+    """ Get the user's heatmap data
+        Requests should have json in the following format:
+    {
+        "userID": "my id"
+    }
+    """
+    # Check the request json
+    expected_format = {
+        "userID": "",
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    user_id = request.json.get("userID")
+    total_xp = db.get("/users/" + user_id + "/statistics/totalXP")
+    return jsonify(total_xp)
 
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
 def calculate_streak():

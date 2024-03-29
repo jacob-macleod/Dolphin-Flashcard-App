@@ -62,8 +62,6 @@ function SignInPage({ userID, setUserID, active=true }) {
 
   useEffect(() => {
     setView(width < mobileBreakpoint ? "mobile" : "desktop");
-    console.log(width < mobileBreakpoint ? "mobile" : "desktop")
-    console.log(" width " + width)
   }, [width]);
 
   const signInButton = active ? <Button text="Continue with Google" onClick={ () => {

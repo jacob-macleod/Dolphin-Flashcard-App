@@ -8,7 +8,7 @@ import DelayedElement from '../componments/DelayedElement';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
-function EditGoalPopup({ visible, setVisible }) {
+function EditGoalPopup({ visible, setVisible, view }) {
     // visible is either false, or stores the goal data
     const [quantity, setQuantity] = useState("Amount of XP");
     const [option, setOption] = useState('xp');
@@ -143,8 +143,8 @@ function EditGoalPopup({ visible, setVisible }) {
 
     return (
         visible === false ? null :
-        <div className='darken-background'>
-            <div className="popup-container">
+        <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
+            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}>
                 <Heading3 text="Edit goal:" />
 
                 <div className="input-container">

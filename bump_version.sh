@@ -22,8 +22,11 @@ patch="${version_parts[2]}"
 # Determine which part to increment based on input parameter
 if [[ $1 == "MAJOR"* ]]; then
     major=$((major + 1))
+    minor=0
+    patch=0
 elif [[ $1 == "MINOR"* ]]; then
     minor=$((minor + 1))
+    patch=0
 elif [[ $1 == "PATCH"* ]]; then
     patch=$((patch + 1))
 else

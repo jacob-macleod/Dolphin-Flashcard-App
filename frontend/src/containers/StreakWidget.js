@@ -10,8 +10,8 @@ import '../App.css';
 
 function StreakWidget () {
     const [streak, setStreak] = useState(null)
-    const [totalXP] = useState("6093")
-    const [weeklyXP] = useState("72")
+    const [totalXP, setTotalXP] = useState(null)
+    const [weeklyXP, setWeeklyXP] = useState(null)
 
     const panelTitleStyle = {
         padding: "8px"
@@ -27,7 +27,9 @@ function StreakWidget () {
       }
 
       useEffect(() => {
-        apiManager.calculateStreak(getCookie("userID"), setStreak)
+        apiManager.calculateStreak(getCookie("userID"), setStreak);
+        apiManager.getWeeklyXp(getCookie("userID"), setWeeklyXP);
+        apiManager.getTotalXp(getCookie("userID"), setTotalXP);
       }, []);
 
     return <>
