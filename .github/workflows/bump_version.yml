@@ -22,6 +22,12 @@ jobs:
           git fetch origin
           git pull origin ${{ github.head_ref || github.ref_name }} --allow-unrelated-histories
 
+      - name: Exit if development branch
+        run: |
+          if [[ ${{ github.head_ref || github.ref_name }} == development ]]; then
+          gh run cancel ${{ github.run_id }};
+          gh run watch ${{ github.run_id }}; fi
+
       - name: Bump the version
         run: bash bump_version.sh "${{ github.event.pull_request.title }}"
 
