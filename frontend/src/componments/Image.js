@@ -9,7 +9,9 @@ function Image({
     className="",
     onClick,
     paddingRight="10px",
+    paddingLeft="0px",
     paddingBottom="0px",
+    paddingTop="0px",
     marginBottom="0px",
     marginTop="0px",
     objectFit="fill"
@@ -28,6 +30,8 @@ function Image({
             height: height,
             borderRadius: borderRadius,
             paddingBottom: paddingBottom,
+            paddingTop: paddingTop,
+            paddingLeft: paddingLeft,
             paddingRight: paddingRight,
             marginBottom: marginBottom,
             marginTop: marginTop,

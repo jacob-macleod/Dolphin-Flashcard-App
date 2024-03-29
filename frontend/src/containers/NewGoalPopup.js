@@ -7,7 +7,7 @@ import apiManager from '../api/Api';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
 
-function NewGoalPopup({ visible, setVisible }) {
+function NewGoalPopup({ visible, setVisible, view }) {
     const [quantity, setQuantity] = useState("Amount of XP");
     const [option, setOption] = useState('xp');
     const [date, setDate] = useState("none");
@@ -81,8 +81,8 @@ function NewGoalPopup({ visible, setVisible }) {
 
     return (
         visible === false ? null :
-        <div className='darken-background'>
-            <div className="popup-container">
+        <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
+            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}>
                 <Heading3 text="Set a new goal:" />
 
                 <div className="input-container">

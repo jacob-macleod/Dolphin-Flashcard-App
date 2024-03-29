@@ -83,8 +83,8 @@ function Dashboard() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
-      <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} />
-      <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} />
+      <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} view={view}/>
+      <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} view={view}/>
 
       <GridContainer layout={
         view == "desktop" ? "240px 400px auto"
