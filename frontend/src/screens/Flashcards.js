@@ -8,6 +8,7 @@ import SidePanel from '../containers/SidePanel';
 import Heading4 from '../componments/Heading4';
 import WhiteOverlay from '../componments/WhiteOverlay';
 import HamburgerBar from '../componments/HamburgerBar';
+import FlashcardOverview from '../containers/FlashcardOverview';
 import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
@@ -28,6 +29,37 @@ function Flashcards() {
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
     view == "mobile" ? "0px" : "16px"
   );
+
+  const tempCardData = [
+    {
+      "back": "Back 1",
+      "flashcardName": "My new set",
+      "front": "Front 1",
+      "lastReview": "30/03/2024",
+      "reviewStatus": "0.0"
+    },
+    {
+      "back": "Back 2",
+      "flashcardName": "My new set",
+      "front": "Front 2",
+      "lastReview": "30/03/2024",
+      "reviewStatus": "0.0"
+    },
+    {
+      "back": "Back 1",
+      "flashcardName": "Set two",
+      "front": "Front 1",
+      "lastReview": "30/03/2024",
+      "reviewStatus": "0.0"
+    },
+    {
+      "back": "Back 2",
+      "flashcardName": "Set two",
+      "front": "Front 2",
+      "lastReview": "30/03/2024",
+      "reviewStatus": "0.0"
+    }
+  ]
 
   // Manage resizing the window size when needed
   useEffect(() => {
@@ -71,11 +103,15 @@ function Flashcards() {
         : "auto"
       } classType="two-column-grid">
         {view != "mobile" ? <SidePanel selectedItem="flashcards"/> : <></>}
+
         <GridItem style={{paddingLeft: flashcardBoxHorizontalPadding, paddingRight: flashcardBoxHorizontalPadding, paddingTop: "0px", width: view == "mobile" ? "100vw" : ""}}>
           {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
-          <WhiteOverlay style={{height: "72px"}}>
+  
+          <WhiteOverlay style={{height: "max-content"}}>
             <Heading4 text="Flashcards" />
+            <FlashcardOverview flashcardData={tempCardData} />
           </WhiteOverlay>
+
         </GridItem>
       </GridContainer>
     <BlobBackground />

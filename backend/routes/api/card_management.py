@@ -6,6 +6,7 @@ from database.database import database as db
 from classes.date import Date
 from verification.api_error_checking import check_request_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
+from classes.card_collection import FlashcardCollection
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
@@ -88,7 +89,7 @@ def create_flashcard():
         if folder.endswith("/") is False:
             folder += "/"
         # A hashed version of the userID and flashcard name
-        flashcard_id = hash_to_numeric(user_id + flashcard_name)
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
         # If the flashcard does not exist, create it
         if db.get("/users/" + user_id + "/flashcards/" + folder  + flashcard_id) is None:
@@ -188,32 +189,36 @@ def get_today_cards():
     if flashcards is None:
         return jsonify(["User has no flashcards"])
 
+    cards = FlashcardCollection(flashcards).today_card_list
+    print (cards)
     # Select only the cards due today or previous days
-    for _, flashcard_data in flashcards.items():
+    for key, flashcard_data in enumerate(flashcards):
+        print (key)
         # Access the "cards" list within each flashcard
         cards_list = flashcard_data.get("cards", [])
         # Iterate through each card in the "cards" list
-        for card in cards_list:
-            if card["lastReview"] <= date.get_current_date():
-                card["flashcardName"] = flashcard_data["flashcardName"]
+        #for card in cards_list:
+        #print (card)
+        """if card["lastReview"] <= date.get_current_date():
+            card["flashcardName"] = flashcard_data["flashcardName"]
 
-                # Work out if the card is new, being learned, or learned
-                daily_review = card["reviewStatus"].split(".")[0]
-                sub_daily_review = card["reviewStatus"].split(".")[1]
+            # Work out if the card is new, being learned, or learned
+            daily_review = card["reviewStatus"].split(".")[0]
+            sub_daily_review = card["reviewStatus"].split(".")[1]
 
-                if daily_review == "0" and sub_daily_review == "0":
-                    not_started += 1
-                    count = not_started
-                    limit = card_presets["notStarted"]
-                elif daily_review == "0":
-                    actively_studying += 1
-                    count = actively_studying
-                    limit = card_presets["activelyStudying"]
-                else:
-                    recapping += 1
-                    count = recapping
-                    limit = card_presets["recapping"]
-                if int(count) < int(limit):
-                    cards_to_return.append(card)
+            if daily_review == "0" and sub_daily_review == "0":
+                not_started += 1
+                count = not_started
+                limit = card_presets["notStarted"]
+            elif daily_review == "0":
+                actively_studying += 1
+                count = actively_studying
+                limit = card_presets["activelyStudying"]
+            else:
+                recapping += 1
+                count = recapping
+                limit = card_presets["recapping"]
+            if int(count) < int(limit):
+                cards_to_return.append(card)"""
 
     return jsonify(cards_to_return)
