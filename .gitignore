@@ -7,7 +7,7 @@ firebase_config.json
 env
 frontend/build
 frontend/src/api/config.js
-#backend/database/database_config.py
+backend/database/database_config.py
 frontend/node_modules/*
 .idea/*
 frontend/node_modules

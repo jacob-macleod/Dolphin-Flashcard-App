@@ -27,11 +27,15 @@ def hash_to_numeric(input_string):
 def create_flashcard():
     """ Create or edit a flashcard set for the user.
         Flashcards have a front, back, review status and last review date
+        Set folder to none to set as a top level flashcard, otherwise set it to the parent folder name.
+        If you want to set multiple parent folders, you can add the folder name seperated by 1.
+        So for example, top-level-parent-name/parent-name-2/parent-name-3
         Example request:
         {
             "userID": "my-id",
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
+            "folder": "parent-name",
             "cards": [
                 {
                     "front":"Front 1",
@@ -53,6 +57,7 @@ def create_flashcard():
         "userID": "",
         "flashcardName": "",
         "flashcardDescription": "",
+        "folder": "",
         "cards": [
             {
                 "front": "",
@@ -78,11 +83,16 @@ def create_flashcard():
         flashcard_name = request.json.get("flashcardName")
         flashcard_description = request.json.get("flashcardDescription")
         cards = request.json.get("cards")
+        folder = request.json.get("folder")
+        # Add "/" to folder if it does not end with if
+        if folder.endswith("/") is False:
+            folder += "/"
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + flashcard_name)
 
-        if db.get("/users/" + user_id + "/flashcards/" + flashcard_id) is None:
-            db.save("/users/" + user_id + "/flashcards/" + flashcard_id,
+        # If the flashcard does not exist, create it
+        if db.get("/users/" + user_id + "/flashcards/" + folder  + flashcard_id) is None:
+            db.save("/users/" + user_id + "/flashcards/" + folder  + flashcard_id,
                     {
                         "flashcardID": flashcard_id,
                         "flashcardName": flashcard_name,

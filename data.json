@@ -7,7 +7,7 @@
                 "streak": "0",
                 "totalXP": "0",
                 "weeklyXP": "0",
-                "lastStreak": "29/03/2024"
+                "lastStreak": "31/03/2024"
             },
             "heatmapData": {},
             "goals": {
@@ -15,12 +15,96 @@
                     "type": "XP",
                     "title": "Gain 4 XP by 30/03/2024",
                     "end_date": "30/03/2024",
-                    "status": "in progress",
-                    "fail_date": "",
+                    "status": "failed",
+                    "fail_date": "31/03/2024",
                     "data": {
                         "start_date": "29/03/2024",
                         "starting_xp": "0",
                         "goal_xp": "4"
+                    }
+                }
+            },
+            "flashcards": {
+                "78706522606884094347267331340740459328628093524759979664863269402823009149302": {
+                    "flashcardID": "78706522606884094347267331340740459328628093524759979664863269402823009149302",
+                    "flashcardName": "My new set",
+                    "flashcardDescription": "This is\nmy description",
+                    "cards": [
+                        {
+                            "front": "Front 1",
+                            "back": "Back 1",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        },
+                        {
+                            "front": "Front 2",
+                            "back": "Back 2",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        }
+                    ]
+                },
+                "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
+                    "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
+                    "flashcardName": "Set two",
+                    "flashcardDescription": "This is the second set I've made",
+                    "cards": [
+                        {
+                            "front": "Front 1",
+                            "back": "Back 1",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        },
+                        {
+                            "front": "Front 2",
+                            "back": "Back 2",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        }
+                    ]
+                },
+                "languages": {
+                    "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
+                        "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
+                        "flashcardName": "Set two",
+                        "flashcardDescription": "This is the second set I've made",
+                        "cards": [
+                            {
+                                "front": "Front 1",
+                                "back": "Back 1",
+                                "reviewStatus": "0.0",
+                                "lastReview": "30/03/2024"
+                            },
+                            {
+                                "front": "Front 2",
+                                "back": "Back 2",
+                                "reviewStatus": "0.0",
+                                "lastReview": "30/03/2024"
+                            }
+                        ]
+                    },
+                    "spanish": {
+                        "common-words": {
+                            "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
+                                "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
+                                "flashcardName": "Set two",
+                                "flashcardDescription": "This is the second set I've made",
+                                "cards": [
+                                    {
+                                        "front": "Front 1",
+                                        "back": "Back 1",
+                                        "reviewStatus": "0.0",
+                                        "lastReview": "30/03/2024"
+                                    },
+                                    {
+                                        "front": "Front 2",
+                                        "back": "Back 2",
+                                        "reviewStatus": "0.0",
+                                        "lastReview": "30/03/2024"
+                                    }
+                                ]
+                            }
+                        }
                     }
                 }
             }

@@ -19,8 +19,9 @@ def dict_to_array(input_dict):
 
 def append_items_to_array(dictionary, result=[]):
     """ Append all values of dictionary to an array """
-    for key, value in dictionary.items():
-        if isinstance(value, dict):
+
+    for key, value in enumerate(dictionary):
+        if isinstance(value, dict) or isinstance(value, list):
             append_items_to_array(value, result)
         else:
             result.append(value)

@@ -12,6 +12,7 @@ Create or edit a set of flashcards for the user.
 | 1. userID               | The ID of the user editing or creating the set of flashcards                      | String  | Required          |
 | 2. flashcardName        | The name of the flashcard set                                                     | String  | Required          |
 | 3. flashcardDescription | The description of the flashcard set                                              | String  | Required          |
+| 4. folder               | The folder of the flashcard. Set to `""` if it has no folder. If multiple folders, set to `top-level-parent-name/parent-name-2/parent-name-3` | String | Required |
 | 4. cards                | A list of flashcards. Each flashcard has a front, back, review status, and last review properties.| list| Required          |
 | 4.1. front              | The front side content of the flashcard                                           | String  | Required          |
 | 4.2. back               | The back side content of the flashcard                                            | String  | Required          |
@@ -22,7 +23,7 @@ Create or edit a set of flashcards for the user.
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d {'userID': 'user1', 'flashcardName': 'Expense Tracker', 'flashcardDescription': 'A set of flashcards for tracking expenses', 'cards': [{'front': 'Monday', 'back': 'Evening', 'reviewStatus': '0.0', 'lastReview': '01-01-2024'}, {'front': 'Tuesday', 'back': 'Morning', 'reviewStatus': '0.0', 'lastReview': '01-01-2024'}, {'front': 'Wednesday', 'back': 'Afternoon', 'reviewStatus': '0.0', 'lastReview': '01-01-2024'}]} http://dolphinflashcards.com/api/create-flashcard
+    curl  -X POST  -H "Content-Type: application/json” -d {'userID': 'user1', 'flashcardName': 'Expense Tracker', 'flashcardDescription': 'A set of flashcards for tracking expenses', 'folder': 'folder-name/folder-2', 'cards': [{'front': 'Monday', 'back': 'Evening', 'reviewStatus': '0.0', 'lastReview': '01-01-2024'}, {'front': 'Tuesday', 'back': 'Morning', 'reviewStatus': '0.0', 'lastReview': '01-01-2024'}, {'front': 'Wednesday', 'back': 'Afternoon', 'reviewStatus': '0.0', 'lastReview': '01-01-2024'}]} http://dolphinflashcards.com/api/create-flashcard
 ```
 
 
