@@ -8,10 +8,12 @@ import community_icon from '../static/community-icon.svg';
 import quests_icon from '../static/quests-icon.svg';
 import leaderboard_icon from '../static/leaderboard-icon.svg';
 import settings_icon from '../static/settings-icon.svg';
+import dashboard_icon from '../static/dashboard-icon.svg';
+import flashcard_icon_white from '../static/flashcard-icon-white.svg';
 import './SidePanel.css';
 import './GridItem.css';
 
-function SidePanel () {
+function SidePanel ({ selectedItem }) {
     const [accountDropdownVisibility, setAccountDropdownVisibility] = useState(false);
     const gridItemStyle = {
         width: "240px",
@@ -22,8 +24,18 @@ function SidePanel () {
         <div className="side-panel">
             <UserProfileHeader setAccountDropdownVisibility={ setAccountDropdownVisibility } accountDropdownVisibility={accountDropdownVisibility}/>
             <AccountDropown visible={accountDropdownVisibility}/>
-            <MenuItem text="Dashboard" src="/dashboard" clicked={true} imgUrl={dashboard_icon_white}/>
-            <MenuItem text="Flashcards" src="/flashcards" imgUrl={flashcard_icon}/>
+            <MenuItem
+                text="Dashboard"
+                src="/dashboard"
+                clicked={selectedItem == "dashboard" ? true : false}
+                imgUrl={selectedItem == "dashboard" ? dashboard_icon_white : dashboard_icon}
+            />
+            <MenuItem
+                text="Flashcards"
+                src="/flashcards"
+                clicked={selectedItem == "flashcards" ? true : false}
+                imgUrl={selectedItem == "flashcards" ? flashcard_icon_white : flashcard_icon}
+            />
             <MenuItem text="Community" src="/community" imgUrl={community_icon}/>
             <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>
             <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>

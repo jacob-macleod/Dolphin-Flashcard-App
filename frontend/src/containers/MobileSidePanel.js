@@ -10,14 +10,15 @@ import leaderboard_icon from '../static/leaderboard-icon.svg';
 import settings_icon from '../static/settings-icon.svg';
 import settingsIcon from '../static/settings-icon.svg';
 import signOutIcon from '../static/signout-icon.svg';
-import { mediumTextMobile } from '../textSizes';
 import { getCookie } from '../api/Authentication';
 import blueHamburger from '../static/blue-hamburger-menu.svg';
+import dashboard_icon from '../static/dashboard-icon.svg';
+import flashcard_icon_white from '../static/flashcard-icon-white.svg';
 import './MobileSidePanel.css';
 import './GridItem.css';
 import '../componments/HamburgerBar.css';
 
-function MobileSidePanel ({visible, setVisible}) {
+function MobileSidePanel ({visible, setVisible, selectedItem}) {
     const iconSize = "32px";
 
     function clickEvent() {
@@ -35,8 +36,18 @@ function MobileSidePanel ({visible, setVisible}) {
                 }}/>
                 <Image width={iconSize} height={iconSize} minWidth={iconSize} url={blueHamburger} onClick={clickEvent} paddingRight='16px'/>
             </div>
-            <MenuItem text="Dashboard" src="/dashboard" clicked={true} imgUrl={dashboard_icon_white}/>
-            <MenuItem text="Flashcards" src="/flashcards" imgUrl={flashcard_icon}/>
+            <MenuItem
+                text="Dashboard"
+                src="/dashboard"
+                clicked={selectedItem == "dashboard" ? true : false}
+                imgUrl={selectedItem == "dashboard" ? dashboard_icon_white : dashboard_icon}
+            />
+            <MenuItem
+                text="Flashcards"
+                src="/flashcards"
+                clicked={selectedItem == "flashcards" ? true : false}
+                imgUrl={selectedItem == "flashcards" ? flashcard_icon_white : flashcard_icon}
+            />
             <MenuItem text="Community" src="/community" imgUrl={community_icon}/>
             <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>
             <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>

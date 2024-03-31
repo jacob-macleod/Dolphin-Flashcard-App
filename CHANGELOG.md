@@ -22,6 +22,24 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [2.0.0] - 2024-03-29
+
+### Added
+
+- N/A
+
+### Fixed
+
+- N/A
+
+### Changed
+
+- The create-flashcard endpoint now must also be passed `folder`, which allows flashcards to be placed in folders. (Set to `""` if the fashcard has no parent folders). This is a breaking change
+
+### Removed
+
+- N/A
+
 ## [1.4.0] - 2024-03-29
 
 ### Added
