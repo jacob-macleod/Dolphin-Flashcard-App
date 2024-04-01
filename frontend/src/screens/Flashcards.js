@@ -158,10 +158,18 @@ function Flashcards() {
       } classType="two-column-grid">
         {view != "mobile" ? <SidePanel selectedItem="flashcards"/> : <></>}
 
-        <GridItem style={{paddingLeft: flashcardBoxHorizontalPadding, paddingRight: flashcardBoxHorizontalPadding, paddingTop: "0px", width: view == "mobile" ? "100vw" : ""}}>
+        <GridItem style={{
+          paddingLeft: flashcardBoxHorizontalPadding,
+          paddingRight: flashcardBoxHorizontalPadding,
+          paddingTop: "0px",
+          width: view == "mobile" ? "100vw" : "",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}>
           {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
   
-          <WhiteOverlay style={{height: "max-content"}}>
+          <WhiteOverlay style={{height: "max-content", maxWidth: "1300px"}}>
             <Heading4 text="Flashcards" />
             <FlashcardOverview flashcardData={tempCardData} />
           </WhiteOverlay>

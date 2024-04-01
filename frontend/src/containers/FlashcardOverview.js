@@ -12,10 +12,6 @@ function FlashcardOverview({ flashcardData }) {
       );
     } else {
       return (
-        /*<div key={folderName + element.flashcardID}>
-          <p>{folderName}</p>
-          {Object.entries(element).map(([key, value]) => renderElement(value, key))}
-        </div>*/
         <FlashcardFolder
           element={element}
           name={folderName}
