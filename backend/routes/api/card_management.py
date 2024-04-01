@@ -173,52 +173,11 @@ def get_today_cards():
         ), 400
 
     user_id = request.json.get("userID")
-    cards_to_return = []
-    date = Date()
-
-    # Get the card presets
-    with open("card_presets.json", "r") as f:
-        card_presets = json.load(f)
-
-    not_started = 0
-    actively_studying = 0
-    recapping = 0
 
     # Get all flashcards
     flashcards = db.get("/users/" + user_id + "/flashcards")
     if flashcards is None:
         return jsonify(["User has no flashcards"])
 
-    cards = FlashcardCollection(flashcards).today_card_list
-    print (cards)
-    # Select only the cards due today or previous days
-    for key, flashcard_data in enumerate(flashcards):
-        print (key)
-        # Access the "cards" list within each flashcard
-        cards_list = flashcard_data.get("cards", [])
-        # Iterate through each card in the "cards" list
-        #for card in cards_list:
-        #print (card)
-        """if card["lastReview"] <= date.get_current_date():
-            card["flashcardName"] = flashcard_data["flashcardName"]
-
-            # Work out if the card is new, being learned, or learned
-            daily_review = card["reviewStatus"].split(".")[0]
-            sub_daily_review = card["reviewStatus"].split(".")[1]
-
-            if daily_review == "0" and sub_daily_review == "0":
-                not_started += 1
-                count = not_started
-                limit = card_presets["notStarted"]
-            elif daily_review == "0":
-                actively_studying += 1
-                count = actively_studying
-                limit = card_presets["activelyStudying"]
-            else:
-                recapping += 1
-                count = recapping
-                limit = card_presets["recapping"]
-            if int(count) < int(limit):
-                cards_to_return.append(card)"""
-
+    cards_to_return = FlashcardCollection(flashcards).today_card_list
     return jsonify(cards_to_return)
