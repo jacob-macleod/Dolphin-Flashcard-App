@@ -30,36 +30,90 @@ function Flashcards() {
     view == "mobile" ? "0px" : "16px"
   );
 
-  const tempCardData = [
-    {
-      "back": "Back 1",
-      "flashcardName": "My new set",
-      "front": "Front 1",
-      "lastReview": "30/03/2024",
-      "reviewStatus": "0.0"
+  const tempCardData = {
+    "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
+      "cards": {
+        "0": {
+          "back": "Back 1",
+          "front": "Front 1",
+          "lastReview": "30/03/2024",
+          "reviewStatus": "0.0"
+        },
+        "1": {
+          "back": "Back 2",
+          "front": "Front 2",
+          "lastReview": "30/03/2024",
+          "reviewStatus": "0.0"
+        }
+      },
+      "flashcardDescription": "This is the second set I've made",
+      "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
+      "flashcardName": "Set two"
     },
-    {
-      "back": "Back 2",
-      "flashcardName": "My new set",
-      "front": "Front 2",
-      "lastReview": "30/03/2024",
-      "reviewStatus": "0.0"
+    "78706522606884094347267331340740459328628093524759979664863269402823009149302": {
+      "cards": {
+        "0": {
+          "back": "Back 1",
+          "front": "Front 1",
+          "lastReview": "30/03/2024",
+          "reviewStatus": "0.0"
+        },
+        "1": {
+          "back": "Back 2",
+          "front": "Front 2",
+          "lastReview": "30/03/2024",
+          "reviewStatus": "0.0"
+        }
+      },
+      "flashcardDescription": "This is\nmy description",
+      "flashcardID": "78706522606884094347267331340740459328628093524759979664863269402823009149302",
+      "flashcardName": "My new set"
     },
-    {
-      "back": "Back 1",
-      "flashcardName": "Set two",
-      "front": "Front 1",
-      "lastReview": "30/03/2024",
-      "reviewStatus": "0.0"
-    },
-    {
-      "back": "Back 2",
-      "flashcardName": "Set two",
-      "front": "Front 2",
-      "lastReview": "30/03/2024",
-      "reviewStatus": "0.0"
+    "languages": {
+      "35327435524706219408006451834813169054434248079692846228662623660367296560356": {
+        "cards": {
+          "0": {
+            "back": "Back 1",
+            "front": "Front 1",
+            "lastReview": "28/03/2024",
+            "reviewStatus": "0.0"
+          },
+          "1": {
+            "back": "Back 2",
+            "front": "Front 2",
+            "lastReview": "28/03/2024",
+            "reviewStatus": "0.0"
+          }
+        },
+        "flashcardDescription": "This is\nmy description",
+        "flashcardID": "35327435524706219408006451834813169054434248079692846228662623660367296560356",
+        "flashcardName": "My new set"
+      },
+      "spanish": {
+        "common-words": {
+          "47962680440219262426614851383681058904567080607728983184879622214761420733776": {
+            "cards": {
+              "0": {
+                "back": "Back 1",
+                "front": "Front 1",
+                "lastReview": "28/03/2024",
+                "reviewStatus": "0.1"
+              },
+              "1": {
+                "back": "Back 2",
+                "front": "Front 2",
+                "lastReview": "28/03/2024",
+                "reviewStatus": "2.0"
+              }
+            },
+            "flashcardDescription": "This is\nmy description",
+            "flashcardID": "47962680440219262426614851383681058904567080607728983184879622214761420733776",
+            "flashcardName": "My new set"
+          }
+        }
+      }
     }
-  ]
+  }
 
   // Manage resizing the window size when needed
   useEffect(() => {

@@ -1,0 +1,34 @@
+.bar-chart-wrapper{
+    width: calc(100% - 128px);
+    height: 32px;
+    display: flex;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.studying-bar{
+    height: 100%;
+    background-color: #6A84C5;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-started-bar{
+    height: 100%;
+    background-color: #32519E;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.recapping-bar{
+    height: 100%;
+    background-color: #93ABE5;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
