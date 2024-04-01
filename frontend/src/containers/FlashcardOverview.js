@@ -1,4 +1,5 @@
 import React from 'react';
+import FlashcardFolder from '../componments/FlashcardFolder';
 import FlashcardItem from '../componments/FlashcardItem';
 
 function FlashcardOverview({ flashcardData }) {
@@ -11,10 +12,16 @@ function FlashcardOverview({ flashcardData }) {
       );
     } else {
       return (
-        <div key={folderName + element.flashcardID}>
+        /*<div key={folderName + element.flashcardID}>
           <p>{folderName}</p>
           {Object.entries(element).map(([key, value]) => renderElement(value, key))}
-        </div>
+        </div>*/
+        <FlashcardFolder
+          element={element}
+          name={folderName}
+          folderKey={folderName + element.flashcardID}
+          child={Object.entries(element).map(([key, value]) => renderElement(value, key))}
+        />
       );
     }
   };
