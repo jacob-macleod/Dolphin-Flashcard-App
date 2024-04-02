@@ -5,18 +5,25 @@ import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import SidePanel from '../containers/SidePanel';
-import Heading4 from '../componments/Heading4';
 import WhiteOverlay from '../componments/WhiteOverlay';
 import HamburgerBar from '../componments/HamburgerBar';
 import FlashcardOverview from '../containers/FlashcardOverview';
+import DelayedElement from '../componments/DelayedElement';
+import Button from '../componments/Button';
+import GhostButton from '../componments/GhostButton';
+import SearchBar from '../componments/SearchBar';
+import ReviewBarChartKey from '../componments/ReviewBarChartKey';
+import apiManager from '../api/Api';
 import '../componments/Text.css';
 import '../componments/Link.css';
 import '../componments/Bold.css';
+import { getCookie } from '../api/Authentication';
 
 function Flashcards() {
   // Set general variables
   const title = "Flashcards";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(null);
 
   // Set variables for the size
   const mobileBreakpoint = 700;
@@ -30,90 +37,7 @@ function Flashcards() {
     view == "mobile" ? "0px" : "16px"
   );
 
-  const tempCardData = {
-    "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
-      "cards": {
-        "0": {
-          "back": "Back 1",
-          "front": "Front 1",
-          "lastReview": "30/03/2024",
-          "reviewStatus": "0.0"
-        },
-        "1": {
-          "back": "Back 2",
-          "front": "Front 2",
-          "lastReview": "30/03/2024",
-          "reviewStatus": "0.0"
-        }
-      },
-      "flashcardDescription": "This is the second set I've made",
-      "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
-      "flashcardName": "Set two"
-    },
-    "78706522606884094347267331340740459328628093524759979664863269402823009149302": {
-      "cards": {
-        "0": {
-          "back": "Back 1",
-          "front": "Front 1",
-          "lastReview": "30/03/2024",
-          "reviewStatus": "0.0"
-        },
-        "1": {
-          "back": "Back 2",
-          "front": "Front 2",
-          "lastReview": "30/03/2024",
-          "reviewStatus": "0.0"
-        }
-      },
-      "flashcardDescription": "This is\nmy description",
-      "flashcardID": "78706522606884094347267331340740459328628093524759979664863269402823009149302",
-      "flashcardName": "My new set"
-    },
-    "languages": {
-      "35327435524706219408006451834813169054434248079692846228662623660367296560356": {
-        "cards": {
-          "0": {
-            "back": "Back 1",
-            "front": "Front 1",
-            "lastReview": "28/03/2024",
-            "reviewStatus": "0.0"
-          },
-          "1": {
-            "back": "Back 2",
-            "front": "Front 2",
-            "lastReview": "28/03/2024",
-            "reviewStatus": "0.0"
-          }
-        },
-        "flashcardDescription": "This is\nmy description",
-        "flashcardID": "35327435524706219408006451834813169054434248079692846228662623660367296560356",
-        "flashcardName": "My new set"
-      },
-      "spanish": {
-        "common-words": {
-          "47962680440219262426614851383681058904567080607728983184879622214761420733776": {
-            "cards": {
-              "0": {
-                "back": "Back 1",
-                "front": "Front 1",
-                "lastReview": "28/03/2024",
-                "reviewStatus": "0.1"
-              },
-              "1": {
-                "back": "Back 2",
-                "front": "Front 2",
-                "lastReview": "28/03/2024",
-                "reviewStatus": "2.0"
-              }
-            },
-            "flashcardDescription": "This is\nmy description",
-            "flashcardID": "47962680440219262426614851383681058904567080607728983184879622214761420733776",
-            "flashcardName": "My new set"
-          }
-        }
-      }
-    }
-  }
+  const [todayCards, setTodayCards] = useState(null);
 
   // Manage resizing the window size when needed
   useEffect(() => {
@@ -141,6 +65,10 @@ function Flashcards() {
       view == "mobile" ? "0px" : "16px"
     );
   }, [width]);
+
+  useEffect(() => {
+    apiManager.getTodayCards(getCookie("userID"), setTodayCards);
+  }, [])
 
   return (
     <div style={{top: "0px"}}>
@@ -170,8 +98,22 @@ function Flashcards() {
           {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
   
           <WhiteOverlay style={{height: "max-content", maxWidth: "1300px"}}>
-            <Heading4 text="Flashcards" />
-            <FlashcardOverview flashcardData={tempCardData} />
+            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+            <br></br>
+            <br></br>
+            <GridContainer classType="review-bar-wrapper" layout="260px auto 80px">
+              <GridItem />
+              <ReviewBarChartKey />
+              <GridItem />
+            </GridContainer>
+            <DelayedElement
+              child={<FlashcardOverview flashcardData={todayCards} />}
+              childValue={todayCards}
+            />
+            <div style={{float: "left"}}>
+              <GhostButton text="+ New Folder" style={{display: "inline-block", marginRight: "16px"}}/>
+              <Button text="+ New Set" style={{display: "inline-block"}}/>
+            </div>
           </WhiteOverlay>
 
         </GridItem>

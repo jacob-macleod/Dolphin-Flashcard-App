@@ -9,6 +9,7 @@ import Button from './Button';
 
 import horizontalTriangle from '../static/horizontal-triangle.svg';
 import verticalTriangle from '../static/vertical-triangle.svg';
+import threeDots from '../static/three-dots.svg'
 
 import './FlashcardFolder.css';
 import './FlashcardItem.css';
@@ -70,7 +71,7 @@ function FlashcardFolder({ element, name, child, folderKey }) {
 
     return (
         <div key={folderKey} className='folder-wrapper'>
-            <GridContainer classType="flashcard-overview" layout="260px auto 56px">
+            <GridContainer classType="flashcard-overview" layout="260px auto 80px">
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
                         <Image
@@ -106,6 +107,7 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                             paddingLeft: "18px",
                             paddingRight: "18px",
                         }}/>
+                        <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px'/>
                     </div>
                 </GridItem>
             </GridContainer>

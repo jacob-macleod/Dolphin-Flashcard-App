@@ -151,6 +151,17 @@ class ApiManager {
             setTotalXP(totalXp);
         });
     }
+
+    getTodayCards(userID, setTodayCards) {
+        const url = 'get-today-cards';
+        const data = {
+            userID: userID
+        }
+
+        this.fetchData(data, url, todayCards => {
+            setTodayCards(todayCards);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

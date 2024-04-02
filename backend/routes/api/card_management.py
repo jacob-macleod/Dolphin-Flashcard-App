@@ -145,7 +145,7 @@ def get_flashcard():
         return jsonify(e), 500
 
 
-@card_management_routes.route("/api/get-today-cards", methods=["GET"])
+@card_management_routes.route("/api/get-today-cards", methods=["POST"])
 def get_today_cards():
     """ Get all the flashcards to be learned today for a user
         Requests include soley a json including userID

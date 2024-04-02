@@ -1,0 +1,11 @@
+.key-wrapper{
+    display: flex;
+    float: left;
+    padding-left: 99px;
+}
+
+.color-box{
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+}

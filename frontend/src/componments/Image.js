@@ -35,7 +35,8 @@ function Image({
             paddingRight: paddingRight,
             marginBottom: marginBottom,
             marginTop: marginTop,
-            objectFit: objectFit
+            objectFit: objectFit,
+            cursor: onClick != undefined ? "pointer" : "auto"
         }} onClick={handleClick}/>
     );
 }

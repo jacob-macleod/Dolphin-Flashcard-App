@@ -9,6 +9,7 @@ import ReviewBarChart from './ReviewBarChart';
 
 import circledTick from '../static/circled-tick.svg';
 import emptyCircle from '../static/empty-circle.svg';
+import threeDots from '../static/three-dots.svg';
 
 import './FlashcardItem.css';
 
@@ -51,7 +52,7 @@ function FlashcardItem({ element }) {
     }
    }
     return (
-        <GridContainer classType="flashcard-overview" layout="260px auto 56px">
+        <GridContainer classType="flashcard-overview" layout="260px auto 80px">
             <GridItem style={gridItemStyle}>
                 <div className='flashcard-item'>
                     <Image url={selected ? emptyCircle : circledTick} width="16px" height="16px" onClick={onSelectClick}/>
@@ -83,6 +84,7 @@ function FlashcardItem({ element }) {
                         paddingLeft: "18px",
                         paddingRight: "18px",
                     }}/>
+                    <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px'/>
                 </div>
             </GridItem>
         </GridContainer>

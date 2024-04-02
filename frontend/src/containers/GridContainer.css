@@ -25,6 +25,11 @@
 .flashcard-overview{
     display: grid;
     height: 32px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.review-bar-wrapper{
+    display: grid;
+    height: 32px;
 }
