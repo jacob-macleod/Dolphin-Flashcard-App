@@ -13,6 +13,7 @@ import Button from '../componments/Button';
 import GhostButton from '../componments/GhostButton';
 import SearchBar from '../componments/SearchBar';
 import ReviewBarChartKey from '../componments/ReviewBarChartKey';
+import MoveFolderDialogue from '../containers/MoveFolderDialogue';
 import apiManager from '../api/Api';
 import '../componments/Text.css';
 import '../componments/Link.css';
@@ -24,6 +25,7 @@ function Flashcards() {
   const title = "Flashcards";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState(null);
+  const [moveFolderDialogueVisible, setMoveFolderDialogueVisible] = useState(false);
 
   // Set variables for the size
   const mobileBreakpoint = 700;
@@ -79,7 +81,7 @@ function Flashcards() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
-
+      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view}/>
       <GridContainer layout={
         view != "mobile" ? "240px auto"
         : "auto"
@@ -97,22 +99,24 @@ function Flashcards() {
         }}>
           {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
   
-          <WhiteOverlay style={{height: "max-content", maxWidth: "1300px"}}>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
-            <br></br>
-            <br></br>
-            <GridContainer classType="review-bar-wrapper" layout="260px auto 80px">
-              <GridItem />
-              <ReviewBarChartKey />
-              <GridItem />
-            </GridContainer>
-            <DelayedElement
-              child={<FlashcardOverview flashcardData={todayCards} />}
-              childValue={todayCards}
-            />
-            <div style={{float: "left"}}>
-              <GhostButton text="+ New Folder" style={{display: "inline-block", marginRight: "16px"}}/>
-              <Button text="+ New Set" style={{display: "inline-block"}}/>
+          <WhiteOverlay style={{height: "max-content"}}>
+            <div style={{maxWidth: "1200px", margin: "auto"}}>
+              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+              <br></br>
+              <br></br>
+              <GridContainer classType="review-bar-wrapper" layout="260px auto 80px">
+                <GridItem />
+                <ReviewBarChartKey />
+                <GridItem />
+              </GridContainer>
+              <DelayedElement
+                child={<FlashcardOverview flashcardData={todayCards} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}/>}
+                childValue={todayCards}
+              />
+              <div style={{float: "left"}}>
+                <GhostButton text="+ New Folder" style={{display: "inline-block", marginRight: "16px"}}/>
+                <Button text="+ New Set" style={{display: "inline-block"}}/>
+              </div>
             </div>
           </WhiteOverlay>
 

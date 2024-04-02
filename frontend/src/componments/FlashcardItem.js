@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Heading5 from './Heading5';
 import Paragraph from './Paragraph';
 import Button from './Button';
@@ -6,6 +6,7 @@ import Image from './Image';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import ReviewBarChart from './ReviewBarChart';
+import CardOperationsPopup from '../containers/CardOperationsPopup';
 
 import circledTick from '../static/circled-tick.svg';
 import emptyCircle from '../static/empty-circle.svg';
@@ -13,12 +14,13 @@ import threeDots from '../static/three-dots.svg';
 
 import './FlashcardItem.css';
 
-function FlashcardItem({ element }) {
+function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData }) {
     const title = element.flashcardName;
     const numOfCards = Object.keys(element.cards).length;
 
     // onSelectClick is run on component mount, and selected is set to false
     const [selected, setSelected] = React.useState(true);
+    const [operationsPopupVisible, setOperationsPopupVisible] = React.useState(false);
 
     function onSelectClick() {
         if (selected) {
@@ -28,9 +30,38 @@ function FlashcardItem({ element }) {
         }
     }
 
+    function toggleOperationsPopup() {
+        if (operationsPopupVisible) {
+            setOperationsPopupVisible(false);
+        } else {
+            setOperationsPopupVisible(true);
+        }
+    }
+
     const gridItemStyle = {
         padding: "0px",
     }
+
+    useEffect(() => {
+        const closeDropdown = e => {
+            let targetElement = e.target;
+    
+            // Traverse up the DOM tree until we find a matching tag name or reach the document body
+            while (targetElement && targetElement.tagName !== 'IMG') {
+                targetElement = targetElement.parentNode;
+            }
+    
+            // If targetElement is null, it means we reached the document body without finding a BUTTON element
+            if (!targetElement) {
+                setOperationsPopupVisible(false);
+            }
+        };
+
+        document.body.addEventListener('click', closeDropdown);
+
+        return () => document.body.removeEventListener('click', closeDropdown);
+    }, []);
+
     /*
     Calculate how many cards are:
     - not started (review status is 0.0)
@@ -84,7 +115,8 @@ function FlashcardItem({ element }) {
                         paddingLeft: "18px",
                         paddingRight: "18px",
                     }}/>
-                    <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px'/>
+                    <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px' onClick={toggleOperationsPopup}/>
+                    <CardOperationsPopup visible={operationsPopupVisible} setVisible={setOperationsPopupVisible} showMovePopup={setMoveFolderDialogueVisible} flashcardData={flashcardData}/>
                 </div>
             </GridItem>
         </GridContainer>

@@ -2,12 +2,12 @@ import React from 'react';
 import FlashcardFolder from '../componments/FlashcardFolder';
 import FlashcardItem from '../componments/FlashcardItem';
 
-function FlashcardOverview({ flashcardData }) {
+function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible }) {
   const renderElement = (element, folderName) => {
     if (element.cards) {
       return (
         <div key={element.flashcardID}>
-          <FlashcardItem element={element} />
+          <FlashcardItem element={element} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible} flashcardData={flashcardData}/>
         </div>
       );
     } else {

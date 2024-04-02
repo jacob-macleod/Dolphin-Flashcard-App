@@ -26,7 +26,8 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 
 ### Added
 
-- N/A
+- Added flashcards page
+- Added backend method to move a flashcard set to a different folder
 
 ### Fixed
 
