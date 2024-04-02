@@ -8,7 +8,7 @@ function SearchBar({ searchTerm, setSearchTerm }) {
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             defaultValue="Search"
-            style={{marginBottom: "0px"}}
+            style={{marginBottom: "0px", float: "left", marginLeft: "16px"}}
         />
     );
 }

@@ -181,3 +181,63 @@ def get_today_cards():
 
     cards_to_return = FlashcardCollection(flashcards).today_card_list
     return jsonify(cards_to_return)
+
+@card_management_routes.route("/api/move-flashcard-set", methods=["POST"])
+def move_flashcard_set():
+    """Move a flashcard set to a new location
+    Example request:
+    {
+        "userID": "my-id",
+        "currentLocation": "the current folder path",
+        "flashcardID": "the flashcard set ID",
+        "moveLocation": "the folder path to move to"
+    }
+    """
+    expected_format = {
+        "userID": "",
+        "currentLocation": "",
+        "flashcardID": "",
+        "moveLocation": ""
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    # Get the supplied variables
+    user_id = request.json.get("userID")
+    flashcard_id = request.json.get("flashcardID")
+    move_location = request.json.get("moveLocation")
+    current_location = request.json.get("currentLocation")
+
+    if current_location.endswith("/") is False and current_location != "":
+        current_location += "/"
+    if move_location.endswith("/") is False and move_location != "":
+        move_location += "/"
+
+    # Get the current flashcard data
+    flashcard_data = db.get("/users/" + user_id + "/flashcards/" + current_location)
+    if flashcard_data is None or flashcard_id not in flashcard_data.keys():
+        return jsonify(
+            {
+                "error": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " does not exist"}
+        ), 400
+
+    # Remove the flashcard where it currently is
+    edited_flashcard_data = flashcard_data.copy()
+    edited_flashcard_data.pop(flashcard_id, None)
+    db.save("/users/" + user_id + "/flashcards/" + current_location, edited_flashcard_data)
+
+    # Save the flashcard in the new location
+    print ("Saving to " + "/users/" + user_id + "/flashcards/" + move_location + flashcard_id)
+    db.save("/users/" + user_id + "/flashcards/" + move_location + flashcard_id, flashcard_data[flashcard_id])
+
+    return jsonify(
+        {
+            "success": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " has been moved to " + move_location}
+    ), 200

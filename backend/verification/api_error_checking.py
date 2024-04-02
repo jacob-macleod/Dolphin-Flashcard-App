@@ -29,7 +29,6 @@ def append_items_to_array(dictionary, result=[]):
 
 def check_request_json(expected_format, request):
     """Checks if the keys in the request match the keys in the expected format"""
-
     # Make an array of the expected keys and actual keys
     expected_format_arr = dict_to_array(expected_format)
     request_arr = dict_to_array(request)
