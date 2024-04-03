@@ -14,7 +14,7 @@ import threeDots from '../static/three-dots.svg';
 
 import './FlashcardItem.css';
 
-function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData }) {
+function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, path="" }) {
     const title = element.flashcardName;
     const numOfCards = Object.keys(element.cards).length;
 
@@ -116,7 +116,14 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData })
                         paddingRight: "18px",
                     }}/>
                     <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px' onClick={toggleOperationsPopup}/>
-                    <CardOperationsPopup visible={operationsPopupVisible} setVisible={setOperationsPopupVisible} showMovePopup={setMoveFolderDialogueVisible} flashcardData={flashcardData}/>
+                    <CardOperationsPopup
+                        visible={operationsPopupVisible}
+                        setVisible={setOperationsPopupVisible} 
+                        showMovePopup={setMoveFolderDialogueVisible}
+                        flashcardData={flashcardData}
+                        path={path}
+                        flashcardID={element.flashcardID}
+                    />
                 </div>
             </GridItem>
         </GridContainer>

@@ -162,6 +162,20 @@ class ApiManager {
             setTodayCards(todayCards);
         });
     }
+
+    moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible) {
+        const url = 'move-flashcard-set';
+        data = {
+            "userID": userID,
+            "currentLocation": currentLocation,
+            "flashcardID": flashcardID,
+            "moveLocation": moveLocation
+        }
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+        });
+    }
 }
 
 const apiManager = new ApiManager();
