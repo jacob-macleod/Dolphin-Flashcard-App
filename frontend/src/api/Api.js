@@ -165,16 +165,18 @@ class ApiManager {
 
     moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible) {
         const url = 'move-flashcard-set';
-        data = {
+        const data = {
             "userID": userID,
             "currentLocation": currentLocation,
             "flashcardID": flashcardID,
             "moveLocation": moveLocation
         }
+        console.log(data);
 
         this.fetchData(data, url, status => {
             setPopupVisible(false);
         });
+        console.log("Moved set");
     }
 }
 

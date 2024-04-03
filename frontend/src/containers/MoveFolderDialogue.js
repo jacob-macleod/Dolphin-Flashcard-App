@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import GhostButton from '../componments/GhostButton';
 import Button from '../componments/Button';
 import Heading3 from '../componments/Heading3';
 import FolderElement from '../componments/FolderElement';
 import apiManager from '../api/Api';
-import getCookie from '../api/Authentication';
+import {getCookie} from '../api/Authentication';
 import './MoveFolderDialogue.css'
 import './NewGoalPopup.css';
 import { UNSAFE_ViewTransitionContext } from 'react-router-dom';
@@ -20,11 +20,21 @@ function MoveFolderDialogue({ visible, setVisible, view }) {
     const currentPath = visible.path;
 
     function moveFlashcard() {
-      /*apiManager.moveFlashcard(
-        getCookie("userID"),
-
-      )*/
+      if (selectedPath != null) {
+        console.log("ABOUT TO MOVE...");
+        apiManager.moveFlashcard(
+          getCookie("userID"),
+          currentPath,
+          flashcardID,
+          selectedPath,
+          setVisible
+        )
+      }
     }
+
+    useEffect(() => {
+      console.log("USEEFFECT - Changed to ", selectedPath);
+    }, [selectedPath]);
 
     const renderElement = (element, folderName, path="") => {
         if (path !== "") {
@@ -59,7 +69,7 @@ function MoveFolderDialogue({ visible, setVisible, view }) {
 
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
-                    <Button text="Move" onClick={() => {}} style={buttonStyle} />
+                    <Button text="Move" onClick={moveFlashcard} style={buttonStyle} />
                 </div>
             </div>
         </div>

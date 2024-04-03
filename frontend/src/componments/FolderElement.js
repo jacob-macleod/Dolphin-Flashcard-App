@@ -19,10 +19,13 @@ function FlashcardFolder({ element, name, child, folderKey, path, selectedPath, 
     }
 
     function toggleClick() {
+        console.log("Clicked");
         if (selected) {
             setSelected(false);
         } else{
+            console.log("Setting selectedPath to", path);
             setSelectedPath(path);
+            console.log("Set selectedPath to", selectedPath);
             setSelected(true);
         }
     }
