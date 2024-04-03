@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GhostButton from '../componments/GhostButton';
 import Button from '../componments/Button';
 import Heading3 from '../componments/Heading3';
@@ -8,9 +8,11 @@ import {getCookie} from '../api/Authentication';
 import './MoveFolderDialogue.css'
 import './NewGoalPopup.css';
 import { UNSAFE_ViewTransitionContext } from 'react-router-dom';
+import DelayedElement from '../componments/DelayedElement';
 
-function MoveFolderDialogue({ visible, setVisible, view }) {
+function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
+    const [loadingIconVisible, setLoadingIconVisible] = useState(null);
     const buttonStyle = {
         display: "inline-grid",
         margin: "0px 16px"
@@ -27,7 +29,8 @@ function MoveFolderDialogue({ visible, setVisible, view }) {
           currentPath,
           flashcardID,
           selectedPath,
-          setVisible
+          setVisible,
+          setReload
         )
       }
     }
@@ -70,6 +73,9 @@ function MoveFolderDialogue({ visible, setVisible, view }) {
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
                     <Button text="Move" onClick={moveFlashcard} style={buttonStyle} />
+                </div>
+                <div style={{height: "min-content", paddingTop: "16px"}}>
+                  <DelayedElement child={<></>} childValue={loadingIconVisible} />
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ import horizontalTriangle from '../static/horizontal-triangle.svg';
 import verticalTriangle from '../static/vertical-triangle.svg';
 import horizontalTriangleWhite from '../static/horizontal-triangle-white.svg';
 import verticalTriangleWhite from '../static/vertical-triangle-white.svg';
+import DelayedElement from './DelayedElement';
 
 import './FlashcardFolder.css';
 import './FolderElement.css';

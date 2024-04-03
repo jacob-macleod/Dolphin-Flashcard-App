@@ -163,7 +163,7 @@ class ApiManager {
         });
     }
 
-    moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible) {
+    moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible, setReload) {
         const url = 'move-flashcard-set';
         const data = {
             "userID": userID,
@@ -175,6 +175,7 @@ class ApiManager {
 
         this.fetchData(data, url, status => {
             setPopupVisible(false);
+            setReload(true);
         });
         console.log("Moved set");
     }

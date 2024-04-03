@@ -26,6 +26,7 @@ function Flashcards() {
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState(null);
   const [moveFolderDialogueVisible, setMoveFolderDialogueVisible] = useState(false);
+  const [reload, setReload] = useState(true);
 
   // Set variables for the size
   const mobileBreakpoint = 700;
@@ -69,8 +70,11 @@ function Flashcards() {
   }, [width]);
 
   useEffect(() => {
-    apiManager.getTodayCards(getCookie("userID"), setTodayCards);
-  }, [])
+    if (reload) {
+      setReload(false);
+      apiManager.getTodayCards(getCookie("userID"), setTodayCards);
+    }
+  }, [reload]);
 
   return (
     <div style={{top: "0px"}}>
@@ -81,7 +85,7 @@ function Flashcards() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
-      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view}/>
+      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload}/>
       <GridContainer layout={
         view != "mobile" ? "240px auto"
         : "auto"
