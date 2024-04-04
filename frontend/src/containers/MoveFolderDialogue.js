@@ -12,7 +12,7 @@ import DelayedElement from '../componments/DelayedElement';
 
 function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
-    const [loadingIconVisible, setLoadingIconVisible] = useState(null);
+    const [loadingIconVisible, setLoadingIconVisible] = useState("visisnle"); // If null, loading icon shows
     const buttonStyle = {
         display: "inline-grid",
         margin: "0px 16px"
@@ -23,7 +23,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
 
     function moveFlashcard() {
       if (selectedPath != null) {
-        console.log("ABOUT TO MOVE...");
+        setLoadingIconVisible(null);
         apiManager.moveFlashcard(
           getCookie("userID"),
           currentPath,
@@ -36,8 +36,8 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     }
 
     useEffect(() => {
-      console.log("USEEFFECT - Changed to ", selectedPath);
-    }, [selectedPath]);
+      setLoadingIconVisible("visible");
+    }, [visible]);
 
     const renderElement = (element, folderName, path="") => {
         if (path !== "") {
@@ -65,16 +65,20 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
       return (
         visible !== false ?
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
-            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}>
+            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
+              style={{
+                height: "fit-content"
+              }}
+            >
                 <Heading3 text="Choose a folder:" />
 
-                <div>{Object.entries(flashcardData).map(([key, value]) => renderElement(value, key))}</div>
+                <div className="card-overview">{Object.entries(flashcardData).map(([key, value]) => renderElement(value, key))}</div>
 
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
                     <Button text="Move" onClick={moveFlashcard} style={buttonStyle} />
                 </div>
-                <div style={{height: "min-content", paddingTop: "16px"}}>
+                <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={loadingIconVisible} />
                 </div>
             </div>
