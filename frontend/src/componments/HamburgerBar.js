@@ -7,7 +7,7 @@ import greyHamburger from '../static/grey-hamburger-menu.svg';
 import './HamburgerBar.css';
 import { getCookie } from '../api/Authentication';
 
-function HamburgerBar ({menuVisible, setMenuVisible}) {
+function HamburgerBar ({ menuVisible, setMenuVisible, selectedItem }) {
     const iconSize = "32px";
 
     function clickEvent() {
@@ -26,7 +26,7 @@ function HamburgerBar ({menuVisible, setMenuVisible}) {
                     <Image width={iconSize} height={iconSize} minWidth={iconSize} url={greyHamburger} onClick={clickEvent} paddingRight='16px'/>
                 </div>
             : <></>}
-            <MobileSidePanel visible={menuVisible} setVisible={setMenuVisible} />
+            <MobileSidePanel visible={menuVisible} setVisible={setMenuVisible} selectedItem={selectedItem}/>
         </div>
 }
 

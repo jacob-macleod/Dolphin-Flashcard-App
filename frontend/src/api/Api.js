@@ -151,6 +151,34 @@ class ApiManager {
             setTotalXP(totalXp);
         });
     }
+
+    getTodayCards(userID, setTodayCards) {
+        const url = 'get-today-cards';
+        const data = {
+            userID: userID
+        }
+
+        this.fetchData(data, url, todayCards => {
+            setTodayCards(todayCards);
+        });
+    }
+
+    moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible, setReload) {
+        const url = 'move-flashcard-set';
+        const data = {
+            "userID": userID,
+            "currentLocation": currentLocation,
+            "flashcardID": flashcardID,
+            "moveLocation": moveLocation
+        }
+        console.log(data);
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+            setReload(true);
+        });
+        console.log("Moved set");
+    }
 }
 
 const apiManager = new ApiManager();

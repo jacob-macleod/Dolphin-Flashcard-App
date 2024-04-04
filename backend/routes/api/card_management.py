@@ -6,6 +6,7 @@ from database.database import database as db
 from classes.date import Date
 from verification.api_error_checking import check_request_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
+from classes.card_collection import FlashcardCollection
 
 card_management_routes = Blueprint('card_management_routes', __name__)
 
@@ -27,11 +28,15 @@ def hash_to_numeric(input_string):
 def create_flashcard():
     """ Create or edit a flashcard set for the user.
         Flashcards have a front, back, review status and last review date
+        Set folder to none to set as a top level flashcard, otherwise set it to the parent folder name.
+        If you want to set multiple parent folders, you can add the folder name seperated by 1.
+        So for example, top-level-parent-name/parent-name-2/parent-name-3
         Example request:
         {
             "userID": "my-id",
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
+            "folder": "parent-name",
             "cards": [
                 {
                     "front":"Front 1",
@@ -53,6 +58,7 @@ def create_flashcard():
         "userID": "",
         "flashcardName": "",
         "flashcardDescription": "",
+        "folder": "",
         "cards": [
             {
                 "front": "",
@@ -78,11 +84,16 @@ def create_flashcard():
         flashcard_name = request.json.get("flashcardName")
         flashcard_description = request.json.get("flashcardDescription")
         cards = request.json.get("cards")
+        folder = request.json.get("folder")
+        # Add "/" to folder if it does not end with if
+        if folder.endswith("/") is False:
+            folder += "/"
         # A hashed version of the userID and flashcard name
-        flashcard_id = hash_to_numeric(user_id + flashcard_name)
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
-        if db.get("/users/" + user_id + "/flashcards/" + flashcard_id) is None:
-            db.save("/users/" + user_id + "/flashcards/" + flashcard_id,
+        # If the flashcard does not exist, create it
+        if db.get("/users/" + user_id + "/flashcards/" + folder  + flashcard_id) is None:
+            db.save("/users/" + user_id + "/flashcards/" + folder  + flashcard_id,
                     {
                         "flashcardID": flashcard_id,
                         "flashcardName": flashcard_name,
@@ -134,7 +145,7 @@ def get_flashcard():
         return jsonify(e), 500
 
 
-@card_management_routes.route("/api/get-today-cards", methods=["GET"])
+@card_management_routes.route("/api/get-today-cards", methods=["POST"])
 def get_today_cards():
     """ Get all the flashcards to be learned today for a user
         Requests include soley a json including userID
@@ -162,48 +173,71 @@ def get_today_cards():
         ), 400
 
     user_id = request.json.get("userID")
-    cards_to_return = []
-    date = Date()
-
-    # Get the card presets
-    with open("card_presets.json", "r") as f:
-        card_presets = json.load(f)
-
-    not_started = 0
-    actively_studying = 0
-    recapping = 0
 
     # Get all flashcards
     flashcards = db.get("/users/" + user_id + "/flashcards")
     if flashcards is None:
         return jsonify(["User has no flashcards"])
 
-    # Select only the cards due today or previous days
-    for _, flashcard_data in flashcards.items():
-        # Access the "cards" list within each flashcard
-        cards_list = flashcard_data.get("cards", [])
-        # Iterate through each card in the "cards" list
-        for card in cards_list:
-            if card["lastReview"] <= date.get_current_date():
-                card["flashcardName"] = flashcard_data["flashcardName"]
-
-                # Work out if the card is new, being learned, or learned
-                daily_review = card["reviewStatus"].split(".")[0]
-                sub_daily_review = card["reviewStatus"].split(".")[1]
-
-                if daily_review == "0" and sub_daily_review == "0":
-                    not_started += 1
-                    count = not_started
-                    limit = card_presets["notStarted"]
-                elif daily_review == "0":
-                    actively_studying += 1
-                    count = actively_studying
-                    limit = card_presets["activelyStudying"]
-                else:
-                    recapping += 1
-                    count = recapping
-                    limit = card_presets["recapping"]
-                if int(count) < int(limit):
-                    cards_to_return.append(card)
-
+    cards_to_return = FlashcardCollection(flashcards).today_card_list
     return jsonify(cards_to_return)
+
+@card_management_routes.route("/api/move-flashcard-set", methods=["POST"])
+def move_flashcard_set():
+    """Move a flashcard set to a new location
+    Example request:
+    {
+        "userID": "my-id",
+        "currentLocation": "the current folder path",
+        "flashcardID": "the flashcard set ID",
+        "moveLocation": "the folder path to move to"
+    }
+    """
+    expected_format = {
+        "userID": "",
+        "currentLocation": "",
+        "flashcardID": "",
+        "moveLocation": ""
+    }
+    result = check_request_json(
+        expected_format,
+        request.json
+    )
+    if result is not True:
+        return jsonify(
+            {
+                "error": result + ". The request should be in the format: " + str(expected_format)}
+        ), 400
+
+    # Get the supplied variables
+    user_id = request.json.get("userID")
+    flashcard_id = request.json.get("flashcardID")
+    move_location = request.json.get("moveLocation")
+    current_location = request.json.get("currentLocation")
+
+    if current_location.endswith("/") is False and current_location != "":
+        current_location += "/"
+    if move_location.endswith("/") is False and move_location != "":
+        move_location += "/"
+
+    # Get the current flashcard data
+    flashcard_data = db.get("/users/" + user_id + "/flashcards/" + current_location)
+    if flashcard_data is None or flashcard_id not in flashcard_data.keys():
+        return jsonify(
+            {
+                "error": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " does not exist"}
+        ), 400
+
+    # Remove the flashcard where it currently is
+    edited_flashcard_data = flashcard_data.copy()
+    edited_flashcard_data.pop(flashcard_id, None)
+    db.save("/users/" + user_id + "/flashcards/" + current_location, edited_flashcard_data)
+
+    # Save the flashcard in the new location
+    print ("Saving to " + "/users/" + user_id + "/flashcards/" + move_location + flashcard_id)
+    db.save("/users/" + user_id + "/flashcards/" + move_location + flashcard_id, flashcard_data[flashcard_id])
+
+    return jsonify(
+        {
+            "success": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " has been moved to " + move_location}
+    ), 200

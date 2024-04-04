@@ -1,0 +1,21 @@
+.flashcard-item{
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flashcard-item-blue{
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #6A84C5;
+}
+
+.text-wrapper{
+    height: min-content;
+    width: max-content;
+}
