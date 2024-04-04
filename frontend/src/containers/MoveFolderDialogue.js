@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {motion} from 'framer-motion';
 import GhostButton from '../componments/GhostButton';
 import Button from '../componments/Button';
 import Heading3 from '../componments/Heading3';
@@ -7,8 +8,8 @@ import apiManager from '../api/Api';
 import {getCookie} from '../api/Authentication';
 import './MoveFolderDialogue.css'
 import './NewGoalPopup.css';
-import { UNSAFE_ViewTransitionContext } from 'react-router-dom';
 import DelayedElement from '../componments/DelayedElement';
+import { dropIn } from '../animations/animations';
 
 function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
@@ -65,10 +66,15 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
       return (
         visible !== false ?
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
-            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
+            <motion.div
+              className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
               style={{
                 height: "fit-content"
               }}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={dropIn}
             >
                 <Heading3 text="Choose a folder:" />
 
@@ -81,7 +87,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
                 <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={loadingIconVisible} />
                 </div>
-            </div>
+            </motion.div>
         </div>
         : null
     );

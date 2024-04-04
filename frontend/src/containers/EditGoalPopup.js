@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {motion} from 'framer-motion';
 import GhostButton from '../componments/GhostButton';
 import Heading3 from '../componments/Heading3';
 import Paragraph from '../componments/Paragraph';
@@ -7,6 +8,7 @@ import apiManager from '../api/Api';
 import DelayedElement from '../componments/DelayedElement';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
+import { dropIn } from '../animations/animations';
 
 function EditGoalPopup({ visible, setVisible, view }) {
     // visible is either false, or stores the goal data
@@ -144,7 +146,13 @@ function EditGoalPopup({ visible, setVisible, view }) {
     return (
         visible === false ? null :
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
-            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}>
+            <motion.div
+                className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropIn}
+            >
                 <Heading3 text="Edit goal:" />
 
                 <div className="input-container">
@@ -171,7 +179,7 @@ function EditGoalPopup({ visible, setVisible, view }) {
                 <div style={{display: "flex", justifyContent: "center", height: "50px"}}>
                     <DelayedElement childValue={loadingIcon} child={<></>}/>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }
