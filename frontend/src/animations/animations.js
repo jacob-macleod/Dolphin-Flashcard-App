@@ -37,3 +37,18 @@ export const slideRight = {
         x: "25vh",
     },
 }
+
+export const zoomIn = {
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          ease: 'easeOut',
+          duration: 0.3,
+        },
+      },
+      hide: {
+        y: -20,
+        opacity: 0,
+      },
+}

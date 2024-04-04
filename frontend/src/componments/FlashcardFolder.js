@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {motion} from 'framer-motion';
 import Image from './Image';
 import Paragraph from './Paragraph';
 import Heading5 from './Heading5';
@@ -6,6 +7,7 @@ import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import ReviewBarChart from './ReviewBarChart';
 import Button from './Button';
+import { zoomIn } from '../animations/animations';
 
 import horizontalTriangle from '../static/horizontal-triangle.svg';
 import verticalTriangle from '../static/vertical-triangle.svg';
@@ -70,7 +72,10 @@ function FlashcardFolder({ element, name, child, folderKey }) {
     }, [element]);
 
     return (
-        <div key={folderKey} className='folder-wrapper'>
+        <div
+            key={folderKey}
+            className='folder-wrapper'
+        >
             <GridContainer classType="flashcard-overview" layout="260px auto 80px">
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
@@ -111,11 +116,18 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                     </div>
                 </GridItem>
             </GridContainer>
-            <div className='child-wrapper' style={{
-                display: showChildren ? 'block' : 'none',
-            }}>
+            <motion.div
+                className='child-wrapper'
+                style={{
+                    display: showChildren ? 'block' : 'none',
+                }}
+                initial="hide"
+                animate={showChildren ? "show" : "hide"}
+                exit="exit"
+                variants={zoomIn}
+            >
                 {child}
-            </div>
+            </motion.div>
         </div>
     );
 }
