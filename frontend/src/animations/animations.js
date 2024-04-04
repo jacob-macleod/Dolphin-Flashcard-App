@@ -38,7 +38,7 @@ export const slideRight = {
     },
 }
 
-export const zoomIn = {
+export const easeIn = {
     show: {
         opacity: 1,
         y: 0,
@@ -52,3 +52,19 @@ export const zoomIn = {
         opacity: 0,
       },
 }
+
+export const zoomIn = {
+    show: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+          ease: 'easeOut',
+          duration: 0.3,
+        },
+      },
+      hide: {
+        scale: 1.1,
+        opacity: 0,
+      },
+}
+

@@ -1,5 +1,7 @@
 /* Show a loading icon till the icon loads */
 import LoadingIcons from 'react-loading-icons'
+import {motion} from 'framer-motion';
+import { zoomIn } from '../animations/animations';
 import React from 'react';
 
 function DelayedElement({ child, childValue }) {
@@ -10,7 +12,12 @@ function DelayedElement({ child, childValue }) {
             height="fit-content"
             fill="#6A84C5"
         />
-        : <div>{child}</div>
+        : <motion.div
+            initial="hide"
+            animate={childValue != null ? "show" : "hide"}
+            exit="exit"
+            variants={zoomIn}
+        >{child}</motion.div>
     );
 }
 

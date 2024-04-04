@@ -1,5 +1,6 @@
 """ Routes relating to statistics """
 import threading
+import time
 from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
@@ -256,4 +257,5 @@ def calculate_streak():
     if difference == -1 and request.args.get("increase") == "true":
         db.increment("/users/" + user_id + "/statistics/streak", 1)
         db.save("/users/" + user_id + "/statistics/lastStreak", today)
+    time.sleep(1)
     return jsonify({"streak": db.get("/users/" + user_id + "/statistics/streak")}, 200)

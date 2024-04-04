@@ -7,7 +7,7 @@ import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import ReviewBarChart from './ReviewBarChart';
 import Button from './Button';
-import { zoomIn } from '../animations/animations';
+import { easeIn } from '../animations/animations';
 
 import horizontalTriangle from '../static/horizontal-triangle.svg';
 import verticalTriangle from '../static/vertical-triangle.svg';
@@ -124,7 +124,7 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                 initial="hide"
                 animate={showChildren ? "show" : "hide"}
                 exit="exit"
-                variants={zoomIn}
+                variants={easeIn}
             >
                 {child}
             </motion.div>
