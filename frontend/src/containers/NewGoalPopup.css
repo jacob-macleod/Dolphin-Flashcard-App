@@ -44,7 +44,7 @@
     display: grid;
     place-content: center;
     z-index: 3;
-    position: absolute;
+    position: fixed;
     align-items: center;
     justify-items: center;
 }
