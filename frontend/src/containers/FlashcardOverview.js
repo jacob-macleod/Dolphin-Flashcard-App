@@ -2,12 +2,18 @@ import React from 'react';
 import FlashcardFolder from '../componments/FlashcardFolder';
 import FlashcardItem from '../componments/FlashcardItem';
 
-function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible }) {
+function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, view }) {
   const renderElement = (element, folderName, path="") => {
     if (element.cards) {
       return (
         <div key={element.flashcardID}>
-          <FlashcardItem element={element} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible} flashcardData={flashcardData} path={path}/>
+          <FlashcardItem
+            element={element}
+            setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+            flashcardData={flashcardData}
+            path={path}
+            view={view}
+          />
         </div>
       );
     } else {
@@ -23,6 +29,7 @@ function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible }) {
           name={folderName}
           folderKey={folderName + element.flashcardID}
           child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
+          view={view}
         />
       );
     }

@@ -16,7 +16,7 @@ import threeDots from '../static/three-dots.svg'
 import './FlashcardFolder.css';
 import './FlashcardItem.css';
 
-function FlashcardFolder({ element, name, child, folderKey }) {
+function FlashcardFolder({ element, name, child, folderKey, view }) {
     const gridItemStyle = {
         padding: "0px",
     }
@@ -29,6 +29,10 @@ function FlashcardFolder({ element, name, child, folderKey }) {
 
     function toggleChildren() {
         setShowChildren(!showChildren);
+    }
+
+    function studyCard() {
+        alert ("Clicked!");
     }
 
     function countCards(data) {
@@ -76,7 +80,10 @@ function FlashcardFolder({ element, name, child, folderKey }) {
             key={folderKey}
             className='folder-wrapper'
         >
-            <GridContainer classType="flashcard-overview" layout="260px auto 80px">
+            <GridContainer
+                classType="flashcard-overview"
+                layout={view == "desktop" ? "260px auto 80px" : "auto auto auto"}
+            >
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
                         <Image
@@ -86,8 +93,11 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                         />
                         <Paragraph text={name} style={{
                                 margin: "0px",
-                                lineHeight: "2"
-                        }}/>
+                                lineHeight: "2",
+                                textDecoration: view == "mobile" ? "underline" : "none",
+                        }}
+                        onClick={view == "mobile" ? studyCard : () => {}}
+                        />
                     </div>
                 </GridItem>
 
@@ -98,24 +108,31 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                             marginLeft: "0px",
                             marginRight: "16px",
                         }}/>
-                        <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount}/>
+                    {view == "desktop" ? <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount} view={view}/> : <></>}
                     </div>
                 </GridItem>
 
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
-                        <Button text="Study" style={{
-                            margin: "0px",
-                            fontSize: "16px",
-                            paddingTop: "8px",
-                            paddingBottom: "8px",
-                            paddingLeft: "18px",
-                            paddingRight: "18px",
-                        }}/>
+                        {view != "mobile" ?
+                            <Button text="Study" style={{
+                                margin: "0px",
+                                fontSize: "16px",
+                                paddingTop: "8px",
+                                paddingBottom: "8px",
+                                paddingLeft: "18px",
+                                paddingRight: "18px",
+                            }}
+                            onClick={studyCard}
+                            />
+                        : <></>}
                         <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px'/>
                     </div>
                 </GridItem>
             </GridContainer>
+            {view != "desktop" ?
+            <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount} view={view}/>
+            : <></>}
             <motion.div
                 className='child-wrapper'
                 style={{

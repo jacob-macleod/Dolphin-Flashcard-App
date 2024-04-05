@@ -29,15 +29,15 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
 
   // Set variables for the size
-  const mobileBreakpoint = 700;
-  const tabletBreakpoint = 1000;
+  const mobileBreakpoint = 830;
+  const tabletBreakpoint = 1090;
   const [width, setWidth] = useState(window.innerWidth);
   const [view, setView] = useState(
     width < mobileBreakpoint ? "mobile"
     : width < tabletBreakpoint ? "tablet" : "desktop"
   );
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
-    view == "mobile" ? "0px" : "16px"
+    view == "mobile" ? "8px" : "16px"
   );
 
   const [todayCards, setTodayCards] = useState(null);
@@ -65,8 +65,9 @@ function Flashcards() {
       width < mobileBreakpoint ? "mobile"
       : width < tabletBreakpoint ? "tablet" : "desktop");
     setFlashcardBoxHorizontalPadding(
-      view == "mobile" ? "0px" : "16px"
+      view == "mobile" ? "8px" : "16px"
     );
+    console.log("Width is ", width);
   }, [width]);
 
   useEffect(() => {
@@ -75,6 +76,10 @@ function Flashcards() {
       apiManager.getTodayCards(getCookie("userID"), setTodayCards);
     }
   }, [reload]);
+
+  useEffect(() => {
+    console.log("View is ", view);
+  }, [view]);
 
   return (
     <div style={{top: "0px"}}>
@@ -97,24 +102,24 @@ function Flashcards() {
           paddingRight: flashcardBoxHorizontalPadding,
           paddingTop: "0px",
           width: view == "mobile" ? "100vw" : "",
-          display: "flex",
+          display: view == "mobile" ? "block" : "flex",
           flexDirection: "row",
           justifyContent: "center",
         }}>
-          {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
+        {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
   
-          <WhiteOverlay style={{height: "max-content"}}>
+          <WhiteOverlay style={{height: "max-content", paddingBottom: view == "mobile" ? "80px" : ""}}>
             <div style={{maxWidth: "1200px", margin: "auto"}}>
-              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view}/>
               <br></br>
               <br></br>
-              <GridContainer classType="review-bar-wrapper" layout="260px auto 80px">
-                <GridItem />
-                <ReviewBarChartKey />
-                <GridItem />
+              <GridContainer classType="review-bar-wrapper" layout={view == "desktop" ? "260px auto 80px" : "auto"}>
+                {view == "desktop" ? <GridItem /> : <></>}
+                <ReviewBarChartKey view={view}/>
+                {view == "desktop" ? <GridItem /> : <></>}
               </GridContainer>
               <DelayedElement
-                child={<FlashcardOverview flashcardData={todayCards} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}/>}
+                child={<FlashcardOverview flashcardData={todayCards} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible} view={view}/>}
                 childValue={todayCards}
               />
               <div style={{float: "left"}}>

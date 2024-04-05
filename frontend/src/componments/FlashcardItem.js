@@ -14,7 +14,7 @@ import threeDots from '../static/three-dots.svg';
 
 import './FlashcardItem.css';
 
-function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, path="" }) {
+function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, path="", view }) {
     const title = element.flashcardName;
     const numOfCards = Object.keys(element.cards).length;
 
@@ -40,6 +40,10 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
 
     const gridItemStyle = {
         padding: "0px",
+    }
+
+    function studyCard() {
+        alert ("Clicked!");
     }
 
     useEffect(() => {
@@ -83,14 +87,21 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
     }
    }
     return (
-        <GridContainer classType="flashcard-overview" layout="260px auto 80px">
+        <div>
+        <GridContainer
+            classType="flashcard-overview"
+            layout={view == "desktop" ? "260px auto 80px" : "auto auto auto"}
+        >
             <GridItem style={gridItemStyle}>
                 <div className='flashcard-item'>
                     <Image url={selected ? emptyCircle : circledTick} width="16px" height="16px" onClick={onSelectClick}/>
                     <Paragraph text={title} style={{
                         margin: "0px",
-                        lineHeight: "2"
-                    }}/>
+                        lineHeight: "2",
+                        textDecoration: view == "mobile" ? "underline" : "none",
+                    }}
+                    onClick={view == "mobile" ? studyCard : () => {}}
+                    />
                 </div>
             </GridItem>
 
@@ -101,20 +112,23 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
                         marginLeft: "0px",
                         marginRight: "16px",
                     }}/>
-                    <ReviewBarChart studying={studying} recapping={recapping} notStarted={notStarted}/>
+                    {view == "desktop" ? <ReviewBarChart studying={studying} recapping={recapping} notStarted={notStarted}/> : <></>}
                 </div>
             </GridItem>
 
             <GridItem style={gridItemStyle}>
                 <div className='flashcard-item'>
-                    <Button text="Study" style={{
-                        margin: "0px",
-                        fontSize: "16px",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
-                        paddingLeft: "18px",
-                        paddingRight: "18px",
-                    }}/>
+                    {view != "mobile" ?
+                        <Button text="Study" style={{
+                            margin: "0px",
+                            fontSize: "16px",
+                            paddingTop: "8px",
+                            paddingBottom: "8px",
+                            paddingLeft: "18px",
+                            paddingRight: "18px",
+                        }}
+                        onClick={studyCard}/>
+                    : <></>}
                     <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px' onClick={toggleOperationsPopup}/>
                     <CardOperationsPopup
                         visible={operationsPopupVisible}
@@ -127,6 +141,10 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
                 </div>
             </GridItem>
         </GridContainer>
+        {view != "desktop" ?
+            <ReviewBarChart studying={studying} recapping={recapping} notStarted={notStarted} view={view}/>
+        : <></>}
+        </div>
     );
 }
 

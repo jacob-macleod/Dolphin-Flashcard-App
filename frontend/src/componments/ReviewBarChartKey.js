@@ -2,7 +2,7 @@ import React from 'react';
 import Heading5 from './Heading5';
 import './ReviewBarChartKey.css'
 
-function ReviewBarChartKey({ text }) {
+function ReviewBarChartKey({ view }) {
     const notStartedColor = "#32519E";
     const studyingColor = "#6A84C5";
     const recappingColor = "#93ABE5";
@@ -13,7 +13,7 @@ function ReviewBarChartKey({ text }) {
     }
 
     return (
-        <div className='key-wrapper'>
+        <div className={view == "desktop" ? 'key-wrapper' : 'key-wrapper-mobile'}>
             <div className='color-box' style={{background: notStartedColor}}></div>
             <Heading5 text="Not Started" style={headingStyle} />
 
