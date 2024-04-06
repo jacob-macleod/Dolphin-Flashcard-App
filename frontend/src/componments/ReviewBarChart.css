@@ -6,6 +6,15 @@
     overflow: hidden;
 }
 
+.bar-chart-wrapper-mobile{
+    width: 100%;
+    height: 32px;
+    display: flex;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 16px;
+}
+
 .studying-bar{
     height: 100%;
     background-color: #6A84C5;

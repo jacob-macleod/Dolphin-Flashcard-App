@@ -4,8 +4,14 @@
     padding-left: 99px;
 }
 
+.key-wrapper-mobile{
+    display: flex;
+    float: left;
+}
+
 .color-box{
     width: 16px;
+    min-width: 16px;
     height: 16px;
     border-radius: 3px;
 }

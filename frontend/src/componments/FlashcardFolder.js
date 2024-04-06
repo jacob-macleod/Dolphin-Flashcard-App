@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {motion} from 'framer-motion';
 import Image from './Image';
 import Paragraph from './Paragraph';
 import Heading5 from './Heading5';
@@ -6,6 +7,7 @@ import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import ReviewBarChart from './ReviewBarChart';
 import Button from './Button';
+import { easeIn } from '../animations/animations';
 
 import horizontalTriangle from '../static/horizontal-triangle.svg';
 import verticalTriangle from '../static/vertical-triangle.svg';
@@ -14,7 +16,7 @@ import threeDots from '../static/three-dots.svg'
 import './FlashcardFolder.css';
 import './FlashcardItem.css';
 
-function FlashcardFolder({ element, name, child, folderKey }) {
+function FlashcardFolder({ element, name, child, folderKey, view }) {
     const gridItemStyle = {
         padding: "0px",
     }
@@ -27,6 +29,10 @@ function FlashcardFolder({ element, name, child, folderKey }) {
 
     function toggleChildren() {
         setShowChildren(!showChildren);
+    }
+
+    function studyCard() {
+        alert ("Clicked!");
     }
 
     function countCards(data) {
@@ -70,8 +76,14 @@ function FlashcardFolder({ element, name, child, folderKey }) {
     }, [element]);
 
     return (
-        <div key={folderKey} className='folder-wrapper'>
-            <GridContainer classType="flashcard-overview" layout="260px auto 80px">
+        <div
+            key={folderKey}
+            className='folder-wrapper'
+        >
+            <GridContainer
+                classType="flashcard-overview"
+                layout={view == "desktop" ? "260px auto 80px" : "auto auto auto"}
+            >
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
                         <Image
@@ -81,8 +93,11 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                         />
                         <Paragraph text={name} style={{
                                 margin: "0px",
-                                lineHeight: "2"
-                        }}/>
+                                lineHeight: "2",
+                                textDecoration: view != "desktop" ? "underline" : "none",
+                        }}
+                        onClick={view != "desktop" ? studyCard : () => {}}
+                        />
                     </div>
                 </GridItem>
 
@@ -93,29 +108,43 @@ function FlashcardFolder({ element, name, child, folderKey }) {
                             marginLeft: "0px",
                             marginRight: "16px",
                         }}/>
-                        <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount}/>
+                    {view == "desktop" ? <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount} view={view}/> : <></>}
                     </div>
                 </GridItem>
 
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
-                        <Button text="Study" style={{
-                            margin: "0px",
-                            fontSize: "16px",
-                            paddingTop: "8px",
-                            paddingBottom: "8px",
-                            paddingLeft: "18px",
-                            paddingRight: "18px",
-                        }}/>
+                        {view == "desktop" ?
+                            <Button text="Study" style={{
+                                margin: "0px",
+                                fontSize: "16px",
+                                paddingTop: "8px",
+                                paddingBottom: "8px",
+                                paddingLeft: "18px",
+                                paddingRight: "18px",
+                            }}
+                            onClick={studyCard}
+                            />
+                        : <></>}
                         <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px'/>
                     </div>
                 </GridItem>
             </GridContainer>
-            <div className='child-wrapper' style={{
-                display: showChildren ? 'block' : 'none',
-            }}>
+            {view != "desktop" ?
+            <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount} view={view}/>
+            : <></>}
+            <motion.div
+                className='child-wrapper'
+                style={{
+                    display: showChildren ? 'block' : 'none',
+                }}
+                initial="hide"
+                animate={showChildren ? "show" : "hide"}
+                exit="exit"
+                variants={easeIn}
+            >
                 {child}
-            </div>
+            </motion.div>
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {motion} from 'framer-motion';
 import GhostButton from '../componments/GhostButton';
 import Heading3 from '../componments/Heading3';
 import Paragraph from '../componments/Paragraph';
@@ -6,6 +7,7 @@ import Button from '../componments/Button';
 import apiManager from '../api/Api';
 import './NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
+import { dropIn } from '../animations/animations';
 
 function NewGoalPopup({ visible, setVisible, view }) {
     const [quantity, setQuantity] = useState("Amount of XP");
@@ -82,7 +84,13 @@ function NewGoalPopup({ visible, setVisible, view }) {
     return (
         visible === false ? null :
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
-            <div className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}>
+            <motion.div
+                className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={dropIn}
+            >
                 <Heading3 text="Set a new goal:" />
 
                 <div className="input-container">
@@ -108,7 +116,7 @@ function NewGoalPopup({ visible, setVisible, view }) {
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} />
                     <Button text="Set Goal" onClick={createGoal} />
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

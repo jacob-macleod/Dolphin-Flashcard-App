@@ -22,6 +22,25 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [2.1.0] - 2024-04-06
+
+### Added
+
+- Added animations throughout site
+
+### Fixed
+
+- N/A
+
+### Changed
+
+- Made the flashcards page render better on mobile
+- Changed modal overlays to better render on mobile
+
+### Removed
+
+- N/A
+
 ## [2.0.0] - 2024-03-29
 
 ### Added
