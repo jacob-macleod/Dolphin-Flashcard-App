@@ -137,6 +137,7 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
                         flashcardData={flashcardData}
                         path={path}
                         flashcardID={element.flashcardID}
+                        view={view}
                     />
                 </div>
             </GridItem>

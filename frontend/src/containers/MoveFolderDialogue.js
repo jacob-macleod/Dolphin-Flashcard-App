@@ -68,9 +68,6 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
             <motion.div
               className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
-              style={{
-                height: "fit-content"
-              }}
               initial="hidden"
               animate="visible"
               exit="exit"

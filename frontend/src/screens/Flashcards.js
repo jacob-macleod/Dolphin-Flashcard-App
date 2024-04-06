@@ -108,7 +108,13 @@ function Flashcards() {
         }}>
         {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
   
-          <WhiteOverlay style={{height: "max-content", paddingBottom: view == "mobile" ? "80px" : ""}}>
+          <WhiteOverlay
+            style={{
+                height: "max-content",
+                paddingBottom: view == "mobile" ? "80px" : "",
+                width: view == "desktop" ? "100%" : "calc(100% - 16px)"
+              }}
+            >
             <div style={{maxWidth: "1200px", margin: "auto"}}>
               <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view}/>
               <br></br>

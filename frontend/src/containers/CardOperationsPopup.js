@@ -7,10 +7,8 @@ import deleteIcon from '../static/bin-icon.svg';
 
 import './CardOperationsPopup.css'
 
-function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flashcardID }) {
-    const menuItemStyle = {
-        margin:"0px"
-    }
+function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flashcardID, view }) {
+    const float = view == "mobile" ? "left" : null;
 
     const cardData = {
         "flashcardData": flashcardData,
@@ -19,11 +17,11 @@ function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flas
     }
     return (
         visible ?
-        <div className='card-operations-popup-wrapper'>
+        <div className={view == "mobile" ? 'card-operations-popup-wrapper-mobile' : 'card-operations-popup-wrapper'}>
             <div className='card-operations-container'>
-                <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" />
-                <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}}/>
-                <MenuItem text="Delete" imgUrl={deleteIcon} margin="0px" />
+                <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" float={float}/>
+                <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}} float={float}/>
+                <MenuItem text="Delete" imgUrl={deleteIcon} margin="0px" float={float}/>
             </div>
         </div>
         : <></>

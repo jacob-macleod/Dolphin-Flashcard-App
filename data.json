@@ -7,7 +7,7 @@
                 "streak": "0",
                 "totalXP": "0",
                 "weeklyXP": "0",
-                "lastStreak": "04/04/2024"
+                "lastStreak": "06/04/2024"
             },
             "heatmapData": {},
             "goals": {
@@ -34,6 +34,18 @@
                         "start_date": "04/04/2024",
                         "starting_xp": "0",
                         "goal_xp": "54"
+                    }
+                },
+                "40494524727730469473896172528410833746083433354251236314996606953222109132254": {
+                    "type": "XP",
+                    "title": "Gain 3 XP by 06/04/2024",
+                    "end_date": "06/04/2024",
+                    "status": "in progress",
+                    "fail_date": "",
+                    "data": {
+                        "start_date": "06/04/2024",
+                        "starting_xp": "0",
+                        "goal_xp": "3"
                     }
                 }
             },
