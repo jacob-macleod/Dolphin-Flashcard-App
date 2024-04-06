@@ -72,6 +72,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
               animate="visible"
               exit="exit"
               variants={dropIn}
+              style={view == "desktop" ? {height: "fit-content"} : null}
             >
                 <Heading3 text="Choose a folder:" />
 

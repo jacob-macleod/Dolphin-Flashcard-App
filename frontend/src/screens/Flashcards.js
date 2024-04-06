@@ -29,7 +29,7 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
 
   // Set variables for the size
-  const mobileBreakpoint = 830;
+  const mobileBreakpoint = 650;
   const tabletBreakpoint = 1090;
   const [width, setWidth] = useState(window.innerWidth);
   const [view, setView] = useState(
@@ -67,7 +67,6 @@ function Flashcards() {
     setFlashcardBoxHorizontalPadding(
       view == "mobile" ? "8px" : "16px"
     );
-    console.log("Width is ", width);
   }, [width]);
 
   useEffect(() => {
@@ -76,10 +75,6 @@ function Flashcards() {
       apiManager.getTodayCards(getCookie("userID"), setTodayCards);
     }
   }, [reload]);
-
-  useEffect(() => {
-    console.log("View is ", view);
-  }, [view]);
 
   return (
     <div style={{top: "0px"}}>

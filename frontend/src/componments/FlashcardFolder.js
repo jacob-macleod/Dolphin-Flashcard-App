@@ -94,9 +94,9 @@ function FlashcardFolder({ element, name, child, folderKey, view }) {
                         <Paragraph text={name} style={{
                                 margin: "0px",
                                 lineHeight: "2",
-                                textDecoration: view == "mobile" ? "underline" : "none",
+                                textDecoration: view != "desktop" ? "underline" : "none",
                         }}
-                        onClick={view == "mobile" ? studyCard : () => {}}
+                        onClick={view != "desktop" ? studyCard : () => {}}
                         />
                     </div>
                 </GridItem>
@@ -114,7 +114,7 @@ function FlashcardFolder({ element, name, child, folderKey, view }) {
 
                 <GridItem style={gridItemStyle}>
                     <div className='flashcard-item'>
-                        {view != "mobile" ?
+                        {view == "desktop" ?
                             <Button text="Study" style={{
                                 margin: "0px",
                                 fontSize: "16px",

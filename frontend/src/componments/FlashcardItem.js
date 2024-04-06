@@ -98,9 +98,9 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
                     <Paragraph text={title} style={{
                         margin: "0px",
                         lineHeight: "2",
-                        textDecoration: view == "mobile" ? "underline" : "none",
+                        textDecoration: view == "desktop" ? "none" : "underline",
                     }}
-                    onClick={view == "mobile" ? studyCard : () => {}}
+                    onClick={view != "desktop" ? studyCard : () => {}}
                     />
                 </div>
             </GridItem>
@@ -118,7 +118,7 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
 
             <GridItem style={gridItemStyle}>
                 <div className='flashcard-item'>
-                    {view != "mobile" ?
+                    {view == "desktop" ?
                         <Button text="Study" style={{
                             margin: "0px",
                             fontSize: "16px",
