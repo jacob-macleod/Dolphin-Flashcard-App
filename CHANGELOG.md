@@ -29,6 +29,7 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - `Mailchimp` and `MailChimpWidget` to allow signing into the mailchimp newsletter
 - The new untracked file `frontend/src/api/secretKeys.js` stores the `action` part of the mailchimp form, including a secret API key. This must be supplied to use mailchimp, otherwise an error will be shown in the console
 - The `mailChimpApiKey` key stored in `frontend/src/api/secretKeys.js` can be easily regenerated from mailchimp if forgotten
+- Added workflow stage to check config files are corrrect
 
 ### Fixed
 
