@@ -1,0 +1,15 @@
+name: 'Check Config Files'
+
+on:
+  pull_request:
+
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Check files
+        run: |
+            python3 validate_config_files.py

@@ -92,6 +92,8 @@ If you want to manually setup the code, follow the following steps:
 - Navigate to the `frontend/` folder, install the `npm` dependencies in `node_requirements.txt`, and building the code with `npm run build`
 - If using docker, a `docker-compose.yml` file can be made, using the following information:
 - Make sure `backend/database/database_config.py` stores `type="production"`
+- Make sure `frontend/src/api/secretKeys.js` stores the `action` part of the correct Mailchimp form as `mailChimpApiKey`
+  - See [this medium article](https://ogroetz.medium.com/adding-a-mailchimp-signup-form-to-your-react-app-2b34dd374ff9) for more information
 
 ```yaml
 version: '3'
