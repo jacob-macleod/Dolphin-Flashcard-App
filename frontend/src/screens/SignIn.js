@@ -13,6 +13,7 @@ import Paragraph from '../componments/Paragraph';
 import Button from '../componments/Button';
 import DeveloperSection from '../componments/DeveloperSection';
 import BentoPanel from '../containers/BentoPanel';
+import MailChimpWidget from '../componments/MailChimpWidget';
 import goals from '../static/goals.png';
 import heatmap from '../static/heatmap.png';
 import card from '../static/card.png';
@@ -99,6 +100,8 @@ function SignInPage({ userID, setUserID, active=true }) {
               <Paragraph text="Dolphin flashcards is a totally brand-new flashcard app - with one goal: to be better than anyone else on the market. Sign in for free to become part of it." />
               {signInButton}
             </div>
+
+            <MailChimpWidget view={view}/>
 
             <BentoPanel
               item1 = {<div>

@@ -25,6 +25,7 @@ jobs:
           echo "$FIREBASE_KEY" > credentials.json
           echo "$FIREBASE_URL" > firebase_url
           echo "$FIREBASE_CONFIG" > firebase_config.json
+          echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
         env:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}

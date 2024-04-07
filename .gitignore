@@ -19,6 +19,8 @@ data.json
 frontend/node_modules
 frontend/.pnp
 frontend/.pnp.js
+frontend/.env
+frontend/src/api/secretKeys.js
 
 # testing
 frontend//coverage
