@@ -88,9 +88,9 @@ function Dashboard() {
         : view == "tablet" ? "240px auto"
         : "auto"
       }>
-        {view != "mobile" ? <SidePanel /> : <></>}
+        {view != "mobile" ? <SidePanel selectedItem="dashboard"/> : <></>}
         <GridItem style={{padding: "0px", width: view == "mobile" ? "100vw" : "100%"}}>
-          {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible}/> : <></>}
+          {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="dashboard"/> : <></>}
           <Heading4 text={userWelcomeText} />
           <StreakWidget />
 

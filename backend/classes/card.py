@@ -116,11 +116,9 @@ class Card:
         daily_reviews = self.review_status.split(".")[1]
 
         if days == "0":
-            print ("Days == 0")
             daily_reviews, days = self.increment_daily_reviews(daily_reviews, days)
         else:
             # Increment the days
-            print ("Incrementing days")
             days = self.increment_days(days)
             daily_reviews = "0"
 

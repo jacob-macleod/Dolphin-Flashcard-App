@@ -7,20 +7,129 @@
                 "streak": "0",
                 "totalXP": "0",
                 "weeklyXP": "0",
-                "lastStreak": "29/03/2024"
+                "lastStreak": "06/04/2024"
             },
             "heatmapData": {},
             "goals": {
-                "78003435558132231747879069272620611185200283339360462620388356853846842093839": {
+                "78003435558132231747879069272620611185200283339360462620388356853846842093839": {},
+                "62101748350080344520882529291432452906294472895984476074719315616232343771080": {
                     "type": "XP",
-                    "title": "Gain 4 XP by 30/03/2024",
-                    "end_date": "30/03/2024",
+                    "title": "Gain 34 XP by 05/04/2024",
+                    "end_date": "05/04/2024",
                     "status": "in progress",
                     "fail_date": "",
                     "data": {
-                        "start_date": "29/03/2024",
+                        "start_date": "04/04/2024",
                         "starting_xp": "0",
-                        "goal_xp": "4"
+                        "goal_xp": "34"
+                    }
+                },
+                "71214550647230629941164930186433236938813259876755802292599670714745472120747": {
+                    "type": "XP",
+                    "title": "Gain 54 XP by 10/04/2024",
+                    "end_date": "10/04/2024",
+                    "status": "in progress",
+                    "fail_date": "",
+                    "data": {
+                        "start_date": "04/04/2024",
+                        "starting_xp": "0",
+                        "goal_xp": "54"
+                    }
+                },
+                "40494524727730469473896172528410833746083433354251236314996606953222109132254": {
+                    "type": "XP",
+                    "title": "Gain 3 XP by 06/04/2024",
+                    "end_date": "06/04/2024",
+                    "status": "in progress",
+                    "fail_date": "",
+                    "data": {
+                        "start_date": "06/04/2024",
+                        "starting_xp": "0",
+                        "goal_xp": "3"
+                    }
+                }
+            },
+            "flashcards": {
+                "78706522606884094347267331340740459328628093524759979664863269402823009149302": {
+                    "flashcardID": "78706522606884094347267331340740459328628093524759979664863269402823009149302",
+                    "flashcardName": "My new set",
+                    "flashcardDescription": "This is\nmy description",
+                    "cards": [
+                        {
+                            "front": "Front 1",
+                            "back": "Back 1",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        },
+                        {
+                            "front": "Front 2",
+                            "back": "Back 2",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        }
+                    ]
+                },
+                "languages": {
+                    "spanish": {
+                        "common-words": {
+                            "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
+                                "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
+                                "flashcardName": "Set two",
+                                "flashcardDescription": "This is the second set I've made",
+                                "cards": [
+                                    {
+                                        "front": "Front 1",
+                                        "back": "Back 1",
+                                        "reviewStatus": "0.0",
+                                        "lastReview": "30/03/2024"
+                                    },
+                                    {
+                                        "front": "Front 2",
+                                        "back": "Back 2",
+                                        "reviewStatus": "0.0",
+                                        "lastReview": "30/03/2024"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "35327435524706219408006451834813169054434248079692846228662623660367296560356": {
+                        "flashcardID": "35327435524706219408006451834813169054434248079692846228662623660367296560356",
+                        "flashcardName": "My new set",
+                        "flashcardDescription": "This is\nmy description",
+                        "cards": [
+                            {
+                                "front": "Front 1",
+                                "back": "Back 1",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            },
+                            {
+                                "front": "Front 2",
+                                "back": "Back 2",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            }
+                        ]
+                    },
+                    "47962680440219262426614851383681058904567080607728983184879622214761420733776": {
+                        "flashcardID": "47962680440219262426614851383681058904567080607728983184879622214761420733776",
+                        "flashcardName": "My new set",
+                        "flashcardDescription": "This is\nmy description",
+                        "cards": [
+                            {
+                                "front": "Front 1",
+                                "back": "Back 1",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            },
+                            {
+                                "front": "Front 2",
+                                "back": "Back 2",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            }
+                        ]
                     }
                 }
             }

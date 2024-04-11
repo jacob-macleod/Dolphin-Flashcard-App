@@ -19,8 +19,9 @@ def dict_to_array(input_dict):
 
 def append_items_to_array(dictionary, result=[]):
     """ Append all values of dictionary to an array """
-    for key, value in dictionary.items():
-        if isinstance(value, dict):
+
+    for key, value in enumerate(dictionary):
+        if isinstance(value, dict) or isinstance(value, list):
             append_items_to_array(value, result)
         else:
             result.append(value)
@@ -28,7 +29,6 @@ def append_items_to_array(dictionary, result=[]):
 
 def check_request_json(expected_format, request):
     """Checks if the keys in the request match the keys in the expected format"""
-
     # Make an array of the expected keys and actual keys
     expected_format_arr = dict_to_array(expected_format)
     request_arr = dict_to_array(request)

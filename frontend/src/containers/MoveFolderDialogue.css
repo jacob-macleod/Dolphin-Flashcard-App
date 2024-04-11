@@ -1,0 +1,15 @@
+.button-container{
+    padding-top: 16px;
+}
+
+.card-overview{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
+.loading-icon-wrapper{
+    height: min-content;
+    padding-top: 16px;
+    display: grid;
+    justify-content: center;
+}

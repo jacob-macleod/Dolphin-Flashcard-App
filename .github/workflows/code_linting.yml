@@ -33,8 +33,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install node
+    - name: Install node.js
       run: |
+        echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
         cd frontend
         sudo apt install nodejs npm
         npm install -g create-react-app
