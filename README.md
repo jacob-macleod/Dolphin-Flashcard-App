@@ -107,3 +107,4 @@ services:
 - `docker-compose up` can be used to build the code, and `docker-compose up --force-recreate --build -d && docker image prune -f` to update the container
 
 More information of how the code works is in `CONTRIBUTING.md`
+
