@@ -1,6 +1,7 @@
 import React from 'react';
 import FlashcardFolder from '../componments/FlashcardFolder';
 import FlashcardItem from '../componments/FlashcardItem';
+import Heading5 from '../componments/Heading5';
 
 function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, view }) {
   const renderElement = (element, folderName, path="") => {
@@ -34,8 +35,13 @@ function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, view }
       );
     }
   };
-
-  return <div>{Object.entries(flashcardData).map(([key, value]) => renderElement(value, key))}</div>;
+  // If flashcardData has no data, return a message to the user
+  // If flashcardData has data, it is == ["User has no flashcards"]
+  console.log(flashcardData)
+  console.log(Array.isArray(flashcardData));
+  return Array.isArray(flashcardData)
+  ? <Heading5 text="You don't have any flashcards yet!"/>
+  : <div>{Object.entries(flashcardData).map(([key, value]) => renderElement(value, key))}</div>;
 }
 
 export default FlashcardOverview;
