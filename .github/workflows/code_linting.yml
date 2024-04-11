@@ -35,7 +35,6 @@ jobs:
 
     - name: Install node.js
       run: |
-        cat .github/workflows/code_linting.yml
         echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
         cd frontend
         sudo apt install nodejs npm
