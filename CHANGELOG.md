@@ -22,6 +22,24 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [2.2.2] - 2024-04-11
+
+### Added
+
+- N/A
+
+### Fixed
+
+- Fixed workflow bug which meant environment variable was not read properly
+
+### Changed
+
+- N/A
+
+### Removed
+
+- N/A
+
 ## [2.2.1] - 2024-11-04
 
 ### Added
