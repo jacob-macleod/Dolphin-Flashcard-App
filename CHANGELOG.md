@@ -22,6 +22,24 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [2.2.1] - 2024-11-04
+
+### Added
+
+- N/A
+
+### Fixed
+
+- Solved an issue where jsonp was not downloaded
+
+### Changed
+
+- N/A
+
+### Removed
+
+- N/A
+
 ## [2.2.0] - 2024-04-07
 
 ### Added
