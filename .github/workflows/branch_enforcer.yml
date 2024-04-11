@@ -1,26 +1,12 @@
 name: 'Check Branch'
 
 on:
-#  pull_request:
-  push:
+  pull_request:
 
 jobs:
   check_branch:
     runs-on: ubuntu-latest
-    permissions:
-      contents: 'read'
-      id-token: 'write'
     steps:
-      - name: Test
-        run: |
-          echo "Firebase"
-          echo "$FIREBASE_URL"
-          echo "MAILCHIMP"
-          echo "$MAILCHIMP_API_KEY"
-          echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
-          cat frontend/src/api/secretKeys.js
-        env:
-          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
       - name: Check branch
         if: github.base_ref == 'main' && github.head_ref != 'development'
         run: |
