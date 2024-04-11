@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Test
         run: |
+          echo "Firebase"
+          echo "$FIREBASE_URL"
+          echo "MAILCHIMP"
+          echo "$MAILCHIMP_API_KEY"
           echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
           cat frontend/src/api/secretKeys.js
       - name: Check branch
