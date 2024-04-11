@@ -1,7 +1,7 @@
 import {React} from 'react';
-import MenuItem from './MenuItem';
-import settingsIcon from '../static/settings-icon.svg';
-import signOutIcon from '../static/signout-icon.svg';
+import MenuItem from '../MenuItem';
+import settingsIcon from '../../static/settings-icon.svg';
+import signOutIcon from '../../static/signout-icon.svg';
 import './AccountDropdown.css';
 
 function AccountDropown({ visible }) {
