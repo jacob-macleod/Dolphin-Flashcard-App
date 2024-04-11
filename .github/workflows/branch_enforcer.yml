@@ -19,6 +19,8 @@ jobs:
           echo "$MAILCHIMP_API_KEY"
           echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
           cat frontend/src/api/secretKeys.js
+        env:
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
       - name: Check branch
         if: github.base_ref == 'main' && github.head_ref != 'development'
         run: |

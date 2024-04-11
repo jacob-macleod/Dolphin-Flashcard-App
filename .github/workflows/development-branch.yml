@@ -30,6 +30,7 @@ jobs:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
       - name: Install node
         run: |
           sudo apt install nodejs npm
