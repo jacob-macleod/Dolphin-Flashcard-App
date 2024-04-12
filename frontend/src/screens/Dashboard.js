@@ -2,22 +2,22 @@ import {React, useState, useEffect} from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
-import GridContainer from '../containers/GridContainer';
-import GridItem from '../containers/GridItem';
-import Heading5 from '../componments/Heading5';
-import SidePanel from '../containers/SidePanel';
-import NewGoalPopup from '../containers/NewGoalPopup';
-import EditGoalPopup from '../containers/EditGoalPopup';
-import Heading4 from '../componments/Heading4';
-import StreakWidget from '../containers/StreakWidget';
-import GoalsWidget from '../containers/GoalsWidget';
-import WhiteOverlay from '../componments/WhiteOverlay';
-import HamburgerBar from '../componments/HamburgerBar';
-import Heatmap from '../componments/Heatmap';
+import GridContainer from '../componments/GridContainer/GridContainer';
+import GridItem from '../componments/GridItem/GridItem';
+import Heading5 from '../componments/Text/Heading5/Heading5';
+import SidePanel from '../containers/SidePanel/SidePanel';
+import NewGoalPopup from '../containers/Modal/NewGoalPopup/NewGoalPopup';
+import EditGoalPopup from '../containers/Modal/EditGoalPopup/EditGoalPopup';
+import Heading4 from '../componments/Text/Heading4/Heading4';
+import StreakWidget from '../containers/StreakWidget/StreakWidget';
+import GoalsWidget from '../containers/GoalsWidget/GoalsWidget';
+import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
+import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
+import Heatmap from '../containers/Heatmap/Heatmap';
 import { getCookie } from '../api/Authentication';
-import '../componments/Text.css';
-import '../componments/Link.css';
-import '../componments/Bold.css';
+import '../componments/Text/Text/Text.css';
+import '../componments/Text/Link/Link.css';
+import '../componments/Text/BoldParagraph/Bold.css';
 
 function Dashboard() {
   // Set general variables

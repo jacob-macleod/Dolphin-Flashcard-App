@@ -22,6 +22,25 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [2.3.0] - 2024-04-12
+
+### Added
+
+- N/A
+
+### Fixed
+
+- N/A
+
+### Changed
+
+- Refactored code by adding more folders to more easily manage componments
+- Removed unneeded files
+
+### Removed
+
+- N/A
+
 ## [2.2.2] - 2024-04-11
 
 ### Added
