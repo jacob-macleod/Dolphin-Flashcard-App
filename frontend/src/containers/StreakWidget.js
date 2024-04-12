@@ -1,10 +1,10 @@
 import {React, useState, useEffect} from 'react';
-import DelayedElement from '../componments/DelayedElement';
-import Heading5 from '../componments/Heading5';
-import WhiteOverlay from '../componments/WhiteOverlay';
-import Header from '../componments/Header';
+import DelayedElement from './DelayedElement';
+import Heading5 from '../componments/Text/Heading5/Heading5';
+import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
+import Header from '../componments/Text/Header/Header';
 import apiManager from '../api/Api';
-import Heading4 from '../componments/Heading4';
+import Heading4 from '../componments/Text/Heading4/Heading4';
 import { getCookie } from '../api/Authentication';
 import '../App.css';
 

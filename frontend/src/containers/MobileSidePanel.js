@@ -1,7 +1,7 @@
 import {React, useState} from 'react';
-import MenuItem from '../componments/MenuItem';
-import Image from '../componments/Image';
-import Heading5 from '../componments/Heading5';
+import MenuItem from './MenuItem';
+import Image from '../componments/Image/Image';
+import Heading5 from '../componments/Text/Heading5/Heading5';
 import dashboard_icon_white from '../static/dashboard-icon-white.svg';
 import flashcard_icon from '../static/flashcard-icon.svg';
 import community_icon from '../static/community-icon.svg';
@@ -16,7 +16,7 @@ import dashboard_icon from '../static/dashboard-icon.svg';
 import flashcard_icon_white from '../static/flashcard-icon-white.svg';
 import './MobileSidePanel.css';
 import './GridItem.css';
-import '../componments/HamburgerBar.css';
+import './HamburgerBar/HamburgerBar.css';
 
 function MobileSidePanel ({visible, setVisible, selectedItem}) {
     const iconSize = "32px";

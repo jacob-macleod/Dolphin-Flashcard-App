@@ -1,6 +1,6 @@
 import {React, useState} from 'react';
-import UserProfileHeader from '../componments/UserProfileHeader';
-import MenuItem from '../componments/MenuItem';
+import UserProfileHeader from './UserProfileHeader';
+import MenuItem from './MenuItem';
 import AccountDropown from '../componments/AccountDropdown';
 import dashboard_icon_white from '../static/dashboard-icon-white.svg';
 import flashcard_icon from '../static/flashcard-icon.svg';
