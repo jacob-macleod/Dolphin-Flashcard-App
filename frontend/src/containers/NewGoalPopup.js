@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {motion} from 'framer-motion';
 import GhostButton from '../componments/GhostButton';
-import Heading3 from '../componments/Heading3';
-import Paragraph from '../componments/Paragraph';
+import Heading3 from '../componments/Text/Heading3/Heading3';
+import Paragraph from '../componments/Text/Paragraph/Paragraph';
 import Button from '../componments/Button';
 import apiManager from '../api/Api';
 import './NewGoalPopup.css';

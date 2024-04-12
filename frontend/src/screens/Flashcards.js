@@ -5,19 +5,19 @@ import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../containers/GridContainer';
 import GridItem from '../containers/GridItem';
 import SidePanel from '../containers/SidePanel';
-import WhiteOverlay from '../componments/WhiteOverlay';
-import HamburgerBar from '../componments/HamburgerBar';
-import FlashcardOverview from '../containers/FlashcardOverview';
-import DelayedElement from '../componments/DelayedElement';
+import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
+import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
+import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview';
+import DelayedElement from '../containers/DelayedElement';
 import Button from '../componments/Button';
 import GhostButton from '../componments/GhostButton';
-import SearchBar from '../componments/SearchBar';
-import ReviewBarChartKey from '../componments/ReviewBarChartKey';
+import SearchBar from '../componments/SearchBar/SearchBar';
+import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/MoveFolderDialogue';
 import apiManager from '../api/Api';
-import '../componments/Text.css';
-import '../componments/Link.css';
-import '../componments/Bold.css';
+import '../componments/Text/Text/Text.css';
+import '../componments/Text/Link/Link.css';
+import '../componments/Text/BoldParagraph/Bold.css';
 import { getCookie } from '../api/Authentication';
 
 function Flashcards() {

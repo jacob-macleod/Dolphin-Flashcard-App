@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from '../componments/MenuItem';
+import MenuItem from './MenuItem';
 
 import renameIcon from '../static/rename-icon.svg';
 import moveIcon from '../static/move-icon.svg';

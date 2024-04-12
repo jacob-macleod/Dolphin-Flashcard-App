@@ -1,5 +1,5 @@
 import {React} from 'react';
-import MenuItem from '../MenuItem';
+import MenuItem from '../../containers/MenuItem';
 import settingsIcon from '../../static/settings-icon.svg';
 import signOutIcon from '../../static/signout-icon.svg';
 import './AccountDropdown.css';
