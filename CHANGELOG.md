@@ -35,6 +35,7 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 ### Changed
 
 - Refactored code by adding more folders to more easily manage componments
+- Removed unneeded files
 
 ### Removed
 
