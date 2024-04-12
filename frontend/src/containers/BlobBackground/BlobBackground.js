@@ -1,6 +1,6 @@
 import React from 'react';
 import './BlobBackground.css'
-import Blob from '../componments/Blob';
+import Blob from '../../componments/Blob';
 
 
 function BlobBackground() {

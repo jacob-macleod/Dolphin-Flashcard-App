@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {motion} from 'framer-motion';
-import GhostButton from '../componments/GhostButton';
-import Heading3 from '../componments/Text/Heading3/Heading3';
-import Paragraph from '../componments/Text/Paragraph/Paragraph';
-import Button from '../componments/Button';
-import apiManager from '../api/Api';
+import GhostButton from '../../../componments/GhostButton';
+import Heading3 from '../../../componments/Text/Heading3/Heading3';
+import Paragraph from '../../../componments/Text/Paragraph/Paragraph';
+import Button from '../../../componments/Button';
+import apiManager from '../../../api/Api';
+import '../Modal.css';
 import './NewGoalPopup.css';
-import { getCookie } from '../api/Authentication';
-import { dropIn } from '../animations/animations';
+import { getCookie } from '../../../api/Authentication';
+import { dropIn } from '../../../animations/animations';
 
 function NewGoalPopup({ visible, setVisible, view }) {
     const [quantity, setQuantity] = useState("Amount of XP");

@@ -1,5 +1,5 @@
 import React from 'react';
-import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
+import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 
 function BentoPanel({ item1, item2, view, style={}, overlayMarginBottom }) {
     return view === "desktop" ?

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {motion} from 'framer-motion';
-import GhostButton from '../componments/GhostButton';
-import Button from '../componments/Button';
-import Heading3 from '../componments/Text/Heading3/Heading3';
-import FolderElement from './FlashcardOverview/FlashcardFolder/FlashcardFolder';
-import apiManager from '../api/Api';
-import {getCookie} from '../api/Authentication';
+import GhostButton from '../../../componments/GhostButton';
+import Button from '../../../componments/Button';
+import Heading3 from '../../../componments/Text/Heading3/Heading3';
+import FolderElement from '../../FlashcardOverview/FlashcardFolder/FlashcardFolder';
+import apiManager from '../../../api/Api';
+import {getCookie} from '../../../api/Authentication';
 import './MoveFolderDialogue.css'
-import './NewGoalPopup.css';
-import DelayedElement from './DelayedElement';
-import { dropIn } from '../animations/animations';
+import '../Modal.css';
+import DelayedElement from '../../DelayedElement';
+import { dropIn } from '../../../animations/animations';
 
 function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);

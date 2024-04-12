@@ -1,12 +1,11 @@
 import {React, useState, useEffect} from 'react';
-import Heading5 from '../componments/Text/Heading5/Heading5';
-import Button from '../componments/Button';
-import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import Goal from './Goal';
-import apiManager from '../api/Api';
-import { getCookie } from '../api/Authentication';
-import '../App.css';
-import DelayedElement from './DelayedElement';
+import Heading5 from '../../componments/Text/Heading5/Heading5';
+import Button from '../../componments/Button';
+import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
+import Goal from '../Goal';
+import apiManager from '../../api/Api';
+import { getCookie } from '../../api/Authentication';
+import DelayedElement from '../DelayedElement';
 
 function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopupVisible, setEditGoalPopupVisible}) {
     const [goals, setGoals] = useState(null);
