@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Subheader from '../../componments/Text/Subheader/Subheader';
-import BentoPanel from '../BentoPanel';
+import BentoPanel from '../BentoPanel/BentoPanel';
 import Mailchimp from "../../componments/Mailchimp/Mailchimp";
 
 let mailChimpApiKey = "";

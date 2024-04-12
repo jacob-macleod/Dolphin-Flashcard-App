@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {motion} from 'framer-motion';
-import GhostButton from '../componments/GhostButton';
-import Heading3 from '../componments/Text/Heading3/Heading3';
-import Paragraph from '../componments/Text/Paragraph/Paragraph';
-import Button from '../componments/Button';
-import apiManager from '../api/Api';
-import DelayedElement from './DelayedElement';
-import './NewGoalPopup.css';
-import { getCookie } from '../api/Authentication';
-import { dropIn } from '../animations/animations';
+import GhostButton from '../../../componments/GhostButton';
+import Heading3 from '../../../componments/Text/Heading3/Heading3';
+import Paragraph from '../../../componments/Text/Paragraph/Paragraph';
+import Button from '../../../componments/Button';
+import apiManager from '../../../api/Api';
+import DelayedElement from '../../DelayedElement';
+import '../Modal.css';
+import { getCookie } from '../../../api/Authentication';
+import { dropIn } from '../../../animations/animations';
 
 function EditGoalPopup({ visible, setVisible, view }) {
     // visible is either false, or stores the goal data

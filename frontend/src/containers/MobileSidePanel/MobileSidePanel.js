@@ -1,22 +1,22 @@
 import {React, useState} from 'react';
-import MenuItem from './MenuItem';
-import Image from '../componments/Image/Image';
-import Heading5 from '../componments/Text/Heading5/Heading5';
-import dashboard_icon_white from '../static/dashboard-icon-white.svg';
-import flashcard_icon from '../static/flashcard-icon.svg';
-import community_icon from '../static/community-icon.svg';
-import quests_icon from '../static/quests-icon.svg';
-import leaderboard_icon from '../static/leaderboard-icon.svg';
-import settings_icon from '../static/settings-icon.svg';
-import settingsIcon from '../static/settings-icon.svg';
-import signOutIcon from '../static/signout-icon.svg';
-import { getCookie } from '../api/Authentication';
-import blueHamburger from '../static/blue-hamburger-menu.svg';
-import dashboard_icon from '../static/dashboard-icon.svg';
-import flashcard_icon_white from '../static/flashcard-icon-white.svg';
+import MenuItem from '../MenuItem';
+import Image from '../../componments/Image/Image';
+import Heading5 from '../../componments/Text/Heading5/Heading5';
+import dashboard_icon_white from '../../static/dashboard-icon-white.svg';
+import flashcard_icon from '../../static/flashcard-icon.svg';
+import community_icon from '../../static/community-icon.svg';
+import quests_icon from '../../static/quests-icon.svg';
+import leaderboard_icon from '../../static/leaderboard-icon.svg';
+import settings_icon from '../../static/settings-icon.svg';
+import settingsIcon from '../../static/settings-icon.svg';
+import signOutIcon from '../../static/signout-icon.svg';
+import { getCookie } from '../../api/Authentication';
+import blueHamburger from '../../static/blue-hamburger-menu.svg';
+import dashboard_icon from '../../static/dashboard-icon.svg';
+import flashcard_icon_white from '../../static/flashcard-icon-white.svg'
 import './MobileSidePanel.css';
-import './GridItem.css';
-import './HamburgerBar/HamburgerBar.css';
+import '../../componments/GridItem/GridItem.css';
+import '../HamburgerBar/HamburgerBar.css';
 
 function MobileSidePanel ({visible, setVisible, selectedItem}) {
     const iconSize = "32px";

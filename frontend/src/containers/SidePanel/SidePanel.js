@@ -1,17 +1,17 @@
 import {React, useState} from 'react';
-import UserProfileHeader from './UserProfileHeader';
-import MenuItem from './MenuItem';
-import AccountDropown from '../componments/AccountDropdown';
-import dashboard_icon_white from '../static/dashboard-icon-white.svg';
-import flashcard_icon from '../static/flashcard-icon.svg';
-import community_icon from '../static/community-icon.svg';
-import quests_icon from '../static/quests-icon.svg';
-import leaderboard_icon from '../static/leaderboard-icon.svg';
-import settings_icon from '../static/settings-icon.svg';
-import dashboard_icon from '../static/dashboard-icon.svg';
-import flashcard_icon_white from '../static/flashcard-icon-white.svg';
+import UserProfileHeader from '../UserProfileHeader';
+import MenuItem from '../MenuItem';
+import AccountDropown from '../../componments/AccountDropdown';
+import dashboard_icon_white from '../../static/dashboard-icon-white.svg';
+import flashcard_icon from '../../static/flashcard-icon.svg';
+import community_icon from '../../static/community-icon.svg';
+import quests_icon from '../../static/quests-icon.svg';
+import leaderboard_icon from '../../static/leaderboard-icon.svg';
+import settings_icon from '../../static/settings-icon.svg';
+import dashboard_icon from '../../static/dashboard-icon.svg';
+import flashcard_icon_white from '../../static/flashcard-icon-white.svg';
 import './SidePanel.css';
-import './GridItem.css';
+import '../../componments/GridItem/GridItem.css';
 
 function SidePanel ({ selectedItem }) {
     const [accountDropdownVisibility, setAccountDropdownVisibility] = useState(false);

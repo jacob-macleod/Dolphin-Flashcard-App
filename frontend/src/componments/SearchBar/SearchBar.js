@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../containers/NewGoalPopup.css';
+import '../../containers/Modal/NewGoalPopup/NewGoalPopup.css';
 
 function SearchBar({ searchTerm, setSearchTerm, view }) {
     return (
