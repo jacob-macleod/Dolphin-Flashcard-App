@@ -9,7 +9,7 @@ import '../Modal.css';
 import './NewGoalPopup.css';
 import { getCookie } from '../../../api/Authentication';
 
-function NewGoalPopup({ visible, setVisible, view }) {
+function NewGoalForm({ visible, setVisible, view }) {
     const [quantity, setQuantity] = useState("Amount of XP");
     const [option, setOption] = useState('xp');
     const [date, setDate] = useState("none");
@@ -60,22 +60,6 @@ function NewGoalPopup({ visible, setVisible, view }) {
         }
     }, [goalStatus, setVisible]);
 
-    function createGoal() {
-        if (option === "xp") {
-            // If values have been set
-            if (value !== "" && date !== "none") {
-                apiManager.createXpGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
-                setValue("");
-                setDate("none");
-            }
-        } else {
-            if (value !== "" && date !== "none") {
-                apiManager.createCardGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
-                setValue("");
-                setDate("none");
-            }
-        }
-    }
     // Handler function to update the option state when a new option is selected
     const handleOptionChange = (event) => {
         setOption(event.target.value);
@@ -103,13 +87,8 @@ function NewGoalPopup({ visible, setVisible, view }) {
                 <Paragraph text="Custom date: " style={{ display: "flex", alignItems: "center" }} />
                 <input type='date' className="date" value={date} onChange={onDateChange} min={today}/>
             </div>
-
-            <div style={{display: "flex"}}>
-                <GhostButton text="Cancel" onClick={() => setVisible(false)} />
-                <Button text="Set Goal" onClick={createGoal} />
-            </div>
         </Modal>
     );
 }
 
-export default NewGoalPopup;
+export default NewGoalForm;
