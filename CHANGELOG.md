@@ -22,6 +22,24 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
+## [2.3.1] - 2024-04-17
+
+### Added
+
+- Added NewGoalForm file
+
+### Fixed
+
+- N/A
+
+### Changed
+
+- Refactored NewGoalPopup in frontend
+
+### Removed
+
+- N/A
+
 ## [2.3.0] - 2024-04-12
 
 ### Added
