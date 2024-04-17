@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import GhostButton from '../../../componments/GhostButton';
 import Heading3 from '../../../componments/Text/Heading3/Heading3';
 import Paragraph from '../../../componments/Text/Paragraph/Paragraph';
-import Button from '../../../componments/Button';
-import Modal from '../Modal';
-import apiManager from '../../../api/Api';
 import '../Modal.css';
 import './NewGoalPopup.css';
-import { getCookie } from '../../../api/Authentication';
 
-function NewGoalForm({ visible, setVisible, view }) {
-    const [quantity, setQuantity] = useState("Amount of XP");
-    const [option, setOption] = useState('xp');
-    const [date, setDate] = useState("none");
-    const [value, setValue] = useState("");
-    const [goalStatus, setGoalStatus] = useState(null);
+function NewGoalForm({ setVisible, quantity, setQuantity, option, setOption, date, setDate, value, setValue, goalStatus }) {
 
     const onDateChange = (event) => {
        setDate(event.target.value);
@@ -30,22 +20,6 @@ function NewGoalForm({ visible, setVisible, view }) {
             setValue(inputValue);
         }
     };
-
-    function formatDate(dateString) {
-        // Split the date string into an array of year, month, and day
-        const [year, month, day] = dateString.split('-');
-    
-        // Create a new Date object using the year, month, and day
-        const date = new Date(year, month - 1, day);
-    
-        // Get the day, month, and year components from the Date object
-        const formattedDay = date.getDate().toString().padStart(2, '0');
-        const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
-        const formattedYear = date.getFullYear();
-    
-        // Return the formatted date string in the "dd/mm/yyyy" format
-        return `${formattedDay}/${formattedMonth}/${formattedYear}`;
-    }
 
     const today = new Date().toISOString().split('T')[0];
 
@@ -66,7 +40,7 @@ function NewGoalForm({ visible, setVisible, view }) {
     };
 
     return (
-        <Modal visible={visible} view={view}>
+        <>
             <Heading3 text="Set a new goal:" />
 
             <div className="input-container">
@@ -87,7 +61,7 @@ function NewGoalForm({ visible, setVisible, view }) {
                 <Paragraph text="Custom date: " style={{ display: "flex", alignItems: "center" }} />
                 <input type='date' className="date" value={date} onChange={onDateChange} min={today}/>
             </div>
-        </Modal>
+        </>
     );
 }
 

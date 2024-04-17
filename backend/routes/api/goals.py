@@ -53,25 +53,32 @@ def update_goal_status() :
     now = date.get_current_date()
     goals = db.get("/users/" + user_id + "/goals/")
 
-    for goal in goals:
-        if goals[goal]["status"] == "in progress" :
-            # Check if the goal should be completed
-            if goals[goal]["type"] == "XP" :
-                if int(goals[goal]["data"]["starting_xp"]) >= int(goals[goal]["data"]["goal_xp"]) :
-                    goals[goal]["status"] = "completed"
-            elif goals[goal]["type"] == "Card" :
-                if int(goals[goal]["data"]["cards_revised_so_far"]) >= int(goals[goal]["data"]["cards_to_revise"]) :
-                    goals[goal]["status"] = "completed"
+    new_goals = {}
 
-            # Check if goal should be failed - if now is after end date (and it is still in progress)
-            # Now and end date are both strings in dd/mm/yyyy format
-            if date.compare_dates(now, goals[goal]["end_date"]) > 0 :
-                goals[goal]["status"] = "failed"
-                goals[goal]["fail_date"] = now
+    for goal in goals:
+        # If the goal has been deleted, fully delete it
+        # When goals are deleted, the goal data is set to <goal id>: {}. In the firebase instance, it is then deleted automatically,
+        # But not in the local json files. Thus, an extra check needs to be made
+        if "status" in goals[goal]:
+            new_goals[goal] = goals[goal] # Add the goal if it has not been deleted
+            if goals[goal]["status"] == "in progress" :
+                # Check if the goal should be completed
+                if goals[goal]["type"] == "XP" :
+                    if int(goals[goal]["data"]["starting_xp"]) >= int(goals[goal]["data"]["goal_xp"]) :
+                        goals[goal]["status"] = "completed"
+                elif goals[goal]["type"] == "Card" :
+                    if int(goals[goal]["data"]["cards_revised_so_far"]) >= int(goals[goal]["data"]["cards_to_revise"]) :
+                        goals[goal]["status"] = "completed"
+
+                # Check if goal should be failed - if now is after end date (and it is still in progress)
+                # Now and end date are both strings in dd/mm/yyyy format
+                if date.compare_dates(now, goals[goal]["end_date"]) > 0 :
+                    goals[goal]["status"] = "failed"
+                    goals[goal]["fail_date"] = now
 
     # Save the new goal data
-    db.save("/users/" + user_id + "/goals/", goals)
-    return jsonify(goals), 200
+    db.save("/users/" + user_id + "/goals/", new_goals)
+    return jsonify(new_goals), 200
 
 @goal_routes.route("/api/create-xp-goal", methods=["POST"])
 def create_xp_goal() :
