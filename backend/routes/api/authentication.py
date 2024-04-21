@@ -4,10 +4,15 @@ from flask_cors import CORS
 from flask import Blueprint, abort, jsonify, request
 from database.database import database as db
 from classes.date import Date
-from verification.api_error_checking import check_request_json
+from routes.api.validation_wrapper import validate_json
 
 authentication_routes = Blueprint('api_routes', __name__)
 CORS(authentication_routes)
+
+CREATE_ACCOUNT_FORMAT = {
+    "userID": "",
+    "displayName": ""
+}
 
 # Check if the request is coming from local traffic
 def is_local_request():
@@ -19,44 +24,25 @@ def is_local_request():
 
 
 @authentication_routes.route("/api/create-account", methods=["POST"])
+@validate_json(CREATE_ACCOUNT_FORMAT)
 def create_account():
     """ Create an account for the user if one is not created """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-        "displayName": ""}
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     user_id = request.json.get("userID")
     name = request.json.get("displayName")
     date = Date()
 
-    if db.get("/users/" + user_id) is None:
-        db.save("/users/" + user_id,
-                {
-                    "userID": user_id,
-                    "name": name,
-                    "statistics": {
-                        "streak": "0",
-                        "totalXP": "0",
-                        "weeklyXP": "0",
-                        "lastStreak": date.get_current_date()
-                    },
-                    "heatmapData": {}
-                }
-                )
-
-    return jsonify({
-                       "success": True}, 200)
-
+    user = db.collection("users").document(user_id)
+    user.set({"name": name})
+    stats = db.collection("statistics").document(user_id)
+    stats.set(
+        {
+            "lastStreak": date.get_current_date(),
+            "streak": 0,
+            "weeklyXP": 0,
+            "totalXP": 0
+        }
+    )
+    return jsonify({"success": True}, 200)
 
 # Route to serve credentials.json for local traffic only
 @authentication_routes.route('/api/firebase-config', methods=['GET'])

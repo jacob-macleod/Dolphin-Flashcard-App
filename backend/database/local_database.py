@@ -12,3 +12,6 @@ class LocalDatabase(DatabaseAbstract):
 
         cred = AnonymousCredentials()
         self.db = Client(project=project_id, credentials=cred)
+
+    def __getattr__(self, name):
+        return getattr(self.db, name)
