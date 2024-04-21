@@ -1,10 +1,10 @@
 """ Routes relating to general card management """
 import hashlib
-import json
 from flask import Blueprint, request, jsonify
 from database.database import database as db
 from classes.date import Date
 from verification.api_error_checking import check_request_json
+from routes.api.validation_wrapper import validate_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 from classes.card_collection import FlashcardCollection
 
@@ -23,8 +23,23 @@ def hash_to_numeric(input_string):
     # Return the numeric representation of the hash
     return str(hashed_numeric)
 
+CREATE_FLASHCARD_FORMAT = {
+    "userID": "",
+    "flashcardName": "",
+    "flashcardDescription": "",
+    "folder": "",
+    "cards": [
+        {
+            "front": "",
+            "back": "",
+            "reviewStatus": REVIEW_STATUS_REGEX,
+            "lastReview": DATE_REGEX
+        }
+    ]
+}
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
+@validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
     """ Create or edit a flashcard set for the user.
         Flashcards have a front, back, review status and last review date
@@ -53,32 +68,6 @@ def create_flashcard():
             ]
         }
     """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-        "flashcardName": "",
-        "flashcardDescription": "",
-        "folder": "",
-        "cards": [
-            {
-                "front": "",
-                "back": "",
-                "reviewStatus": REVIEW_STATUS_REGEX,
-                "lastReview": DATE_REGEX
-            }
-        ]
-    }
-
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     try:
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
@@ -91,7 +80,7 @@ def create_flashcard():
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
-        # If the flashcard does not exist, create it
+        """# If the flashcard does not exist, create it
         if db.get("/users/" + user_id + "/flashcards/" + folder  + flashcard_id) is None:
             db.save("/users/" + user_id + "/flashcards/" + folder  + flashcard_id,
                     {
@@ -100,7 +89,25 @@ def create_flashcard():
                         "flashcardDescription": flashcard_description,
                         "cards": cards
                     }
-                    )
+                    )"""
+        # Get the IDs for each flashcard
+        card_ids = [
+            hash_to_numeric(user_id + folder + card["front"])
+            for card in cards
+        ]
+        print (card_ids)
+        # Create the flashcard set
+        flashcard_set = db.collection("flashcards").document(flashcard_id)
+        flashcard_set.set(
+            {
+                "name": flashcard_name,
+                "description": flashcard_description,
+                "cards": card_ids
+            }
+        )
+        # Create each individual flashcard
+        # Assign the set to the user
+        # Give the user read and write access
 
         return jsonify({
             "success": True}, 200)
