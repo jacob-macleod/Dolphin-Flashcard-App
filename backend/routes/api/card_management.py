@@ -74,9 +74,7 @@ def create_flashcard():
         flashcard_description = request.json.get("flashcardDescription")
         cards = request.json.get("cards")
         folder = request.json.get("folder")
-        # Add "/" to folder if it does not end with if
-        if folder.endswith("/") is False:
-            folder += "/"
+
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
@@ -97,17 +95,65 @@ def create_flashcard():
         ]
         print (card_ids)
         # Create the flashcard set
-        flashcard_set = db.collection("flashcards").document(flashcard_id)
-        flashcard_set.set(
+        flashcard_set = db.collection("flashcard_set").document(flashcard_id)
+        """flashcard_set.set(
             {
                 "name": flashcard_name,
                 "description": flashcard_description,
                 "cards": card_ids
             }
-        )
+        )"""
+
         # Create each individual flashcard
-        # Assign the set to the user
+        for index, card_id in enumerate(card_ids):
+            card = db.collection("flashcards").document(card_id)
+            """card.set(
+                {
+                    "front": cards[index]["front"],
+                    "back": cards[index]["back"],
+                }
+            )"""
+        # Assign the set to the user in the folder structure
+        folder_path = folder.split("/")
+        folder = db.collection("folders").document(user_id)
+
+        folder_data = folder.get().get("data")
+        current = folder_data
+
+        if current is None:
+            current = {}
+
+        # Traverse the dictionary according to the given path
+        for key in folder_path:
+            if isinstance(current, dict):
+                current = current.setdefault(key, {})
+
+        if isinstance(current, dict):
+            if "data" not in current.keys():
+                current[folder_path[-1]] = [flashcard_id]
+            else:
+                current[folder_path[-1]].append(flashcard_id)
+
+            folder.set(
+                {
+                    "data": current
+                }
+            )
+
         # Give the user read and write access
+        read_write_access = db.collection("read_write_access").document(user_id)
+        allowed_cards = read_write_access.get().get("card_list")
+
+        if allowed_cards is None:
+            allowed_cards = [flashcard_id]
+        else:
+            allowed_cards.append(flashcard_id)
+
+        """read_write_access.set(
+            {
+                "card_list": allowed_cards
+            }
+        )"""
 
         return jsonify({
             "success": True}, 200)
