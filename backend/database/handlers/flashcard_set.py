@@ -1,7 +1,8 @@
 """Provides utility classes for interacting with the flashcard_set database
 """
+from database.handlers.database_handler import DatabaseHandler
 
-class FlashcardSet:
+class FlashcardSet(DatabaseHandler):
     """Provides utility classes for interacting with the flashcard_set database
     """
     def __init__(self, context):
@@ -11,7 +12,7 @@ class FlashcardSet:
             context (FirebaseDatabase | LocalDatabase): The concrete database implementation
             use to perform queries
         """
-        self._context = context
+        super().__init__(context, db_name="flashcard_set")
 
     def create_flashcard_set(
             self,
@@ -29,7 +30,7 @@ class FlashcardSet:
             cards_ids (list): A list of the ids of each card within the flashcard set
         """
         # Create the flashcard set
-        flashcard_set = self._context.collection("flashcard_set").document(flashcard_id)
+        flashcard_set = self._context.collection(self._db_name).document(flashcard_id)
         flashcard_set.set(
             {
                 "name": flashcard_name,

@@ -93,54 +93,18 @@ def create_flashcard():
         )
 
         # Create each individual flashcard
-        for index, card_id in enumerate(card_ids):
-            card = db.query.collection("flashcards").document(card_id)
-            card.set(
-                {
-                    "front": cards[index]["front"],
-                    "back": cards[index]["back"],
-                }
-            )
+        db.flashcards.create_flashcards(card_ids, cards)
+
         # Assign the set to the user in the folder structure
-        folder_path = folder.split("/")
-        folder = db.query.collection("folders").document(user_id)
-
-        folder_data = folder.get().get("data")
-        if folder_data is None:
-            folder_data = {}
-
-        current = folder_data
-
-        # Traverse the dictionary according to the given path
-        for key in folder_path[:-1]:
-                current = current.setdefault(key, {})
-
-        print (f"Folder_path[-1]: '{folder_path[:-1]}' and folder_path is '{folder_path}'")
-        if folder_path[-1] not in current.keys():
-            current[folder_path[-1]] = {}
-
-        current[folder_path[-1]][flashcard_name] = {"flashcardId": flashcard_id}
-        print (current)
-        folder.set(
-            {
-                "data": folder_data
-            }
+        db.folders.add_flashcard_to_folder(
+            user_id=user_id,
+            folder=folder,
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name
         )
 
         # Give the user read and write access
-        read_write_access = db.query.collection("read_write_access").document(user_id)
-        allowed_cards = read_write_access.get().get("card_list")
-
-        if allowed_cards is None:
-            allowed_cards = [flashcard_id]
-        else:
-            allowed_cards.append(flashcard_id)
-
-        read_write_access.set(
-            {
-                "card_list": allowed_cards
-            }
-        )
+        db.read_write_access.give_user_access(user_id, flashcard_id)
 
         return jsonify({
             "success": True}, 200)
