@@ -3,8 +3,8 @@
 # Start Firestore emulator
 bash firebase_emulator.sh &
 
-# Wait for the emulator to start
-echo "Waiting 10 seconds for emulator to start..."
+# Wait for the emulator to startm which will involve pulling the image when running in a container
+echo "Waiting 15 seconds for emulator to start..."
 sleep 10
 
 # Run unit tests
