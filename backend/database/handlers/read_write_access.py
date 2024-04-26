@@ -1,4 +1,4 @@
-"""Provides utility classes for interacting with the folders database
+"""Provides utility classes for interacting with the read_write_access database
 """
 from database.handlers.database_handler import DatabaseHandler
 

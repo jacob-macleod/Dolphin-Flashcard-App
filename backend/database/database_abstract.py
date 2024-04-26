@@ -5,6 +5,8 @@ from database.handlers.flashcard_set import FlashcardSet
 from database.handlers.flashcards import Flashcards
 from database.handlers.folders import Folders
 from database.handlers.read_write_access import ReadWriteAccess
+from database.handlers.users import Users
+from database.handlers.statistics import Statistics
 
 class DatabaseAbstract(ABC) :
     """ Abstract class for the database """
@@ -16,6 +18,8 @@ class DatabaseAbstract(ABC) :
         self._flashcards = None
         self._folders = None
         self._read_write_access = None
+        self._users = None
+        self._statistics = None
 
     def _init_database_handlers(self):
         """Initialise the database handlers. This can't be placed in this abstract init class
@@ -25,6 +29,8 @@ class DatabaseAbstract(ABC) :
         self._flashcards = Flashcards(self.db)
         self._folders = Folders(self.db)
         self._read_write_access = ReadWriteAccess(self.db)
+        self._users = Users(self.db)
+        self._statistics = Statistics(self.db)
 
     @property
     def query(self):
@@ -74,3 +80,21 @@ class DatabaseAbstract(ABC) :
             ReadWriteAccess: The ReadWriteAccess class
         """
         return self._read_write_access
+
+    @property
+    def users(self):
+        """Return the Users class
+
+        Returns:
+            Users: The Users class
+        """
+        return self._users
+
+    @property
+    def statistics(self):
+        """Return the Statistics class
+
+        Returns:
+            Statistics: The Statistics class
+        """
+        return self._statistics
