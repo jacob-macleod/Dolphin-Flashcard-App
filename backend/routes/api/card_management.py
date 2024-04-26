@@ -74,6 +74,8 @@ def create_flashcard():
         flashcard_description = request.json.get("flashcardDescription")
         cards = request.json.get("cards")
         folder = request.json.get("folder")
+        '''if folder.endswith("/") is False:
+            folder += "/"'''
 
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
@@ -118,27 +120,23 @@ def create_flashcard():
         folder = db.collection("folders").document(user_id)
 
         folder_data = folder.get().get("data")
+        if folder_data is None:
+            folder_data = {}
+
         current = folder_data
 
-        if current is None:
-            current = {}
-
         # Traverse the dictionary according to the given path
-        for key in folder_path:
-            if isinstance(current, dict):
+        for key in folder_path[:-1]:
                 current = current.setdefault(key, {})
 
-        if isinstance(current, dict):
-            if "data" not in current.keys():
-                current[folder_path[-1]] = [flashcard_id]
-            else:
-                current[folder_path[-1]].append(flashcard_id)
-
-            folder.set(
-                {
-                    "data": current
-                }
-            )
+        print (f"Folder_path[-1]: '{folder_path[:-1]}' and folder_path is '{folder_path}'")
+        current[folder_path[-1]] = {flashcard_name: {"flashcardId": flashcard_id}}
+        print (current)
+        folder.set(
+            {
+                "data": folder_data
+            }
+        )
 
         # Give the user read and write access
         read_write_access = db.collection("read_write_access").document(user_id)
