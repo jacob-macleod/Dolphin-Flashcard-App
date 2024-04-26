@@ -74,50 +74,36 @@ def create_flashcard():
         flashcard_description = request.json.get("flashcardDescription")
         cards = request.json.get("cards")
         folder = request.json.get("folder")
-        '''if folder.endswith("/") is False:
-            folder += "/"'''
 
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
-        """# If the flashcard does not exist, create it
-        if db.get("/users/" + user_id + "/flashcards/" + folder  + flashcard_id) is None:
-            db.save("/users/" + user_id + "/flashcards/" + folder  + flashcard_id,
-                    {
-                        "flashcardID": flashcard_id,
-                        "flashcardName": flashcard_name,
-                        "flashcardDescription": flashcard_description,
-                        "cards": cards
-                    }
-                    )"""
-        # Get the IDs for each flashcard
+        # Generate the card_ids
         card_ids = [
             hash_to_numeric(user_id + folder + card["front"])
             for card in cards
         ]
-        print (card_ids)
+
         # Create the flashcard set
-        flashcard_set = db.collection("flashcard_set").document(flashcard_id)
-        """flashcard_set.set(
-            {
-                "name": flashcard_name,
-                "description": flashcard_description,
-                "cards": card_ids
-            }
-        )"""
+        db.flashcard_set.create_flashcard_set(
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            flashcard_description=flashcard_description,
+            card_ids=card_ids
+        )
 
         # Create each individual flashcard
         for index, card_id in enumerate(card_ids):
-            card = db.collection("flashcards").document(card_id)
-            """card.set(
+            card = db.query.collection("flashcards").document(card_id)
+            card.set(
                 {
                     "front": cards[index]["front"],
                     "back": cards[index]["back"],
                 }
-            )"""
+            )
         # Assign the set to the user in the folder structure
         folder_path = folder.split("/")
-        folder = db.collection("folders").document(user_id)
+        folder = db.query.collection("folders").document(user_id)
 
         folder_data = folder.get().get("data")
         if folder_data is None:
@@ -142,7 +128,7 @@ def create_flashcard():
         )
 
         # Give the user read and write access
-        read_write_access = db.collection("read_write_access").document(user_id)
+        read_write_access = db.query.collection("read_write_access").document(user_id)
         allowed_cards = read_write_access.get().get("card_list")
 
         if allowed_cards is None:
@@ -150,18 +136,17 @@ def create_flashcard():
         else:
             allowed_cards.append(flashcard_id)
 
-        """read_write_access.set(
+        read_write_access.set(
             {
                 "card_list": allowed_cards
             }
-        )"""
+        )
 
         return jsonify({
             "success": True}, 200)
     except Exception as e:
         # Return the error as a json object
         return jsonify(e), 500
-
 
 @card_management_routes.route("/api/get-flashcard", methods=["GET"])
 def get_flashcard():

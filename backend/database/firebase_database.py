@@ -21,6 +21,4 @@ class FirebaseDatabase(DatabaseAbstract):
         # TODO: Investigate if firebase_config.json is needed, after the new changes
         self.db = firestore.client()
 
-    def __getattr__(self, name):
-        print ("Getting")
-        return getattr(self.db, name)
+        self._init_database_handlers()

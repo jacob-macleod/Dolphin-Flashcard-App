@@ -1,36 +1,39 @@
 """Provides the abstract class for the database
 """
 from abc import ABC, abstractmethod
+from database.handlers.flashcard_set import FlashcardSet
 
 class DatabaseAbstract(ABC) :
     """ Abstract class for the database """
     @abstractmethod
     def __init__(self):
         # Redefined in classes implementing this abstract class
-        self.db = None
+        self._db = None
 
-    def get(self, path):
-        """ Get data from database """
-        print ("Getting data")
-        self.db.collection("users").document("user1").set(
-            {
-                "name": "Jacob"
-            }
-        )
-        print ("Saved data")
+    def _init_database_handlers(self):
+        """Initialise the database handlers. This can't be placed in this abstract init class
+        because the concrete implementations need to occur first to set self.db
+        """
+        self._flashcard_set = FlashcardSet(self.db)
 
-        doc_ref = self.db.collection("users").document("user1")
+    @property
+    def query(self):
+        """Return the db element
 
-        doc = doc_ref.get()
-        if doc.exists:
-            print(f"Document data: {doc.to_dict()}")
-        else:
-            print("No such document!")
+        Returns:
+            FirebaseDatabase | LocalDatabase: The value of db
+        """
+        return self._db
 
-    def save(self, path, data) :
-        """ Save data to a path """
-        print ("Saving data")
+    @query.setter
+    def db(self, value):
+        self._db = value
 
-    def increment(self, path, increment_amount) :
-        """ Increment a number stored as a string from a path in the database """
-        print ("Incrementing data")
+    @property
+    def flashcard_set(self):
+        """Return the flashcard set class
+
+        Returns:
+            FlashcardSet: The flashcard set class
+        """
+        return self._flashcard_set
