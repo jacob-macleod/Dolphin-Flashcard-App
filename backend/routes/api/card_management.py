@@ -130,7 +130,10 @@ def create_flashcard():
                 current = current.setdefault(key, {})
 
         print (f"Folder_path[-1]: '{folder_path[:-1]}' and folder_path is '{folder_path}'")
-        current[folder_path[-1]] = {flashcard_name: {"flashcardId": flashcard_id}}
+        if folder_path[-1] not in current.keys():
+            current[folder_path[-1]] = {}
+
+        current[folder_path[-1]][flashcard_name] = {"flashcardId": flashcard_id}
         print (current)
         folder.set(
             {
