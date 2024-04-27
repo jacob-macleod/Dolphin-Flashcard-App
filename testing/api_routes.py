@@ -1,8 +1,23 @@
+"""A collection of API routes to be used in test_api.py
+"""
+
 class Routes:
+    """A collection of API routes to be used in test_api.py
+    """
     # authentication.py
     ROUTE_CREATE_ACCOUNT = {
         "url": "/api/create-account",
         "methods": ["POST"]
+    }
+
+    ROUTE_GET_USER = {
+        "url": "/api/get-user",
+        "methods": ["GET"]
+    }
+
+    ROUTE_GET_USER_STATS = {
+        "url": "/api/get-user-stats",
+        "methods": ["GET"]
     }
 
     ROUTE_FIREBASE_CONFIG = {

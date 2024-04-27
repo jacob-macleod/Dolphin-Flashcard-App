@@ -3,33 +3,44 @@ import sys
 import os
 import unittest
 
+from api_routes import Routes
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, '..', 'backend')
 sys.path.append(src_path)
 from verification.api_error_checking import check_request_json
-from routes.api.authentication import create_account
+from classes.date import Date
 from json import loads, dumps
 from requests import get, post
 from main import server_addr
-from api_routes import Routes
 
 headers = {
     'Content-Type': 'application/json'
 }
 
+date = Date()
+
 class TestApi(unittest.TestCase):
+    """Test the API
+    """
     def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime
         """
 
-        response = get(f'http://127.0.0.1:{server_addr[1]}{route}',
-                       headers=headers,
-                       data=dumps(data))
+        response = get(
+            f'http://127.0.0.1:{server_addr[1]}{route}',
+            headers=headers,
+            data=dumps(data),
+            timeout=5
+        )
 
-        self.assertNotEqual(response.status_code, 500,
-                            f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
-                            f"{route}")
+        self.assertNotEqual(
+            response.status_code, 500,
+            "An unhandled exception caused an Internal Server Error " +
+            f"({response.status_code}) in " +
+            f"{route}"
+        )
 
         return loads(response.text)
 
@@ -38,13 +49,18 @@ class TestApi(unittest.TestCase):
         Simple get method to not repeat "post" everytime
         """
 
-        response = post(f'http://127.0.0.1:{server_addr[1]}{route}',
-                        data=dumps(data),
-                        headers=headers)
+        response = post(
+            f'http://127.0.0.1:{server_addr[1]}{route}',
+            data=dumps(data),
+            headers=headers,
+            timeout=5
+        )
 
-        self.assertNotEqual(response.status_code, 500,
-                            f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
-                            f"{route}")
+        self.assertNotEqual(
+            response.status_code, 500,
+            f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
+            f"{route}"
+        )
 
         return loads(response.text)
 
@@ -64,7 +80,8 @@ class TestApi(unittest.TestCase):
         self.assertTrue(response, 'Should be True, but was {}'.format(response))
 
     def test_check_request_json(self) -> None:
-        # Check the check_request_json function works as expected
+        """Check the check_request_json function works as expected
+        """
 
         # Test with a valid request
         result = check_request_json(
@@ -174,7 +191,7 @@ class TestApi(unittest.TestCase):
         Valid account
         """
         valid_dummy = {
-            "userID"     : "1",
+            "userID": "1",
             "displayName": "Dummy"
         }
 
@@ -183,3 +200,52 @@ class TestApi(unittest.TestCase):
         print (response_json)
         self.assertTrue(expr=response_json['success'],
                         msg='Dummy account creation should be successful.')
+
+    def test_get_user(self) -> None:
+        """Get the newly created user
+        """
+        valid_dummy = {
+            "userID": "1"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_USER['url'], valid_dummy)
+        response_json = response[0]
+        assert response_json == {'name': 'Dummy'}
+
+    def test_get_invalid_user(self):
+        """Get a user that does not exist
+        """
+        invalid_dummy = {
+            "userID": "2"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_USER['url'], invalid_dummy)
+        response_json = response[0]
+        assert response_json is None
+
+    def test_get_user_stats(self):
+        """Get the statistics for the user that has been created
+        """
+        valid_dummy = {
+            "userID": "1"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_USER_STATS['url'], valid_dummy)
+        response_json = response[0]
+        assert response_json == {
+            'lastStreak': date.get_current_date(),
+            'streak': 0,
+            'weeklyXP': 0,
+            'totalXP': 0
+        }
+
+    def test_get_invalid_user_stats(self):
+        """Get the statistics for a user that does not exist
+        """
+        invalid_dummy = {
+            "userID": "2"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_USER_STATS['url'], invalid_dummy)
+        response_json = response[0]
+        assert response_json is None

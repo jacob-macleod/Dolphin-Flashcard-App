@@ -23,3 +23,11 @@ class Users(DatabaseHandler):
         """
         user = self._context.collection(self._db_name).document(user_id)
         user.set({"name": name})
+
+    def get_user(self, user_id: str):
+        """Get a user from the user_id
+
+        Args:
+            user_id (str): The user_id
+        """
+        return self._context.collection(self._db_name).document(user_id).get().to_dict()

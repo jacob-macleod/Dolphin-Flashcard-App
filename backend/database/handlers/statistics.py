@@ -31,3 +31,11 @@ class Statistics(DatabaseHandler):
                 "totalXP": 0
             }
         )
+
+    def get_stats(self, user_id: str):
+        """Get the statistics for a user
+
+        Args:
+            user_id (str): The user ID to get the statistics for
+        """
+        return self._context.collection(self._db_name).document(user_id).get().to_dict()
