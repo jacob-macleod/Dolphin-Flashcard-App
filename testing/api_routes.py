@@ -31,6 +31,11 @@ class Routes:
         "methods": ["POST"]
     }
 
+    ROUTE_GET_FLASHCARD_ITEM = {
+        "url": "/api/get-flashcard-item",
+        "methods": ["GET"]
+    }
+
     ROUTE_GET_FLASHCARD = {
         "url": "/api/get-flashcard",
         "methods": ["GET"]

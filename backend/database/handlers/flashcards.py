@@ -29,3 +29,11 @@ class Flashcards(DatabaseHandler):
                     "back": cards[index]["back"],
                 }
             )
+
+    def get_flashcard(self, card_id: str):
+        """Get a flashcard
+
+        Args:
+            card_id (str): The card ID to get
+        """
+        return self._context.collection("flashcards").document(card_id).get().to_dict()

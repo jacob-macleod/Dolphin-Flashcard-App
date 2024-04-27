@@ -249,3 +249,86 @@ class TestApi(unittest.TestCase):
         response = self.get_api(Routes.ROUTE_GET_USER_STATS['url'], invalid_dummy)
         response_json = response[0]
         assert response_json is None
+
+    def test_create_flashcard_set(self):
+        """Create a flashcard set for the newly created user
+        """
+        flashcard_data ={
+            "userID": "1",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "folder": "parent-name",
+            "cards": [
+                {
+                    "front":"Front 1",
+                    "back": "Back 1",
+                    "reviewStatus":"0.0",
+                    "lastReview": "27/04/2024"
+                },
+                {
+                    "front":"Front 2",
+                    "back": "Back 2",
+                    "reviewStatus":"0.0",
+                    "lastReview": "27/04/2024"
+                }
+            ]
+        }
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], flashcard_data)
+        response_json = response[0]
+        assert response_json['success']
+
+    def test_get_flashcard_set(self):
+        """Get the flashcard set that has been created
+        """
+        flashcard_set_data = {
+            "userID": "1",
+            "folder": "parent-name",
+            "flashcardName": "My new set"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], flashcard_set_data)
+        response_json = response[0]
+        assert response_json == {
+            'cards': [
+                '111197372349526489549352770627451434124951736187783527272260257031167665344330',
+                '105807173781801679610690871524240887702929777887954072430940584241217379438024'
+            ],
+            'description': 'This is\nmy description',
+            'name': 'My new set'
+        }
+
+    def test_get_invalid_flashcard_set(self):
+        """Get a flashcard set that does not exist
+        """
+        flashcard_set_data = {
+            "userID": "1",
+            "folder": "parent-name",
+            "flashcardName": "My new set 2"
+        }
+
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], flashcard_set_data)
+        response_json = response[0]
+        assert response_json is None
+
+    def test_get_valid_cards(self):
+        """Get the cards that have just been created
+        """
+        card_ids = [
+            '111197372349526489549352770627451434124951736187783527272260257031167665344330',
+            '105807173781801679610690871524240887702929777887954072430940584241217379438024'
+        ]
+        card_datas = [
+            {
+                "front": "Front 1",
+                "back": "Back 1"
+            },
+            {
+                "front": "Front 2",
+                "back": "Back 2"
+            }
+        ]
+        for index, card_id in enumerate(card_ids):
+            response = self.get_api(Routes.ROUTE_GET_FLASHCARD_ITEM['url'], {"cardID": card_id})
+            response_json = response[0]
+            assert response_json == card_datas[index]

@@ -38,3 +38,11 @@ class FlashcardSet(DatabaseHandler):
                 "cards": card_ids
             }
         )
+
+    def get_flashcard_set(self, flashcard_id: str):
+        """Get a flashcard set
+
+        Args:
+            flashcard_id (str): The flashcard ID to get
+        """
+        return self._context.collection(self._db_name).document(flashcard_id).get().to_dict()

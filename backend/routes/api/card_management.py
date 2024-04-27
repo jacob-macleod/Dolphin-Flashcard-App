@@ -38,6 +38,16 @@ CREATE_FLASHCARD_FORMAT = {
     ]
 }
 
+GET_FLASHCARD_FORMAT = {
+    "userID": "",
+    "folder": "",
+    "flashcardName": ""
+}
+
+GET_FLASHCARD_ITEM = {
+    "cardID": ""
+}
+
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
@@ -113,40 +123,50 @@ def create_flashcard():
         return jsonify(e), 500
 
 @card_management_routes.route("/api/get-flashcard", methods=["GET"])
+@validate_json(GET_FLASHCARD_FORMAT)
 def get_flashcard():
-    """ Get a flashcard based on the name and user ID
+    """ Get a flashcard set based on the name and user ID
         Add json to request as in:
         {
             "userID": "my-id",
+            "folder": "parent-name",
             "flashcardName": "My new set"
         }
     """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-        "flashcardName": ""
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     try:
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
-        flashcard_id = hash_to_numeric(user_id + flashcard_name)
+        folder = request.json.get("folder")
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
-        return jsonify(db.get("/users/" + user_id + "/flashcards/" + flashcard_id))
+        return jsonify(
+            db.flashcard_set.get_flashcard_set(flashcard_id), 200
+        )
 
     except Exception as e:
         # Return the error as a json object
         return jsonify(e), 500
 
+@card_management_routes.route("/api/get-flashcard-item", methods=["GET"])
+
+def get_flashcard_item():
+    """ Get a flashcard item based on the card ID. Flashcard sets store
+    multiple flashcard items, which are the individual flashcards
+        Add json to request as in:
+        {
+            "cardID": "my-id"
+        }
+    """
+    try:
+        card_id = request.json.get("cardID")
+
+        return jsonify(
+            db.flashcards.get_flashcard(card_id), 200
+        )
+
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(e), 500
 
 @card_management_routes.route("/api/get-today-cards", methods=["POST"])
 def get_today_cards():
