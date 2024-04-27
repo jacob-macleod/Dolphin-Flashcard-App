@@ -332,3 +332,10 @@ class TestApi(unittest.TestCase):
             response = self.get_api(Routes.ROUTE_GET_FLASHCARD_ITEM['url'], {"cardID": card_id})
             response_json = response[0]
             assert response_json == card_datas[index]
+
+    def test_get_invalid_card_ids(self):
+        """Get a card which does not exist
+        """
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD_ITEM['url'], {"cardID": "123"})
+        response_json = response[0]
+        assert response_json is None
