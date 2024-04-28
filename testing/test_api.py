@@ -339,3 +339,32 @@ class TestApi(unittest.TestCase):
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD_ITEM['url'], {"cardID": "123"})
         response_json = response[0]
         assert response_json is None
+
+    def test_get_all_cards(self):
+        """Get the newly created cards
+        """
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "1"})
+        assert response == {
+            'parent-name': {
+                'My new set': {
+                    'cards': {
+                        '105807173781801679610690871524240887702929777887954072430940584241217379438024':{
+                            'last_review': '28/04/2024',
+                            'review_status': '0.0'
+                        },
+                        '111197372349526489549352770627451434124951736187783527272260257031167665344330': {
+                            'last_review': '28/04/2024',
+                            'review_status': '0.0'
+                        }
+                    },
+                    'flashcardID': '110677275635593279644085421081590251557524150041496894982504548493525112413991',
+                    'flashcardName': 'My new set'
+                }
+            }
+        }
+
+    def test_get_all_cards_invalid_user(self):
+        """Get the cards for a user that does not exist
+        """
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        assert response == ['User has no flashcards']

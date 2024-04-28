@@ -48,6 +48,11 @@ GET_FLASHCARD_ITEM = {
     "cardID": ""
 }
 
+GET_TODAY_CARDS = {
+    "userID": ""
+}
+GET_ALL_CARDS = GET_TODAY_CARDS
+
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
@@ -121,7 +126,7 @@ def create_flashcard():
             "success": True}, 200)
     except Exception as e:
         # Return the error as a json object
-        return jsonify(e), 500
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-flashcard", methods=["GET"])
 @validate_json(GET_FLASHCARD_FORMAT)
@@ -146,10 +151,10 @@ def get_flashcard():
 
     except Exception as e:
         # Return the error as a json object
-        return jsonify(e), 500
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-flashcard-item", methods=["GET"])
-
+@validate_json(GET_FLASHCARD_ITEM)
 def get_flashcard_item():
     """ Get a flashcard item based on the card ID. Flashcard sets store
     multiple flashcard items, which are the individual flashcards
@@ -167,9 +172,10 @@ def get_flashcard_item():
 
     except Exception as e:
         # Return the error as a json object
-        return jsonify(e), 500
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-today-cards", methods=["POST"])
+@validate_json(GET_TODAY_CARDS)
 def get_today_cards():
     """ Get all the flashcards to be learned today for a user
         Requests include soley a json including userID
@@ -182,29 +188,44 @@ def get_today_cards():
         If it is 0.x, it is actively studying
         If it is >= 1.x, it is learned
     """
-    # Check the request json
-    expected_format = {
-        "userID": ""
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
+    try:
+        user_id = request.json.get("userID")
 
-    user_id = request.json.get("userID")
+        # Get all flashcards
+        flashcards = db.folders.get_user_data(user_id)
 
-    # Get all flashcards
-    flashcards = db.get("/users/" + user_id + "/flashcards")
-    if flashcards is None:
-        return jsonify(["User has no flashcards"])
+        if flashcards is None:
+            return jsonify(["User has no flashcards"])
 
-    cards_to_return = FlashcardCollection(flashcards).today_card_list
-    return jsonify(cards_to_return)
+        cards_to_return = FlashcardCollection(flashcards).today_card_list
+        return jsonify(cards_to_return)
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/get-all-cards", methods=["POST"])
+@validate_json(GET_ALL_CARDS)
+def get_all_cards():
+    """Get all the flashcards created by a user
+
+        Example request:
+        {
+            "userID": "my-id"
+        }
+    """
+    try:
+        user_id = request.json.get("userID")
+
+        # Get all flashcards
+        flashcards = db.folders.get_user_data(user_id)
+
+        if flashcards is None:
+            return jsonify(["User has no flashcards"])
+
+        return jsonify(flashcards)
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/move-flashcard-set", methods=["POST"])
 def move_flashcard_set():

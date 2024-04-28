@@ -53,7 +53,7 @@ class Folders(DatabaseHandler):
 
         for card_id in card_ids:
             card_review_statuses[card_id] = {
-                "review_status": 0.0,
+                "review_status": "0.0",
                 "last_review": current_date
             }
 
@@ -75,4 +75,7 @@ class Folders(DatabaseHandler):
     def get_user_data(self, user_id:str):
         """Get the folder data for a user
         """
-        return self._context.collection("folders").document(user_id)
+        data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if data is not None:
+            data = data.get("data")
+        return data
