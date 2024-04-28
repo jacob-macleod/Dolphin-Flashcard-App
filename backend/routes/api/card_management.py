@@ -110,7 +110,8 @@ def create_flashcard():
             user_id=user_id,
             folder=folder,
             flashcard_id=flashcard_id,
-            flashcard_name=flashcard_name
+            flashcard_name=flashcard_name,
+            card_ids=card_ids
         )
 
         # Give the user read and write access
