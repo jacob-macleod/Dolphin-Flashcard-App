@@ -24,7 +24,7 @@ class Folders(DatabaseHandler):
         flashcard_name: str,
         card_ids: list
     ):
-        """Add a flashcard to a folder, creating teh folder and any sub folders as needed
+        """Add a flashcard to a folder, creating the folder and any sub folders as needed
 
         Args:
             user_id (str): The user ID to save to
@@ -59,7 +59,9 @@ class Folders(DatabaseHandler):
 
         # Set the correct data to current, which will also change folder_data
         if folder_path[-1] not in current.keys():
-            current[folder_path[-1]] = {}
+            pass
+            # TODO: Invesitgate if this code is needed
+            #current[folder_path[-1]] = {}
 
         current[folder_path[-1]][flashcard_name] = {
             "flashcard_id": flashcard_id,
@@ -79,3 +81,41 @@ class Folders(DatabaseHandler):
         if data is not None:
             data = data.get("data")
         return data
+
+    def move_flashcard_set(self, user_id: str, flashcard_name: str, current_location: str, move_location: str):
+        # Get the current flashcard data
+        flashcard_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if flashcard_data is None:
+            return None
+        else:
+            flashcard_data = flashcard_data.get("data")
+
+        current_location_list = current_location.split("/")
+        edited_flashcard_data = flashcard_data.copy()
+        for item in current_location_list:
+            edited_flashcard_data = edited_flashcard_data.get(item)
+
+        if flashcard_name in edited_flashcard_data.keys():
+            flashcard_id = edited_flashcard_data.get(flashcard_name).get("flashcard_id")
+            cards = edited_flashcard_data.get(flashcard_name).get("cards")
+            edited_flashcard_data.pop(flashcard_name, None)
+        else:
+            raise KeyError("Flashcard not found in current location")
+
+        # Remove the flashcard where it currently is
+        #edited_flashcard_data = flashcard_data.copy()
+        #edited_flashcard_data.pop(flashcard_name, None)
+        self._context.collection(self._db_name).document(user_id).set(
+            {
+                "data": edited_flashcard_data
+            }
+        )
+
+        # Save the flashcard in the new location
+        self.add_flashcard_to_folder(
+            user_id,
+            move_location,
+            flashcard_id,
+            flashcard_name,
+            cards
+        )

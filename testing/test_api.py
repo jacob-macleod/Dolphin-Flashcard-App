@@ -349,11 +349,11 @@ class TestApi(unittest.TestCase):
                 'My new set': {
                     'cards': {
                         '105807173781801679610690871524240887702929777887954072430940584241217379438024':{
-                            'last_review': '28/04/2024',
+                            'last_review': date.get_current_date(),
                             'review_status': '0.0'
                         },
                         '111197372349526489549352770627451434124951736187783527272260257031167665344330': {
-                            'last_review': '28/04/2024',
+                            'last_review': date.get_current_date(),
                             'review_status': '0.0'
                         }
                     },
@@ -368,3 +368,12 @@ class TestApi(unittest.TestCase):
         """
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
         assert response == ['User has no flashcards']
+
+    # TODO: Test to create a flashcard set where 1 folder needs to be created
+    # TODO: Test to create a flashcard set where 2 folders need to be created
+    # TODO: Test to create a flashcard set that already exists
+    # TODO: Test to move flashcard set to a new location that exists
+    # TODO: Test to move flashcard set to a new location that does not exist
+    # TODO: Test to move flashcard set to a new location that exists that already stores folders and a set
+    # TODO: Test to move flashcard set from a location that stores a folder and a set to a new location
+    # TODO: Test to move a flashcard set that does not exist
