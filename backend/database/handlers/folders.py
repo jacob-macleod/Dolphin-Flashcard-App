@@ -59,9 +59,7 @@ class Folders(DatabaseHandler):
 
         # Set the correct data to current, which will also change folder_data
         if folder_path[-1] not in current.keys():
-            pass
-            # TODO: Invesitgate if this code is needed
-            #current[folder_path[-1]] = {}
+            current[folder_path[-1]] = {}
 
         current[folder_path[-1]][flashcard_name] = {
             "flashcard_id": flashcard_id,
@@ -82,7 +80,25 @@ class Folders(DatabaseHandler):
             data = data.get("data")
         return data
 
-    def move_flashcard_set(self, user_id: str, flashcard_name: str, current_location: str, move_location: str):
+    def move_flashcard_set(
+        self,
+        user_id: str,
+        flashcard_name: str,
+        current_location: str,
+        move_location: str
+    ):
+        """
+        Move a flashcard set to a new location
+
+        Args:
+            user_id (str): The user id who owns the set
+            flashcard_name (str): The name of the flashcard set
+            current_location (str): The current location where the flashcard is stored
+            move_location (str): The location to move the flashcard set to
+
+        Raises:
+            KeyError: When the flashcard is not found in the current location
+        """
         # Get the current flashcard data
         flashcard_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
         if flashcard_data is None:
@@ -103,8 +119,6 @@ class Folders(DatabaseHandler):
             raise KeyError("Flashcard not found in current location")
 
         # Remove the flashcard where it currently is
-        #edited_flashcard_data = flashcard_data.copy()
-        #edited_flashcard_data.pop(flashcard_name, None)
         self._context.collection(self._db_name).document(user_id).set(
             {
                 "data": edited_flashcard_data

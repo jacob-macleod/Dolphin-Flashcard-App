@@ -253,16 +253,11 @@ def move_flashcard_set():
         move_location = request.json.get("moveLocation")
         current_location = request.json.get("currentLocation")
 
-        '''if current_location.endswith("/") is False and current_location != "":
-            current_location += "/"'''
-        if move_location.endswith("/") is False and move_location != "":
-            move_location += "/"
-
         db.folders.move_flashcard_set(user_id, flashcard_id, current_location, move_location)
 
         return jsonify(
             {
-                "success": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " has been moved to " + move_location}
+                "success": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + "/" + flashcard_id + " has been moved to " + move_location}
         ), 200
     except Exception as e:
         return jsonify(str(e)), 500
