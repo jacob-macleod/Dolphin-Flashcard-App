@@ -369,7 +369,41 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
         assert response == ['User has no flashcards']
 
-    # TODO: Test to create a flashcard set where 1 folder needs to be created
+    def test_create_set_with_no_folder(self):
+        """
+        Test to create a flashcard set where no folder needs to be created
+        """
+        # Create the flashcard set
+        flashcard_data ={
+            "userID": "2",
+            "flashcardName": "My new set",
+            "flashcardDescription": "This is\nmy description",
+            "folder": "",
+            "cards": [
+                {
+                    "front":"Front 1",
+                    "back": "Back 1",
+                    "reviewStatus":"0.0",
+                    "lastReview": "27/04/2024"
+                },
+                {
+                    "front":"Front 2",
+                    "back": "Back 2",
+                    "reviewStatus":"0.0",
+                    "lastReview": "27/04/2024"
+                }
+            ]
+        }
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], flashcard_data)
+        response_json = response[0]
+        assert response_json['success']
+
+        # Test the received data is as expected
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        print (response)
+        assert False
+
     # TODO: Test to create a flashcard set where 2 folders need to be created
     # TODO: Test to create a flashcard set that already exists
     # TODO: Test to move flashcard set to a new location that exists

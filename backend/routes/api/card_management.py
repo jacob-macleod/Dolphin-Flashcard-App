@@ -257,7 +257,10 @@ def move_flashcard_set():
 
         return jsonify(
             {
-                "success": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + "/" + flashcard_id + " has been moved to " + move_location}
+                "success": "The flashcard set at "
+                + "/users/" + user_id
+                + "/flashcards/" + current_location + "/" + flashcard_id
+                + " has been moved to " + move_location}
         ), 200
     except Exception as e:
         return jsonify(str(e)), 500
