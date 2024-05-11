@@ -35,6 +35,8 @@ class Folders(DatabaseHandler):
         """
         # Initialise variables
         folder_path = folder.split("/")
+        # Store whether the folder to store the flashcard in is the root folder
+        is_root_folder = (folder_path==[""])
         folder = self._context.collection("folders").document(user_id)
 
         folder_data = folder.get().get("data")
@@ -58,13 +60,22 @@ class Folders(DatabaseHandler):
             }
 
         # Set the correct data to current, which will also change folder_data
-        if folder_path[-1] not in current.keys():
+        if folder_path[-1] not in current.keys() and not is_root_folder:
             current[folder_path[-1]] = {}
 
-        current[folder_path[-1]][flashcard_name] = {
-            "flashcard_id": flashcard_id,
-            "cards": card_review_statuses
-        }
+        # Save the flashcard data
+        if is_root_folder:
+            # If the data is being saved to the root folder
+            current[flashcard_name] = {
+                "flashcard_id": flashcard_id,
+                "cards": card_review_statuses
+            }
+        else:
+            # If the data is being saved to a subfolder
+            current[folder_path[-1]][flashcard_name] = {
+                "flashcard_id": flashcard_id,
+                "cards": card_review_statuses
+            }
 
         folder.set(
             {
