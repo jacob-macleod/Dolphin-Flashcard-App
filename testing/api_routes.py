@@ -66,3 +66,8 @@ class Routes:
         "url": "/api/calculate-streak",
         "methods": ["POST"]
     }
+
+    ROUTE_MOVE_FLASHCARD = {
+        "url": "/api/move-flashcard-set",
+        "methods": ["POST"]
+    }

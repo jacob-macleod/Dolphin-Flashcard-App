@@ -405,10 +405,10 @@ class TestApi(unittest.TestCase):
             'My new set': {
                 'cards': {
                     '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     },
                     '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     }
                 },
                 'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
@@ -454,9 +454,9 @@ class TestApi(unittest.TestCase):
             'My new set': {
                 'cards': {
                     '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     }, '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     }
                 },
                 'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
@@ -465,10 +465,10 @@ class TestApi(unittest.TestCase):
             'My second set': {
                 'cards': {
                     '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     },
                     '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     }
                 },
                 'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147',
@@ -483,7 +483,7 @@ class TestApi(unittest.TestCase):
         there's multiple random cards in the root folder
         """
         # Create the flashcard set
-        flashcard_data ={
+        flashcard_data = {
             "userID": "2",
             "flashcardName": "Set with two folders",
             "flashcardDescription": "This set is within two folders",
@@ -515,10 +515,10 @@ class TestApi(unittest.TestCase):
             'My new set': {
                 'cards': {
                     '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     },
                     '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     }
                 },
                 'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
@@ -527,10 +527,10 @@ class TestApi(unittest.TestCase):
             'My second set': {
                 'cards': {
                     '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     },
                     '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                        'last_review': '11/05/2024', 'review_status': '0.0'
+                        'last_review': date.get_current_date(), 'review_status': '0.0'
                     }
                 },
                 'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147', 'flashcardName': 'My second set'
@@ -540,10 +540,10 @@ class TestApi(unittest.TestCase):
                     'Set with two folders': {
                         'cards': {
                             '14905360164829162384003180375530029836752830300568461727668114186655222344365': {
-                                'last_review': '11/05/2024', 'review_status': '0.0'
+                                'last_review': date.get_current_date(), 'review_status': '0.0'
                             },
                             '87153283362492593072257432791028666090314536797789089922601298297131913616718': {
-                                'last_review': '11/05/2024', 'review_status': '0.0'
+                                'last_review': date.get_current_date(), 'review_status': '0.0'
                             }
                         },
                         'flashcardID': '14360501735762204737125532220923305690523298304800903823506033410378709611982',
@@ -553,8 +553,70 @@ class TestApi(unittest.TestCase):
             }
         }
 
-    # TODO: Test to create a flashcard set that already exists
-    # TODO: Test to move flashcard set to a new location that exists
+    def test_create_set_that_already_exists(self):
+        """
+        Test to create a flashcard set that already exists. At the moment, this passes, overwwriting card data
+        """
+        self.test_create_set_with_no_folder()
+
+    def test_move_card_to_location_that_exists(self):
+        """
+        Test to move flashcard set to a new location that exists
+        """
+        request_data = {
+            "userID": "2",
+            "currentLocation": "",
+            "flashcardID": "My second set",
+            "moveLocation": "my_folder1"
+        }
+        response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD['url'], request_data)
+        assert response == {'success': 'The flashcard set at /users/2/flashcards//My second set has been moved to my_folder1'}
+
+        # Test the received data is as expected
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        print (response)
+        assert response == {
+            'My new set': {
+                'cards': {
+                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
+                        'last_review': '12/05/2024', 'review_status': '0.0'
+                    },
+                    '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
+                        'last_review': '12/05/2024', 'review_status': '0.0'
+                    }
+                },
+                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
+                'flashcardName': 'My new set'
+            },
+            'my_folder1': {
+                'My second set': {
+                    'cards': {
+                        '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
+                            'last_review': '12/05/2024', 'review_status': '0.0'
+                        },
+                        '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
+                            'last_review': '12/05/2024', 'review_status': '0.0'
+                        }},
+                        'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147',
+                        'flashcardName': 'My second set'
+                    },
+                    'my_second_folder': {
+                        'Set with two folders': {
+                            'cards': {
+                                '14905360164829162384003180375530029836752830300568461727668114186655222344365': {
+                                    'last_review': '12/05/2024', 'review_status': '0.0'
+                                },
+                                '87153283362492593072257432791028666090314536797789089922601298297131913616718': {
+                                    'last_review': '12/05/2024', 'review_status': '0.0'
+                                }
+                            },
+                            'flashcardID': '14360501735762204737125532220923305690523298304800903823506033410378709611982',
+                            'flashcardName': 'Set with two folders'
+                        }
+                    }
+                }
+            }
+
     # TODO: Test to move flashcard set to a new location that does not exist
     # TODO: Test to move flashcard set to a new location that exists that already stores folders and a set
     # TODO: Test to move flashcard set from a location that stores a folder and a set to a new location

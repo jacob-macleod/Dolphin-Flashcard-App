@@ -122,6 +122,10 @@ class Folders(DatabaseHandler):
         for item in current_location_list:
             edited_flashcard_data = edited_flashcard_data.get(item)
 
+        # Handle the case where the flashcard is in the root folder
+        if edited_flashcard_data is None:
+            edited_flashcard_data = flashcard_data
+
         if flashcard_name in edited_flashcard_data.keys():
             flashcard_id = edited_flashcard_data.get(flashcard_name).get("flashcard_id")
             cards = edited_flashcard_data.get(flashcard_name).get("cards")
