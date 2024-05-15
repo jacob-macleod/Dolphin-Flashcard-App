@@ -136,7 +136,7 @@ class Folders(DatabaseHandler):
         # Remove the flashcard where it currently is
         self._context.collection(self._db_name).document(user_id).set(
             {
-                "data": edited_flashcard_data
+                "data": flashcard_data
             }
         )
 
