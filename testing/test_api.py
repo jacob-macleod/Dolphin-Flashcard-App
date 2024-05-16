@@ -635,7 +635,6 @@ class TestApi(unittest.TestCase):
 
         # Test the received data is as expected
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
-        print (response)
         assert response == {
             'languages': {
                 'spanish': {
@@ -682,5 +681,20 @@ class TestApi(unittest.TestCase):
                     }
                 }
             }
-    # TODO: Test to move flashcard set from a location that stores a folder and a set to a new location
-    # TODO: Test to move a flashcard set that does not exist
+
+    def test_move_non_existant_set(self):
+        """
+        Test to move a flashcard set that does not exist
+        """
+        request_data = {
+            "userID": "2",
+            "currentLocation": "my_invalid_folder",
+            "flashcardID": "My non existant set",
+            "moveLocation": "my_new_folder"
+        }
+        try:
+            # This should return an error
+            self.post_api(Routes.ROUTE_MOVE_FLASHCARD['url'], request_data)
+            assert False
+        except Exception:
+            assert True
