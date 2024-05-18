@@ -5,33 +5,55 @@ from routes.api.card_management import hash_to_numeric
 from flask import Blueprint, request, jsonify
 from routes.api.regex_patterns import DATE_REGEX, NUMBER
 from verification.api_error_checking import check_request_json
+from routes.api.validation_wrapper import validate_json
 
 goal_routes = Blueprint('goal_routes', __name__)
+
+CREATE_XP_GOAL_FORMAT = {
+    "userID": "",
+    "goalXP": NUMBER,
+    "endDate": DATE_REGEX
+}
 
 def update_goal_stats(user_id, xp_increment):
     """Update the user's goal stats
     To be run when a new card is revised"""
+    db.goals.update_goal_stats(user_id, xp_increment)
 
-    # Get the user's goals
-    goals = db.get("/users/" + user_id + "/goals/")
+@goal_routes.route("/api/create-xp-goal", methods=["POST"])
+@validate_json(CREATE_XP_GOAL_FORMAT)
+def create_xp_goal() :
+    """ Create an XP goal for the user
+     XP goals have:
+     - ID
+     - type (XP)
+     - title
+     - end date
+     - status (failed, completed or in progress)
+     - a fail date if failed
+     - data storing:
+        - start date
+        - starting XP
+        - desired XP
+    This is the same as a card goal except for the data section
 
-    # For each goal
-    for goal in goals:
-        # If the goal is in progress
-        if goals[goal].get("status") == "in progress":
-            if goals[goal].get("type") == "XP":
-                # Increment the user's XP
-                goals[goal]["data"]["starting_xp"] = str(
-                    int(goals[goal]["data"]["starting_xp"]) + int(xp_increment)
-                )
-            elif goals[goal].get("type") == "Card":
-                # Increment user's card goal
-                goals[goal]["data"]["cards_revised_so_far"] = str(
-                    int(goals[goal]["data"]["cards_revised_so_far"]) + 1
-                )
+    Example request:
+    {
+        "userID": "my-id",
+        "goalXP": "100",
+        endDate: "01/01/2022" (in dd/mm/yyyy format)
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        goal_xp = request.json.get("goalXP")
+        end_date = request.json.get("endDate")
+        start_date = Date().get_current_date()
+        db.goals.create_xp_goal(user_id, goal_xp, start_date, end_date, hash_to_numeric)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    # Save the new goal data
-    db.save("/users/" + user_id + "/goals/", goals)
+    return jsonify({"success": "Goal created successfully"}), 200
 
 @goal_routes.route("/api/update-goal-status", methods=["POST"])
 def update_goal_status() :
@@ -79,72 +101,6 @@ def update_goal_status() :
     # Save the new goal data
     db.save("/users/" + user_id + "/goals/", new_goals)
     return jsonify(new_goals), 200
-
-@goal_routes.route("/api/create-xp-goal", methods=["POST"])
-def create_xp_goal() :
-    """ Create an XP goal for the user
-     XP goals have:
-     - ID
-     - type (XP)
-     - title
-     - end date
-     - status (failed, completed or in progress)
-     - a fail date if failed
-     - data storing:
-        - start date
-        - starting XP
-        - desired XP
-    This is the same as a card goal except for the data section
-
-    Example request:
-    {
-        "userID": "my-id",
-        "goalXP": "100",
-        endDate: "01/01/2022" (in dd/mm/yyyy format)
-    }
-    """
-    expected_format = {
-        "userID": "",
-        "goalXP": NUMBER,
-        "endDate": DATE_REGEX
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
-    user_id = request.json.get("userID")
-    goal_xp = request.json.get("goalXP")
-    end_date = request.json.get("endDate")
-
-    date = Date()
-    goal_xp = str(goal_xp)
-    goal_type = "XP"
-    title = "Gain " + goal_xp + " XP by " + end_date
-    status = "in progress"
-    start_date = date.get_current_date()
-    goal_id = hash_to_numeric(user_id + title)
-
-    db.save(
-        "/users/" + user_id + "/goals/" + goal_id + "/",
-        {
-            "type": goal_type,
-            "title": title,
-            "end_date": end_date,
-            "status": status,
-            "fail_date": "",
-            "data": {
-                "start_date": start_date,
-                "starting_xp": "0",
-                "goal_xp": goal_xp
-            }
-        }
-    )
-    return jsonify({"success": "Goal created successfully"}), 200
 
 @goal_routes.route("/api/create-card-goal", methods=["POST"])
 def create_card_goal() :

@@ -2,8 +2,6 @@
 import hashlib
 from flask import Blueprint, request, jsonify
 from database.database import database as db
-from classes.date import Date
-from verification.api_error_checking import check_request_json
 from routes.api.validation_wrapper import validate_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 from classes.card_collection import FlashcardCollection

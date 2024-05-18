@@ -7,6 +7,7 @@ from database.handlers.folders import Folders
 from database.handlers.read_write_access import ReadWriteAccess
 from database.handlers.users import Users
 from database.handlers.statistics import Statistics
+from database.handlers.goals import Goals
 
 class DatabaseAbstract(ABC) :
     """ Abstract class for the database """
@@ -31,6 +32,7 @@ class DatabaseAbstract(ABC) :
         self._read_write_access = ReadWriteAccess(self.db)
         self._users = Users(self.db)
         self._statistics = Statistics(self.db)
+        self._goals = Goals(self.db)
 
     @property
     def query(self):
@@ -98,3 +100,12 @@ class DatabaseAbstract(ABC) :
             Statistics: The Statistics class
         """
         return self._statistics
+
+    @property
+    def goals(self):
+        """Return the Goals class
+
+        Returns:
+            Goals: The Goals class
+        """
+        return self._goals
