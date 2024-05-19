@@ -15,6 +15,12 @@ CREATE_XP_GOAL_FORMAT = {
     "endDate": DATE_REGEX
 }
 
+CREATE_CARD_GOAL_FORMAT = {
+    "userID": "",
+    "cardsToRevise": NUMBER,
+    "endDate": DATE_REGEX
+}
+
 def update_goal_stats(user_id, xp_increment):
     """Update the user's goal stats
     To be run when a new card is revised"""
@@ -50,6 +56,33 @@ def create_xp_goal() :
         end_date = request.json.get("endDate")
         start_date = Date().get_current_date()
         db.goals.create_xp_goal(user_id, goal_xp, start_date, end_date, hash_to_numeric)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    return jsonify({"success": "Goal created successfully"}), 200
+
+@goal_routes.route("/api/create-card-goal", methods=["POST"])
+@validate_json(CREATE_CARD_GOAL_FORMAT)
+def create_card_goal() :
+    """ Create a card goal for the user
+    Card goals have:
+     - ID
+     - type (XP)
+     - title
+     - end date
+     - status (failed, completed or in progress)
+     - a fail date if failed
+     - data storing:
+        - cards revised so far
+        - starting XP
+        - desired cards to revise
+    """
+    try:
+        user_id = request.json.get("userID")
+        desired_cards_to_revise = request.json.get("cardsToRevise")
+        end_date = request.json.get("endDate")
+
+        db.goals.create_card_goal(user_id, desired_cards_to_revise, end_date, hash_to_numeric)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -101,61 +134,6 @@ def update_goal_status() :
     # Save the new goal data
     db.save("/users/" + user_id + "/goals/", new_goals)
     return jsonify(new_goals), 200
-
-@goal_routes.route("/api/create-card-goal", methods=["POST"])
-def create_card_goal() :
-    """ Create a card goal for the user
-    Card goals have:
-     - ID
-     - type (XP)
-     - title
-     - end date
-     - status (failed, completed or in progress)
-     - a fail date if failed
-     - data storing:
-        - cards revised so far
-        - starting XP
-        - desired cards to revise
-    """
-    expected_format = {
-        "userID": "",
-        "cardsToRevise": NUMBER,
-        "endDate": DATE_REGEX
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
-    user_id = request.json.get("userID")
-    desired_cards_to_revise = request.json.get("cardsToRevise")
-    end_date = request.json.get("endDate")
-
-    desired_cards_to_revise = str(desired_cards_to_revise)
-    goal_type = "Card"
-    title = "Revise " + desired_cards_to_revise + " cards by " + end_date
-    status = "in progress"
-    goal_id = hash_to_numeric(user_id + title)
-
-    db.save(
-        "/users/" + user_id + "/goals/" + goal_id + "/",
-        {
-            "type": goal_type,
-            "title": title,
-            "end_date": end_date,
-            "status": status,
-            "fail_date": "",
-            "data": {
-                "cards_revised_so_far": "0",
-                "cards_to_revise": desired_cards_to_revise
-            }
-        }
-    )
-    return jsonify({"success": "Goal created successfully"}), 200
 
 @goal_routes.route("/api/edit-card-goal", methods=["POST"])
 def edit_card_goal():

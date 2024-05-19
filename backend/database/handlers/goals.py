@@ -85,3 +85,39 @@ class Goals(DatabaseHandler):
                 }
             }
         )
+
+    def create_card_goal(
+        self,
+        user_id:str,
+        desired_cards_to_revise:int,
+        end_date:str,
+        hash_to_numeric:callable
+    ):
+        """
+        Create a goal which records how many cards the user has revised
+
+        Args:
+            user_id (str): The user id which the goal is for
+            desired_cards_to_revise (int): The number of cards to be revised for the goal
+            end_date (str): The end date of the goal
+            hash_to_numeric (callable): The function which is used to generate the goal id
+            from the user id and the title
+        """
+        goal_type = "Card"
+        title = "Revise " + desired_cards_to_revise + " cards by " + end_date
+        status = "in progress"
+        goal_id = hash_to_numeric(user_id + title)
+
+        self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).set(
+            {
+                "type": goal_type,
+                "title": title,
+                "end_date": end_date,
+                "status": status,
+                "fail_date": "",
+                "data": {
+                    "cards_revised_so_far": "0",
+                    "cards_to_revise": desired_cards_to_revise
+                }
+            }
+        )
