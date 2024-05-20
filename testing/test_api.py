@@ -698,3 +698,21 @@ class TestApi(unittest.TestCase):
             assert False
         except Exception:
             assert True
+
+    def test_create_card_goal(self):
+        """
+        Test to create a card goal
+        """
+        request_data = {
+            "userID": "2",
+            "cardsToRevise": 5,
+            "endDate": "01/01/2022"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL['url'], request_data)
+        assert response == {'success': 'Goal created successfully'}
+
+    # TODO: Test to create an XP goal
+    # TODO: Test for a goal that should be completed
+    # TODO: Test for a goal that should be failed
+    # TODO: Test for a goal that should be in progress
+    # TODO: Test for a goal that should be deleted

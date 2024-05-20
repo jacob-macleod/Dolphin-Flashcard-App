@@ -71,3 +71,8 @@ class Routes:
         "url": "/api/move-flashcard-set",
         "methods": ["POST"]
     }
+
+    ROUTE_CREATE_CARD_GOAL = {
+        "url": "/api/create-card-goal",
+        "methods": ["POST"]
+    }

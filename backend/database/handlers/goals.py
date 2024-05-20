@@ -28,6 +28,8 @@ class Goals(DatabaseHandler):
         goals = self._context.collection("goals").document(user_id)
         if goals is None:
             return "User has no goals"
+        else:
+            goals = goals.get("goal_data")
 
         # For each goal
         for goal in goals:
@@ -121,3 +123,43 @@ class Goals(DatabaseHandler):
                 }
             }
         )
+
+    def update_goal_status(
+        self,
+        user_id: str,
+        date_obj: Date,
+        now: str
+    ):
+        new_goals = {}
+        goals = self._context.collection("goals").document(user_id).collection("goal_data").stream()
+
+        for doc in goals:
+            goal = doc.to_dict()
+            goal_id = doc.id  # Get the document ID
+
+            # If the goal has been deleted, fully delete it
+            # When goals are deleted, the goal data is set to <goal id>: {}.
+            # In the firebase instance, it is then deleted automatically,
+            # But not in the local json files. Thus, an extra check needs to be made
+            if "status" in goal:
+                new_goals[goal_id] = goal  # Add the goal if it has not been deleted
+                if goal["status"] == "in progress":
+                    # Check if the goal should be completed
+                    if goal["type"] == "XP":
+                        if int(goal["data"]["starting_xp"]) >= int(goal["data"]["goal_xp"]):
+                            goal["status"] = "completed"
+                    elif goal["type"] == "Card":
+                        if int(goal["data"]["cards_revised_so_far"]) >= int(goal["data"]["cards_to_revise"]):
+                            goal["status"] = "completed"
+
+                    # Check if goal should be failed - if now is after end date (and it is still in progress)
+                    # Now and end date are both strings in dd/mm/yyyy format
+                    if date_obj.compare_dates(now, goal["end_date"]) > 0:
+                        goal["status"] = "failed"
+                        goal["fail_date"] = now
+
+        # Save the updated goal data back to Firestore
+        for goal_id, goal_data in new_goals.items():
+            self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).set(goal_data)
+
+        return new_goals
