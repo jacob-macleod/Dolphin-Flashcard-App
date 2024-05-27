@@ -69,7 +69,7 @@ class Goals(DatabaseHandler):
             from the user id and the title
         """
         goal_type = "XP"
-        title = "Gain " + goal_xp + " XP by " + end_date
+        title = "Gain " + str(goal_xp) + " XP by " + end_date
         status = "in progress"
         goal_id = hash_to_numeric(user_id + title)
 
@@ -106,7 +106,7 @@ class Goals(DatabaseHandler):
             from the user id and the title
         """
         goal_type = "Card"
-        title = "Revise " + desired_cards_to_revise + " cards by " + end_date
+        title = "Revise " + str(desired_cards_to_revise) + " cards by " + end_date
         status = "in progress"
         goal_id = hash_to_numeric(user_id + title)
 

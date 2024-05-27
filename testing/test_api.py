@@ -701,7 +701,7 @@ class TestApi(unittest.TestCase):
 
     def test_create_card_goal(self):
         """
-        Test to create a card goal
+        Test to create a card goal that should be failed
         """
         request_data = {
             "userID": "2",
@@ -711,8 +711,72 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL['url'], request_data)
         assert response == {'success': 'Goal created successfully'}
 
-    # TODO: Test to create an XP goal
-    # TODO: Test for a goal that should be completed
-    # TODO: Test for a goal that should be failed
-    # TODO: Test for a goal that should be in progress
-    # TODO: Test for a goal that should be deleted
+    def test_create_xp_goal(self):
+        """
+        Test to create an XP goal that should be in progress
+        """
+        request_data = {
+            "userID": "2",
+            "goalXP": 5,
+            "endDate": date.get_current_date()
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL['url'], request_data)
+        assert response == {'success': 'Goal created successfully'}
+
+    def test_create_completed_goal(self):
+        """
+        Test for a goal that should be completed
+        """
+        request_data = {
+            "userID": "2",
+            "goalXP": 0,
+            "endDate": date.get_current_date()
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL['url'], request_data)
+        assert response == {'success': 'Goal created successfully'}
+
+    def test_update_goal_status(self):
+        """
+        Make sure the update-goal-status route works
+        """
+        request_data = {
+            "userID": "2"
+        }
+        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
+        assert response == {
+            "23950537846254522181797288263005802025644498495346760838104543445960680933390": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": "27/05/2024",
+                "starting_xp": "0"
+                },
+                "end_date": "27/05/2024",
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by 27/05/2024",
+                "type": "XP"
+            },
+            "88664670328303939763764370854729408637283576594881284720665530227293958647276": {
+                "data": {
+                "goal_xp": 5,
+                "start_date": "27/05/2024",
+                "starting_xp": "0"
+                },
+                "end_date": "27/05/2024",
+                "fail_date": "",
+                "status": "in progress",
+                "title": "Gain 5 XP by 27/05/2024",
+                "type": "XP"
+            },
+            "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
+                "data": {
+                "cards_revised_so_far": "0",
+                "cards_to_revise": 5
+                },
+                "end_date": "01/01/2022",
+                "fail_date": "27/05/2024",
+                "status": "failed",
+                "title": "Revise 5 cards by 01/01/2022",
+                "type": "Card"
+            }
+        }

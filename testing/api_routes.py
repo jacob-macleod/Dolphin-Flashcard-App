@@ -76,3 +76,13 @@ class Routes:
         "url": "/api/create-card-goal",
         "methods": ["POST"]
     }
+
+    ROUTE_CREATE_XP_GOAL = {
+        "url": "/api/create-xp-goal",
+        "methods": ["POST"]
+    }
+
+    ROUTE_UPDATE_GOAL_STATUS = {
+        "url": "/api/update-goal-status",
+        "methods": ["POST"]
+    }
