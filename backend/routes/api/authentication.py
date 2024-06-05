@@ -45,7 +45,7 @@ def get_user():
     except Exception as e:
         return jsonify({"error": str(e)}, 400)
 
-@authentication_routes.route("/api/get-user-stats", methods=["GET"])
+@authentication_routes.route("/api/get-user-stats", methods=["GET", "POST"])
 @validate_json(GET_USER_STATS_FORMAT)
 def get_user_stats():
     """Get the statistics for a user
