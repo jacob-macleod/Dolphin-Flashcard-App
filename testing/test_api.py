@@ -13,6 +13,13 @@ from classes.date import Date
 from json import loads, dumps
 from requests import get, post
 from main import server_addr
+from database.database_config import type
+
+# Check the database is set to local
+if type != "local":
+    raise ValueError(
+        f"The database type in src/database/database_config.py is set to '{type}', not 'local'!"
+    )
 
 headers = {
     'Content-Type': 'application/json'
@@ -747,25 +754,25 @@ class TestApi(unittest.TestCase):
             "23950537846254522181797288263005802025644498495346760838104543445960680933390": {
                 "data": {
                 "goal_xp": 0,
-                "start_date": "27/05/2024",
+                "start_date": date.get_current_date(),
                 "starting_xp": "0"
                 },
-                "end_date": "27/05/2024",
+                "end_date": date.get_current_date(),
                 "fail_date": "",
                 "status": "completed",
-                "title": "Gain 0 XP by 27/05/2024",
+                "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "88664670328303939763764370854729408637283576594881284720665530227293958647276": {
                 "data": {
                 "goal_xp": 5,
-                "start_date": "27/05/2024",
+                "start_date": date.get_current_date(),
                 "starting_xp": "0"
                 },
-                "end_date": "27/05/2024",
+                "end_date": date.get_current_date(),
                 "fail_date": "",
                 "status": "in progress",
-                "title": "Gain 5 XP by 27/05/2024",
+                "title": "Gain 5 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
@@ -780,3 +787,11 @@ class TestApi(unittest.TestCase):
                 "type": "Card"
             }
         }
+
+    def test_edit_card_goal(self):
+        """
+        Test the function to edit a card goal
+        """
+        # Test case 1: The card exists
+        # Test case 2: The card does not exist
+        # Test case 3: The card has been edited

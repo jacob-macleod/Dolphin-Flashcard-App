@@ -25,6 +25,14 @@ UPDATE_GOAL_STATUS_FORMAT = {
     "userID": "",
 }
 
+EDIT_CARD_GOAL_FORMAT = {
+    "userID": "",
+    "goalID": "",
+    "newEndDate": DATE_REGEX,
+    "newTitle": "",
+    "newCardsToRevise": NUMBER
+}
+
 def update_goal_stats(user_id, xp_increment):
     """Update the user's goal stats
     To be run when a new card is revised"""
@@ -108,44 +116,19 @@ def update_goal_status() :
     return jsonify(new_goals), 200
 
 @goal_routes.route("/api/edit-card-goal", methods=["POST"])
+@validate_json(EDIT_CARD_GOAL_FORMAT)
 def edit_card_goal():
     """ Edit an existing card goal for the user """
-    expected_format = {
-        "userID": "",
-        "goalID": "",
-        "newEndDate": DATE_REGEX,
-        "newTitle": "",
-        "newCardsToRevise": NUMBER
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     user_id = request.json.get("userID")
     goal_id = request.json.get("goalID")
-    print (goal_id)
     new_end_date = request.json.get("newEndDate")
     new_title = request.json.get("newTitle")
     new_cards_to_revise = request.json.get("newCardsToRevise")
 
-    goal_path = "/users/" + user_id + "/goals/" + goal_id + "/"
-    goal_data = db.get(goal_path)
-
-    if goal_data is None:
-        return jsonify({"error": "Goal not found"}), 404
-
-    # Update the goal data
-    goal_data["end_date"] = new_end_date
-    goal_data["title"] = new_title
-    goal_data["data"]["cards_to_revise"] = str(new_cards_to_revise)
-
-    # Save the updated goal data
-    db.save(goal_path, goal_data)
+    try:
+        db.goals.edit_card_goal(user_id, goal_id, new_end_date, new_title, new_cards_to_revise)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
     return jsonify({"success": "Goal updated successfully"}), 200
 
