@@ -100,3 +100,35 @@ class Statistics(DatabaseHandler):
             raise ValueError("User does not exist!")
 
         return user_data["heatmap_data"]
+
+    def calculate_streak(self, user_id:str, date:Date, increase_xp):
+        """
+        Calculate the user's streak, and increase it if needed
+
+        Args:
+            user_id (str): The user_id
+            date (Date): The current date
+            increase_xp (str): If "true", the streak will be increased
+
+        Returns:
+            int: The value of the new streak
+        """
+        today = date.get_current_date()
+        stats = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        last_streak = stats["lastStreak"]
+        today = date.get_current_date()
+        difference = date.compare_dates(last_streak, today)
+
+        # If the streak needs to be reset
+        if difference < -1:
+            stats["streak"] = 0
+            stats["lastStreak"] = today
+        if difference == -1 and increase_xp == "true":
+            stats["streak"] = 1
+            stats["lastStreak"] = today
+
+        self._context.collection(self._db_name).document(user_id).set(
+            stats
+        )
+
+        return stats["streak"]
