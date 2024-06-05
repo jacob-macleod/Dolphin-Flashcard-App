@@ -1,9 +1,9 @@
 # Overview
 
-This changelog follows the [semantic versioning standard](https://semver.org)
+This changelog follows the semantic versioning standard(https://semver.org)
 
 <!--
-## [0.0.0] - yyyy-mm-dd
+## 0.0.0 - yyyy-mm-dd
 
 ### Added
 
@@ -22,80 +22,55 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - N/A
 -->
 
-## [2.3.1] - 2024-04-17
+## 3.0.0 - 2024-06-05
+
+### Added
+
+- Seperated concrete database implementation classes from api methods to seperate classes in `database/handlers`
+- Added much more unit tests, and made the pipeline run all unit tests
+- Added methods to help with unit tests like /api/get-user-stats
+
+### Changed
+
+- Switched to Firebase Firestore instead of Firebase Database to allow referencing data, not just embedding - leading to greater scaliability
+- Changed frontend to interact with the new database
+
+### Removed
+
+- Deprecated /api/calculate-card-stats - this will now be done by the client to improve speed
+- Deprecated /api/get-weekly-xp and /api/get-total-xp - the frontend calculates them at the same time, so it makes sense to use /api/get-user-stats to pull this data instead
+
+## 2.3.1 - 2024-04-17
 
 ### Added
 
 - Added NewGoalForm file
 
-### Fixed
-
-- N/A
-
 ### Changed
 
 - Refactored NewGoalPopup in frontend
 
-### Removed
 
-- N/A
-
-## [2.3.0] - 2024-04-12
-
-### Added
-
-- N/A
-
-### Fixed
-
-- N/A
+## 2.3.0 - 2024-04-12
 
 ### Changed
 
 - Refactored code by adding more folders to more easily manage componments
 - Removed unneeded files
 
-### Removed
-
-- N/A
-
-## [2.2.2] - 2024-04-11
-
-### Added
-
-- N/A
+## 2.2.2 - 2024-04-11
 
 ### Fixed
 
 - Fixed workflow bug which meant environment variable was not read properly
 
-### Changed
-
-- N/A
-
-### Removed
-
-- N/A
-
-## [2.2.1] - 2024-11-04
-
-### Added
-
-- N/A
+## 2.2.1 - 2024-11-04
 
 ### Fixed
 
 - Solved an issue where jsonp was not downloaded
 
-### Changed
-
-- N/A
-
-### Removed
-
-- N/A
-
-## [2.2.0] - 2024-04-07
+## 2.2.0 - 2024-04-07
 
 ### Added
 
@@ -104,83 +79,45 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 - The `mailChimpApiKey` key stored in `frontend/src/api/secretKeys.js` can be easily regenerated from mailchimp if forgotten
 - Added workflow stage to check config files are corrrect
 
-### Fixed
-
-- N/A
-
 ### Changed
 
 - Added an untested workflow command to store the `MAILCHIMP_API_KEY` variable into the file `frontend/src/api/secretKeys.js` on docker image build
 
-### Removed
-
-- N/A
-
-## [2.1.0] - 2024-04-06
+## 2.1.0 - 2024-04-06
 
 ### Added
 
 - Added animations throughout site
 
-### Fixed
-
-- N/A
 
 ### Changed
 
 - Made the flashcards page render better on mobile
 - Changed modal overlays to better render on mobile
 
-### Removed
-
-- N/A
-
-## [2.0.0] - 2024-03-29
+## 2.0.0 - 2024-03-29
 
 ### Added
 
 - Added flashcards page
 - Added backend method to move a flashcard set to a different folder
 
-### Fixed
-
-- N/A
-
 ### Changed
 
 - The create-flashcard endpoint now must also be passed `folder`, which allows flashcards to be placed in folders. (Set to `""` if the fashcard has no parent folders). This is a breaking change
 
-### Removed
 
-- N/A
-
-## [1.4.0] - 2024-03-29
+## 1.4.0 - 2024-03-29
 
 ### Added
 
 - Added get_weekly_xp and get_total_xp methods to API
 
-### Fixed
-
-- N/A
-
 ### Changed
 
 - Added proper responsiveness for mobile and tablet devices on dashboard page
 
-### Removed
-
-- N/A
-
-## [1.3.1] - 2024-03-28
-
-### Added
-
-- N/A
-
-### Fixed
-
-- N/A
+## 1.3.1 - 2024-03-28
 
 ### Changed
 
@@ -190,20 +127,12 @@ This changelog follows the [semantic versioning standard](https://semver.org)
 
 - N/A
 
-## [1.3.0] - 2024-03-28
+## 1.3.0 - 2024-03-28
 
 ### Added
 
 - Added workflow files to allow better handling of tagging and versions
 
-### Fixed
-
-- N/A
-
 ### Changed
 
 - Edited bump_version.sh to give recomendations on whether software is versioned correctly, rather than actually changing it
-
-### Removed
-
-- N/A
