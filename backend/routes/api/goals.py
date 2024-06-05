@@ -4,7 +4,6 @@ from database.database import database as db
 from routes.api.card_management import hash_to_numeric
 from flask import Blueprint, request, jsonify
 from routes.api.regex_patterns import DATE_REGEX, NUMBER
-from verification.api_error_checking import check_request_json
 from routes.api.validation_wrapper import validate_json
 
 goal_routes = Blueprint('goal_routes', __name__)

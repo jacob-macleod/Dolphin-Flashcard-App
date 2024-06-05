@@ -16,7 +16,7 @@ class Statistics(DatabaseHandler):
         super().__init__(context, db_name="statistics")
         self._date = Date()
 
-    def create_new_user_stats(self, user_id: str):
+    def create_new_user_stats(self, user_id: str, today):
         """Create the statistics for a new user 
 
         Args:
@@ -28,7 +28,10 @@ class Statistics(DatabaseHandler):
                 "lastStreak": self._date.get_current_date(),
                 "streak": 0,
                 "weeklyXP": 0,
-                "totalXP": 0
+                "totalXP": 0,
+                "heatmap_data": {
+                    today: "1"
+                }
             }
         )
 
@@ -39,3 +42,28 @@ class Statistics(DatabaseHandler):
             user_id (str): The user ID to get the statistics for
         """
         return self._context.collection(self._db_name).document(user_id).get().to_dict()
+
+    def update_heatmap(self, user_id:str, today:str):
+        user_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+
+        # Heatmap has a date as the key, and the value is the number of cards reviewed that day
+        if user_data is not None :
+            item_found = False
+            for item in user_data["heatmap_data"]:
+                if item == today:
+                    item_found = True
+                    # Increment data
+                    user_data["heatmap_data"][item] = str(int(user_data["heatmap_data"][item]) + 1)
+
+            # If no data for today is recorded
+            if not item_found:
+                user_data["heatmap_data"][today] = "1"
+        # If the user has not been created yet
+        else :
+            raise ValueError("User does not exist!")
+
+        self._context.collection(self._db_name).document(user_id).set(
+            user_data
+        )
+
+        return user_data["heatmap_data"]

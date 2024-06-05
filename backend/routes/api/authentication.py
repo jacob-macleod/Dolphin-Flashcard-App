@@ -2,6 +2,7 @@ from flask_cors import CORS
 from flask import Blueprint, jsonify, request
 from database.database import database as db
 from routes.api.validation_wrapper import validate_json
+from classes.date import Date
 
 authentication_routes = Blueprint('api_routes', __name__)
 CORS(authentication_routes)
@@ -24,8 +25,11 @@ def create_account():
     user_id = request.json.get("userID")
     name = request.json.get("displayName")
 
+    date = Date()
+    today = date.get_current_date().replace('/', '-')
+
     db.users.create_user(user_id, name)
-    db.statistics.create_new_user_stats(user_id)
+    db.statistics.create_new_user_stats(user_id, today)
 
     return jsonify({"success": True}, 200)
 

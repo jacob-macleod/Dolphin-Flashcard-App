@@ -253,6 +253,7 @@ class TestApi(unittest.TestCase):
     def test_get_user_stats(self):
         """Get the statistics for the user that has been created
         """
+        # Test case 1: Get the user stats
         valid_dummy = {
             "userID": "1"
         }
@@ -263,8 +264,13 @@ class TestApi(unittest.TestCase):
             'lastStreak': date.get_current_date(),
             'streak': 0,
             'weeklyXP': 0,
-            'totalXP': 0
+            'totalXP': 0,
+            'heatmap_data': {
+                date.get_current_date().replace("/", "-"): "1"
+            }
         }
+
+        # Test case 2: Update the heatmap
 
     def test_get_invalid_user_stats(self):
         """Get the statistics for a user that does not exist
@@ -952,3 +958,25 @@ class TestApi(unittest.TestCase):
                 "type": "Card"
             }
         }
+
+    def test_update_heatmap(self):
+        """
+        Test the update-heatmap method
+        """
+        # Test case 1: User exists
+        request_data = {
+            "userID": "1"
+        }
+        response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
+        assert response == {"05-06-2024": "2"}
+
+        # Test case 2: User does not exist
+        request_data = {
+            "userID": "Invalid User"
+        }
+        try:
+            # This should not run
+            response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
+            assert False
+        except:
+            return True
