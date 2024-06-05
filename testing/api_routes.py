@@ -86,3 +86,8 @@ class Routes:
         "url": "/api/update-goal-status",
         "methods": ["POST"]
     }
+
+    ROUTE_EDIT_CARD_GOAL = {
+        "url": "/api/edit-card-goal",
+        "methods": ["POST"]
+    }

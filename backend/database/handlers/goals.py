@@ -204,7 +204,7 @@ class Goals(DatabaseHandler):
         # Update the goal data
         goal_data["end_date"] = new_end_date
         goal_data["title"] = new_title
-        goal_data["data"]["cards_to_revise"] = str(new_cards_to_revise)
+        goal_data["data"]["cards_to_revise"] = new_cards_to_revise
 
         # Save the updated goal data
         self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).set(goal_data)

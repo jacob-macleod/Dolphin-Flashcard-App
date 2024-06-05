@@ -746,12 +746,13 @@ class TestApi(unittest.TestCase):
         """
         Make sure the update-goal-status route works
         """
+        # Test case 1: The function works
         request_data = {
             "userID": "2"
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
         assert response == {
-            "23950537846254522181797288263005802025644498495346760838104543445960680933390": {
+            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
                 "data": {
                 "goal_xp": 0,
                 "start_date": date.get_current_date(),
@@ -763,7 +764,7 @@ class TestApi(unittest.TestCase):
                 "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
-            "88664670328303939763764370854729408637283576594881284720665530227293958647276": {
+            "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
                 "data": {
                 "goal_xp": 5,
                 "start_date": date.get_current_date(),
@@ -781,17 +782,79 @@ class TestApi(unittest.TestCase):
                 "cards_to_revise": 5
                 },
                 "end_date": "01/01/2022",
-                "fail_date": "27/05/2024",
+                "fail_date": date.get_current_date(),
                 "status": "failed",
                 "title": "Revise 5 cards by 01/01/2022",
                 "type": "Card"
             }
         }
 
-    def test_edit_card_goal(self):
-        """
-        Test the function to edit a card goal
-        """
-        # Test case 1: The card exists
-        # Test case 2: The card does not exist
-        # Test case 3: The card has been edited
+        # Test case 2: The card exists
+        request_data = {
+            "userID": "2",
+            "goalID": "9902473624918826751793822303272600295431210547080501995768909442922844439697",
+            "newEndDate": "28/05/2027",
+            "newTitle": "My new title",
+            "newCardsToRevise": 200
+        }
+        response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL['url'], request_data)
+        assert response == {'success': 'Goal updated successfully'}
+
+        # Test case 3: The card does not exist
+        request_data = {
+            "userID": "2",
+            "goalID": "This card does not exist",
+            "newEndDate": "28/05/2027",
+            "newTitle": "My new title",
+            "newCardsToRevise": 200
+        }
+        try:
+            # This line should fail
+            response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL['url'], request_data)
+            assert False
+        except Exception:
+            assert True
+
+        # Test case 4: The card has been edited properly
+        request_data = {
+            "userID": "2"
+        }
+        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
+        print (response)
+        assert response == {
+            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by " + date.get_current_date(),
+                "type": "XP"
+            },
+            "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
+                "data": {
+                "goal_xp": 5,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "in progress",
+                "title": "Gain 5 XP by " + date.get_current_date(),
+                "type": "XP"
+            },
+            "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
+                "data": {
+                "cards_revised_so_far": "0",
+                "cards_to_revise": 200
+                },
+                "end_date": "28/05/2027",
+                "fail_date": date.get_current_date(),
+                "status": "failed", # Failed because it was already failed before end_date was updated
+                "title": "My new title",
+                "type": "Card"
+            }
+        }
