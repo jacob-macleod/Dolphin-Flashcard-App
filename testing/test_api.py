@@ -815,7 +815,33 @@ class TestApi(unittest.TestCase):
         except Exception:
             assert True
 
-        # Test case 4: The card has been edited properly
+        # Test case 4: Editing a valid XP card
+        request_data = {
+            "userID": "2",
+            "goalID": "54343396708103413832968857573083357508652358450712125381004588668888522542831",
+            "newEndDate": "29/05/2027",
+            "newTitle": "My new xp title",
+            "newGoalXP": 50
+        }
+        response = self.post_api(Routes.ROUTE_EDIT_XP_GOAL['url'], request_data)
+        assert response == {'success': 'Goal updated successfully'}
+
+        # Test case 5: Editing an XP card which does not exist
+        request_data = {
+            "userID": "2",
+            "goalID": "This goal does not exist",
+            "newEndDate": "29/05/2027",
+            "newTitle": "My new xp title",
+            "newGoalXP": 50
+        }
+        try:
+            # This line should fail
+            response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL['url'], request_data)
+            assert False
+        except Exception:
+            assert True
+
+        # Test case 6: The cards have been edited properly
         request_data = {
             "userID": "2"
         }
@@ -836,14 +862,14 @@ class TestApi(unittest.TestCase):
             },
             "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
                 "data": {
-                "goal_xp": 5,
+                "goal_xp": 50,
                 "start_date": date.get_current_date(),
                 "starting_xp": "0"
                 },
-                "end_date": date.get_current_date(),
+                "end_date": "29/05/2027",
                 "fail_date": "",
                 "status": "in progress",
-                "title": "Gain 5 XP by " + date.get_current_date(),
+                "title": "My new xp title",
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {

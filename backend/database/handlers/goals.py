@@ -175,7 +175,14 @@ class Goals(DatabaseHandler):
 
         return new_goals
 
-    def edit_card_goal(self, user_id:str, goal_id:str, new_end_date:str, new_title:str, new_cards_to_revise:int):
+    def edit_card_goal(
+        self,
+        user_id:str,
+        goal_id:str,
+        new_end_date:str,
+        new_title:str,
+        new_cards_to_revise:int
+    ):
         """Edit an existing card goal
 
         Args:
@@ -204,7 +211,50 @@ class Goals(DatabaseHandler):
         # Update the goal data
         goal_data["end_date"] = new_end_date
         goal_data["title"] = new_title
+        # This line is the only difference between this and edit_xp_goal
         goal_data["data"]["cards_to_revise"] = new_cards_to_revise
+
+        # Save the updated goal data
+        self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).set(goal_data)
+
+    def edit_xp_goal(
+        self,
+        user_id:str,
+        goal_id:str,
+        new_end_date:str,
+        new_title:str,
+        new_goal_xp:int
+    ):
+        """Edit an existing XP goal
+
+        Args:
+            user_id (str): The user who owns the card
+            goal_id (str): The ID of the goal to edit
+            new_end_date (str): The new end date for the goal
+            new_title (str): The new title for the goal
+            new_goal_xp (int): The new xp to gain
+
+        Raises:
+            ValueError: Raise an error when the goal has not been created yet
+        """
+        goal_object = self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).get()
+        goal_data = {
+            "data": goal_object.get("data"),
+            "end_date": goal_object.get("end_date"),
+            "fail_date": goal_object.get("fail_date"),
+            "status": goal_object.get("status"),
+            "title": goal_object.get("title"),
+            "type": goal_object.get("type")
+        }
+
+        if goal_data.get("data") is None:
+            raise ValueError("Goal not found")
+
+        # Update the goal data
+        goal_data["end_date"] = new_end_date
+        goal_data["title"] = new_title
+        # This line is the only difference between this and edit_card_goal
+        goal_data["data"]["goal_xp"] = new_goal_xp
 
         # Save the updated goal data
         self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).set(goal_data)
