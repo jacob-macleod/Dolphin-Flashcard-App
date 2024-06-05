@@ -258,3 +258,13 @@ class Goals(DatabaseHandler):
 
         # Save the updated goal data
         self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).set(goal_data)
+
+    def delete_goal(self, user_id:str, goal_id:str):
+        """
+        Delete a user's goal
+
+        Args:
+            user_id (str): The user id of the goal to delete
+            goal_id (str): The goal id to delete
+        """
+        self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).delete()

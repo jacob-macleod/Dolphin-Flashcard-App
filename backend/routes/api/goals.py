@@ -41,6 +41,11 @@ EDIT_XP_GOAL_FORMAT = {
     "newGoalXP": NUMBER
 }
 
+DELETE_GOAL_FORMAT = {
+    "userID": "",
+    "goalID": ""
+}
+
 def update_goal_stats(user_id, xp_increment):
     """Update the user's goal stats
     To be run when a new card is revised"""
@@ -158,27 +163,17 @@ def edit_xp_goal():
     return jsonify({"success": "Goal updated successfully"}), 200
 
 @goal_routes.route("/api/delete-goal", methods=["DELETE"])
+@validate_json(DELETE_GOAL_FORMAT)
 def delete_goal():
-    """ Edit an existing XP goal for the user """
-    expected_format = {
-        "userID": "",
-        "goalID": ""
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
+    """
+    Delete a user's goal
+    """
     user_id = request.json.get("userID")
     goal_id = request.json.get("goalID")
 
-    goal_path = "/users/" + user_id + "/goals/" + goal_id + "/"
-
-    # Save the updated goal data
-    db.save(goal_path, {})
+    try:
+        db.goals.delete_goal(user_id, goal_id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
     return jsonify({"success": "Goal deleted successfully"}), 200

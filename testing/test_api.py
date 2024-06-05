@@ -11,7 +11,7 @@ sys.path.append(src_path)
 from verification.api_error_checking import check_request_json
 from classes.date import Date
 from json import loads, dumps
-from requests import get, post
+from requests import get, post, delete
 from main import server_addr
 from database.database_config import type
 
@@ -57,6 +57,26 @@ class TestApi(unittest.TestCase):
         """
 
         response = post(
+            f'http://127.0.0.1:{server_addr[1]}{route}',
+            data=dumps(data),
+            headers=headers,
+            timeout=5
+        )
+
+        self.assertNotEqual(
+            response.status_code, 500,
+            f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
+            f"{route}"
+        )
+
+        return loads(response.text)
+
+    def delete_api(self, route: str, data: dict) -> dict:
+        """
+        Simple get method to not repeat "delete" everytime
+        """
+
+        response = delete(
             f'http://127.0.0.1:{server_addr[1]}{route}',
             data=dumps(data),
             headers=headers,
@@ -870,6 +890,54 @@ class TestApi(unittest.TestCase):
                 "fail_date": "",
                 "status": "in progress",
                 "title": "My new xp title",
+                "type": "XP"
+            },
+            "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
+                "data": {
+                "cards_revised_so_far": "0",
+                "cards_to_revise": 200
+                },
+                "end_date": "28/05/2027",
+                "fail_date": date.get_current_date(),
+                "status": "failed", # Failed because it was already failed before end_date was updated
+                "title": "My new title",
+                "type": "Card"
+            }
+        }
+
+        # Test case 7: A valid goal is deleted
+        request_data = {
+            "userID": "2",
+            "goalID": "54343396708103413832968857573083357508652358450712125381004588668888522542831"
+        }
+        response = self.delete_api(Routes.ROUTE_DELETE_GOAL['url'], request_data)
+        assert response == {'success': 'Goal deleted successfully'}
+
+        # Test case 8: An invalid goal is deleted - this does not actually have an error
+        request_data = {
+            "userID": "2",
+            "goalID": "Invalid goal id"
+        }
+        response = self.delete_api(Routes.ROUTE_DELETE_GOAL['url'], request_data)
+        assert response == {'success': 'Goal deleted successfully'}
+
+        # Test case 8: Check the goal is actually deleted
+        request_data = {
+            "userID": "2"
+        }
+        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
+        print (response)
+        assert response == {
+            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {

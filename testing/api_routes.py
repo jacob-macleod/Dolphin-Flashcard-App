@@ -96,3 +96,8 @@ class Routes:
         "url": "/api/edit-xp-goal",
         "methods": ["POST"]
     }
+
+    ROUTE_DELETE_GOAL = {
+        "url": "/api/delete-goal",
+        "methods": ["DELETE"]
+    }
