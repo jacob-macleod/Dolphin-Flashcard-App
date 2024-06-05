@@ -8,7 +8,7 @@ import Header from '../componments/Header';
 import Subheader from '../componments/Subheader';
 import '../componments/Text.css';
 import '../componments/Link.css';
-import '../componments/Bold.css';
+import '../componments/Text/BoldParagraph/Bold.css';
 
 function LandingPage() {
   const title = "Dolphin Flashcards";

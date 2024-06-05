@@ -1,10 +1,8 @@
 """ Routes relating to general card management """
 import hashlib
-import json
 from flask import Blueprint, request, jsonify
 from database.database import database as db
-from classes.date import Date
-from verification.api_error_checking import check_request_json
+from routes.api.validation_wrapper import validate_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 from classes.card_collection import FlashcardCollection
 
@@ -23,8 +21,45 @@ def hash_to_numeric(input_string):
     # Return the numeric representation of the hash
     return str(hashed_numeric)
 
+CREATE_FLASHCARD_FORMAT = {
+    "userID": "",
+    "flashcardName": "",
+    "flashcardDescription": "",
+    "folder": "",
+    "cards": [
+        {
+            "front": "",
+            "back": "",
+            "reviewStatus": REVIEW_STATUS_REGEX,
+            "lastReview": DATE_REGEX
+        }
+    ]
+}
+
+GET_FLASHCARD_FORMAT = {
+    "userID": "",
+    "folder": "",
+    "flashcardName": ""
+}
+
+GET_FLASHCARD_ITEM = {
+    "cardID": ""
+}
+
+GET_TODAY_CARDS = {
+    "userID": ""
+}
+GET_ALL_CARDS = GET_TODAY_CARDS
+
+MOVE_FLASHCARD_SET = {
+    "userID": "",
+    "currentLocation": "",
+    "flashcardID": "",
+    "moveLocation": ""
+}
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
+@validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
     """ Create or edit a flashcard set for the user.
         Flashcards have a front, back, review status and last review date
@@ -53,99 +88,99 @@ def create_flashcard():
             ]
         }
     """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-        "flashcardName": "",
-        "flashcardDescription": "",
-        "folder": "",
-        "cards": [
-            {
-                "front": "",
-                "back": "",
-                "reviewStatus": REVIEW_STATUS_REGEX,
-                "lastReview": DATE_REGEX
-            }
-        ]
-    }
-
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     try:
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
         flashcard_description = request.json.get("flashcardDescription")
         cards = request.json.get("cards")
         folder = request.json.get("folder")
-        # Add "/" to folder if it does not end with if
-        if folder.endswith("/") is False:
-            folder += "/"
+
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
-        # If the flashcard does not exist, create it
-        if db.get("/users/" + user_id + "/flashcards/" + folder  + flashcard_id) is None:
-            db.save("/users/" + user_id + "/flashcards/" + folder  + flashcard_id,
-                    {
-                        "flashcardID": flashcard_id,
-                        "flashcardName": flashcard_name,
-                        "flashcardDescription": flashcard_description,
-                        "cards": cards
-                    }
-                    )
+        # Generate the card_ids
+        card_ids = [
+            hash_to_numeric(user_id + folder + card["front"])
+            for card in cards
+        ]
+
+        # Create the flashcard set
+        db.flashcard_set.create_flashcard_set(
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            flashcard_description=flashcard_description,
+            card_ids=card_ids
+        )
+
+        # Create each individual flashcard
+        db.flashcards.create_flashcards(card_ids, cards)
+
+        # Assign the set to the user in the folder structure
+        db.folders.add_flashcard_to_folder(
+            user_id=user_id,
+            folder=folder,
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            card_ids=card_ids
+        )
+
+        # Give the user read and write access
+        db.read_write_access.give_user_access(user_id, flashcard_id)
 
         return jsonify({
             "success": True}, 200)
     except Exception as e:
         # Return the error as a json object
-        return jsonify(e), 500
-
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-flashcard", methods=["GET"])
+@validate_json(GET_FLASHCARD_FORMAT)
 def get_flashcard():
-    """ Get a flashcard based on the name and user ID
+    """ Get a flashcard set based on the name and user ID
         Add json to request as in:
         {
             "userID": "my-id",
+            "folder": "parent-name",
             "flashcardName": "My new set"
         }
     """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-        "flashcardName": ""
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     try:
         user_id = request.json.get("userID")
         flashcard_name = request.json.get("flashcardName")
-        flashcard_id = hash_to_numeric(user_id + flashcard_name)
+        folder = request.json.get("folder")
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
 
-        return jsonify(db.get("/users/" + user_id + "/flashcards/" + flashcard_id))
+        return jsonify(
+            db.flashcard_set.get_flashcard_set(flashcard_id), 200
+        )
 
     except Exception as e:
         # Return the error as a json object
-        return jsonify(e), 500
+        return jsonify(str(e)), 500
 
+@card_management_routes.route("/api/get-flashcard-item", methods=["GET"])
+@validate_json(GET_FLASHCARD_ITEM)
+def get_flashcard_item():
+    """ Get a flashcard item based on the card ID. Flashcard sets store
+    multiple flashcard items, which are the individual flashcards
+        Add json to request as in:
+        {
+            "cardID": "my-id"
+        }
+    """
+    try:
+        card_id = request.json.get("cardID")
+
+        return jsonify(
+            db.flashcards.get_flashcard(card_id), 200
+        )
+
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-today-cards", methods=["POST"])
+@validate_json(GET_TODAY_CARDS)
 def get_today_cards():
     """ Get all the flashcards to be learned today for a user
         Requests include soley a json including userID
@@ -158,31 +193,47 @@ def get_today_cards():
         If it is 0.x, it is actively studying
         If it is >= 1.x, it is learned
     """
-    # Check the request json
-    expected_format = {
-        "userID": ""
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
+    try:
+        user_id = request.json.get("userID")
 
-    user_id = request.json.get("userID")
+        # Get all flashcards
+        flashcards = db.folders.get_user_data(user_id)
 
-    # Get all flashcards
-    flashcards = db.get("/users/" + user_id + "/flashcards")
-    if flashcards is None:
-        return jsonify(["User has no flashcards"])
+        if flashcards is None:
+            return jsonify(["User has no flashcards"])
 
-    cards_to_return = FlashcardCollection(flashcards).today_card_list
-    return jsonify(cards_to_return)
+        cards_to_return = FlashcardCollection(flashcards).today_card_list
+        return jsonify(cards_to_return)
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/get-all-cards", methods=["POST"])
+@validate_json(GET_ALL_CARDS)
+def get_all_cards():
+    """Get all the flashcards created by a user
+
+        Example request:
+        {
+            "userID": "my-id"
+        }
+    """
+    try:
+        user_id = request.json.get("userID")
+
+        # Get all flashcards
+        flashcards = db.folders.get_user_data(user_id)
+
+        if flashcards is None:
+            return jsonify(["User has no flashcards"])
+
+        return jsonify(flashcards)
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/move-flashcard-set", methods=["POST"])
+@validate_json(MOVE_FLASHCARD_SET)
 def move_flashcard_set():
     """Move a flashcard set to a new location
     Example request:
@@ -193,51 +244,21 @@ def move_flashcard_set():
         "moveLocation": "the folder path to move to"
     }
     """
-    expected_format = {
-        "userID": "",
-        "currentLocation": "",
-        "flashcardID": "",
-        "moveLocation": ""
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
+    try:
+        # Get the supplied variables
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+        move_location = request.json.get("moveLocation")
+        current_location = request.json.get("currentLocation")
+
+        db.folders.move_flashcard_set(user_id, flashcard_id, current_location, move_location)
+
         return jsonify(
             {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
-    # Get the supplied variables
-    user_id = request.json.get("userID")
-    flashcard_id = request.json.get("flashcardID")
-    move_location = request.json.get("moveLocation")
-    current_location = request.json.get("currentLocation")
-
-    if current_location.endswith("/") is False and current_location != "":
-        current_location += "/"
-    if move_location.endswith("/") is False and move_location != "":
-        move_location += "/"
-
-    # Get the current flashcard data
-    flashcard_data = db.get("/users/" + user_id + "/flashcards/" + current_location)
-    if flashcard_data is None or flashcard_id not in flashcard_data.keys():
-        return jsonify(
-            {
-                "error": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " does not exist"}
-        ), 400
-
-    # Remove the flashcard where it currently is
-    edited_flashcard_data = flashcard_data.copy()
-    edited_flashcard_data.pop(flashcard_id, None)
-    db.save("/users/" + user_id + "/flashcards/" + current_location, edited_flashcard_data)
-
-    # Save the flashcard in the new location
-    print ("Saving to " + "/users/" + user_id + "/flashcards/" + move_location + flashcard_id)
-    db.save("/users/" + user_id + "/flashcards/" + move_location + flashcard_id, flashcard_data[flashcard_id])
-
-    return jsonify(
-        {
-            "success": "The flashcard set at " + "/users/" + user_id + "/flashcards/" + current_location + flashcard_id + " has been moved to " + move_location}
-    ), 200
+                "success": "The flashcard set at "
+                + "/users/" + user_id
+                + "/flashcards/" + current_location + "/" + flashcard_id
+                + " has been moved to " + move_location}
+        ), 200
+    except Exception as e:
+        return jsonify(str(e)), 500

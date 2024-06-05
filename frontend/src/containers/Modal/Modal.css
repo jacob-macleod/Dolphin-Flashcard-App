@@ -1,0 +1,58 @@
+.popup-container{
+    position:absolute;
+    width: 378px;
+    height: 420px;
+    background: linear-gradient(180deg, #F3F1FB 0%, white 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 68%, rgba(242.95, 241.35, 250.75, 0.75) 100%);
+    box-shadow: 0px 2px 16px -3px rgba(13.12, 41.47, 67.63, 0.25);
+    border-radius: 16px;
+    border: 1px white solid;
+    padding: 16px;
+    margin: 16px;
+    z-index: 4;
+}
+
+.popup-container-tablet {
+    position:absolute;
+    width: 378px;
+    height: 420px;
+    background: linear-gradient(180deg, #F3F1FB 0%, white 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 68%, rgba(242.95, 241.35, 250.75, 0.75) 100%);
+    box-shadow: 0px 2px 16px -3px rgba(13.12, 41.47, 67.63, 0.25);
+    border-radius: 16px;
+    border: 1px white solid;
+    padding: 16px;
+    margin: 16px;
+    z-index: 4;
+}
+
+.popup-container-mobile {
+    position:fixed;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #F3F1FB 0%, white 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 68%, rgba(242.95, 241.35, 250.75, 0.75) 100%);
+    box-shadow: 0px 2px 16px -3px rgba(13.12, 41.47, 67.63, 0.25);
+    border-radius: 16px;
+    border: 1px white solid;
+    padding: 16px;
+}
+
+.darken-background {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.386);
+    display: grid;
+    place-content: center;
+    z-index: 3;
+    position: fixed;
+    align-items: center;
+    justify-items: center;
+}
+
+.whiten-background {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    z-index: 3;
+    position: absolute;
+}

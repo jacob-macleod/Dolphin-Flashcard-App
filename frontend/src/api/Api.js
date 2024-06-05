@@ -132,6 +132,17 @@ class ApiManager {
         })
     }
 
+
+    getXP(userID, setWeeklyXP, setTotalXP) {
+        const url = 'get-user-stats';
+        const data = {
+            userID: userID
+        };
+        this.fetchData(data, url, xpData => {
+            setWeeklyXP(xpData[0].weeklyXP);
+            setTotalXP(xpData[0].totalXP);
+        }, "POST");
+    }
     getWeeklyXp(userID, setWeeklyXp) {
         const url = 'get-weekly-xp';
         const data = {
@@ -171,13 +182,11 @@ class ApiManager {
             "flashcardID": flashcardID,
             "moveLocation": moveLocation
         }
-        console.log(data);
 
         this.fetchData(data, url, status => {
             setPopupVisible(false);
             setReload(true);
         });
-        console.log("Moved set");
     }
 }
 
