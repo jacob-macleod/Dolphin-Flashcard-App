@@ -6,14 +6,36 @@ from database.database import database as db
 from classes.date import Date
 from classes.card import Card
 from verification.api_error_checking import check_request_json
-from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, NUMBER, CARD_STATUS
+from routes.api.validation_wrapper import validate_json
 
 statistics_routes = Blueprint('statistics_routes', __name__)
+
+UPDATE_HEATMAP_FORMAT = {
+    "userID": "",
+}
+
+GET_HEATMAP_FORMAT = UPDATE_HEATMAP_FORMAT
+CALCULATE_STREAK_FORMAT = {
+    "userID": ""
+}
 
 def increase_xp(user_id, increment_amount) :
     """ Increase the user's XP by 10 """
     db.increment("/users/" + user_id + "/statistics/totalXP", increment_amount)
     db.increment("/users/" + user_id + "/statistics/weeklyXP", increment_amount)
+
+'''
+This is deprecated since version 3.0.0, because I think it'll be too slow calculating this
+server side. Instead, the same algorithm will be used client side. This has the disadvantage of
+potential inconsistencies between clients in different languages (for example, Flutter and React,
+if Flutter is added at some point), but it means that loading the next card will be instant. This
+is really important, because:
+- If it takes 2 seconds to fetch this data, if the user revises 100-200 cards (achievable when revising
+    language vocab), it'll delay the user by 3-6 minutes. This is a lot of time to wait for a user - they are
+    overall delayed by 5 mins
+- There's more API requests - more expensive
+- The user will get bored if they have to wait - its hard enough revising cards anyway without having to wait
+    for ages
 
 @statistics_routes.route("/api/calculate-card-stats", methods=["POST"])
 def calculate_card_stats() :
@@ -95,78 +117,13 @@ def calculate_card_stats() :
         "lastReview": card.last_review,
         "reviewStatus": card.review_status,
         "cardStreak": card.streak
-    })
+    })'''
 
-@statistics_routes.route("/api/update-heatmap", methods=["POST"])
-def update_heatmap() :
-    """ Called when streak is updated
-        Requests should have json in the following format:
-    {
-        "userID": "my id"
-    }
-     """
-    # Check the request json
-    expected_format = {
-            "userID": "",
-        }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {"error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
+'''
+These routes are deprecated since version 3.0.0. /api/get-user-stats can
+get all this data, but more efficiently (this data is requested in the
+dashboard page together, so one request can be used instead of 3)
 
-    user_id = request.json.get("userID")
-    heatmap = db.get("/users/" + user_id + "/heatmapData")
-    date = Date()
-    today = date.get_current_date().replace('/', '-')
-
-    # Heatmap has a date as the key, and the value is the number of cards reviewed that day
-    if heatmap is not None :
-        item_found = False
-        for item in heatmap:
-            if item == today:
-                item_found = True
-                # Increment data
-                heatmap[item] = str(int(heatmap[item]) + 1)
-
-        # If no data for today is recorded
-        if not item_found:
-            heatmap[today] = "1"
-    # If the heatmap has not been created yet
-    else :
-        heatmap = {}
-        heatmap[(today)] = "1"
-    db.save("/users/" + user_id + "/heatmapData", heatmap)
-    return jsonify(heatmap)
-
-@statistics_routes.route("/api/get-heatmap", methods=["POST"])
-def get_heatmap() :
-    """ Get the user's heatmap data
-        Requests should have json in the following format:
-    {
-        "userID": "my id"
-    }
-    """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
-    user_id = request.json.get("userID")
-    heatmap = db.get("/users/" + user_id + "/heatmapData")
-    return jsonify(heatmap)
 
 @statistics_routes.route("/api/get-weekly-xp", methods=["POST"])
 def get_weekly_xp() :
@@ -219,43 +176,59 @@ def get_total_xp() :
     user_id = request.json.get("userID")
     total_xp = db.get("/users/" + user_id + "/statistics/totalXP")
     return jsonify(total_xp)
+'''
+
+@statistics_routes.route("/api/update-heatmap", methods=["POST"])
+@validate_json(UPDATE_HEATMAP_FORMAT)
+def update_heatmap() :
+    """ Called when streak is updated
+        Requests should have json in the following format:
+    {
+        "userID": "my id"
+    }
+     """
+    user_id = request.json.get("userID")
+    date = Date()
+    today = date.get_current_date().replace('/', '-')
+
+    try:
+        heatmap = db.statistics.update_heatmap(user_id, today)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    return jsonify(heatmap)
+
+@statistics_routes.route("/api/get-heatmap", methods=["POST"])
+@validate_json(GET_HEATMAP_FORMAT)
+def get_heatmap() :
+    """ Get the user's heatmap data
+        Requests should have json in the following format:
+    {
+        "userID": "my id"
+    }
+    """
+    user_id = request.json.get("userID")
+    try:
+        return db.statistics.get_heatmap(user_id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
+@validate_json(CALCULATE_STREAK_FORMAT)
 def calculate_streak():
     """ Calculate the user's streak, and increase it if needed
         json should be included with the request as the following:
         {
-            "userID": "my id"
+            "userID": "my id",
         }
         ?increase=true can be added to the streak to increase it if needed
      """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     user_id = request.json.get("userID")
     date = Date()
-    stats = db.get("/users/" + user_id + "/statistics/")
-    last_streak = stats["lastStreak"]
-    today = date.get_current_date()
-    difference = date.compare_dates(last_streak, today)
 
-    # If the streak needs to be reset
-    if difference < -1:
-        db.save("/users/" + user_id + "/statistics/streak", "0")
-        db.save("/users/" + user_id + "/statistics/lastStreak", today)
-    if difference == -1 and request.args.get("increase") == "true":
-        db.increment("/users/" + user_id + "/statistics/streak", 1)
-        db.save("/users/" + user_id + "/statistics/lastStreak", today)
-    time.sleep(1)
-    return jsonify({"streak": db.get("/users/" + user_id + "/statistics/streak")}, 200)
+    try:
+        new_streak = db.statistics.calculate_streak(user_id, date, request.args.get("increase"))
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+    return jsonify({"streak": new_streak}, 200)

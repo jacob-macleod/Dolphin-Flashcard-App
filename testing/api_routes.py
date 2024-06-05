@@ -1,8 +1,23 @@
+"""A collection of API routes to be used in test_api.py
+"""
+
 class Routes:
+    """A collection of API routes to be used in test_api.py
+    """
     # authentication.py
     ROUTE_CREATE_ACCOUNT = {
         "url": "/api/create-account",
         "methods": ["POST"]
+    }
+
+    ROUTE_GET_USER = {
+        "url": "/api/get-user",
+        "methods": ["GET"]
+    }
+
+    ROUTE_GET_USER_STATS = {
+        "url": "/api/get-user-stats",
+        "methods": ["GET"]
     }
 
     ROUTE_FIREBASE_CONFIG = {
@@ -14,6 +29,11 @@ class Routes:
     ROUTE_CREATE_FLASHCARD = {
         "url": "/api/create-flashcard",
         "methods": ["POST"]
+    }
+
+    ROUTE_GET_FLASHCARD_ITEM = {
+        "url": "/api/get-flashcard-item",
+        "methods": ["GET"]
     }
 
     ROUTE_GET_FLASHCARD = {
@@ -39,10 +59,45 @@ class Routes:
 
     ROUTE_GET_HEATMAP = {
         "url": "/api/get-heatmap",
-        "methods": ["GET"]
+        "methods": ["POST"]
     }
 
     ROUTE_CALCULATE_STREAK = {
         "url": "/api/calculate-streak",
         "methods": ["POST"]
+    }
+
+    ROUTE_MOVE_FLASHCARD = {
+        "url": "/api/move-flashcard-set",
+        "methods": ["POST"]
+    }
+
+    ROUTE_CREATE_CARD_GOAL = {
+        "url": "/api/create-card-goal",
+        "methods": ["POST"]
+    }
+
+    ROUTE_CREATE_XP_GOAL = {
+        "url": "/api/create-xp-goal",
+        "methods": ["POST"]
+    }
+
+    ROUTE_UPDATE_GOAL_STATUS = {
+        "url": "/api/update-goal-status",
+        "methods": ["POST"]
+    }
+
+    ROUTE_EDIT_CARD_GOAL = {
+        "url": "/api/edit-card-goal",
+        "methods": ["POST"]
+    }
+
+    ROUTE_EDIT_XP_GOAL = {
+        "url": "/api/edit-xp-goal",
+        "methods": ["POST"]
+    }
+
+    ROUTE_DELETE_GOAL = {
+        "url": "/api/delete-goal",
+        "methods": ["DELETE"]
     }

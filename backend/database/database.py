@@ -15,16 +15,7 @@ class Database:
             print ("Using local database")
             self.db = LocalDatabase()
 
-    def get(self, path):
-        """ Get data from database """
-        return self.db.get(path)
-
-    def save(self, path, data) :
-        """ Save data to a path """
-        self.db.save(path, data)
-
-    def increment(self, path, increment_amount) :
-        """ Increment a number stored as a string from a path in the database """
-        self.db.increment(path, increment_amount)
+    def __getattr__(self, name):
+        return getattr(self.db, name)
 
 database = Database()
