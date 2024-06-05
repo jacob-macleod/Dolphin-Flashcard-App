@@ -979,4 +979,22 @@ class TestApi(unittest.TestCase):
             response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
             assert False
         except:
-            return True
+            assert True
+
+        # Test case 3: User exists when fetching heatmap data
+        request_data = {
+            "userID": "1"
+        }
+        response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], request_data)
+        assert response == {"05-06-2024": "2"}
+
+        # Test case 4: User does not exist when fetching heatmap data
+        request_data = {
+            "userID": "Invalid User"
+        }
+        try:
+            # This should not run
+            response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], request_data)
+            assert False
+        except:
+            assert True

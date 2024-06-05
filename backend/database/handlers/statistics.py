@@ -44,6 +44,19 @@ class Statistics(DatabaseHandler):
         return self._context.collection(self._db_name).document(user_id).get().to_dict()
 
     def update_heatmap(self, user_id:str, today:str):
+        """
+        Increment the heatmap data for the current date for a user
+
+        Args:
+            user_id (str): The user id to update for
+            today (str): The current date in the format "DD-MM-YYYY"
+
+        Raises:
+            ValueError: Raised when the user id does not exist
+
+        Returns:
+            dict: The updated heatmap data
+        """
         user_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
 
         # Heatmap has a date as the key, and the value is the number of cards reviewed that day
@@ -65,5 +78,25 @@ class Statistics(DatabaseHandler):
         self._context.collection(self._db_name).document(user_id).set(
             user_data
         )
+
+        return user_data["heatmap_data"]
+
+    def get_heatmap(self, user_id:str):
+        """
+        Get the heatmap data for a user
+
+        Args:
+            user_id (str): The user ID to get the heatmap data for
+
+        Raises:
+            ValueError: Raised when the user does not exist
+
+        Returns:
+            dict: The full heatmap data for the user
+        """
+        user_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+
+        if user_data is None:
+            raise ValueError("User does not exist!")
 
         return user_data["heatmap_data"]

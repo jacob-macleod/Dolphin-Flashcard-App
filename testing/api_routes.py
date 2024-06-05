@@ -59,7 +59,7 @@ class Routes:
 
     ROUTE_GET_HEATMAP = {
         "url": "/api/get-heatmap",
-        "methods": ["GET"]
+        "methods": ["POST"]
     }
 
     ROUTE_CALCULATE_STREAK = {

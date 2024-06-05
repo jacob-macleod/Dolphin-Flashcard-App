@@ -14,6 +14,8 @@ UPDATE_HEATMAP_FORMAT = {
     "userID": "",
 }
 
+GET_HEATMAP_FORMAT = UPDATE_HEATMAP_FORMAT
+
 def increase_xp(user_id, increment_amount) :
     """ Increase the user's XP by 10 """
     db.increment("/users/" + user_id + "/statistics/totalXP", increment_amount)
@@ -135,6 +137,7 @@ def update_heatmap() :
     return jsonify(heatmap)
 
 @statistics_routes.route("/api/get-heatmap", methods=["POST"])
+@validate_json(GET_HEATMAP_FORMAT)
 def get_heatmap() :
     """ Get the user's heatmap data
         Requests should have json in the following format:
@@ -142,23 +145,11 @@ def get_heatmap() :
         "userID": "my id"
     }
     """
-    # Check the request json
-    expected_format = {
-        "userID": "",
-    }
-    result = check_request_json(
-        expected_format,
-        request.json
-    )
-    if result is not True:
-        return jsonify(
-            {
-                "error": result + ". The request should be in the format: " + str(expected_format)}
-        ), 400
-
     user_id = request.json.get("userID")
-    heatmap = db.get("/users/" + user_id + "/heatmapData")
-    return jsonify(heatmap)
+    try:
+        return db.statistics.get_heatmap(user_id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @statistics_routes.route("/api/get-weekly-xp", methods=["POST"])
 def get_weekly_xp() :
