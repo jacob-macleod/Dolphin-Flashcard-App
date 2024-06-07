@@ -71,7 +71,7 @@ def create_xp_goal() :
     {
         "userID": "my-id",
         "goalXP": "100",
-        endDate: "01/01/2022" (in dd/mm/yyyy format)
+        "endDate": "01/01/2022" (in dd/mm/yyyy format)
     }
     """
     try:

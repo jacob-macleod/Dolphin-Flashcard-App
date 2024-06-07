@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.0.1 - 2024-06-07
+
+### Added
+
+- Improved documentation for goals.py
+
 ## 3.0.0 - 2024-06-05
 
 ### Added
