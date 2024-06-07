@@ -30,11 +30,11 @@ class FlashcardCollection():
             flashcard_data (dict): The data for an individual flashcard
         """
         if datetime.strptime(
-            card["lastReview"], "%d/%m/%Y"
+            card["last_review"], "%d/%m/%Y"
         ) <= current_date:
             # Work out if the card is new, being learned, or learned
-            daily_review = card["reviewStatus"].split(".")[0]
-            sub_daily_review = card["reviewStatus"].split(".")[1]
+            daily_review = card["review_status"].split(".")[0]
+            sub_daily_review = card["review_status"].split(".")[1]
 
             if daily_review == "0" and sub_daily_review == "0":
                 self._not_started += 1
@@ -74,20 +74,20 @@ class FlashcardCollection():
                 # If it's a flashcard set, add it to the list
                 current_card = flashcards[flashcard_data]
                 item_to_append_to[flashcard_data] = {}
-                item_to_append_to[flashcard_data]["flashcardID"] = current_card["flashcardID"]
-                item_to_append_to[flashcard_data]["flashcardName"] = current_card["flashcardName"]
-                item_to_append_to[flashcard_data]["flashcardDescription"] = current_card["flashcardDescription"]
+
+                item_to_append_to[flashcard_data]["flashcardID"] = current_card["flashcard_id"]
+                item_to_append_to[flashcard_data]["flashcardName"] = flashcard_data
                 item_to_append_to[flashcard_data]["cards"] = {}
 
-                # Reset the card coounts
+                # Reset the card counts
                 self._not_started = 0
                 self._actively_studying = 0
                 self._recapping = 0
 
                 # If each individual flashcard is for today, add it to the set
-                for key, card in enumerate(current_card["cards"]):
-                    if self._is_for_today(card, current_date):
-                        item_to_append_to[flashcard_data]["cards"][key] = card
+                for _, card in enumerate(current_card["cards"]):
+                    if self._is_for_today(current_card["cards"][card], current_date):
+                        item_to_append_to[flashcard_data]["cards"][card] = current_card["cards"][card]
 
     @property
     def today_card_list(self):

@@ -1,10 +1,7 @@
 """ Provides a class to interact with the database """
-import os
-import json
 import firebase_admin
-from firebase_admin import auth
-from firebase_admin import db, credentials
-import pyrebase
+from firebase_admin import credentials
+from firebase_admin import credentials, firestore
 from database.database_abstract import DatabaseAbstract
 
 class FirebaseDatabase(DatabaseAbstract):
@@ -16,24 +13,12 @@ class FirebaseDatabase(DatabaseAbstract):
 
         # Firebase URL stored in local file in development,
         # and as a secret key in github actions in production
-        # Open firebase_url and save text to var
-        with open("firebase_url", "r") as f:
-            firebase_url = f.read()
+        # However, I don't know if firebase URL is still needed!
+        # TODO: Investigate if this is needed by seeing what happens when the file
+        # firebase_url is not provided
 
-        firebase_admin.initialize_app(cred, {"databaseURL": firebase_url})
-        print (json.load(open('firebase_config.json')))
-        pb = pyrebase.initialize_app(json.load(open('firebase_config.json')))
+        firebase_admin.initialize_app(cred)
+        # TODO: Investigate if firebase_config.json is needed, after the new changes
+        self.db = firestore.client()
 
-    def get(self, path):
-        """ Get data from database """
-        return db.reference(path).get()
-
-    def save(self, path, data) :
-        """ Save data to a path """
-        db.reference(path).set(data)
-
-    def increment(self, path, increment_amount) :
-        """ Increment a number stored as a string from a path in the database """
-        old_value = self.get(path)
-        new_value = str(int(old_value) + int(increment_amount))
-        self.save(path, new_value)
+        self._init_database_handlers()
