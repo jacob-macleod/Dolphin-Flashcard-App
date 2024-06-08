@@ -52,7 +52,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
                 <Heading3 text="Choose a folder:" />
 
                 <div className="card-overview">
-                  <FolderTreeView visible={visible} />
+                  <FolderTreeView visible={visible} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
                 </div>
 
                 <div className='button-container'>

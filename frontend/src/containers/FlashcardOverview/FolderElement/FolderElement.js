@@ -20,6 +20,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
 
     function toggleClick() {
         if (selected) {
+            setSelectedPath(null);
             setSelected(false);
         } else{
             setSelectedPath(path);

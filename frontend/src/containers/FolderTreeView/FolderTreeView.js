@@ -4,8 +4,7 @@ import FolderElement from '../FlashcardOverview/FolderElement/FolderElement';
 import '../Modal/MoveFolderDialogue/MoveFolderDialogue.css';
 import '../Modal/Modal.css';
 
-function FolderTreeView({ visible }) {
-    const [selectedPath, setSelectedPath] = React.useState(null);
+function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
     const flashcardData = visible.flashcardData;
 
     const renderElement = (element, folderName, path="") => {

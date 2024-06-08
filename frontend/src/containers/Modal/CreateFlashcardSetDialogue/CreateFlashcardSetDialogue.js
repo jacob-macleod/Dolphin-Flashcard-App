@@ -5,6 +5,7 @@ import Button from '../../../componments/Button';
 import Heading3 from '../../../componments/Text/Heading3/Heading3';
 import FolderTreeView from '../../FolderTreeView';
 import Paragraph from '../../../componments/Text/Paragraph';
+import ErrorText from '../../../componments/Text/ErrorText';
 import apiManager from '../../../api/Api';
 import {getCookie} from '../../../api/Authentication';
 import '../MoveFolderDialogue/MoveFolderDialogue.css'
@@ -16,6 +17,8 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
     const [flashcardName, setFlashcardName] = useState("");
     const [flashcardDescription, setFlashcardDescription] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessageVisibility, setErrorMessageVisibility] = useState("none");
     const [loadingIconVisible, setLoadingIconVisible] = useState("visisnle"); // If null, loading icon shows
     const buttonStyle = {
         display: "inline-grid",
@@ -34,12 +37,28 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
       setFlashcardDescription(event.target.value);
     };
 
+    useEffect(() => {
+      /* Generate an error message when the user clicks "Submit" */
+      if (selectedPath === null) {
+        setErrorMessage("Please select a folder!");
+      } else if (flashcardName === "") {
+        setErrorMessage("Please enter a name!");
+      } else if (flashcardDescription === "") {
+        setErrorMessage("Please enter a description!");
+      } else {
+        setErrorMessage(null);
+      }
+    }, [selectedPath, flashcardName, flashcardDescription]);
+
     function createSet() {
-      /*if (selectedPath != null) {
-        setLoadingIconVisible(null);
-        apiManager.createFlashcard(userID, flashcardName, flashcardDescription, folder, cards, loadEditFlashcardPage)
-      }*/
-     alert ("Clicked!");
+      setErrorMessageVisibility("block");
+      if (errorMessage === null) {
+        /*if (selectedPath != null) {
+          setLoadingIconVisible(null);
+          apiManager.createFlashcard(userID, flashcardName, flashcardDescription, folder, cards, loadEditFlashcardPage)
+        }*/
+        alert ("Clicked!");
+      }
     }
     useEffect(() => {
       setLoadingIconVisible("visible");
@@ -59,7 +78,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
                 <Heading3 text="Choose a folder:" />
 
                 <div className="card-overview" style={{cursor: "pointer"}}>
-                  <FolderTreeView visible={visible} />
+                  <FolderTreeView visible={visible} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
                 </div>
 
                 <Heading3 text="Choose other details:" />
@@ -74,8 +93,10 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
                     <input type="text" className="input" value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
                 </div>
 
+                <ErrorText text={errorMessage} style={{ display: errorMessageVisibility}} />
+
                 <div className='button-container'>
-                    <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
+                    <GhostButton text="Cancel" onClick={() => {setErrorMessageVisibility("none"); setVisible(false)}} style={buttonStyle} />
                     <Button text="Create" onClick={createSet} style={buttonStyle} />
                 </div>
 
