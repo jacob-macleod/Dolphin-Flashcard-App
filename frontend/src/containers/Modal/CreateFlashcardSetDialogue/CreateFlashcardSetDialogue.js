@@ -4,6 +4,7 @@ import GhostButton from '../../../componments/GhostButton';
 import Button from '../../../componments/Button';
 import Heading3 from '../../../componments/Text/Heading3/Heading3';
 import FolderTreeView from '../../FolderTreeView';
+import Paragraph from '../../../componments/Text/Paragraph';
 import apiManager from '../../../api/Api';
 import {getCookie} from '../../../api/Authentication';
 import '../MoveFolderDialogue/MoveFolderDialogue.css'
@@ -13,6 +14,8 @@ import { dropIn } from '../../../animations/animations';
 
 function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
+    const [flashcardName, setFlashcardName] = useState("");
+    const [flashcardDescription, setFlashcardDescription] = useState("");
     const [loadingIconVisible, setLoadingIconVisible] = useState("visisnle"); // If null, loading icon shows
     const buttonStyle = {
         display: "inline-grid",
@@ -21,17 +24,20 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     const flashcardID = visible.flashcardID;
     const currentPath = visible.path;
 
+    // When the flashcard name is chaned using the input box
+    const onFlashcardNameChange = (event) => {
+      setFlashcardName(event.target.value);
+    };
+
+    // When the flashcard description is chaned using the input box
+    const onFlashcardDescriptionChange = (event) => {
+      setFlashcardDescription(event.target.value);
+    };
+
     function createSet() {
       /*if (selectedPath != null) {
         setLoadingIconVisible(null);
-        apiManager.moveFlashcard(
-          getCookie("userID"),
-          currentPath,
-          flashcardID,
-          selectedPath,
-          setVisible,
-          setReload
-        )
+        apiManager.createFlashcard(userID, flashcardName, flashcardDescription, folder, cards, loadEditFlashcardPage)
       }*/
      alert ("Clicked!");
     }
@@ -52,14 +58,27 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
             >
                 <Heading3 text="Choose a folder:" />
 
-                <div className="card-overview">
+                <div className="card-overview" style={{cursor: "pointer"}}>
                   <FolderTreeView visible={visible} />
+                </div>
+
+                <Heading3 text="Choose other details:" />
+
+                <div className="input-container">
+                    <Paragraph text="Name: " style={{ display: "flex", alignItems: "center" }} />
+                    <input type="text" className="input" value={flashcardName} onChange={onFlashcardNameChange}/>
+                </div>
+
+                <div className="input-container">
+                    <Paragraph text="Description: " style={{ display: "flex", alignItems: "center" }} />
+                    <input type="text" className="input" value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
                 </div>
 
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
                     <Button text="Create" onClick={createSet} style={buttonStyle} />
                 </div>
+
                 <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={loadingIconVisible} />
                 </div>
