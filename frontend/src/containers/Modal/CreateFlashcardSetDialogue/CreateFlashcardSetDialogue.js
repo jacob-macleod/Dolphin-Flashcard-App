@@ -6,12 +6,12 @@ import Heading3 from '../../../componments/Text/Heading3/Heading3';
 import FolderTreeView from '../../FolderTreeView';
 import apiManager from '../../../api/Api';
 import {getCookie} from '../../../api/Authentication';
-import './MoveFolderDialogue.css'
+import '../MoveFolderDialogue/MoveFolderDialogue.css'
 import '../Modal.css';
 import DelayedElement from '../../DelayedElement';
 import { dropIn } from '../../../animations/animations';
 
-function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
+function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
     const [loadingIconVisible, setLoadingIconVisible] = useState("visisnle"); // If null, loading icon shows
     const buttonStyle = {
@@ -21,8 +21,8 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     const flashcardID = visible.flashcardID;
     const currentPath = visible.path;
 
-    function moveFlashcard() {
-      if (selectedPath != null) {
+    function createSet() {
+      /*if (selectedPath != null) {
         setLoadingIconVisible(null);
         apiManager.moveFlashcard(
           getCookie("userID"),
@@ -32,7 +32,8 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
           setVisible,
           setReload
         )
-      }
+      }*/
+     alert ("Clicked!");
     }
     useEffect(() => {
       setLoadingIconVisible("visible");
@@ -47,7 +48,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
               animate="visible"
               exit="exit"
               variants={dropIn}
-              style={view == "desktop" ? {height: "fit-content"} : null}
+              style={view !== "mobile" ? {height: "fit-content"} : null}
             >
                 <Heading3 text="Choose a folder:" />
 
@@ -57,7 +58,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
 
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
-                    <Button text="Move" onClick={moveFlashcard} style={buttonStyle} />
+                    <Button text="Create" onClick={createSet} style={buttonStyle} />
                 </div>
                 <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={loadingIconVisible} />
@@ -68,4 +69,4 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     );
 }
 
-export default MoveFolderDialogue;
+export default CreateFlashcardSetDialogue;

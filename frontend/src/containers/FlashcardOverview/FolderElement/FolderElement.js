@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from '../../../componments/Image';
-import Paragraph from '../../../componments/Paragraph';
+import Paragraph from '../../../componments/Text/Paragraph';
 
 import horizontalTriangle from '../../../static/horizontal-triangle.svg';
 import verticalTriangle from '../../../static/vertical-triangle.svg';
@@ -10,7 +10,7 @@ import verticalTriangleWhite from '../../../static/vertical-triangle-white.svg';
 import '../FlashcardFolder.css';
 import './FolderElement.css';
 
-function FlashcardFolder({ element, name, child, folderKey, path, selectedPath, setSelectedPath }) {
+function FolderElement({ element, name, child, folderKey, path, selectedPath, setSelectedPath }) {
     const [selected, setSelected] = React.useState(false);
     const [showChildren, setShowChildren] = useState(false);
 
@@ -19,13 +19,10 @@ function FlashcardFolder({ element, name, child, folderKey, path, selectedPath, 
     }
 
     function toggleClick() {
-        console.log("Clicked");
         if (selected) {
             setSelected(false);
         } else{
-            console.log("Setting selectedPath to", path);
             setSelectedPath(path);
-            console.log("Set selectedPath to", selectedPath);
             setSelected(true);
         }
     }
@@ -62,4 +59,4 @@ function FlashcardFolder({ element, name, child, folderKey, path, selectedPath, 
     );
 }
 
-export default FlashcardFolder;
+export default FolderElement;
