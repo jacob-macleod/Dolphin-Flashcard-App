@@ -15,7 +15,7 @@ import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import { getCookie } from '../api/Authentication';
 
-function Flashcards({ flashcardData }) {
+function Flashcards() {
   // Set general variables
   const title = "Flashcards";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);

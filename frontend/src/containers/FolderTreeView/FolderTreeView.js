@@ -5,7 +5,12 @@ import '../Modal/MoveFolderDialogue/MoveFolderDialogue.css';
 import '../Modal/Modal.css';
 
 function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
-    const flashcardData = visible.flashcardData;
+    // If visible is not an array, add a "Your account" folder
+    if (visible[0] !== "User has no flashcards") {
+        visible = {"Your Account": visible}
+    };
+    console.log("Visible is");
+    console.log(visible);
 
     const renderElement = (element, folderName, path="") => {
         if (path !== "") {
@@ -17,7 +22,7 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
         if (element.cards) {
         } else {
           return (
-            <FlashcardFolder
+            /*<FlashcardFolder
               element={element}
               name={folderName}
               path={path}
@@ -25,23 +30,32 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
               selectedPath={selectedPath}
               setSelectedPath={setSelectedPath}
               child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
+            />*/
+            <FolderElement
+                element={element}
+                name={folderName}
+                path={folderName}
+                folderKey={folderName + element.flashcardID}
+                selectedPath={selectedPath}
+                setSelectedPath={setSelectedPath}
+                child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
             />
           );
         }
     };
 
     if (visible[0] !== "User has no flashcards") {
-        return Object.entries(flashcardData).map(([key, value]) => renderElement(value, key))
+        return Object.entries(visible).map(([key, value]) => renderElement(value, key))
     } else {
         return (
             <FolderElement
-            element={<div></div>}
-            name={"Your Account"}
-            path={""}
-            folderKey={""}
-            selectedPath={selectedPath}
-            setSelectedPath={setSelectedPath}
-            child={null}
+                element={<div></div>}
+                name={"Your Account"}
+                path={""}
+                folderKey={""}
+                selectedPath={selectedPath}
+                setSelectedPath={setSelectedPath}
+                child={null}
             />
         );
     }

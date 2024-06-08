@@ -23,6 +23,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
             setSelectedPath(null);
             setSelected(false);
         } else{
+            console.log(path);
             setSelectedPath(path);
             setSelected(true);
         }

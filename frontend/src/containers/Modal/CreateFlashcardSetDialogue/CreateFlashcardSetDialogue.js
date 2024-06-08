@@ -70,8 +70,8 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
 
     useEffect(() => {
       if (loadEditFlashcardPage) {
-        alert ("Loading page");
         setLoadingIconVisible(false);
+        //window.open("/edit-flashcard-set?newSet=true", "_self")
       }
     }, [loadEditFlashcardPage]);
 
