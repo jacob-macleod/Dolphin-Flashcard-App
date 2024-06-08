@@ -20,6 +20,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     const [errorMessage, setErrorMessage] = useState(null);
     const [errorMessageVisibility, setErrorMessageVisibility] = useState("none");
     const [loadingIconVisible, setLoadingIconVisible] = useState("visisnle"); // If null, loading icon shows
+    const [loadEditFlashcardPage, setLoadEditFlashcardPage] = useState(false);
     const buttonStyle = {
         display: "inline-grid",
         margin: "0px 16px"
@@ -53,13 +54,27 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     function createSet() {
       setErrorMessageVisibility("block");
       if (errorMessage === null) {
-        /*if (selectedPath != null) {
+        if (selectedPath != null) {
           setLoadingIconVisible(null);
-          apiManager.createFlashcard(userID, flashcardName, flashcardDescription, folder, cards, loadEditFlashcardPage)
-        }*/
-        alert ("Clicked!");
+          apiManager.createFlashcard(
+            getCookie("userID"),
+            flashcardName,
+            flashcardDescription,
+            selectedPath,
+            [],
+            setLoadEditFlashcardPage
+          )
+        }
       }
     }
+
+    useEffect(() => {
+      if (loadEditFlashcardPage) {
+        alert ("Loading page");
+        setLoadingIconVisible(false);
+      }
+    }, [loadEditFlashcardPage]);
+
     useEffect(() => {
       setLoadingIconVisible("visible");
     }, [visible]);
