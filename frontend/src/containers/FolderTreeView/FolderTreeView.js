@@ -21,6 +21,16 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
 
         if (element.cards) {
         } else {
+        // Make sure the path stays as "" for the first item, which is the root folder
+        // But shown to the user as a folder called "Your Account"
+        var pathName;
+        if (folderName === "Your Account") {
+            path = ""
+            pathName = ""
+        } else {
+            pathName = folderName;
+        }
+
           return (
             /*<FlashcardFolder
               element={element}
@@ -34,7 +44,7 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
             <FolderElement
                 element={element}
                 name={folderName}
-                path={folderName}
+                path={pathName}
                 folderKey={folderName + element.flashcardID}
                 selectedPath={selectedPath}
                 setSelectedPath={setSelectedPath}

@@ -13,7 +13,6 @@ import './FolderElement.css';
 function FolderElement({ element, name, child, folderKey, path, selectedPath, setSelectedPath }) {
     const [selected, setSelected] = React.useState(false);
     const [showChildren, setShowChildren] = useState(false);
-
     function toggleChildren() {
         setShowChildren(!showChildren);
     }
@@ -30,6 +29,9 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
     }
 
     useEffect(() => {
+        console.log("Selected path and path");
+        console.log(selectedPath);
+        console.log(path);
         if (selectedPath !== path) {
             setSelected(false);
         }
