@@ -12,3 +12,15 @@
     flex: 1 0 0;
     align-self: stretch;
 }
+
+.grey-italics{
+    flex: 1 0 0;
+    align-self: stretch;
+    color: var(--Grey-Text-Colour, #747474);
+
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+}

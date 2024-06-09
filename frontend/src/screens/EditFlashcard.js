@@ -10,10 +10,12 @@ import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
+import Paragraph from '../componments/Text/Paragraph';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
+import './EditFlashcard.css';
 import { getCookie } from '../api/Authentication';
 
 function Flashcards() {
@@ -35,10 +37,6 @@ function Flashcards() {
   const flashcardName = queryParams.get('flashcardName');
   const folder = queryParams.get('folder');
   const description = queryParams.get('flashcardDescription');
-
-  console.log("newSet: " + newSet);
-  console.log("flashcardName: " + flashcardName);
-  console.log("folder: " + folder);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -128,7 +126,14 @@ function Flashcards() {
               }}
             >
             <div style={{maxWidth: "1200px", margin: "auto"}}>
-              <p>Create a Flashcard</p>
+              <div className='flashcard-set-header'>
+                <p className='link'>
+                  &lt; Back to {newSet === "true" ? "flashcards" : "studying"}
+                </p>
+                <Paragraph text={
+                  folder == "" ? "'Your Account > " + flashcardName  + "'": folder + " > " + flashcardName + "'"
+                } type="grey-italics" />
+              </div>
             </div>
           </WhiteOverlay>
 
