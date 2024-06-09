@@ -71,7 +71,12 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     useEffect(() => {
       if (loadEditFlashcardPage) {
         setLoadingIconVisible(false);
-        //window.open("/edit-flashcard-set?newSet=true", "_self")
+        window.open(
+          "/edit-flashcard-set?newSet=true&flashcardName="
+          + flashcardName + "&folder=" + selectedPath
+          + "&flashcardDescription=" + flashcardDescription,
+          "_self"
+        );
       }
     }, [loadEditFlashcardPage]);
 

@@ -1,4 +1,5 @@
 import {React, useState, useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -22,6 +23,22 @@ function Flashcards() {
   const [moveFolderDialogueVisible, setMoveFolderDialogueVisible] = useState(false);
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
+  const [flashcardData, setFlashcardData] = useState(null);
+
+  // Use useLocation hook to get the current location object
+  const location = useLocation();
+  // Create a new URLSearchParams object with the search part of the location
+  const queryParams = new URLSearchParams(location.search);
+
+  // Get the query parameters from the URL
+  const newSet = queryParams.get('newSet');
+  const flashcardName = queryParams.get('flashcardName');
+  const folder = queryParams.get('folder');
+  const description = queryParams.get('flashcardDescription');
+
+  console.log("newSet: " + newSet);
+  console.log("flashcardName: " + flashcardName);
+  console.log("folder: " + folder);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -46,6 +63,19 @@ function Flashcards() {
   
     // Set up the event listener for resize
     window.addEventListener("resize", handleResize);
+
+    // Request the flashcard set details if it is not a new set
+    if (newSet === "true") {
+      setFlashcardData(
+        {
+          "cards": [],
+          "description": description,
+          "name": flashcardName
+        },
+      )
+    } else {
+      alert ("Getting set details");
+    }
 
     // Clean up the event listener when the component is unmounted
     return () => {
