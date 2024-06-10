@@ -16,7 +16,6 @@ app.register_blueprint(card_management_routes)
 app.register_blueprint(goal_routes)
 server_addr = ('0.0.0.0', 5000)
 
-
 # Serve the React frontend from the frontend/build folder
 @app.route('/', defaults={
     'path': ''})
