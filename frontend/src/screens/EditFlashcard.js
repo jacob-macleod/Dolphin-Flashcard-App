@@ -11,12 +11,17 @@ import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
 import Paragraph from '../componments/Text/Paragraph';
+import Heading4 from '../componments/Text/Heading4';
+import SearchBar from '../componments/SearchBar/SearchBar';
+import Button from '../componments/Button/Button';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './EditFlashcard.css';
+import '../containers/Modal/NewGoalPopup/NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
+import Heading5 from '../componments/Text/Heading5/Heading5';
 
 function Flashcards() {
   // Set general variables
@@ -25,6 +30,7 @@ function Flashcards() {
   const [moveFolderDialogueVisible, setMoveFolderDialogueVisible] = useState(false);
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
+  const [sortType, setSortType] = useState("most-recent");
   const [flashcardData, setFlashcardData] = useState(null);
 
   // Use useLocation hook to get the current location object
@@ -49,6 +55,10 @@ function Flashcards() {
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
     view == "mobile" ? "8px" : "16px"
   );
+
+  function handleOptionChange(event) {
+    setSortType(event.target.value);
+  }  
 
   // Manage resizing the window size when needed
   useEffect(() => {
@@ -121,20 +131,63 @@ function Flashcards() {
           <WhiteOverlay
             style={{
                 height: "max-content",
+                padding: "16px",
                 paddingBottom: view == "mobile" ? "80px" : "",
                 width: view == "desktop" ? "100%" : "calc(100% - 16px)"
               }}
             >
-            <div style={{maxWidth: "1200px", margin: "auto"}}>
-              <div className='flashcard-set-header'>
-                <p className='link'>
-                  &lt; Back to {newSet === "true" ? "flashcards" : "studying"}
-                </p>
-                <Paragraph text={
-                  folder == "" ? "'Your Account > " + flashcardName  + "'": folder + " > " + flashcardName + "'"
-                } type="grey-italics" />
+            <div className='flashcard-set-header'>
+              <p
+                className='link'
+                style={{paddingLeft: "16px"}}
+                onClick={() => {window.open("/flashcards", "_self")}}
+              >
+                &lt; Back to {newSet === "true" ? "flashcards" : "studying"}
+              </p>
+              <Paragraph text={
+                folder == "" ? '"Your Account > ' + flashcardName  + '"': folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
+              } type="grey-italics" />
               </div>
-            </div>
+              <div className="search-bar">
+                <SearchBar
+                  searchTerm={""}
+                  setSearchTerm={console.log}
+                  view={view}
+                  marginRight="0px"
+                  borderRadius="8px 0 0 8px"
+                  paddingBottom="8px"
+                  placeholder="Search..."
+                  width="100%"
+                />
+                <Button
+                  text="Search"
+                  onClick={() => {alert("Searching")}}
+                  style={{
+                    marginTop: "8px",
+                    marginBottom: "8px",
+                    borderRadius: "0 8px 8px 0",
+                    marginRight: "8px"
+                  }}
+                />
+              </div>
+              <div className='sort-dialogue'>
+                <Paragraph text="Sort:" />
+                <select className="dropdown" value={sortType} onChange={handleOptionChange}>
+                    <option value="a-z" className="option">A-Z</option>
+                    <option value="z-a" className="option">Z-A</option>
+                    <option value="most-recent" className="option">Most Recent</option>
+                    <option value="least-recent" className="option">Least Recent</option>
+                </select>
+              </div>
+              <Button text="+ New Card" onClick={() => {alert ("Creating new card")}} />
+              {
+                flashcardData != null && flashcardData.cards.length === 0
+                ? <Heading5
+                    text="You don't have any flashcards yet!"
+                    style={{margin: "8px"}}
+                  />
+                : <></>
+              }
           </WhiteOverlay>
 
         </GridItem>
