@@ -14,4 +14,4 @@ pip3 install -r requirements.txt
 pytest testing/
 
 # Stop Firestore emulator
-docker stop $(docker ps -aq --filter "ancestor=mtlynch/firestore-emulator-docker")
+#docker stop $(docker ps -aq --filter "ancestor=mtlynch/firestore-emulator-docker")

@@ -101,3 +101,8 @@ class Routes:
         "url": "/api/delete-goal",
         "methods": ["DELETE"]
     }
+
+    ROUTE_CREATE_FOLDER = {
+        "url": "/api/create-folder",
+        "methods": ["POST"]
+    }
