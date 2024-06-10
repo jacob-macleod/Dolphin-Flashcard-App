@@ -36,6 +36,11 @@ CREATE_FLASHCARD_FORMAT = {
     ]
 }
 
+CREATE_FOLDER_FORMAT = {
+    "userID": "",
+    "folder": ""
+}
+
 GET_FLASHCARD_FORMAT = {
     "userID": "",
     "folder": "",
@@ -131,6 +136,28 @@ def create_flashcard():
             "success": True}, 200)
     except Exception as e:
         # Return the error as a json object
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/create-folder", methods=["POST"])
+@validate_json(CREATE_FOLDER_FORMAT)
+def create_folder():
+    """ Create a folder for the user
+    Example request:
+    {
+        "userID": "my-id",
+        "folder": "parent-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        folder = request.json.get("folder")
+
+        db.folders.create_folder(user_id, folder)
+
+        return jsonify({
+            "success": "Folder " + folder + " created"
+        }), 200
+    except Exception as e:
         return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-flashcard", methods=["GET"])

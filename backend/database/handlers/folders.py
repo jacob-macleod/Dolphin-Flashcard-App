@@ -148,3 +148,37 @@ class Folders(DatabaseHandler):
             flashcard_name,
             cards
         )
+
+    def create_folder(
+        self,
+        user_id: str,
+        folder: str
+    ):
+        """
+        Create a folder in the database
+
+        Args:
+            user_id (str): The user id to save the folder to
+            folder (str): The folder path to create
+        """
+        folder_path = folder.split("/")
+        folder = self._context.collection(self._db_name).document(user_id)
+
+        folder_data = folder.get().get("data")
+        if folder_data is None:
+            folder_data = {}
+
+        current = folder_data
+
+        # Traverse the dictionary according to the given path
+        for key in folder_path[:-1]:
+                current = current.setdefault(key, {})
+
+        # Set the correct data to current, which will also change folder_data
+        current[folder_path[-1]] = {}
+
+        folder.set(
+            {
+                "data": folder_data
+            }
+        )
