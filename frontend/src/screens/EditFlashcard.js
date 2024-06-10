@@ -1,4 +1,5 @@
 import {React, useState, useEffect} from 'react';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -7,30 +8,41 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
-import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview';
-import DelayedElement from '../containers/DelayedElement';
-import Button from '../componments/Button';
-import GhostButton from '../componments/GhostButton';
-import SearchBar from '../componments/SearchBar/SearchBar';
-import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
-import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
+import Paragraph from '../componments/Text/Paragraph';
+import Heading4 from '../componments/Text/Heading4';
+import SearchBar from '../componments/SearchBar/SearchBar';
+import Button from '../componments/Button/Button';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
+import './EditFlashcard.css';
+import '../containers/Modal/NewGoalPopup/NewGoalPopup.css';
 import { getCookie } from '../api/Authentication';
+import Heading5 from '../componments/Text/Heading5/Heading5';
 
 function Flashcards() {
   // Set general variables
   const title = "Flashcards";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(null);
   const [moveFolderDialogueVisible, setMoveFolderDialogueVisible] = useState(false);
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
-  const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
+  const [sortType, setSortType] = useState("most-recent");
+  const [flashcardData, setFlashcardData] = useState(null);
+
+  // Use useLocation hook to get the current location object
+  const location = useLocation();
+  // Create a new URLSearchParams object with the search part of the location
+  const queryParams = new URLSearchParams(location.search);
+
+  // Get the query parameters from the URL
+  const newSet = queryParams.get('newSet');
+  const flashcardName = queryParams.get('flashcardName');
+  const folder = queryParams.get('folder');
+  const description = queryParams.get('flashcardDescription');
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -44,7 +56,9 @@ function Flashcards() {
     view == "mobile" ? "8px" : "16px"
   );
 
-  const [todayCards, setTodayCards] = useState(null);
+  function handleOptionChange(event) {
+    setSortType(event.target.value);
+  }  
 
   // Manage resizing the window size when needed
   useEffect(() => {
@@ -57,6 +71,19 @@ function Flashcards() {
   
     // Set up the event listener for resize
     window.addEventListener("resize", handleResize);
+
+    // Request the flashcard set details if it is not a new set
+    if (newSet === "true") {
+      setFlashcardData(
+        {
+          "cards": [],
+          "description": description,
+          "name": flashcardName
+        },
+      )
+    } else {
+      alert ("Getting set details");
+    }
 
     // Clean up the event listener when the component is unmounted
     return () => {
@@ -73,13 +100,6 @@ function Flashcards() {
     );
   }, [width]);
 
-  useEffect(() => {
-    if (reload) {
-      setReload(false);
-      apiManager.getTodayCards(getCookie("userID"), setTodayCards);
-    }
-  }, [reload]);
-
   return (
     <div style={{top: "0px"}}>
       <Helmet>
@@ -89,11 +109,8 @@ function Flashcards() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
-
       <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload}/>
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload}/>
-      <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload}/>
-
       <GridContainer layout={
         view != "mobile" ? "240px auto"
         : "auto"
@@ -114,40 +131,63 @@ function Flashcards() {
           <WhiteOverlay
             style={{
                 height: "max-content",
+                padding: "16px",
                 paddingBottom: view == "mobile" ? "80px" : "",
                 width: view == "desktop" ? "100%" : "calc(100% - 16px)"
               }}
             >
-            <div style={{maxWidth: "1200px", margin: "auto"}}>
-              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view}/>
-              <br></br>
-              <br></br>
-              <GridContainer classType="review-bar-wrapper" layout={view == "desktop" ? "260px auto 80px" : "auto"}>
-                {view == "desktop" ? <GridItem /> : <></>}
-                <ReviewBarChartKey view={view}/>
-                {view == "desktop" ? <GridItem /> : <></>}
-              </GridContainer>
-              <DelayedElement
-                child={<FlashcardOverview flashcardData={todayCards} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible} view={view}/>}
-                childValue={todayCards}
-              />
-              <div style={{float: "left"}}>
-                <GhostButton
-                  text="+ New Folder"
-                  style={{display: "inline-block", marginRight: "16px"}}
-                  onClick={() => {
-                    setCreateFolderDialogueVisible(todayCards);
-                  }}
+            <div className='flashcard-set-header'>
+              <p
+                className='link'
+                style={{paddingLeft: "16px"}}
+                onClick={() => {window.open("/flashcards", "_self")}}
+              >
+                &lt; Back to {newSet === "true" ? "flashcards" : "studying"}
+              </p>
+              <Paragraph text={
+                folder == "" ? '"Your Account > ' + flashcardName  + '"': folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
+              } type="grey-italics" />
+              </div>
+              <div className="search-bar">
+                <SearchBar
+                  searchTerm={""}
+                  setSearchTerm={console.log}
+                  view={view}
+                  marginRight="0px"
+                  borderRadius="8px 0 0 8px"
+                  paddingBottom="8px"
+                  placeholder="Search..."
+                  width="100%"
                 />
                 <Button
-                  text="+ New Set"
-                  style={{display: "inline-block"}}
-                  onClick={() => {
-                    setCreateCardDialogueVisible(todayCards);
+                  text="Search"
+                  onClick={() => {alert("Searching")}}
+                  style={{
+                    marginTop: "8px",
+                    marginBottom: "8px",
+                    borderRadius: "0 8px 8px 0",
+                    marginRight: "8px"
                   }}
                 />
               </div>
-            </div>
+              <div className='sort-dialogue'>
+                <Paragraph text="Sort:" />
+                <select className="dropdown" value={sortType} onChange={handleOptionChange}>
+                    <option value="a-z" className="option">A-Z</option>
+                    <option value="z-a" className="option">Z-A</option>
+                    <option value="most-recent" className="option">Most Recent</option>
+                    <option value="least-recent" className="option">Least Recent</option>
+                </select>
+              </div>
+              <Button text="+ New Card" onClick={() => {alert ("Creating new card")}} />
+              {
+                flashcardData != null && flashcardData.cards.length === 0
+                ? <Heading5
+                    text="You don't have any flashcards yet!"
+                    style={{margin: "8px"}}
+                  />
+                : <></>
+              }
           </WhiteOverlay>
 
         </GridItem>

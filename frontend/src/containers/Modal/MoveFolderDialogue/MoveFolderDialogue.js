@@ -3,7 +3,7 @@ import {motion} from 'framer-motion';
 import GhostButton from '../../../componments/GhostButton';
 import Button from '../../../componments/Button';
 import Heading3 from '../../../componments/Text/Heading3/Heading3';
-import FolderElement from '../../FlashcardOverview/FlashcardFolder/FlashcardFolder';
+import FolderTreeView from '../../FolderTreeView';
 import apiManager from '../../../api/Api';
 import {getCookie} from '../../../api/Authentication';
 import './MoveFolderDialogue.css'
@@ -18,7 +18,6 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
         display: "inline-grid",
         margin: "0px 16px"
     }
-    const flashcardData = visible.flashcardData;
     const flashcardID = visible.flashcardID;
     const currentPath = visible.path;
 
@@ -35,33 +34,9 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
         )
       }
     }
-
     useEffect(() => {
       setLoadingIconVisible("visible");
     }, [visible]);
-
-    const renderElement = (element, folderName, path="") => {
-        if (path !== "") {
-            path = path + "/" + folderName;
-        } else {
-            path = folderName;
-        }
-
-        if (element.cards) {
-        } else {
-          return (
-            <FolderElement
-              element={element}
-              name={folderName}
-              path={path}
-              folderKey={folderName + element.flashcardID}
-              selectedPath={selectedPath}
-              setSelectedPath={setSelectedPath}
-              child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
-            />
-          );
-        }
-      };
 
       return (
         visible !== false ?
@@ -76,7 +51,9 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
             >
                 <Heading3 text="Choose a folder:" />
 
-                <div className="card-overview">{Object.entries(flashcardData).map(([key, value]) => renderElement(value, key))}</div>
+                <div className="card-overview">
+                  <FolderTreeView visible={visible} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
+                </div>
 
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />

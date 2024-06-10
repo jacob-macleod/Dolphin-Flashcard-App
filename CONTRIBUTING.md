@@ -8,7 +8,7 @@ Welcome to this guide! Read more to learn how to contribute. For quick reference
 	* 1.2. [Running the React Frontend App](#RunningtheReactFrontendApp)
 * 2. [Contributing to the Backend API](#ContributingtotheBackendAPI)
 	* 2.1. [Quick Explanation](#QuickExplanation-1)
-	* 2.2. [Using a Local Files (Recommended)](#UsingaLocalFilesRecommended)
+	* 2.2. [Using a Local Setup (Recommended)](#UsingaLocalSetupRecommended)
 	* 2.3. [Using Firebase as the database](#UsingFirebaseasthedatabase)
 	* 2.4. [Serving the frontend](#Servingthefrontend)
 * 3. [Some Extra Information...](#SomeExtraInformation...)
@@ -65,7 +65,7 @@ To determine whether Firebase or local json files are used, `backend/database/da
 
 * If `type="production"`, the production Firebase server is used
 
-* If `type="local"`, local files are used
+* If `type="local"`, a local firebase server is used
 
 Depending on the value of the `type` variable, either the `FirebaseDatabase` or `LocalDatabase` classes are initialised, and the initialised instance is stored
 by the `Database` class as `db`. `FirebaseDatabase` and `LocalDatabase` inherit from the `DatabaseAbstract` abstract class, and so must have a `get`, `save` and
@@ -73,15 +73,19 @@ by the `Database` class as `db`. `FirebaseDatabase` and `LocalDatabase` inherit 
 
 Note that API documentation is in `docs/`
 
-###  2.2. <a name='UsingaLocalFilesRecommended'></a>Using a Local Files (Recommended)
+###  2.2. <a name='UsingaLocalSetupRecommended'></a>Using a Local Setup (Recommended)
 
-To contribute to the backend, using local files, follow these steps:
+To contribute to the backend, using local a local Firebase setup, follow these steps:
 
 * Clone the repository and `cd` into it
 
 * Run `pip install -r requirements.txt`
 
 * Make sure `backend/database/database_config.py` stores `type="local"`
+
+* Run `bash firebase_emulator.sh` - this runs a local firebase docker image for development
+  * `firebase_emulator.sh` is currently only avaliable for Linux, but since it only uses docker and a `curl` command, it should be fairly easy to port to Windows
+  * `docker` and `curl` are required to run the emulator
 
 * Run `python3 backend/main.py`
 
