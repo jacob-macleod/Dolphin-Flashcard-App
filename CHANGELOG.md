@@ -22,6 +22,18 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.1.0 - 2024-06-10
+
+### Added
+
+- New `CreateFlashcardSetDialogue` modal to handle creating a flashcard set
+- Added a basic edit-flashcard page  with most features and API calls unimplemented which the `CreateFlashcardSetDialogue` modal takes the user to when a flashcard is created. The page can be passed `newSet`, which if true, won't request flashcard data from the server. When implementing the edit-flashcard page fully, the page should use the API to read flashcard details when `newSet` is not true
+- Added basic `CreateFolderDialogue` modal, which does not work yet
+
+### Changed
+
+- Updated `CONTRIBUTING.md` to reflect the latest database changes
+
 ## 3.0.1 - 2024-06-07
 
 ### Added
