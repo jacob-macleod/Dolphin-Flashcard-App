@@ -649,11 +649,10 @@ class TestApi(unittest.TestCase):
                 }
             }
 
-    def test_create_folder_and_move_cards(self):
+    def test_move_card_to_new_location(self):
         """
-        Other card tests
+        Test to move flashcard set to a new location that does not exist
         """
-        # Test case 1: Moving card to new location
         request_data = {
             "userID": "2",
             "currentLocation": "my_folder1",
@@ -715,68 +714,6 @@ class TestApi(unittest.TestCase):
                     }
                 }
             }
-
-        """# Test case 2: Valid folder
-        request_data = {
-            "userID": "1",
-            "folder": "my_new_folder"
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
-        assert response == {'success': 'Folder created successfully'}
-
-        # Test case 3: Test the folder is actually created
-        request_data = {
-            "userID": "1"
-        }
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], request_data)
-        print (response)
-        assert response == {
-            'languages': {
-                'spanish': {
-                    'My second set': {
-                        'cards': {
-                            '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                                'last_review': date.get_current_date(), 'review_status': '0.0'
-                            },
-                            '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                                'last_review': date.get_current_date(), 'review_status': '0.0'
-                            }
-                        },
-                        'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147',
-                        'flashcardName': 'My second set'
-                    },
-                }
-            },
-            'My new set': {
-                'cards': {
-                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    },
-                    '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
-                },
-                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
-                'flashcardName': 'My new set'
-            },
-            'my_folder1': {
-                    'my_second_folder': {
-                        'Set with two folders': {
-                            'cards': {
-                                '14905360164829162384003180375530029836752830300568461727668114186655222344365': {
-                                    'last_review': date.get_current_date(), 'review_status': '0.0'
-                                },
-                                '87153283362492593072257432791028666090314536797789089922601298297131913616718': {
-                                    'last_review': date.get_current_date(), 'review_status': '0.0'
-                                }
-                            },
-                            'flashcardID': '14360501735762204737125532220923305690523298304800903823506033410378709611982',
-                            'flashcardName': 'Set with two folders'
-                        },
-                    },
-                },
-            'my_new_folder': "",
-            }"""
 
     def test_move_non_existant_set(self):
         """
@@ -841,19 +778,7 @@ class TestApi(unittest.TestCase):
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
         assert response == {
-            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
-                "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "completed",
-                "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
-            },
-            "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
+            "57997013792575944246209192693120489227510276371952697692817847646110720849732": {
                 "data": {
                 "goal_xp": 5,
                 "start_date": date.get_current_date(),
@@ -863,6 +788,18 @@ class TestApi(unittest.TestCase):
                 "fail_date": "",
                 "status": "in progress",
                 "title": "Gain 5 XP by " + date.get_current_date(),
+                "type": "XP"
+            },
+            "65927231998714811579564329190280177362923076654378806218586546420203161954544": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
@@ -907,7 +844,7 @@ class TestApi(unittest.TestCase):
         # Test case 4: Editing a valid XP card
         request_data = {
             "userID": "2",
-            "goalID": "54343396708103413832968857573083357508652358450712125381004588668888522542831",
+            "goalID": "57997013792575944246209192693120489227510276371952697692817847646110720849732",
             "newEndDate": "29/05/2027",
             "newTitle": "My new xp title",
             "newGoalXP": 50
@@ -935,21 +872,8 @@ class TestApi(unittest.TestCase):
             "userID": "2"
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
-        print (response)
         assert response == {
-            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
-                "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "completed",
-                "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
-            },
-            "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
+            "57997013792575944246209192693120489227510276371952697692817847646110720849732": {
                 "data": {
                 "goal_xp": 50,
                 "start_date": date.get_current_date(),
@@ -959,6 +883,18 @@ class TestApi(unittest.TestCase):
                 "fail_date": "",
                 "status": "in progress",
                 "title": "My new xp title",
+                "type": "XP"
+            },
+            "65927231998714811579564329190280177362923076654378806218586546420203161954544": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
@@ -977,7 +913,7 @@ class TestApi(unittest.TestCase):
         # Test case 7: A valid goal is deleted
         request_data = {
             "userID": "2",
-            "goalID": "54343396708103413832968857573083357508652358450712125381004588668888522542831"
+            "goalID": "57997013792575944246209192693120489227510276371952697692817847646110720849732"
         }
         response = self.delete_api(Routes.ROUTE_DELETE_GOAL['url'], request_data)
         assert response == {'success': 'Goal deleted successfully'}
@@ -995,9 +931,8 @@ class TestApi(unittest.TestCase):
             "userID": "2"
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
-        print (response)
         assert response == {
-            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
+            "65927231998714811579564329190280177362923076654378806218586546420203161954544": {
                 "data": {
                 "goal_xp": 0,
                 "start_date": date.get_current_date(),
@@ -1030,12 +965,9 @@ class TestApi(unittest.TestCase):
         request_data = {
             "userID": "1"
         }
+        today = date.get_current_date().replace("/", "-")
         response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
-        print ("============================")
-        print (date.get_current_date())
-        today = date.get_current_date().replace("-", "/")
-        print (today)
-        assert response == {'10-06-2024': '2'}
+        assert response == {today: "2"}
 
         # Test case 2: User does not exist
         request_data = {
