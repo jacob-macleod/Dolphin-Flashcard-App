@@ -58,7 +58,7 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
           } else {
             var pathToUse = selectedPath;
           }
-          alert(pathToUse + folderName);
+
           apiManager.createFolder(
             getCookie("userID"),
             pathToUse + folderName,

@@ -44,7 +44,7 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
             <FolderElement
                 element={element}
                 name={folderName}
-                path={pathName}
+                path={path}
                 folderKey={folderName + element.flashcardID}
                 selectedPath={selectedPath}
                 setSelectedPath={setSelectedPath}
