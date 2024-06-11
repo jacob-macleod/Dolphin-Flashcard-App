@@ -49,14 +49,22 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
       if (errorMessage === null) {
         if (selectedPath != null) {
           setLoadingIconVisible(null);
-          /*apiManager.createFlashcard(
+          setFolderName("");
+          setErrorMessageVisibility("none");
+          
+          // If selectedPath is not "", add a "/" to the end of the path
+          if (selectedPath !== "") {
+            var pathToUse = selectedPath + "/";
+          } else {
+            var pathToUse = selectedPath;
+          }
+          alert(pathToUse + folderName);
+          apiManager.createFolder(
             getCookie("userID"),
-            folderName,
-            flashcardDescription,
-            selectedPath,
-            [],
-            setLoadEditFlashcardPage
-          )*/
+            pathToUse + folderName,
+            setVisible,
+            setReload
+          )
         }
       }
     }

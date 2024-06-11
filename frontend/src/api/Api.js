@@ -189,7 +189,14 @@ class ApiManager {
         });
     }
 
-    createFlashcard(userID, flashcardName, flashcardDescription, folder, cards, loadEditFlashcardPage) {
+    createFlashcard(
+        userID,
+        flashcardName,
+        flashcardDescription,
+        folder,
+        cards,
+        loadEditFlashcardPage
+    ) {
         /*
         Create a flashcard
         */
@@ -206,6 +213,19 @@ class ApiManager {
             loadEditFlashcardPage(data);
         });
     
+    }
+
+    createFolder(userID, folderPath, setPopupVisible, setReload) {
+        const url = 'create-folder';
+        const data = {
+            "userID": userID,
+            "folder": folderPath
+        }
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+            setReload(true);
+        });
     }
 }
 
