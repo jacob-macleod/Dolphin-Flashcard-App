@@ -227,6 +227,30 @@ class ApiManager {
             setReload(true);
         });
     }
+
+    getFlashcard(userID, folder, flashcardName, setFlashcardData) {
+        const url = 'get-flashcard';
+        const data = {
+            "userID": userID,
+            "folder": folder,
+            "flashcardName": flashcardName
+        }
+
+        this.fetchData(data, url, flashcardData => {
+            setFlashcardData(flashcardData[0]);
+        });
+    }
+
+    getFlashcardItem(cardID, setFlashcardItem) {
+        const url = 'get-flashcard-item';
+        const data = {
+            "cardID": cardID
+        }
+
+        this.fetchData(data, url, flashcardItem => {
+            setFlashcardItem(flashcardItem[0]);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

@@ -32,6 +32,8 @@ function Flashcards() {
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [sortType, setSortType] = useState("most-recent");
   const [flashcardData, setFlashcardData] = useState(null);
+  const [flashcardsExist, setFlashcardsExist] = useState(null);
+  const [flashcardItems, setFlashcardItems] = useState([]);
 
   // Use useLocation hook to get the current location object
   const location = useLocation();
@@ -81,8 +83,14 @@ function Flashcards() {
           "name": flashcardName
         },
       )
+      setFlashcardsExist(false);
     } else {
-      alert ("Getting set details");
+      apiManager.getFlashcard(
+        getCookie("userID"),
+        folder,
+        flashcardName,
+        setFlashcardData
+      );
     }
 
     // Clean up the event listener when the component is unmounted
@@ -90,6 +98,17 @@ function Flashcards() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  /*useEffect(() => {
+    console.log(flashcardData);
+    if (flashcardData != null && flashcardData.cards != null) {
+      if (flashcardData.cards.length == 0) {
+        setFlashcardsExist(false);
+      } else {
+        setFlashcardsExist(true);
+      }
+    }
+  }, [flashcardData]);*/
 
   useEffect(() => {
     setView(
@@ -99,6 +118,33 @@ function Flashcards() {
       view == "mobile" ? "8px" : "16px"
     );
   }, [width]);
+
+  // Get the flashcard data
+  useEffect(() => {
+    console.log(flashcardData)
+    const fetchCardData = async () => {
+      const cardPromises = flashcardData.cards.map((cardID) => {
+        console.log("Getting card data");
+        return new Promise((resolve) => {
+          apiManager.getFlashcardItem(cardID, (item) => {
+            resolve(item);
+          });
+        });
+      });
+
+      const cardData = await Promise.all(cardPromises);
+      setFlashcardItems(cardData);
+      setFlashcardsExist(true);
+    };
+
+    if (flashcardData != null && flashcardData.cards != null) {
+      if (flashcardData.cards.length == 0) {
+        setFlashcardsExist(false);
+      } else {
+        fetchCardData();
+      }
+    }
+  }, [flashcardData]);
 
   return (
     <div style={{top: "0px"}}>
@@ -181,12 +227,15 @@ function Flashcards() {
               </div>
               <Button text="+ New Card" onClick={() => {alert ("Creating new card")}} />
               {
-                flashcardData != null && flashcardData.cards.length === 0
-                ? <Heading5
+                flashcardsExist
+                ? flashcardItems.map((item) => (
+                    console.log(item),
+                    <li>front: {item.front} and back: {item.back}</li>
+                  ))
+                : <Heading5
                     text="You don't have any flashcards yet!"
                     style={{margin: "8px"}}
                   />
-                : <></>
               }
           </WhiteOverlay>
 
