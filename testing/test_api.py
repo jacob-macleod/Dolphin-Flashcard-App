@@ -997,3 +997,72 @@ class TestApi(unittest.TestCase):
             assert False
         except:
             assert True
+
+    def test_create_folder(self):
+        """
+        Test to create a folder
+        """
+        get_today_cards = {
+            "userID": "folderUser"
+        }
+        # Test case 1: Valid folder
+        request_data = {
+            "userID": "folderUser",
+            "folder": "my_folder/folder1"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+        assert response == {'success': 'Folder my_folder/folder1 created'}
+
+        # Check the folder has been created
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
+        assert response == {
+            'my_folder': {
+                'folder1': {}
+            }
+        }
+
+        # Test case 2: Create a folder with parent folder that contains data
+        request_data = {
+            "userID": "folderUser",
+            "folder": "my_folder/folder2"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+        assert response == {'success': 'Folder my_folder/folder2 created'}
+
+        # Check the folder has been created
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
+        assert response == {
+            'my_folder': {
+                'folder1': {},
+                'folder2': {}
+            }
+        }
+
+        # Test case 3: Folder which exists
+        request_data = {
+            "userID": "folderUser",
+            "folder": "my_folder/folder1"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+        assert response == {'success': 'Folder my_folder/folder1 created'}
+
+        # Check the folder has been created
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
+        assert response == {
+            'my_folder': {
+                'folder1': {},
+                'folder2': {}
+            }
+        }
+
+        # Test case 4: Invalid folder name
+        request_data = {
+            "userID": "folderUser",
+            "folder": "//my_fol/der/folder2/"
+        }
+        try:
+            # This should fail
+            response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+            assert False
+        except Exception:
+            assert True
