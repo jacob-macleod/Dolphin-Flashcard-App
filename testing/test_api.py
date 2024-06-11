@@ -778,19 +778,7 @@ class TestApi(unittest.TestCase):
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
         assert response == {
-            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
-                "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "completed",
-                "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
-            },
-            "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
+            "57997013792575944246209192693120489227510276371952697692817847646110720849732": {
                 "data": {
                 "goal_xp": 5,
                 "start_date": date.get_current_date(),
@@ -800,6 +788,18 @@ class TestApi(unittest.TestCase):
                 "fail_date": "",
                 "status": "in progress",
                 "title": "Gain 5 XP by " + date.get_current_date(),
+                "type": "XP"
+            },
+            "65927231998714811579564329190280177362923076654378806218586546420203161954544": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
@@ -844,7 +844,7 @@ class TestApi(unittest.TestCase):
         # Test case 4: Editing a valid XP card
         request_data = {
             "userID": "2",
-            "goalID": "54343396708103413832968857573083357508652358450712125381004588668888522542831",
+            "goalID": "57997013792575944246209192693120489227510276371952697692817847646110720849732",
             "newEndDate": "29/05/2027",
             "newTitle": "My new xp title",
             "newGoalXP": 50
@@ -872,21 +872,8 @@ class TestApi(unittest.TestCase):
             "userID": "2"
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
-        print (response)
         assert response == {
-            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
-                "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "completed",
-                "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
-            },
-            "54343396708103413832968857573083357508652358450712125381004588668888522542831": {
+            "57997013792575944246209192693120489227510276371952697692817847646110720849732": {
                 "data": {
                 "goal_xp": 50,
                 "start_date": date.get_current_date(),
@@ -896,6 +883,18 @@ class TestApi(unittest.TestCase):
                 "fail_date": "",
                 "status": "in progress",
                 "title": "My new xp title",
+                "type": "XP"
+            },
+            "65927231998714811579564329190280177362923076654378806218586546420203161954544": {
+                "data": {
+                "goal_xp": 0,
+                "start_date": date.get_current_date(),
+                "starting_xp": "0"
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP"
             },
             "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
@@ -914,7 +913,7 @@ class TestApi(unittest.TestCase):
         # Test case 7: A valid goal is deleted
         request_data = {
             "userID": "2",
-            "goalID": "54343396708103413832968857573083357508652358450712125381004588668888522542831"
+            "goalID": "57997013792575944246209192693120489227510276371952697692817847646110720849732"
         }
         response = self.delete_api(Routes.ROUTE_DELETE_GOAL['url'], request_data)
         assert response == {'success': 'Goal deleted successfully'}
@@ -932,9 +931,8 @@ class TestApi(unittest.TestCase):
             "userID": "2"
         }
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
-        print (response)
         assert response == {
-            "39044324231811698044465195446002182549597141351219460081680269200524449525456": {
+            "65927231998714811579564329190280177362923076654378806218586546420203161954544": {
                 "data": {
                 "goal_xp": 0,
                 "start_date": date.get_current_date(),
@@ -967,8 +965,9 @@ class TestApi(unittest.TestCase):
         request_data = {
             "userID": "1"
         }
+        today = date.get_current_date().replace("/", "-")
         response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
-        assert response == {"05-06-2024": "2"}
+        assert response == {today: "2"}
 
         # Test case 2: User does not exist
         request_data = {
@@ -986,7 +985,7 @@ class TestApi(unittest.TestCase):
             "userID": "1"
         }
         response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], request_data)
-        assert response == {"05-06-2024": "2"}
+        assert response == {today: "2"}
 
         # Test case 4: User does not exist when fetching heatmap data
         request_data = {
@@ -997,4 +996,73 @@ class TestApi(unittest.TestCase):
             response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], request_data)
             assert False
         except:
+            assert True
+
+    def test_create_folder(self):
+        """
+        Test to create a folder
+        """
+        get_today_cards = {
+            "userID": "folderUser"
+        }
+        # Test case 1: Valid folder
+        request_data = {
+            "userID": "folderUser",
+            "folder": "my_folder/folder1"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+        assert response == {'success': 'Folder my_folder/folder1 created'}
+
+        # Check the folder has been created
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
+        assert response == {
+            'my_folder': {
+                'folder1': {}
+            }
+        }
+
+        # Test case 2: Create a folder with parent folder that contains data
+        request_data = {
+            "userID": "folderUser",
+            "folder": "my_folder/folder2"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+        assert response == {'success': 'Folder my_folder/folder2 created'}
+
+        # Check the folder has been created
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
+        assert response == {
+            'my_folder': {
+                'folder1': {},
+                'folder2': {}
+            }
+        }
+
+        # Test case 3: Folder which exists
+        request_data = {
+            "userID": "folderUser",
+            "folder": "my_folder/folder1"
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+        assert response == {'success': 'Folder my_folder/folder1 created'}
+
+        # Check the folder has been created
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
+        assert response == {
+            'my_folder': {
+                'folder1': {},
+                'folder2': {}
+            }
+        }
+
+        # Test case 4: Invalid folder name
+        request_data = {
+            "userID": "folderUser",
+            "folder": "//my_fol/der/folder2/"
+        }
+        try:
+            # This should fail
+            response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+            assert False
+        except Exception:
             assert True

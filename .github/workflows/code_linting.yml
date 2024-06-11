@@ -26,7 +26,7 @@ jobs:
           sudo apt-get install docker
       - name: Run pytest
         run: |
-          bash testing/run_tests.sh
+          bash testing/run_tests.sh || exit $?
 
   attempt-build:
     runs-on: ubuntu-latest

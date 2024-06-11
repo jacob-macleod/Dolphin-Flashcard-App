@@ -22,6 +22,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.2.0 - 2024-06-11
+
+### Added
+
+- Added ability to create a folder
+- Added new API endpoint to create folder
+- Added unit tests for `create-folder` endpoint
+
 ## 3.1.0 - 2024-06-10
 
 ### Added
