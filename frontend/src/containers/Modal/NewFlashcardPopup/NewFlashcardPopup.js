@@ -68,11 +68,9 @@ function NewFlashcardPopup({
     }, [requestResponse]);
 
     useEffect(() => {
-        if (visible === true){
-            setTerm(initialTerm);
-            setDefinition(initialDefinition);
-        }
-    }, [visible])
+        setTerm(initialTerm);
+        setDefinition(initialDefinition);
+    }, [visible, initialTerm, initialDefinition])
 
     const buttonStyle = {
         marginLeft: "8px",

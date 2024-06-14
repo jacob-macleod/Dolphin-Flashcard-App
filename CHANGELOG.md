@@ -22,6 +22,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.4.0 - 2024-06-15
+
+### Changed
+
+- Turned the edit flashcard popup into a WYSIWYG editor
+
+### Fixed
+
+- Fixed some issues in pipelines
+
 ## 3.3.0 - 2024-06-15
 
 ### Added
