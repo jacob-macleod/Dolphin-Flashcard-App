@@ -4,6 +4,7 @@ import SignInPage from './screens/SignIn';
 import MainPage from "./screens/MainPage";
 import Flashcards from './screens/Flashcards';
 import EditFlashcard from './screens/EditFlashcard';
+import StudyFlashcard from './screens/StudyFlashcard';
 import { getCookie } from './api/Authentication';
 
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/dashboard" element={<MainPage userID={userID} setUserID={setUserID}/>} />
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/edit-flashcard-set" element={<EditFlashcard />} />
+          <Route path="/study" element={<StudyFlashcard />} />
         </Routes>
       </BrowserRouter>
     </>
