@@ -1,0 +1,4 @@
+.text-box-container{
+    display: grid;
+    grid-template-columns: auto auto;
+}

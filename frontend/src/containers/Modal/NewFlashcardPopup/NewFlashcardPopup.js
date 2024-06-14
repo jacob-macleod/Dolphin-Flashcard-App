@@ -7,6 +7,7 @@ import Modal from '../Modal';
 import DelayedElement from '../../DelayedElement';
 import apiManager from '../../../api/Api';
 import '../Modal.css';
+import './NewFlashcardPopup.css';
 import { getCookie } from '../../../api/Authentication';
 
 function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcardItems, setFlashcardItems, folder }) {
@@ -43,15 +44,22 @@ function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcard
         setLoadingIconVisible("visible");
     }, [requestResponse]);
 
-    return (
-        <Modal visible={visible} view={view} style={{height: "fit-content"}}>
-            <Heading3 text="Create a new flashcard:" />
-            <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm}/>
-            <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition}/>
+    const buttonStyle = {
+        marginLeft: "8px",
+        marginRight: "8px"
+    }
 
-            <div style={{display: "flex"}}>
-                <GhostButton text="Cancel" onClick={() => setVisible(false)} />
-                <Button text="Create" onClick={createFlashcard} />
+    return (
+        <Modal visible={visible} view={view} style={{height: "fit-content", width: "100%", maxWidth: "1000px"}}>
+            <Heading3 text="Create a new flashcard:" />
+            <div className="text-box-container">
+                <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm}/>
+                <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition}/>
+            </div>
+
+            <div style={{display: "flex", justifyContent: "flex-end"}}>
+                <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle}/>
+                <Button text="Create" onClick={createFlashcard} style={buttonStyle}/>
             </div>
 
             <div className={"loading-icon-wrapper"}>

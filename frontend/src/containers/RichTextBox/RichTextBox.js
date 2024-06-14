@@ -110,7 +110,7 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
     };
 
     return (
-        <>
+        <div>
             <BoldParagraph text={type} />
             <div className='text-effects'>
                 {activeButtons.bold ? (
@@ -203,7 +203,7 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
                 onClick={handleTextareaClick}
                 placeholder='Type here...'
             />
-        </>
+        </div>
     );
 }
 
