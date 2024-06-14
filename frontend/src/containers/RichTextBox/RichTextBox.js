@@ -8,8 +8,7 @@ import UnnumberedListIcon from '../../static/unnumbered-list-icon.svg';
 import NumberedListIcon from '../../static/numbered-list-icon.svg';
 import "./RichTextBox.css";
 
-function RichTextBox({ text = "", type }) {
-    const [flashcardData, setFlashcardData] = useState(text);
+function RichTextBox({ flashcardData, setFlashcardData, type }) {
     const [activeButtons, setActiveButtons] = useState({
         bold: false,
         italic: false,

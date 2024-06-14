@@ -157,7 +157,15 @@ function Flashcards() {
         </meta>
       </Helmet>
 
-      <NewFlashcardPopup visible={NewFlashcardPopupVisible} setVisible={setNewFlashcardPopupVisible} view={view} />
+      <NewFlashcardPopup
+        visible={NewFlashcardPopupVisible}
+        setVisible={setNewFlashcardPopupVisible}
+        view={view}
+        flashcardData={flashcardData}
+        flashcardItems={flashcardItems}
+        setFlashcardItems={setFlashcardItems}
+        folder={folder}
+      />
 
       <GridContainer layout={
         view != "mobile" ? "240px auto"

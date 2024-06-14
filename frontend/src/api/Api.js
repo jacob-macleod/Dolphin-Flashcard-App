@@ -195,19 +195,22 @@ class ApiManager {
         flashcardDescription,
         folder,
         cards,
-        loadEditFlashcardPage
+        loadEditFlashcardPage,
+        data=null
     ) {
         /*
         Create a flashcard
         */
         const url = 'create-flashcard';
-        const data = {
-            "userID": userID,
-            "flashcardName": flashcardName,
-            "flashcardDescription": flashcardDescription,
-            "folder": folder,
-            "cards": cards
-       }
+        if (data === null) {
+            data = {
+                "userID": userID,
+                "flashcardName": flashcardName,
+                "flashcardDescription": flashcardDescription,
+                "folder": folder,
+                "cards": cards
+            }
+        }
 
         this.fetchData(data, url, status => {
             loadEditFlashcardPage(data);
