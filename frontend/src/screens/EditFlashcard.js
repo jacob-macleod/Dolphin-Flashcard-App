@@ -8,12 +8,13 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
-import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
-import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
+import NewFlashcardPopup from '../containers/Modal/NewFlashcardPopup/NewFlashcardPopup';
 import Paragraph from '../componments/Text/Paragraph';
-import Heading4 from '../componments/Text/Heading4';
+import FlashcardRow from '../containers/FlashcardRow';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import Button from '../componments/Button/Button';
+import BoldParagraph from '../componments/Text/BoldParagraph/BoldParagraph';
+import DelayedElement from '../containers/DelayedElement';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -32,6 +33,13 @@ function Flashcards() {
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [sortType, setSortType] = useState("most-recent");
   const [flashcardData, setFlashcardData] = useState(null);
+  const [flashcardsExist, setFlashcardsExist] = useState(null);
+  const [flashcardItems, setFlashcardItems] = useState([]);
+  const [NewFlashcardPopupVisible, setNewFlashcardPopupVisible] = useState(false);
+  const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] = useState(false);
+  // Used when editing an existing flashcard
+  const [initialTerm, setInitialTerm] = useState("");
+  const [initialDefinition, setInitialDefinition] = useState("");
 
   // Use useLocation hook to get the current location object
   const location = useLocation();
@@ -81,8 +89,14 @@ function Flashcards() {
           "name": flashcardName
         },
       )
+      setFlashcardsExist(false);
     } else {
-      alert ("Getting set details");
+      apiManager.getFlashcard(
+        getCookie("userID"),
+        folder,
+        flashcardName,
+        setFlashcardData
+      );
     }
 
     // Clean up the event listener when the component is unmounted
@@ -90,6 +104,17 @@ function Flashcards() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  /*useEffect(() => {
+    console.log(flashcardData);
+    if (flashcardData != null && flashcardData.cards != null) {
+      if (flashcardData.cards.length == 0) {
+        setFlashcardsExist(false);
+      } else {
+        setFlashcardsExist(true);
+      }
+    }
+  }, [flashcardData]);*/
 
   useEffect(() => {
     setView(
@@ -100,6 +125,33 @@ function Flashcards() {
     );
   }, [width]);
 
+  // Get the flashcard data
+  useEffect(() => {
+    console.log(flashcardData)
+    const fetchCardData = async () => {
+      const cardPromises = flashcardData.cards.map((cardID) => {
+        console.log("Getting card data");
+        return new Promise((resolve) => {
+          apiManager.getFlashcardItem(cardID, (item) => {
+            resolve(item);
+          });
+        });
+      });
+
+      const cardData = await Promise.all(cardPromises);
+      setFlashcardItems(cardData);
+      setFlashcardsExist(true);
+    };
+
+    if (flashcardData != null && flashcardData.cards != null) {
+      if (flashcardData.cards.length == 0) {
+        setFlashcardsExist(false);
+      } else {
+        fetchCardData();
+      }
+    }
+  }, [flashcardData]);
+
   return (
     <div style={{top: "0px"}}>
       <Helmet>
@@ -109,8 +161,29 @@ function Flashcards() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
-      <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload}/>
-      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload}/>
+
+      <NewFlashcardPopup
+        visible={NewFlashcardPopupVisible}
+        setVisible={setNewFlashcardPopupVisible}
+        view={view}
+        flashcardData={flashcardData}
+        flashcardItems={flashcardItems}
+        setFlashcardItems={setFlashcardItems}
+        folder={folder}
+      />
+      <NewFlashcardPopup
+        visible={editFlashcardPopupVisible}
+        setVisible={setEditFlashcardPopupVisible}
+        view={view}
+        flashcardData={flashcardData}
+        flashcardItems={flashcardItems}
+        setFlashcardItems={setFlashcardItems}
+        folder={folder}
+        editExistingFlashcard={true}
+        initialTerm={initialTerm}
+        initialDefinition={initialDefinition}
+      />
+
       <GridContainer layout={
         view != "mobile" ? "240px auto"
         : "auto"
@@ -136,58 +209,88 @@ function Flashcards() {
                 width: view == "desktop" ? "100%" : "calc(100% - 16px)"
               }}
             >
-            <div className='flashcard-set-header'>
-              <p
-                className='link'
-                style={{paddingLeft: "16px"}}
-                onClick={() => {window.open("/flashcards", "_self")}}
-              >
-                &lt; Back to {newSet === "true" ? "flashcards" : "studying"}
-              </p>
-              <Paragraph text={
-                folder == "" ? '"Your Account > ' + flashcardName  + '"': folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
-              } type="grey-italics" />
-              </div>
-              <div className="search-bar">
-                <SearchBar
-                  searchTerm={""}
-                  setSearchTerm={console.log}
-                  view={view}
-                  marginRight="0px"
-                  borderRadius="8px 0 0 8px"
-                  paddingBottom="8px"
-                  placeholder="Search..."
-                  width="100%"
-                />
-                <Button
-                  text="Search"
-                  onClick={() => {alert("Searching")}}
-                  style={{
-                    marginTop: "8px",
-                    marginBottom: "8px",
-                    borderRadius: "0 8px 8px 0",
-                    marginRight: "8px"
-                  }}
-                />
-              </div>
-              <div className='sort-dialogue'>
-                <Paragraph text="Sort:" />
-                <select className="dropdown" value={sortType} onChange={handleOptionChange}>
-                    <option value="a-z" className="option">A-Z</option>
-                    <option value="z-a" className="option">Z-A</option>
-                    <option value="most-recent" className="option">Most Recent</option>
-                    <option value="least-recent" className="option">Least Recent</option>
-                </select>
-              </div>
-              <Button text="+ New Card" onClick={() => {alert ("Creating new card")}} />
-              {
-                flashcardData != null && flashcardData.cards.length === 0
-                ? <Heading5
-                    text="You don't have any flashcards yet!"
-                    style={{margin: "8px"}}
-                  />
-                : <></>
-              }
+              <div style={{maxWidth: "1200px", margin: "auto"}}>
+                <div className='flashcard-set-header'>
+
+                  <p
+                    className='link'
+                    style={{paddingLeft: "16px"}}
+                    onClick={() => {window.open("/flashcards", "_self")}}
+                  >
+
+                    &lt; Back to {newSet === "true" ? "flashcards" : "studying"}
+                  </p>
+
+                  <Paragraph text={
+                    folder == "" || folder === null ? '"Your Account > ' + flashcardName  + '"': folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
+                  } type="grey-italics" />
+                  </div>
+
+                  <div className="search-bar">
+                    <SearchBar
+                      searchTerm={""}
+                      setSearchTerm={console.log}
+                      view={view}
+                      marginRight="0px"
+                      borderRadius="8px 0 0 8px"
+                      paddingBottom="8px"
+                      placeholder="Search..."
+                      width="100%"
+                    />
+
+                    <Button
+                      text="Search"
+                      onClick={() => {alert("Searching")}}
+                      style={{
+                        marginTop: "8px",
+                        marginBottom: "8px",
+                        borderRadius: "0 8px 8px 0",
+                        marginRight: "8px"
+                      }}
+                    />
+                  </div>
+
+                  <div className='sort-dialogue'>
+                    <Paragraph text="Sort:" />
+                    <select className="dropdown" value={sortType} onChange={handleOptionChange}>
+                        <option value="a-z" className="option">A-Z</option>
+                        <option value="z-a" className="option">Z-A</option>
+                        <option value="most-recent" className="option">Most Recent</option>
+                        <option value="least-recent" className="option">Least Recent</option>
+                    </select>
+                  </div>
+
+                  <Button text="+ New Card" onClick={() => {
+                    setNewFlashcardPopupVisible(true);
+                  }} />
+
+                  <div className='two-column-text'>
+                      <BoldParagraph text="Term:" />
+                      <BoldParagraph text="Definition:" />
+                  </div>
+
+                  {
+                    flashcardData === null
+                    ? <div className={"loading-icon-wrapper"}>
+                        <DelayedElement child={<></>} childValue={null} />
+                    </div>
+                    : flashcardsExist
+                    ? flashcardItems.map((item) => (
+                        <FlashcardRow
+                          front={item.front}
+                          back={item.back}
+                          view={view}
+                          showEditPopup={setEditFlashcardPopupVisible}
+                          setInitialTerm={setInitialTerm}
+                          setInitialDefinition={setInitialDefinition}
+                        />
+                      ))
+                    : <Heading5
+                        text="You don't have any flashcards yet!"
+                        style={{margin: "8px"}}
+                      />
+                  }
+            </div>
           </WhiteOverlay>
 
         </GridItem>

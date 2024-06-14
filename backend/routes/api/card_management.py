@@ -160,7 +160,7 @@ def create_folder():
     except Exception as e:
         return jsonify(str(e)), 500
 
-@card_management_routes.route("/api/get-flashcard", methods=["GET"])
+@card_management_routes.route("/api/get-flashcard", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_FORMAT)
 def get_flashcard():
     """ Get a flashcard set based on the name and user ID
@@ -185,7 +185,7 @@ def get_flashcard():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
-@card_management_routes.route("/api/get-flashcard-item", methods=["GET"])
+@card_management_routes.route("/api/get-flashcard-item", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_ITEM)
 def get_flashcard_item():
     """ Get a flashcard item based on the card ID. Flashcard sets store

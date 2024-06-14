@@ -195,19 +195,22 @@ class ApiManager {
         flashcardDescription,
         folder,
         cards,
-        loadEditFlashcardPage
+        loadEditFlashcardPage,
+        data=null
     ) {
         /*
         Create a flashcard
         */
         const url = 'create-flashcard';
-        const data = {
-            "userID": userID,
-            "flashcardName": flashcardName,
-            "flashcardDescription": flashcardDescription,
-            "folder": folder,
-            "cards": cards
-       }
+        if (data === null) {
+            data = {
+                "userID": userID,
+                "flashcardName": flashcardName,
+                "flashcardDescription": flashcardDescription,
+                "folder": folder,
+                "cards": cards
+            }
+        }
 
         this.fetchData(data, url, status => {
             loadEditFlashcardPage(data);
@@ -225,6 +228,30 @@ class ApiManager {
         this.fetchData(data, url, status => {
             setPopupVisible(false);
             setReload(true);
+        });
+    }
+
+    getFlashcard(userID, folder, flashcardName, setFlashcardData) {
+        const url = 'get-flashcard';
+        const data = {
+            "userID": userID,
+            "folder": folder,
+            "flashcardName": flashcardName
+        }
+
+        this.fetchData(data, url, flashcardData => {
+            setFlashcardData(flashcardData[0]);
+        });
+    }
+
+    getFlashcardItem(cardID, setFlashcardItem) {
+        const url = 'get-flashcard-item';
+        const data = {
+            "cardID": cardID
+        }
+
+        this.fetchData(data, url, flashcardItem => {
+            setFlashcardItem(flashcardItem[0]);
         });
     }
 }

@@ -24,3 +24,8 @@
     width: fit-content;
     margin-left: 16px;
 }
+.two-column-text{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+}
