@@ -27,6 +27,19 @@ function NewFlashcardPopup({
     const [requestResponse, setRequestResponse] = useState("")
     const [loadingIconVisible, setLoadingIconVisible] = useState("visisble"); // If null, loading icon shows
 
+    function removeQueryParameter(url, param) {
+        let urlObj = new URL(url);
+        let params = new URLSearchParams(urlObj.search);
+      
+        // Remove the specified query parameter
+        params.delete(param);
+      
+        // Reconstruct the URL without the removed parameter
+        urlObj.search = params.toString();
+      
+        return urlObj.toString();
+    }
+
     function createFlashcard() {
         var newFlashcardItems = flashcardItems;
         // If the flashcard is being added, append the new data
@@ -59,6 +72,16 @@ function NewFlashcardPopup({
         console.log(newFlashcardItems);
         setLoadingIconVisible(null);
         setFlashcardItems(newFlashcardItems);
+        
+        // If the page has just been created, reload the page without the newSet parameter
+        if (!editExistingFlashcard) {
+            alert (window.location.href);
+            window.open(
+                removeQueryParameter(window.location.href, 'newSet'),
+                "_self"
+            );
+        }
+
     }
 
     useEffect(() => {
