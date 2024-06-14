@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 
 function sanitizeHtml(html) {
     return DOMPurify.sanitize(html, {
-        ALLOWED_TAGS: ['strong', 'em', 'u', 's', 'span', 'br'],
+        ALLOWED_TAGS: ['strong', 'em', 'u', 's', 'span', 'br', 'p', 'ol', 'li'],
         ALLOWED_ATTR: ['style'],
         FORBID_ATTR: ['class', 'id', 'onclick', 'onmouseover', 'onerror'],
         ALLOWED_STYLES: {
@@ -25,7 +25,6 @@ function sanitizeHtml(html) {
         .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
         .replace(/~~(.*?)~~/g, '<s>$1</s>')
         .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>');
-
     const sanitizedHtmlText = sanitizeHtml(htmlText);
 
     return (
@@ -38,7 +37,7 @@ function sanitizeHtml(html) {
                     paddingRight: "30px",
                 }}
                 >
-                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: htmlText }}/>
+                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: sanitizedHtmlText }}/>
                 </div>
             }
             style={{
