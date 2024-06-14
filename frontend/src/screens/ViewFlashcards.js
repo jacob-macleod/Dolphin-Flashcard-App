@@ -12,7 +12,7 @@ import useWindowSize from '../hooks/useWindowSize';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 
-function StudyFlashcard() {
+function ViewFlashcards() {
     const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   
     // Set variables for the size
@@ -70,4 +70,4 @@ function StudyFlashcard() {
   );
 }
 
-export default StudyFlashcard;
+export default ViewFlashcards;
