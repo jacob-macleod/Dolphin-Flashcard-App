@@ -10,15 +10,37 @@ import '../Modal.css';
 import './NewFlashcardPopup.css';
 import { getCookie } from '../../../api/Authentication';
 
-function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcardItems, setFlashcardItems, folder }) {
-    const [term, setTerm] = useState("");
-    const [definition, setDefinition] = useState("");
+function NewFlashcardPopup({
+    visible,
+    setVisible,
+    view,
+    flashcardData,
+    flashcardItems,
+    setFlashcardItems,
+    folder,
+    editExistingFlashcard=false,
+    initialTerm="",
+    initialDefinition=""
+    }) {
+    const [term, setTerm] = useState(initialTerm);
+    const [definition, setDefinition] = useState(initialDefinition);
     const [requestResponse, setRequestResponse] = useState("")
     const [loadingIconVisible, setLoadingIconVisible] = useState("visisble"); // If null, loading icon shows
 
     function createFlashcard() {
         var newFlashcardItems = flashcardItems;
-        newFlashcardItems.push({front: term, back: definition});
+        // If the flashcard is being added, append the new data
+        if (!editExistingFlashcard) {
+            newFlashcardItems.push({front: term, back: definition});
+        } else {
+            // If the flashcard is being edited, replace the data
+            for (var i = 0; i < newFlashcardItems.length; i++) {
+                if (newFlashcardItems[i].front === initialTerm && newFlashcardItems[i].back === initialDefinition) {
+                    newFlashcardItems[i].front = term;
+                    newFlashcardItems[i].back = definition;
+                }
+            }
+        }
 
         var flashcardDataRequest = {}
         flashcardDataRequest.cards = newFlashcardItems;
@@ -34,6 +56,7 @@ function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcard
             newFlashcardItems,
             setRequestResponse
         );
+        console.log(newFlashcardItems);
         setLoadingIconVisible(null);
         setFlashcardItems(newFlashcardItems);
     }
@@ -44,6 +67,13 @@ function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcard
         setLoadingIconVisible("visible");
     }, [requestResponse]);
 
+    useEffect(() => {
+        if (visible === true){
+            setTerm(initialTerm);
+            setDefinition(initialDefinition);
+        }
+    }, [visible])
+
     const buttonStyle = {
         marginLeft: "8px",
         marginRight: "8px"
@@ -51,7 +81,7 @@ function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcard
 
     return (
         <Modal visible={visible} view={view} style={{height: "fit-content", width: "100%", maxWidth: "1000px"}}>
-            <Heading3 text="Create a new flashcard:" />
+            <Heading3 text={editExistingFlashcard ? "Edit flashcard:" : "Create a new flashcard:"} />
             <div className="text-box-container">
                 <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm}/>
                 <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition}/>
@@ -59,7 +89,7 @@ function NewFlashcardPopup({ visible, setVisible, view, flashcardData, flashcard
 
             <div style={{display: "flex", justifyContent: "flex-end"}}>
                 <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle}/>
-                <Button text="Create" onClick={createFlashcard} style={buttonStyle}/>
+                <Button text={editExistingFlashcard ? "Update" : "Create"} onClick={createFlashcard} style={buttonStyle}/>
             </div>
 
             <div className={"loading-icon-wrapper"}>

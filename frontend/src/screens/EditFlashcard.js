@@ -35,6 +35,10 @@ function Flashcards() {
   const [flashcardsExist, setFlashcardsExist] = useState(null);
   const [flashcardItems, setFlashcardItems] = useState([]);
   const [NewFlashcardPopupVisible, setNewFlashcardPopupVisible] = useState(false);
+  const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] = useState(false);
+  // Used when editing an existing flashcard
+  const [initialTerm, setInitialTerm] = useState("");
+  const [initialDefinition, setInitialDefinition] = useState("");
 
   // Use useLocation hook to get the current location object
   const location = useLocation();
@@ -166,6 +170,18 @@ function Flashcards() {
         setFlashcardItems={setFlashcardItems}
         folder={folder}
       />
+      <NewFlashcardPopup
+        visible={editFlashcardPopupVisible}
+        setVisible={setEditFlashcardPopupVisible}
+        view={view}
+        flashcardData={flashcardData}
+        flashcardItems={flashcardItems}
+        setFlashcardItems={setFlashcardItems}
+        folder={folder}
+        editExistingFlashcard={true}
+        initialTerm={initialTerm}
+        initialDefinition={initialDefinition}
+      />
 
       <GridContainer layout={
         view != "mobile" ? "240px auto"
@@ -205,7 +221,7 @@ function Flashcards() {
                   </p>
 
                   <Paragraph text={
-                    folder == "" ? '"Your Account > ' + flashcardName  + '"': folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
+                    folder == "" || folder === null ? '"Your Account > ' + flashcardName  + '"': folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
                   } type="grey-italics" />
                   </div>
 
@@ -255,7 +271,14 @@ function Flashcards() {
                   {
                     flashcardsExist
                     ? flashcardItems.map((item) => (
-                        <FlashcardRow front={item.front} back={item.back} />
+                        <FlashcardRow
+                          front={item.front}
+                          back={item.back}
+                          view={view}
+                          showEditPopup={setEditFlashcardPopupVisible}
+                          setInitialTerm={setInitialTerm}
+                          setInitialDefinition={setInitialDefinition}
+                        />
                       ))
                     : <Heading5
                         text="You don't have any flashcards yet!"

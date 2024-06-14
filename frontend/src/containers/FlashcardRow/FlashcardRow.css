@@ -1,6 +1,7 @@
 .flashcard-row{
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Equal-width columns */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 16px; /* Equal-width columns */
     justify-items: center;
     column-gap: 14px;
+    align-items: center;
 }

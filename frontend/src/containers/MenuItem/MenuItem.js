@@ -4,7 +4,6 @@ import Image from '../../componments/Image/Image';
 import './MenuItem.css';
 
 function MenuItem({ text, clicked=false, src, imgUrl="", width="178px", margin=null, onClick=null, float=null}) {
-
     return (
         <div
             className={clicked ? "menu-item-clicked" : "menu-item"}
