@@ -1,20 +1,20 @@
 import React from 'react';
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import Paragraph from '../../componments/Text/Paragraph';
+import ReactMarkdown from 'react-markdown';
 
 function CardOverview({ text }) {
     return (
         <WhiteOverlay
             children={
-                <Paragraph
-                    text={text}
-                    style={{
-                        paddingTop: "22px",
-                        paddingBottom: "22px",
-                        paddingLeft: "30px",
-                        paddingRight: "30px",
-                    }}
-                />
+                <div style={{
+                    paddingTop: "22px",
+                    paddingBottom: "22px",
+                    paddingLeft: "30px",
+                    paddingRight: "30px",
+                }}>
+                    <ReactMarkdown>{text}</ReactMarkdown>
+                </div>
             }
             style={{
                 width: "100%",
