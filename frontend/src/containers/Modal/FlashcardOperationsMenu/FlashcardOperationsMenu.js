@@ -39,7 +39,9 @@ function CardOperationsPopup({ visible, showEditPopup, setVisible, view, setInit
                     setInitialDefinition(back);
                     showEditPopup(true)
                 }}/>
-                <MenuItem text="Delete" src={window.location.href} imgUrl={deleteIcon} margin="0px" float={float}/>
+                <MenuItem text="Delete" src={window.location.href} imgUrl={deleteIcon} margin="0px" float={float} onClick={() => {
+                    alert ("This hasn't been coded yet!");
+                }}/>
             </div>
         </div>
         : <></>

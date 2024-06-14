@@ -14,6 +14,7 @@ import FlashcardRow from '../containers/FlashcardRow';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import Button from '../componments/Button/Button';
 import BoldParagraph from '../componments/Text/BoldParagraph/BoldParagraph';
+import DelayedElement from '../containers/DelayedElement';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -269,7 +270,11 @@ function Flashcards() {
                   </div>
 
                   {
-                    flashcardsExist
+                    flashcardData === null
+                    ? <div className={"loading-icon-wrapper"}>
+                        <DelayedElement child={<></>} childValue={null} />
+                    </div>
+                    : flashcardsExist
                     ? flashcardItems.map((item) => (
                         <FlashcardRow
                           front={item.front}
