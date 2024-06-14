@@ -31,8 +31,12 @@
     padding: 16px;
     box-sizing: border-box;
     overflow-y: auto;
+    height: 100%;
   }
-  
+
+  .p{
+    margin: 0px;
+  }
 
 .text-effects{
     display: flex;

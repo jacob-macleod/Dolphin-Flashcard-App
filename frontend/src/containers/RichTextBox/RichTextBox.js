@@ -9,6 +9,7 @@ import BulletList from '@tiptap/extension-bullet-list';
 import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
+import Color from '@tiptap/extension-color'; // Add this import
 import { SketchPicker } from 'react-color';
 import BoldParagraph from '../../componments/Text/BoldParagraph/BoldParagraph';
 import Image from '../../componments/Image/Image';
@@ -33,12 +34,19 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
       OrderedList,
       ListItem,
       TextStyle,
+      Color, // Add this extension
     ],
     content: flashcardData,
     onUpdate: ({ editor }) => {
       setFlashcardData(editor.getHTML());
     },
   });
+
+  useEffect(() => {
+    if (editor && flashcardData !== editor.getHTML()) {
+      editor.commands.setContent(flashcardData);
+    }
+  }, [flashcardData, editor]);
 
   const handleColorChange = (color) => {
     setSelectedColor(color.hex);
@@ -63,15 +71,13 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
   );
 
   return (
-    <div>
+    <div className="editor-container">
       <BoldParagraph text={type} />
       <div className="text-effects">
         {renderButton(() => editor.chain().focus().toggleBold().run(), 'B', editor?.isActive('bold'))}
         {renderButton(() => editor.chain().focus().toggleItalic().run(), 'I', editor?.isActive('italic'))}
         {renderButton(() => editor.chain().focus().toggleUnderline().run(), 'U', editor?.isActive('underline'))}
         {renderButton(() => editor.chain().focus().toggleStrike().run(), 'S', editor?.isActive('strike'))}
-        {renderButton(() => editor.chain().focus().toggleBulletList().run(), <Image url={UnnumberedListIcon} width="16px" />, editor?.isActive('bulletList'))}
-        {renderButton(() => editor.chain().focus().toggleOrderedList().run(), <Image url={NumberedListIcon} width="16px" />, editor?.isActive('orderedList'))}
 
         <div className="text-effects">
           <GhostButton style={{ ...iconStyle, backgroundColor: selectedColor }} text="" onClick={() => setShowColorPicker(!showColorPicker)} />
@@ -86,6 +92,9 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
             </div>
           )}
         </div>
+
+        {renderButton(() => editor.chain().focus().toggleBulletList().run(), <Image url={UnnumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('bulletList'))}
+        {renderButton(() => editor.chain().focus().toggleOrderedList().run(), <Image url={NumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('orderedList'))}
       </div>
       <EditorContent editor={editor} className="rich-text-box" />
     </div>
