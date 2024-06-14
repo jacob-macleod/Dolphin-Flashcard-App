@@ -1,6 +1,5 @@
 import React from 'react';
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
-import Paragraph from '../../componments/Text/Paragraph';
 import ReactMarkdown from 'react-markdown';
 
 function CardOverview({ text }) {

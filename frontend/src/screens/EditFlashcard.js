@@ -8,8 +8,7 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
-import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
-import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
+import NewFlashcardPopup from '../containers/Modal/NewFlashcardPopup/NewFlashcardPopup';
 import Paragraph from '../componments/Text/Paragraph';
 import FlashcardRow from '../containers/FlashcardRow';
 import SearchBar from '../componments/SearchBar/SearchBar';
@@ -35,6 +34,7 @@ function Flashcards() {
   const [flashcardData, setFlashcardData] = useState(null);
   const [flashcardsExist, setFlashcardsExist] = useState(null);
   const [flashcardItems, setFlashcardItems] = useState([]);
+  const [NewFlashcardPopupVisible, setNewFlashcardPopupVisible] = useState(false);
 
   // Use useLocation hook to get the current location object
   const location = useLocation();
@@ -156,8 +156,9 @@ function Flashcards() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
-      <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload}/>
-      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload}/>
+
+      <NewFlashcardPopup visible={NewFlashcardPopupVisible} setVisible={setNewFlashcardPopupVisible} view={view} />
+
       <GridContainer layout={
         view != "mobile" ? "240px auto"
         : "auto"
@@ -234,7 +235,9 @@ function Flashcards() {
                     </select>
                   </div>
 
-                  <Button text="+ New Card" onClick={() => {alert ("Creating new card")}} />
+                  <Button text="+ New Card" onClick={() => {
+                    setNewFlashcardPopupVisible(true);
+                  }} />
 
                   <div className='two-column-text'>
                       <BoldParagraph text="Term:" />
