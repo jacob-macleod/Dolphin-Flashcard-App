@@ -13,8 +13,8 @@ function NewFlashcardPopup({ visible, setVisible, view }) {
     return (
         <Modal visible={visible} view={view}>
             <Heading3 text="Create a new flashcard:" />
-            <RichTextBox text=""/>
-            <RichTextBox text=""/>
+            <RichTextBox text="" type="Term:"/>
+            <RichTextBox text="" type="Definition:"/>
 
             <div style={{display: "flex"}}>
                 <GhostButton text="Cancel" onClick={() => setVisible(false)} />
