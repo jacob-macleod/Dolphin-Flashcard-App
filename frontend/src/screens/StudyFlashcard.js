@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from 'react';
+import {React, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -7,6 +7,8 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
+import FlashcardHeader from '../containers/FlashcardHeader';
+import useWindowSize from '../hooks/useWindowSize';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 
@@ -16,44 +18,11 @@ function StudyFlashcard() {
     // Set variables for the size
     const mobileBreakpoint = 650;
     const tabletBreakpoint = 1090;
-    const [width, setWidth] = useState(window.innerWidth);
-    const [view, setView] = useState(
-      width < mobileBreakpoint ? "mobile"
-      : width < tabletBreakpoint ? "tablet" : "desktop"
-    );
-    const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
-      view == "mobile" ? "8px" : "16px"
-    );
+    const view = useWindowSize(mobileBreakpoint, tabletBreakpoint);
+    const flashcardBoxHorizontalPadding = view === "mobile" ? "8px" : "16px";
 
-  // Set general variables
-  const title = "Study Flashcard";
-
-  // Manage resizing the window size when needed
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-  
-    // Set the initial window size
-    setWidth(window.innerWidth);
-  
-    // Set up the event listener for resize
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    setView(
-      width < mobileBreakpoint ? "mobile"
-      : width < tabletBreakpoint ? "tablet" : "desktop");
-    setFlashcardBoxHorizontalPadding(
-      view == "mobile" ? "8px" : "16px"
-    );
-  }, [width]);
+    // Set general variables
+    const title = "Study Flashcard";
 
   return (
     <div style={{top: "0px"}}>
@@ -89,9 +58,9 @@ function StudyFlashcard() {
                 width: view == "desktop" ? "100%" : "calc(100% - 16px)"
               }}
             >
-            <div style={{maxWidth: "1200px", margin: "auto"}}>
-              <p>Studying flashcard</p>
-            </div>
+                <FlashcardHeader newSet={false} flashcardName={"My Flashcard"} folder={"\"My folder"} type={"studyFlashcard"}/>
+                <div style={{maxWidth: "1200px", margin: "auto"}}>
+                </div>
           </WhiteOverlay>
 
         </GridItem>
