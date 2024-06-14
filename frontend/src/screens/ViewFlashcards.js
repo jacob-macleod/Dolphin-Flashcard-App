@@ -11,10 +11,13 @@ import FlashcardHeader from '../containers/FlashcardHeader';
 import useWindowSize from '../hooks/useWindowSize';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
+import "../componments/Text/Link/Link.css";
+import './ViewFlashcards.css';
 
 function ViewFlashcards() {
     const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
-  
+    const [mode, setMode] = useState("daily");
+
     // Set variables for the size
     const mobileBreakpoint = 650;
     const tabletBreakpoint = 1090;
@@ -60,6 +63,10 @@ function ViewFlashcards() {
             >
                 <FlashcardHeader newSet={false} flashcardName={"My Flashcard"} folder={"\"My folder"} type={"studyFlashcard"}/>
                 <div style={{maxWidth: "1200px", margin: "auto"}}>
+                  <div className='mode-selector-container'>
+                    <p className={mode === "daily" ? 'link' : "inactive-link"} onClick={() => {setMode("daily")}}>Your Daily Dose</p>
+                    <p className={mode === "total" ? 'link' : 'inactive-link'} onClick={() => {setMode("total")}}>All Cards</p>
+                  </div>
                 </div>
           </WhiteOverlay>
 
