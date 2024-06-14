@@ -1,0 +1,6 @@
+.flashcard-row{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+    column-gap: 14px;
+}
