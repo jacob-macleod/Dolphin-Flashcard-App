@@ -24,7 +24,11 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ## 3.3.0 - 2024-06-15
 
+### Added
+
 - Implemented edit flashcard page and created components for rendering flashcards
+
+### Fixed
 - Fixed unit tests
 
 ## 3.2.0 - 2024-06-11
