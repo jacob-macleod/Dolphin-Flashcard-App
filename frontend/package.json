@@ -5,6 +5,12 @@
   "dependencies": {
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tiptap/core": "^2.4.0",
+    "@tiptap/extension-text-style": "^2.4.0",
+    "@tiptap/extension-underline": "^2.4.0",
+    "@tiptap/pm": "^2.4.0",
+    "@tiptap/react": "^2.4.0",
+    "@tiptap/starter-kit": "^2.4.0",
     "@uiw/react-heat-map": "^2.2.2",
     "dompurify": "^3.1.5",
     "firebase": "^10.8.0",

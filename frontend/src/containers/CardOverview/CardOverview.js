@@ -16,10 +16,9 @@ function sanitizeHtml(html) {
         },
         FORBID_STYLE: ['width', 'height'],
     });
-}
+    }
 
-
-function CardOverview({ text }) {
+    function CardOverview({ text }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -39,13 +38,14 @@ function CardOverview({ text }) {
                     paddingRight: "30px",
                 }}
                 >
-                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: sanitizedHtmlText }}/>
+                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: htmlText }}/>
                 </div>
             }
             style={{
                 width: "100%",
                 margin: "7px",
                 padding: "0px",
+                height: "90%",
             }}
         />
     );
