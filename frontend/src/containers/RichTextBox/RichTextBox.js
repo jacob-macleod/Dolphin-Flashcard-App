@@ -74,9 +74,9 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
         } else if (buttonType === 'strikethrough') {
             insertTextAtCursor("~~");
         } else if (buttonType === 'unnumberedList') {
-            insertTextAtCursor("\n- ");
+            insertTextAtCursor("<br>\n- ");
         } else if (buttonType === 'numberedList') {
-            insertTextAtCursor("\n" + numberedListNumber + ". ");
+            insertTextAtCursor("<br>\n" + numberedListNumber + ". ");
             setNumberedListNumber(numberedListNumber + 1);
         } else if (buttonType === 'color') {
             insertTextAtCursor(`<span style="color:${selectedColor}"></span>`);
