@@ -8,7 +8,11 @@ import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import FlashcardHeader from '../containers/FlashcardHeader';
+import Heading4 from '../componments/Text/Heading4/Heading4';
+import CardOverview from '../containers/CardOverview/CardOverview';
+import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
+import Paragraph from '../componments/Text/Paragraph';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 import "../componments/Text/Link/Link.css";
@@ -62,10 +66,21 @@ function ViewFlashcards() {
               }}
             >
                 <FlashcardHeader newSet={false} flashcardName={"My Flashcard"} folder={"\"My folder"} type={"studyFlashcard"}/>
-                <div style={{maxWidth: "1200px", margin: "auto"}}>
+                <div style={{maxWidth: "548px", margin: "auto"}}>
                   <div className='mode-selector-container'>
                     <p className={mode === "daily" ? 'link' : "inactive-link"} onClick={() => {setMode("daily")}}>Your Daily Dose</p>
                     <p className={mode === "total" ? 'link' : 'inactive-link'} onClick={() => {setMode("total")}}>All Cards</p>
+                  </div>
+
+                  <Heading4 text={mode == "daily" ? "Regular study mode" : "All cards mode"}/>
+                  
+                  <CardOverview text="<strong>My card</strong> <p>My description</p>" showResponseOptions={mode==="daily"} showTurnOverButton={true}/>
+                
+                  <Paragraph text="10/12" type="grey" />
+                  <Heading4 text="Other modes" />
+                  <div className='button-container'>
+                    <Button text="Generate Quiz" disabled={true} />
+                    <Button text="Match Mode" disabled={true} />
                   </div>
                 </div>
           </WhiteOverlay>

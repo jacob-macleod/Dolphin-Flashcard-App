@@ -3,3 +3,9 @@
     grid-template-columns: auto auto;
     justify-content: space-evenly;
 }
+
+.button-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-evenly;
+}
