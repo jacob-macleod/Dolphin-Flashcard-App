@@ -12,7 +12,7 @@ const FlashcardHeader = ({ newSet, flashcardName, folder, type="editFlashcardHea
           onClick={() => {
             newSet === "true"
             ? window.open("/flashcards", "_self")
-            : window.open("/view?flashcardName=" + flashcardName + "&folder=" + folder, "_self")
+            : window.open("/view?flashcardName[]=" + flashcardName + "&folder[]=" + folder, "_self")
           }}
         >
           &lt; Back to {newSet === "true" ? "flashcards" : "studying"}

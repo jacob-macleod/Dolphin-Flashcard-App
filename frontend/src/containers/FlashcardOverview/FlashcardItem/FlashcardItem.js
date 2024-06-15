@@ -43,7 +43,10 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
     }
 
     function studyCard() {
-        alert ("Clicked!");
+        window.open(
+            "/view?flashcardName[]=" + element.flashcardName + "&folder[]=" + path,
+            "_self"
+        );
     }
 
     useEffect(() => {

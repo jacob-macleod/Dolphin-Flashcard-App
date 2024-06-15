@@ -75,7 +75,6 @@ function NewFlashcardPopup({
         
         // If the page has just been created, reload the page without the newSet parameter
         if (!editExistingFlashcard) {
-            alert (window.location.href);
             window.open(
                 removeQueryParameter(window.location.href, 'newSet'),
                 "_self"
