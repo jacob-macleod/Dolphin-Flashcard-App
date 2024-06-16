@@ -174,12 +174,12 @@ class ApiManager {
         });
     }
 
-    moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible, setReload) {
+    moveFlashcard(userID, currentLocation, flashcardName, moveLocation, setPopupVisible, setReload) {
         const url = 'move-flashcard-set';
         const data = {
             "userID": userID,
             "currentLocation": currentLocation,
-            "flashcardID": flashcardID,
+            "flashcardName": flashcardName,
             "moveLocation": moveLocation
         }
 
@@ -231,15 +231,17 @@ class ApiManager {
         });
     }
 
-    getFlashcard(userID, folder, flashcardName, setFlashcardData) {
+    getFlashcard(flashcardID, setFlashcardData) {
         const url = 'get-flashcard';
         const data = {
-            "userID": userID,
-            "folder": folder,
-            "flashcardName": flashcardName
+            "flashcardID": flashcardID,
         }
+        console.log("GETTING FLASHCARD DATA WITH REQUEST DATA");
+        console.log(data);
 
         this.fetchData(data, url, flashcardData => {
+            console.log("Returned data:");
+            console.log(flashcardData)
             setFlashcardData(flashcardData[0]);
         });
     }

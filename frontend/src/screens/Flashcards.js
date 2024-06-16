@@ -80,6 +80,12 @@ function Flashcards() {
     }
   }, [reload]);
 
+  useEffect(() => {
+    console.log("CreateFlashcardSet visible");
+    console.log(createCardDialogueVisible);
+    console.log("MoveFolderDialogue visible");
+    console.log(moveFolderDialogueVisible);
+  }, [createCardDialogueVisible, moveFolderDialogueVisible])
   return (
     <div style={{top: "0px"}}>
       <Helmet>

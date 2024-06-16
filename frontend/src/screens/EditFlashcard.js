@@ -38,6 +38,7 @@ function Flashcards() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const newSet = queryParams.get('newSet');
+  const flashcardID = queryParams.get('flashcardID');
   const flashcardName = queryParams.get('flashcardName');
   const folder = queryParams.get('folder');
   const description = queryParams.get('flashcardDescription');
@@ -51,7 +52,7 @@ function Flashcards() {
     flashcardsExist,
     flashcardItems,
     setFlashcardItems,
-  } = useFlashcardData(newSet, folder, flashcardName, description);
+  } = useFlashcardData(newSet, folder, flashcardID, description, flashcardName);
 
   const handleOptionChange = (event) => setSortType(event.target.value);
 
@@ -107,7 +108,7 @@ function Flashcards() {
             }}
           >
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
-              <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} />
+              <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} flashcardID={flashcardID}/>
               <FlashcardSearch view={view} />
               <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} />
 

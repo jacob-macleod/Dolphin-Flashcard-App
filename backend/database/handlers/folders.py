@@ -118,9 +118,11 @@ class Folders(DatabaseHandler):
             flashcard_data = flashcard_data.get("data")
 
         current_location_list = current_location.split("/")
-        edited_flashcard_data = flashcard_data.copy()
-        for item in current_location_list:
-            edited_flashcard_data = edited_flashcard_data.get(item)
+        edited_flashcard_data = flashcard_data
+        # Handle a scenario where the flashcard is currently in the root foldr
+        if current_location_list != [""]:
+            for item in current_location_list:
+                edited_flashcard_data = edited_flashcard_data.get(item)
 
         # Handle the case where the flashcard is in the root folder
         if edited_flashcard_data is None:

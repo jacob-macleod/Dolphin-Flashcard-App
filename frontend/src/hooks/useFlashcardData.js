@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 
-const useFlashcardData = (newSet, folder, flashcardName, description) => {
+const useFlashcardData = (newSet, folder, flashcardID, description, flashcardName) => {
     const [flashcardData, setFlashcardData] = useState(null);
     const [flashcardsExist, setFlashcardsExist] = useState(null);
     const [flashcardItems, setFlashcardItems] = useState([]);
@@ -20,15 +20,14 @@ const useFlashcardData = (newSet, folder, flashcardName, description) => {
         setFlashcardsExist(false);
         } else {
         apiManager.getFlashcard(
-            getCookie("userID"),
-            folder,
-            flashcardName,
+            flashcardID,
             setFlashcardData
         );
         }
     }, [newSet, folder, flashcardName, description]);
 
     useEffect(() => {
+        console.log("Using second useeffect")
         const fetchCardData = async () => {
         const cardPromises = flashcardData.cards.map((cardID) => {
             return new Promise((resolve) => {
@@ -43,10 +42,13 @@ const useFlashcardData = (newSet, folder, flashcardName, description) => {
         setFlashcardItems(cardData);
         setFlashcardsExist(true);
         };
-
+        console.log("Approaching if statement")
+        console.log(flashcardData);
         if (flashcardData && flashcardData.cards.length) {
+            console.log("Fetching card data");
             fetchCardData();
         } else if (flashcardData && flashcardData.cards.length === 0) {
+            console.log("No flashcards exist");
             setFlashcardsExist(false);
         }
     }, [flashcardData]);

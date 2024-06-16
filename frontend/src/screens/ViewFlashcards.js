@@ -35,7 +35,7 @@ function ViewFlashcards() {
 
   // Extract query parameters
   const location = useLocation();
-  const { folder, flashcardName } = queryString.parse(location.search, { arrayFormat: 'bracket' });
+  const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
 
   return (
     <div style={{ top: "0px" }}>
@@ -71,7 +71,7 @@ function ViewFlashcards() {
               width: view === "desktop" ? "100%" : "calc(100% - 16px)"
             }}
           >
-            <FlashcardHeader newSet={false} flashcardName={flashcardName[0]} folder={folder[0]} type={"studyFlashcard"} />
+            <FlashcardHeader newSet={false} flashcardName={flashcardName[0]} folder={folder[0]} type={"studyFlashcard"} flashcardID={flashcardID}/>
             <div style={{ maxWidth: "548px", margin: "auto" }}>
               <div className='mode-selector-container'>
                 <p className={mode === "daily" ? 'link' : "inactive-link"} onClick={() => { setMode("daily") }}>Your Daily Dose</p>

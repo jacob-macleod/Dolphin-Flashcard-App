@@ -58,6 +58,8 @@ function NewFlashcardPopup({
         var flashcardDataRequest = {}
         flashcardDataRequest.cards = newFlashcardItems;
         flashcardDataRequest.userID = getCookie("userID");
+        console.log("FLASHCARD DATA");
+        console.log(flashcardData);
         flashcardDataRequest.flashcardName = flashcardData.name;
         flashcardDataRequest.flashcardDescription = flashcardData.description;
         flashcardDataRequest.folder = folder;

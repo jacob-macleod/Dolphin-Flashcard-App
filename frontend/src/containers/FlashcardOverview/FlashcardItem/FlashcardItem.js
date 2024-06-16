@@ -44,7 +44,7 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
 
     function studyCard() {
         window.open(
-            "/view?flashcardName[]=" + element.flashcardName + "&folder[]=" + path,
+            "/view?flashcardID[]=" + element.flashcardID + "&folder[]=" + path + "&flashcardName[]=" + element.flashcardName,
             "_self"
         );
     }
@@ -139,7 +139,7 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
                         showMovePopup={setMoveFolderDialogueVisible}
                         flashcardData={flashcardData}
                         path={path}
-                        flashcardID={element.flashcardID}
+                        flashcardName={element.flashcardName}
                         view={view}
                     />
                 </div>

@@ -42,9 +42,7 @@ CREATE_FOLDER_FORMAT = {
 }
 
 GET_FLASHCARD_FORMAT = {
-    "userID": "",
-    "folder": "",
-    "flashcardName": ""
+    "flashcardID": ""
 }
 
 GET_FLASHCARD_ITEM = {
@@ -59,7 +57,7 @@ GET_ALL_CARDS = GET_TODAY_CARDS
 MOVE_FLASHCARD_SET = {
     "userID": "",
     "currentLocation": "",
-    "flashcardID": "",
+    "flashcardName": "",
     "moveLocation": ""
 }
 
@@ -166,19 +164,15 @@ def get_flashcard():
     """ Get a flashcard set based on the name and user ID
         Add json to request as in:
         {
-            "userID": "my-id",
-            "folder": "parent-name",
-            "flashcardName": "My new set"
+            "flashcardID": "my-flashcard-id"
         }
     """
     try:
-        user_id = request.json.get("userID")
-        flashcard_name = request.json.get("flashcardName")
-        folder = request.json.get("folder")
-        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+        flashcard_id = request.json.get("flashcardID")
+        flashcard_data = db.flashcard_set.get_flashcard_set(flashcard_id)
 
         return jsonify(
-            db.flashcard_set.get_flashcard_set(flashcard_id), 200
+            flashcard_data, 200
         )
 
     except Exception as e:
@@ -267,24 +261,24 @@ def move_flashcard_set():
     {
         "userID": "my-id",
         "currentLocation": "the current folder path",
-        "flashcardID": "the flashcard set ID",
+        "flashcardName": "the flashcard set name",
         "moveLocation": "the folder path to move to"
     }
     """
     try:
         # Get the supplied variables
         user_id = request.json.get("userID")
-        flashcard_id = request.json.get("flashcardID")
+        flashcard_name = request.json.get("flashcardName")
         move_location = request.json.get("moveLocation")
         current_location = request.json.get("currentLocation")
 
-        db.folders.move_flashcard_set(user_id, flashcard_id, current_location, move_location)
+        db.folders.move_flashcard_set(user_id, flashcard_name, current_location, move_location)
 
         return jsonify(
             {
                 "success": "The flashcard set at "
                 + "/users/" + user_id
-                + "/flashcards/" + current_location + "/" + flashcard_id
+                + "/flashcards/" + current_location + "/" + flashcard_name
                 + " has been moved to " + move_location}
         ), 200
     except Exception as e:
