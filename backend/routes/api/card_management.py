@@ -36,6 +36,11 @@ CREATE_FLASHCARD_FORMAT = {
     ]
 }
 
+CREATE_FOLDER_FORMAT = {
+    "userID": "",
+    "folder": ""
+}
+
 GET_FLASHCARD_FORMAT = {
     "userID": "",
     "folder": "",
@@ -133,7 +138,29 @@ def create_flashcard():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
-@card_management_routes.route("/api/get-flashcard", methods=["GET"])
+@card_management_routes.route("/api/create-folder", methods=["POST"])
+@validate_json(CREATE_FOLDER_FORMAT)
+def create_folder():
+    """ Create a folder for the user
+    Example request:
+    {
+        "userID": "my-id",
+        "folder": "parent-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        folder = request.json.get("folder")
+
+        db.folders.create_folder(user_id, folder)
+
+        return jsonify({
+            "success": "Folder " + folder + " created"
+        }), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/get-flashcard", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_FORMAT)
 def get_flashcard():
     """ Get a flashcard set based on the name and user ID
@@ -158,7 +185,7 @@ def get_flashcard():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
-@card_management_routes.route("/api/get-flashcard-item", methods=["GET"])
+@card_management_routes.route("/api/get-flashcard-item", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_ITEM)
 def get_flashcard_item():
     """ Get a flashcard item based on the card ID. Flashcard sets store

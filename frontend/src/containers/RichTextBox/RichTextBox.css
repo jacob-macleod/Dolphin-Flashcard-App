@@ -1,0 +1,53 @@
+.rich-text-box{
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    max-width: 432px;
+    width: 100%;
+    height: 248px;
+    min-height: 400px; /* or whatever height you need */
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .ProseMirror{
+    color: #222829;
+    border: 1px solid #C2C2C2;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 400;
+    line-height: 20px;
+    word-wrap: break-word;
+    fill: var(--White-Colour, #FFF);
+    stroke-width: 1px;
+    stroke: var(--Light-Prototype, #FFF);
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .p{
+    margin: 0px;
+  }
+
+.text-effects{
+    display: flex;
+}
+
+.selected-color-style{
+    color: var(--Primary-Colour, #6A84C5);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 125% */
+    margin-top: 8px;
+}

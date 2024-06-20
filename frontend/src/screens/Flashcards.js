@@ -14,6 +14,8 @@ import GhostButton from '../componments/GhostButton';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
+import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
+import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -27,6 +29,8 @@ function Flashcards() {
   const [searchTerm, setSearchTerm] = useState(null);
   const [moveFolderDialogueVisible, setMoveFolderDialogueVisible] = useState(false);
   const [reload, setReload] = useState(true);
+  const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
+  const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -85,7 +89,11 @@ function Flashcards() {
             content="width=device-width, initial-scale=1.0">
         </meta>
       </Helmet>
+
+      <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload}/>
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload}/>
+      <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload}/>
+
       <GridContainer layout={
         view != "mobile" ? "240px auto"
         : "auto"
@@ -124,8 +132,20 @@ function Flashcards() {
                 childValue={todayCards}
               />
               <div style={{float: "left"}}>
-                <GhostButton text="+ New Folder" style={{display: "inline-block", marginRight: "16px"}}/>
-                <Button text="+ New Set" style={{display: "inline-block"}}/>
+                <GhostButton
+                  text="+ New Folder"
+                  style={{display: "inline-block", marginRight: "16px"}}
+                  onClick={() => {
+                    setCreateFolderDialogueVisible(todayCards);
+                  }}
+                />
+                <Button
+                  text="+ New Set"
+                  style={{display: "inline-block"}}
+                  onClick={() => {
+                    setCreateCardDialogueVisible(todayCards);
+                  }}
+                />
               </div>
             </div>
           </WhiteOverlay>

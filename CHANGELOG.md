@@ -22,6 +22,51 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.4.0 - 2024-06-15
+
+### Changed
+
+- Turned the edit flashcard popup into a WYSIWYG editor
+
+### Fixed
+
+- Fixed some issues in pipelines
+
+## 3.3.0 - 2024-06-15
+
+### Added
+
+- Implemented edit flashcard page and created components for rendering flashcards
+
+### Fixed
+- Fixed unit tests
+
+## 3.2.0 - 2024-06-11
+
+### Added
+
+- Added ability to create a folder
+- Added new API endpoint to create folder
+- Added unit tests for `create-folder` endpoint
+
+## 3.1.0 - 2024-06-10
+
+### Added
+
+- New `CreateFlashcardSetDialogue` modal to handle creating a flashcard set
+- Added a basic edit-flashcard page  with most features and API calls unimplemented which the `CreateFlashcardSetDialogue` modal takes the user to when a flashcard is created. The page can be passed `newSet`, which if true, won't request flashcard data from the server. When implementing the edit-flashcard page fully, the page should use the API to read flashcard details when `newSet` is not true
+- Added basic `CreateFolderDialogue` modal, which does not work yet
+
+### Changed
+
+- Updated `CONTRIBUTING.md` to reflect the latest database changes
+
+## 3.0.1 - 2024-06-07
+
+### Added
+
+- Improved documentation for goals.py
+
 ## 3.0.0 - 2024-06-05
 
 ### Added

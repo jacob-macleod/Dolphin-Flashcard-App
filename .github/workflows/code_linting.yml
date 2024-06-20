@@ -26,7 +26,7 @@ jobs:
           sudo apt-get install docker
       - name: Run pytest
         run: |
-          bash testing/run_tests.sh
+          bash testing/run_tests.sh || exit $?
 
   attempt-build:
     runs-on: ubuntu-latest
@@ -38,6 +38,7 @@ jobs:
       run: |
         echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
         cd frontend
+        sudo apt-get update
         sudo apt install nodejs npm
         npm install -g create-react-app
         npm install react-scripts
