@@ -31,6 +31,7 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
+  const [selected, setSelected] = useState([]);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -80,12 +81,6 @@ function Flashcards() {
     }
   }, [reload]);
 
-  useEffect(() => {
-    console.log("CreateFlashcardSet visible");
-    console.log(createCardDialogueVisible);
-    console.log("MoveFolderDialogue visible");
-    console.log(moveFolderDialogueVisible);
-  }, [createCardDialogueVisible, moveFolderDialogueVisible])
   return (
     <div style={{top: "0px"}}>
       <Helmet>
@@ -134,24 +129,51 @@ function Flashcards() {
                 {view == "desktop" ? <GridItem /> : <></>}
               </GridContainer>
               <DelayedElement
-                child={<FlashcardOverview flashcardData={todayCards} setMoveFolderDialogueVisible={setMoveFolderDialogueVisible} view={view}/>}
+                child={
+                  <FlashcardOverview
+                    flashcardData={todayCards}
+                    setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                    view={view}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                }
                 childValue={todayCards}
               />
-              <div style={{float: "left"}}>
-                <GhostButton
-                  text="+ New Folder"
-                  style={{display: "inline-block", marginRight: "16px"}}
-                  onClick={() => {
-                    setCreateFolderDialogueVisible(todayCards);
-                  }}
-                />
+              <div style={{
+                display: "flex", 
+                justifyContent: "space-between",
+                paddingTop: "16px"
+              }}>
+                <div style={{float: "left"}}>
+                  <GhostButton
+                    text="+ New Folder"
+                    style={{display: "inline-block", marginRight: "16px"}}
+                    onClick={() => {
+                      setCreateFolderDialogueVisible(todayCards);
+                    }}
+                  />
+                  <Button
+                    text="+ New Set"
+                    style={{display: "inline-block"}}
+                    onClick={() => {
+                      setCreateCardDialogueVisible(todayCards);
+                    }}
+                  />
+                </div>
+              
+              <div style={{float: "right"}}>
                 <Button
-                  text="+ New Set"
-                  style={{display: "inline-block"}}
-                  onClick={() => {
-                    setCreateCardDialogueVisible(todayCards);
+                  text="Study Multiple"
+                  disabled={selected.length === 0}
+                  style={{
+                    paddingTop: "11px",
+                    paddingBottom: "11px",
+                    paddingLeft: "15px",
+                    paddingRight: "15px"
                   }}
                 />
+              </div>
               </div>
             </div>
           </WhiteOverlay>
