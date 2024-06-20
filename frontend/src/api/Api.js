@@ -213,6 +213,7 @@ class ApiManager {
         }
 
         this.fetchData(data, url, status => {
+            data.flashcardID = status[0].flashcardID;
             loadEditFlashcardPage(data);
         });
     

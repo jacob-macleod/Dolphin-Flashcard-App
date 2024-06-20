@@ -130,8 +130,7 @@ def create_flashcard():
         # Give the user read and write access
         db.read_write_access.give_user_access(user_id, flashcard_id)
 
-        return jsonify({
-            "success": True}, 200)
+        return jsonify({"flashcardID": flashcard_id}, 200)
     except Exception as e:
         # Return the error as a json object
         return jsonify(str(e)), 500

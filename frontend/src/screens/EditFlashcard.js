@@ -42,7 +42,7 @@ function Flashcards() {
   const flashcardName = queryParams.get('flashcardName');
   const folder = queryParams.get('folder');
   const description = queryParams.get('flashcardDescription');
-
+  
   const view = useWindowSize(mobileBreakpoint, tabletBreakpoint);
 
   const flashcardBoxHorizontalPadding = view === "mobile" ? "8px" : "16px";
