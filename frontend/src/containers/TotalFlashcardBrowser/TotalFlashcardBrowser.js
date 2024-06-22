@@ -19,8 +19,8 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
     <>{
         flashcardItems != undefined && flashcardItems.length !== 0
         ? <>
-            {flashcardItems[currentCardIndex].front != undefined
-            ? <CardOverview text={flashcardItems[currentCardIndex].front} showTurnOverButton={true} />
+            {individualCards[currentCardIndex] != undefined
+            ? <CardOverview text={individualCards[currentCardIndex].front} description={individualCards[currentCardIndex].back} showTurnOverButton={true} />
             : <></>}
             <Paragraph text={"1/" + individualCards.length} type="grey" />
         </>

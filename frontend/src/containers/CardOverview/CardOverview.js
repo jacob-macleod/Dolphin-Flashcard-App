@@ -1,4 +1,4 @@
-import {React} from 'react';
+import {React, useState} from 'react';
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import GhostButton from '../../componments/GhostButton';
 import "../../componments/Text/Text/Text.css";
@@ -25,14 +25,24 @@ function sanitizeHtml(html) {
         marginRight: "0px",
     }
 
-    function CardOverview({ text, showResponseOptions=false, showTurnOverButton=false }) {
+    function CardOverview({ text, description: back="", showResponseOptions=false, showTurnOverButton=false }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
         .replace(/<u>(.*?)<\/u>/g, '<u>$1</u>')
         .replace(/~~(.*?)~~/g, '<s>$1</s>')
         .replace(/<span style="color:(.*?)">(.*?)<\/span>/g, '<span style="color:$1">$2</span>');
-    const sanitizedHtmlText = sanitizeHtml(htmlText);
+    const sanitizedFront = sanitizeHtml(htmlText);
+    const sanitizedBack = sanitizeHtml(back);
+    const [cardText, setCardText] = useState(sanitizedFront);
+
+    function turnOverCard() {
+        if (cardText === sanitizedFront) {
+            setCardText(sanitizedBack);
+        } else {
+            setCardText(sanitizedFront);
+        }
+    }
 
     return (
         <WhiteOverlay
@@ -53,9 +63,10 @@ function sanitizeHtml(html) {
                                 boxShadow: "none",
                                 color: "#6A84C5",
                             }}
+                            onClick={turnOverCard}
                         />
                     }
-                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: sanitizedHtmlText }}/>
+                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: cardText }}/>
                     {showResponseOptions &&
                         <div style={{
                             display: "flex",
