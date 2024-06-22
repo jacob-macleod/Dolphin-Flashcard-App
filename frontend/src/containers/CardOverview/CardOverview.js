@@ -1,9 +1,8 @@
-import {React, useState} from 'react';
+import { React, useState } from 'react';
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import GhostButton from '../../componments/GhostButton';
 import "../../componments/Text/Text/Text.css";
 import DOMPurify from 'dompurify';
-import { color } from 'framer-motion';
 
 function sanitizeHtml(html) {
     return DOMPurify.sanitize(html, {
@@ -12,20 +11,19 @@ function sanitizeHtml(html) {
         FORBID_ATTR: ['class', 'id', 'onclick', 'onmouseover', 'onerror'],
         ALLOWED_STYLES: {
             '*': {
-                // Only allow color style
                 color: true,
             },
         },
         FORBID_STYLE: ['width', 'height'],
     });
-    }
+}
 
-    const ghostButtonStyle = {
-        marginLeft: "0px",
-        marginRight: "0px",
-    }
+const ghostButtonStyle = {
+    marginLeft: "0px",
+    marginRight: "0px",
+};
 
-    function CardOverview({ text, description: back="", showResponseOptions=false, showTurnOverButton=false }) {
+function CardOverview({ text, description: back = "", showResponseOptions = false, showTurnOverButton = false }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -35,23 +33,30 @@ function sanitizeHtml(html) {
     const sanitizedFront = sanitizeHtml(htmlText);
     const sanitizedBack = sanitizeHtml(back);
     const [cardText, setCardText] = useState(sanitizedFront);
+    const [isFlipped, setIsFlipped] = useState(false);
 
     function turnOverCard() {
-        if (cardText === sanitizedFront) {
-            setCardText(sanitizedBack);
-        } else {
-            setCardText(sanitizedFront);
-        }
+        setIsFlipped(!isFlipped);
+        setTimeout(() => {
+            if (cardText === sanitizedFront) {
+                setCardText(sanitizedBack);
+            } else {
+                setCardText(sanitizedFront);
+            }
+        }, 300); // Adjust this timeout based on animation duration
     }
 
     return (
         <WhiteOverlay
+            isFlipped={isFlipped}
+            flipOnClick={true}
             children={
                 <div style={{
                     paddingTop: "22px",
                     paddingBottom: "22px",
                     paddingLeft: "30px",
                     paddingRight: "30px",
+                    perspective: "1000px",
                 }}
                 >
                     {showTurnOverButton &&
@@ -66,16 +71,18 @@ function sanitizeHtml(html) {
                             onClick={turnOverCard}
                         />
                     }
-                    <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: cardText }}/>
+                    <div style={{ transformStyle: "preserve-3d" }}>
+                        <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: cardText }} />
+                    </div>
                     {showResponseOptions &&
                         <div style={{
                             display: "flex",
                             justifyContent: "space-evenly",
                             marginTop: "20px",
                         }}>
-                            <GhostButton text="I know" style={ghostButtonStyle}/>
-                            <GhostButton text="I'm not sure" style={ghostButtonStyle}/>
-                            <GhostButton text="This is easy" style={ghostButtonStyle}/>
+                            <GhostButton text="I know" style={ghostButtonStyle} />
+                            <GhostButton text="I'm not sure" style={ghostButtonStyle} />
+                            <GhostButton text="This is easy" style={ghostButtonStyle} />
                         </div>
                     }
                 </div>
