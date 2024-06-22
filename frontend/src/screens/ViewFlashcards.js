@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { getTodayCardsFromStorage } from '../hooks/useTodayCards';
 import useCardData from '../hooks/useCardData';
-import useFlashcardData from '../hooks/useFlashcardData';
+//import useFlashcardData from '../hooks/useFlashcardData';
 import queryString from 'query-string';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -18,6 +18,7 @@ import CardOverview from '../containers/CardOverview/CardOverview';
 import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
 import Paragraph from '../componments/Text/Paragraph';
+import TotalFlashcardBrowser from '../containers/TotalFlashcardBrowser';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 import "../componments/Text/Link/Link.css";
@@ -66,13 +67,13 @@ function ViewFlashcards() {
   };
 
   const cardIDs = collectCardIDs(todayCards, flashcardID);
-  const { cardData, cardsExist } = useCardData(cardIDs);
-  const {
+  //const { cardData, cardsExist } = useCardData(cardIDs);
+  /*const {
     flashcardData,
     flashcardsExist,
     flashcardItems,
     setFlashcardItems,
-  } = useFlashcardData(false, folder[0], flashcardID[0], "", flashcardName[0]);
+  } = useFlashcardData(false, folder[0], flashcardID[0], "", flashcardName[0]);*/
 
   return (
     <div style={{ top: "0px" }}>
@@ -124,11 +125,15 @@ function ViewFlashcards() {
 
               <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
 
-              {cardData.length !== 0 ?
-                <CardOverview text={mode === "daily" ? cardData[0].front: flashcardItems[0].front} showResponseOptions={mode === "daily"} showTurnOverButton={true} />
-              : <></>}
+              {mode === "daily"
+                ? <p>Daily mode</p>
+                : <TotalFlashcardBrowser
+                    folder={folder}
+                    flashcardName={flashcardName}
+                    flashcardID={flashcardID}
+                  />
+              }
 
-              <Paragraph text={"1/" + cardData.length} type="grey" />
               <Heading4 text="Other modes" />
               <div className='button-container'>
                 <Button text="Generate Quiz" disabled={true} />
