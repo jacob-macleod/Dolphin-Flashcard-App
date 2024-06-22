@@ -52,18 +52,23 @@ function Flashcards() {
 
   function studyMultipleCards() {
     let urlPath = "";
-
+  
     // Helper function to recursively find the flashcard ID and name
-    const findFlashcard = (cards, pathParts) => {
+    const findFlashcard = (cards, pathParts, folderPath = "") => {
       if (pathParts.length === 0) {
         return null;
       }
       const currentPart = pathParts.shift();
       if (cards[currentPart]) {
+        const newFolderPath = folderPath ? `${folderPath}/${currentPart}` : currentPart;
         if (pathParts.length === 0 && cards[currentPart].flashcardID && cards[currentPart].flashcardName) {
-          return { flashcardID: cards[currentPart].flashcardID, flashcardName: cards[currentPart].flashcardName };
+          return { 
+            flashcardID: cards[currentPart].flashcardID, 
+            flashcardName: cards[currentPart].flashcardName,
+            folderPath: folderPath ? folderPath : ""
+          };
         }
-        return findFlashcard(cards[currentPart], pathParts);
+        return findFlashcard(cards[currentPart], pathParts, newFolderPath);
       }
       return null;
     };
@@ -75,12 +80,12 @@ function Flashcards() {
       const flashcard = findFlashcard(todayCards, pathParts);
   
       if (flashcard) {
-        urlPath += `&flashcardID[]=${flashcard.flashcardID}&flashcardName[]=${flashcard.flashcardName}`;
+        urlPath += `&flashcardID[]=${flashcard.flashcardID}&flashcardName[]=${flashcard.flashcardName}&folder[]=${flashcard.folderPath}`;
       } else {
         // The path was not found
       }
-      window.open(`/view?${urlPath}`, '_self');
     }
+    window.open(`/view?${urlPath}`, '_self');
   }  
 
   return (

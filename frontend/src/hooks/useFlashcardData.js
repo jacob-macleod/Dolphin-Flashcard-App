@@ -29,6 +29,7 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
             return new Promise((resolve) => {
                 apiManager.getFlashcardItem(cardID, (item) => {
                     resolve(item);
+                    console.log("Card data", item)
                 });
             });
         });
@@ -37,6 +38,7 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
         setFlashcardItems(cardData);
         setFlashcardsExist(true);
         };
+        console.log("Flashcard DATA")
         console.log(flashcardData);
         if (flashcardData && flashcardData.cards.length) {
             fetchCardData();

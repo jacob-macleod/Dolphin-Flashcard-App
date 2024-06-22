@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { getTodayCardsFromStorage } from '../hooks/useTodayCards';
 import useCardData from '../hooks/useCardData';
+import useFlashcardData from '../hooks/useFlashcardData';
 import queryString from 'query-string';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -66,8 +67,12 @@ function ViewFlashcards() {
 
   const cardIDs = collectCardIDs(todayCards, flashcardID);
   const { cardData, cardsExist } = useCardData(cardIDs);
-  console.log("CARD DATA");
-  console.log(cardData);
+  const {
+    flashcardData,
+    flashcardsExist,
+    flashcardItems,
+    setFlashcardItems,
+  } = useFlashcardData(false, folder[0], flashcardID[0], "", flashcardName[0]);
 
   return (
     <div style={{ top: "0px" }}>
@@ -120,7 +125,7 @@ function ViewFlashcards() {
               <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
 
               {cardData.length !== 0 ?
-                <CardOverview text={cardData[0].front} showResponseOptions={mode === "daily"} showTurnOverButton={true} />
+                <CardOverview text={mode === "daily" ? cardData[0].front: flashcardItems[0].front} showResponseOptions={mode === "daily"} showTurnOverButton={true} />
               : <></>}
 
               <Paragraph text={"1/" + cardData.length} type="grey" />
