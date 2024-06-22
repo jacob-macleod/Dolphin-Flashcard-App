@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
+import { getTodayCardsFromStorage } from '../hooks/useTodayCards';
+import useCardData from '../hooks/useCardData';
 import queryString from 'query-string';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -23,6 +25,7 @@ import './ViewFlashcards.css';
 function ViewFlashcards() {
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   const [mode, setMode] = useState("daily");
+  const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -36,6 +39,35 @@ function ViewFlashcards() {
   // Extract query parameters
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
+
+  const collectCardIDs = (cards, flashcardIDs) => {
+    const cardIDs = [];
+
+    const traverse = (obj) => {
+      for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          const value = obj[key];
+
+          if (value && typeof value === 'object') {
+            if (flashcardIDs.includes(value.flashcardID)) {
+              if (value.cards) {
+                cardIDs.push(...Object.keys(value.cards));
+              }
+            }
+            traverse(value);
+          }
+        }
+      }
+    };
+
+    traverse(cards);
+    return cardIDs;
+  };
+
+  const cardIDs = collectCardIDs(todayCards, flashcardID);
+  const { cardData, cardsExist } = useCardData(cardIDs);
+  console.log("CARD DATA");
+  console.log(cardData);
 
   return (
     <div style={{ top: "0px" }}>
@@ -71,7 +103,14 @@ function ViewFlashcards() {
               width: view === "desktop" ? "100%" : "calc(100% - 16px)"
             }}
           >
-            <FlashcardHeader newSet={false} flashcardName={flashcardName[0]} folder={folder[0]} type={"studyFlashcard"} flashcardID={flashcardID}/>
+            <FlashcardHeader
+              newSet={false}
+              flashcardName={flashcardName[0]}
+              folder={folder !== undefined ? folder[0] : undefined}
+              type={"studyFlashcard"}
+              flashcardID={flashcardID}
+              numberStudying={flashcardName.length}
+            />
             <div style={{ maxWidth: "548px", margin: "auto" }}>
               <div className='mode-selector-container'>
                 <p className={mode === "daily" ? 'link' : "inactive-link"} onClick={() => { setMode("daily") }}>Your Daily Dose</p>
@@ -80,9 +119,11 @@ function ViewFlashcards() {
 
               <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
 
-              <CardOverview text="<strong>My card</strong> <p>My description</p>" showResponseOptions={mode === "daily"} showTurnOverButton={true} />
+              {cardData.length !== 0 ?
+                <CardOverview text={cardData[0].front} showResponseOptions={mode === "daily"} showTurnOverButton={true} />
+              : <></>}
 
-              <Paragraph text="10/12" type="grey" />
+              <Paragraph text={"1/" + cardData.length} type="grey" />
               <Heading4 text="Other modes" />
               <div className='button-container'>
                 <Button text="Generate Quiz" disabled={true} />

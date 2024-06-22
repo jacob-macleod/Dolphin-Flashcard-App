@@ -1,7 +1,7 @@
 import React from 'react';
 import Paragraph from '../../componments/Text/Paragraph';
 
-const FlashcardHeader = ({ newSet, flashcardName, folder, type="editFlashcardHeader", flashcardID }) => {
+const FlashcardHeader = ({ newSet, flashcardName, folder, type="editFlashcardHeader", flashcardID, numberStudying }) => {
   return (
     <div className='flashcard-set-header'>
       {
@@ -22,10 +22,12 @@ const FlashcardHeader = ({ newSet, flashcardName, folder, type="editFlashcardHea
       <Paragraph text={
         folder === "" || folder === null
           ? '"Your Account > ' + flashcardName + '"'
-          : folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
+          : numberStudying === 1
+            ? folder.replace(/\//g, ' > ') + ' > ' + flashcardName + '"'
+            : "\"Studying " + numberStudying + " flashcards\""
       } type="grey-italics" />
       {
-        type === "studyFlashcard"
+        type === "studyFlashcard" && numberStudying === 1
         ? <p
           className='link'
           style={{ paddingLeft: "16px" }}

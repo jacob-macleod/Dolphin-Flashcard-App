@@ -7,10 +7,7 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
     const [flashcardsExist, setFlashcardsExist] = useState(null);
     const [flashcardItems, setFlashcardItems] = useState([]);
 
-    console.log("Loading")
-
     useEffect(() => {
-        console.log("using useeffect")
         if (newSet === "true") {
         setFlashcardData({
             "cards": [],
@@ -27,11 +24,9 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
     }, [newSet, folder, flashcardName, description]);
 
     useEffect(() => {
-        console.log("Using second useeffect")
         const fetchCardData = async () => {
         const cardPromises = flashcardData.cards.map((cardID) => {
             return new Promise((resolve) => {
-                console.log("Getting card data")
                 apiManager.getFlashcardItem(cardID, (item) => {
                     resolve(item);
                 });
@@ -42,13 +37,10 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
         setFlashcardItems(cardData);
         setFlashcardsExist(true);
         };
-        console.log("Approaching if statement")
         console.log(flashcardData);
         if (flashcardData && flashcardData.cards.length) {
-            console.log("Fetching card data");
             fetchCardData();
         } else if (flashcardData && flashcardData.cards.length === 0) {
-            console.log("No flashcards exist");
             setFlashcardsExist(false);
         }
     }, [flashcardData]);

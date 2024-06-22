@@ -1,5 +1,7 @@
 import {React, useState, useEffect} from 'react';
 import { Helmet } from 'react-helmet';
+import useTodayCards from '../hooks/useTodayCards';
+import useWindowSize from '../hooks/useWindowSize';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../componments/GridContainer/GridContainer';
@@ -36,97 +38,93 @@ function Flashcards() {
   // Set variables for the size
   const mobileBreakpoint = 650;
   const tabletBreakpoint = 1090;
-  const [width, setWidth] = useState(window.innerWidth);
-  const [view, setView] = useState(
-    width < mobileBreakpoint ? "mobile"
-    : width < tabletBreakpoint ? "tablet" : "desktop"
-  );
+  const view = useWindowSize(mobileBreakpoint, tabletBreakpoint);
+
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
-    view == "mobile" ? "8px" : "16px"
+    view === "mobile" ? "8px" : "16px"
   );
 
-  const [todayCards, setTodayCards] = useState(null);
-
-  // Manage resizing the window size when needed
   useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-  
-    // Set the initial window size
-    setWidth(window.innerWidth);
-  
-    // Set up the event listener for resize
-    window.addEventListener("resize", handleResize);
+    setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
+  }, [view]);
 
-    // Clean up the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener("resize", handleResize);
+  const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
+
+  function studyMultipleCards() {
+    let urlPath = "";
+
+    // Helper function to recursively find the flashcard ID and name
+    const findFlashcard = (cards, pathParts) => {
+      if (pathParts.length === 0) {
+        return null;
+      }
+      const currentPart = pathParts.shift();
+      if (cards[currentPart]) {
+        if (pathParts.length === 0 && cards[currentPart].flashcardID && cards[currentPart].flashcardName) {
+          return { flashcardID: cards[currentPart].flashcardID, flashcardName: cards[currentPart].flashcardName };
+        }
+        return findFlashcard(cards[currentPart], pathParts);
+      }
+      return null;
     };
-  }, []);
-
-  useEffect(() => {
-    setView(
-      width < mobileBreakpoint ? "mobile"
-      : width < tabletBreakpoint ? "tablet" : "desktop");
-    setFlashcardBoxHorizontalPadding(
-      view == "mobile" ? "8px" : "16px"
-    );
-  }, [width]);
-
-  useEffect(() => {
-    if (reload) {
-      setReload(false);
-      apiManager.getTodayCards(getCookie("userID"), setTodayCards);
+  
+    // Iterate through selected paths
+    for (let card_path = 0; card_path < selected.length; card_path++) {
+      const path = selected[card_path];
+      const pathParts = path.split('/').filter(part => part !== '');
+      const flashcard = findFlashcard(todayCards, pathParts);
+  
+      if (flashcard) {
+        urlPath += `&flashcardID[]=${flashcard.flashcardID}&flashcardName[]=${flashcard.flashcardName}`;
+      } else {
+        // The path was not found
+      }
+      window.open(`/view?${urlPath}`, '_self');
     }
-  }, [reload]);
+  }  
 
   return (
-    <div style={{top: "0px"}}>
+    <div style={{ top: "0px" }}>
       <Helmet>
-        <title>{ title }</title>
-        <meta
-            name="viewport" 
-            content="width=device-width, initial-scale=1.0">
-        </meta>
+        <title>{title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       </Helmet>
 
-      <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload}/>
-      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload}/>
-      <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload}/>
+      <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload} />
+      <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
+      <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
 
-      <GridContainer layout={
-        view != "mobile" ? "240px auto"
-        : "auto"
-      } classType="two-column-grid">
-        {view != "mobile" ? <SidePanel selectedItem="flashcards"/> : <></>}
+      <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
+        {view !== "mobile" ? <SidePanel selectedItem="flashcards" /> : <></>}
 
-        <GridItem style={{
-          paddingLeft: flashcardBoxHorizontalPadding,
-          paddingRight: flashcardBoxHorizontalPadding,
-          paddingTop: "0px",
-          width: view == "mobile" ? "100vw" : "",
-          display: view == "mobile" ? "block" : "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}>
-        {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards"/> : <></>}
-  
+        <GridItem
+          style={{
+            paddingLeft: flashcardBoxHorizontalPadding,
+            paddingRight: flashcardBoxHorizontalPadding,
+            paddingTop: "0px",
+            width: view === "mobile" ? "100vw" : "",
+            display: view === "mobile" ? "block" : "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" /> : <></>}
+
           <WhiteOverlay
             style={{
-                height: "max-content",
-                paddingBottom: view == "mobile" ? "80px" : "",
-                width: view == "desktop" ? "100%" : "calc(100% - 16px)"
-              }}
-            >
-            <div style={{maxWidth: "1200px", margin: "auto"}}>
-              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view}/>
+              height: "max-content",
+              paddingBottom: view === "mobile" ? "80px" : "",
+              width: view === "desktop" ? "100%" : "calc(100% - 16px)",
+            }}
+          >
+            <div style={{ maxWidth: "1200px", margin: "auto" }}>
+              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} />
               <br></br>
               <br></br>
-              <GridContainer classType="review-bar-wrapper" layout={view == "desktop" ? "260px auto 80px" : "auto"}>
-                {view == "desktop" ? <GridItem /> : <></>}
-                <ReviewBarChartKey view={view}/>
-                {view == "desktop" ? <GridItem /> : <></>}
+              <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
+                {view === "desktop" ? <GridItem /> : <></>}
+                <ReviewBarChartKey view={view} />
+                {view === "desktop" ? <GridItem /> : <></>}
               </GridContainer>
               <DelayedElement
                 child={
@@ -150,14 +148,14 @@ function Flashcards() {
                     text="+ New Folder"
                     style={{display: "inline-block", marginRight: "16px"}}
                     onClick={() => {
-                      setCreateFolderDialogueVisible(todayCards);
+                      setCreateFolderDialogueVisible(true);
                     }}
                   />
                   <Button
                     text="+ New Set"
                     style={{display: "inline-block"}}
                     onClick={() => {
-                      setCreateCardDialogueVisible(todayCards);
+                      setCreateCardDialogueVisible(true);
                     }}
                   />
                 </div>
@@ -165,22 +163,22 @@ function Flashcards() {
               <div style={{float: "right"}}>
                 <Button
                   text="Study Multiple"
-                  disabled={selected.length === 0}
+                  disabled={selected.length <= 1}
                   style={{
                     paddingTop: "11px",
                     paddingBottom: "11px",
                     paddingLeft: "15px",
                     paddingRight: "15px"
                   }}
+                  onClick={studyMultipleCards}
                 />
               </div>
               </div>
             </div>
           </WhiteOverlay>
-
         </GridItem>
       </GridContainer>
-    <BlobBackground />
+      <BlobBackground />
     </div>
   );
 }
