@@ -1,0 +1,11 @@
+.controls-panel{
+    display: flex;
+    justify-content: center;
+}
+
+.card-container {
+    position: relative;
+    width: 100%;
+    height: 322px;
+    overflow: hidden;
+}

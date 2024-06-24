@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import GhostButton from '../../componments/GhostButton';
 import "../../componments/Text/Text/Text.css";
@@ -23,7 +23,7 @@ const ghostButtonStyle = {
     marginRight: "0px",
 };
 
-function CardOverview({ text, description: back = "", showResponseOptions = false, showTurnOverButton = false }) {
+function CardOverview({ text, description: back = "", showResponseOptions = false, showTurnOverButton = false, height="fit-content" }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -43,8 +43,14 @@ function CardOverview({ text, description: back = "", showResponseOptions = fals
             } else {
                 setCardText(sanitizedFront);
             }
-        }, 300); // Adjust this timeout based on animation duration
+        }, 75); // Adjust this timeout based on animation duration
     }
+
+    // Make sure the card is flipped back when the text changes
+    useEffect(() => {
+        setCardText(sanitizedFront);
+        setIsFlipped(false);
+    }, [text]);
 
     return (
         <WhiteOverlay
@@ -57,6 +63,7 @@ function CardOverview({ text, description: back = "", showResponseOptions = fals
                     paddingLeft: "30px",
                     paddingRight: "30px",
                     perspective: "1000px",
+                    height: height,
                 }}
                 >
                     {showTurnOverButton &&

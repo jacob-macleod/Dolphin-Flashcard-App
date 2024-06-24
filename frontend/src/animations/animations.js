@@ -72,13 +72,13 @@ export const flipVariants = {
   hidden: {
       rotateY: 0,
       transition: {
-          duration: 0.3,
+          duration: 0.15,
       },
   },
   visible: {
       rotateY: 180,
       transition: {
-          duration: 0.3,
+          duration: 0.15,
       },
   },
 };
