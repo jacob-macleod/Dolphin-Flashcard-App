@@ -28,6 +28,10 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Solve bug in server and added sign-in method
 
+### Removed
+
+- Removed deprecated endpoint, /api/calculate-card-stats, from the documentation
+
 ## 5.1.0 - 2024-09-01
 
 ### Fixed
