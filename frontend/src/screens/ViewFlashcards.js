@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { getTodayCardsFromStorage } from '../hooks/useTodayCards';
 import useCardData from '../hooks/useCardData';
-//import useFlashcardData from '../hooks/useFlashcardData';
 import queryString from 'query-string';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -14,11 +13,10 @@ import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import FlashcardHeader from '../containers/FlashcardHeader';
 import Heading4 from '../componments/Text/Heading4/Heading4';
-import CardOverview from '../containers/CardOverview/CardOverview';
 import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
-import Paragraph from '../componments/Text/Paragraph';
 import TotalFlashcardBrowser from '../containers/TotalFlashcardBrowser';
+import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
 import "../componments/Text/Link/Link.css";
@@ -126,7 +124,7 @@ function ViewFlashcards() {
               <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
 
               {mode === "daily"
-                ? <p>Daily mode</p>
+                ? <DailyFlashcardBrowser />
                 : <TotalFlashcardBrowser
                     folder={folder}
                     flashcardName={flashcardName}
