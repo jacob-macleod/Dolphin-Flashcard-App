@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import useFlashcardDataForMultipleCards from '../../hooks/getFlashcardDataForMultipleCards';
 import '../../App.css';
 import CardOverview from '../CardOverview/CardOverview';
@@ -6,14 +6,13 @@ import Paragraph from '../../componments/Text/Paragraph';
 import Image from '../../componments/Image/Image';
 import GreyRightArrow from '../../static/grey-right-arrow.svg';
 import GreyLeftArrow from '../../static/grey-left-arrow.svg';
-import "../../componments/Text/Link/Link.css";
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
   hiddenRight: { x: '100%', opacity: 0, position: 'fixed' },
-  visible: { x: 0, opacity: 1, position: 'relative',  },
+  visible: { x: 0, opacity: 1, position: 'relative' },
   exitLeft: { x: '-20%', width: "0px", opacity: 0, position: 'fixed' },
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
@@ -21,6 +20,8 @@ const slideVariants = {
 function TotalFlashcardBrowser({ folder, flashcardName, flashcardID }) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [leftButtonAnimation, setLeftButtonAnimation] = useState(false); // State for left button animation
+  const [rightButtonAnimation, setRightButtonAnimation] = useState(false); // State for right button animation
   const {
     flashcardData,
     flashcardsExist,
@@ -29,23 +30,38 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID }) {
     setFlashcardItems,
   } = useFlashcardDataForMultipleCards(folder, flashcardID, "", flashcardName);
 
-  function leftButtonClick() {
+  const leftButtonClick = useCallback(() => {
+    setLeftButtonAnimation(true); // Trigger left button animation
+    setTimeout(() => setLeftButtonAnimation(false), 300); // Reset left button animation after 300ms
     setDirection(-1);
     setCurrentCardIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : individualCards.length - 1
     );
-  }
+  }, [individualCards.length]);
 
-  function rightButtonClick() {
+  const rightButtonClick = useCallback(() => {
+    setRightButtonAnimation(true); // Trigger right button animation
+    setTimeout(() => setRightButtonAnimation(false), 300); // Reset right button animation after 300ms
     setDirection(1);
     setCurrentCardIndex((prevIndex) =>
       prevIndex < individualCards.length - 1 ? prevIndex + 1 : 0
     );
-  }
+  }, [individualCards.length]);
+
+  const handleKeyDown = useCallback((event) => {
+    if (event.key === 'ArrowLeft') {
+      leftButtonClick();
+    } else if (event.key === 'ArrowRight') {
+      rightButtonClick();
+    }
+  }, [leftButtonClick, rightButtonClick]);
 
   useEffect(() => {
-    console.log("Direction is ", direction);
-  }, [direction]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   return (
     <>
@@ -74,12 +90,22 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID }) {
             </AnimatePresence>
           </div>
           <div className="controls-panel">
-            <Image url={GreyLeftArrow} onClick={leftButtonClick} />
+            <Image
+              url={GreyLeftArrow}
+              onClick={leftButtonClick}
+              className={leftButtonAnimation ? 'left-button-animation' : ''}
+            />
             <Paragraph
               text={`${currentCardIndex + 1} / ${individualCards.length}`}
               type="grey"
             />
-            <Image url={GreyRightArrow} onClick={rightButtonClick} />
+            <div style={{ position: 'relative' }}>
+              <Image
+                url={GreyRightArrow}
+                onClick={rightButtonClick}
+                className={rightButtonAnimation ? 'right-button-animation' : ''}
+              />
+            </div>
           </div>
         </>
       ) : null}

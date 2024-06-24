@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import GhostButton from '../../componments/GhostButton';
 import "../../componments/Text/Text/Text.css";
@@ -34,23 +34,39 @@ function CardOverview({ text, description: back = "", showResponseOptions = fals
     const sanitizedBack = sanitizeHtml(back);
     const [cardText, setCardText] = useState(sanitizedFront);
     const [isFlipped, setIsFlipped] = useState(false);
+    const isFlippedRef = useRef(isFlipped);
 
     function turnOverCard() {
-        setIsFlipped(!isFlipped);
+        setIsFlipped((prev) => !prev);
         setTimeout(() => {
-            if (cardText === sanitizedFront) {
-                setCardText(sanitizedBack);
-            } else {
-                setCardText(sanitizedFront);
-            }
+            setCardText((prev) => (prev === sanitizedFront ? sanitizedBack : sanitizedFront));
         }, 75); // Adjust this timeout based on animation duration
     }
+
+    // Update the ref whenever isFlipped changes
+    useEffect(() => {
+        isFlippedRef.current = isFlipped;
+    }, [isFlipped]);
 
     // Make sure the card is flipped back when the text changes
     useEffect(() => {
         setCardText(sanitizedFront);
         setIsFlipped(false);
     }, [text]);
+
+    function handleKeyDown(event) {
+        if (event.key === " ") {
+            event.preventDefault(); // Prevent the default action of the space key
+            turnOverCard();
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     return (
         <WhiteOverlay
