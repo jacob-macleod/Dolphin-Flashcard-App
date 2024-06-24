@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.5.0 - 2024-06-20
+
+### Removed
+
+- Removed deprecated endpoint, /api/calculate-card-stats, from the documentation
+
 ## 3.4.0 - 2024-06-15
 
 ### Changed

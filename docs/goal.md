@@ -1,66 +1,3 @@
-## Update Goal Status
-### **Endpoint:** /update-goal-status
-### **Method:** POST
-Update the status of a goal. Goals can be of type 'card' or 'XP' and the possible values for the status of a goal are "completed", "in progress", or "failed".
-### Parameters
-
-#### **Request Body Parameters**
-
-| Parameter    | Description                                                                               | Type    | Required/Optional |
-|--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | An identifier for the user whose goals' statuses are to be updated.                       | String  | Required          |
-
-
-## Request Example
-
-```
-    Curl -X POST -H "Content-Type: application/json” -d '{"userID": "123"}' http://dolphinflashcards.com/api/update-goal-status
-
-```
-
-## Response Example
-
-**Success Responses**<br>
-HTTP Status: 200
-```
-    "firstGoal": {
-        "status": "completed",
-        "type": "XP",
-        "data": {
-            "starting_xp": 50,
-            "goal_xp": 100
-        }
-    }
-
-```
-
-HTTP Status: 200
-```
-    "goal2": {
-        "status": "in progress",
-        "type": "Card",
-        "data": {
-            "cards_revised_so_far": 2,
-            "cards_to_revise": 8
-        }
-    }
-
-```
-
-**Error Response**<br>
-HTTP Status: 400
-```
-{
-    "error": Your supplied json keys do not match the expected format. The request should be in the format: {'userID': 'string'} 
-}
-
-```
-
-
-
-
-******************************************
-
 ## Create XP Goal
 ### **Endpoint:** /create-xp-goal
 ### **Method:** POST
@@ -156,8 +93,70 @@ HTTP Status: 400
 
 ```
 
-
 ****************************************
+
+## Update Goal Status
+### **Endpoint:** /update-goal-status
+### **Method:** POST
+Update the status of a goal. Goals can be of type 'card' or 'XP' and the possible values for the status of a goal are "completed", "in progress", or "failed".
+### Parameters
+
+#### **Request Body Parameters**
+
+| Parameter    | Description                                                                               | Type    | Required/Optional |
+|--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
+| userID       | An identifier for the user whose goals' statuses are to be updated.                       | String  | Required          |
+
+
+## Request Example
+
+```
+    Curl -X POST -H "Content-Type: application/json” -d '{"userID": "123"}' http://dolphinflashcards.com/api/update-goal-status
+
+```
+
+## Response Example
+
+**Success Responses**<br>
+HTTP Status: 200
+```
+    "firstGoal": {
+        "status": "completed",
+        "type": "XP",
+        "data": {
+            "starting_xp": 50,
+            "goal_xp": 100
+        }
+    }
+
+```
+
+HTTP Status: 200
+```
+    "goal2": {
+        "status": "in progress",
+        "type": "Card",
+        "data": {
+            "cards_revised_so_far": 2,
+            "cards_to_revise": 8
+        }
+    }
+
+```
+
+**Error Response**<br>
+HTTP Status: 400
+```
+{
+    "error": Your supplied json keys do not match the expected format. The request should be in the format: {'userID': 'string'} 
+}
+
+```
+
+
+
+
+******************************************
 
 ## Edit Card Goal
 ### **Endpoint:** /edit-card-goal
