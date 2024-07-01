@@ -2,6 +2,7 @@ import {React, useEffect, useState} from 'react';
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
 import { getTodayCardsFromStorage } from '../../hooks/useTodayCards';
+import useCardData from '../../hooks/useCardData';
 import '../../App.css';
 import CardOverview from '../CardOverview/CardOverview';
 
@@ -46,10 +47,12 @@ function TotalFlashcardBrowser() {
     };
   
     const cardIDs = collectCardIDs(todayCards, flashcardID);
+    console.log(cardIDs);
+    const {cardData, cardsExist} = useCardData(cardIDs);
 
     useEffect(() => {
-        console.log("TotalFlashcardBrowser.js: cardIDs: ", cardIDs)
-    }, [cardIDs]);
+      console.log(cardData);
+    }, cardData);
 
   return (
     <>
