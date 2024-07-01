@@ -10,7 +10,7 @@ const useCardData = (cardIDs) => {
       const cardPromises = cardIDs.map((cardID) => {
         return new Promise((resolve) => {
           apiManager.getFlashcardItem(cardID, (item) => {
-            resolve(item);
+            resolve({...item, cardID: cardID});
           });
         });
       });

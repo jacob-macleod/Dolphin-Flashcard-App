@@ -24,16 +24,27 @@ function TotalFlashcardBrowser() {
 
     const collectCardIDs = (cards, flashcardIDs) => {
       const cardIDs = [];
-  
+      // Stores review_status and last_review in format {cardID: {"reviewStatus": "", "lastReview": ""}}
+      const reviewStatuses = {};
+    
       const traverse = (obj) => {
         for (const key in obj) {
           if (obj.hasOwnProperty(key)) {
             const value = obj[key];
-  
+    
             if (value && typeof value === 'object') {
               if (flashcardIDs.includes(value.flashcardID)) {
                 if (value.cards) {
-                  cardIDs.push(...Object.keys(value.cards));
+                  for (const cardID in value.cards) {
+                    if (value.cards.hasOwnProperty(cardID)) {
+                      const card = value.cards[cardID];
+                      cardIDs.push(cardID);
+                      reviewStatuses[cardID] = {
+                        reviewStatus: card.review_status,
+                        lastReview: card.last_review
+                      };
+                    }
+                  }
                 }
               }
               traverse(value);
@@ -41,27 +52,48 @@ function TotalFlashcardBrowser() {
           }
         }
       };
-  
+    
       traverse(cards);
-      return cardIDs;
+      return { cardIDs, reviewStatuses };
     };
+    
+    const { cardIDs, reviewStatuses } = collectCardIDs(todayCards, flashcardID);
+    const { cardData, cardsExist } = useCardData(cardIDs);
+    const [updatedCardData, setUpdatedCardData] = useState([]);
   
-    const cardIDs = collectCardIDs(todayCards, flashcardID);
-    console.log(cardIDs);
-    const {cardData, cardsExist} = useCardData(cardIDs);
-
     useEffect(() => {
-      console.log(cardData);
-    }, cardData);
+      if (cardData.length > 0) {
+        const newCardData = cardData.map(card => {
+          if (reviewStatuses[card.cardID]) {
+            return {
+              ...card,
+              review_status: reviewStatuses[card.cardID].reviewStatus,
+              last_review: reviewStatuses[card.cardID].lastReview
+            };
+          }
+          return card;
+        });
+  
+        // Only update state if the new data is different from the current state
+        if (JSON.stringify(newCardData) !== JSON.stringify(updatedCardData)) {
+          setUpdatedCardData(newCardData);
+        }
+      }
+    }, [cardData, reviewStatuses]);
+  
 
   return (
     <>
+      {
+      updatedCardData.length != 0?
         <CardOverview
-        text={"Set"}
-        description={"Description"}
+        text={updatedCardData[0].front}
+        description={updatedCardData[0].back}
         showResponseOptions={true}
         height="264px"
         />
+        : null
+      }
     </>
   );
 }
