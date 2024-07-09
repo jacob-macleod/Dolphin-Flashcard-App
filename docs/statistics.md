@@ -1,7 +1,7 @@
-## Update Heat map
+## Update Heat map 
 ### **Endpoint:** /update-heatmap
 ### **Method:** POST
-Update the user's heatmap data when their streak is modified.
+ Called when streak is updated.
 
 
 ### Parameters
@@ -10,21 +10,30 @@ Update the user's heatmap data when their streak is modified.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the user whose heatmap data is to be updated                                   | String  | Required          |
+| userID       | Identifies the user with an updated heatmap data.                                        | String  | Required          |
 
 
 
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d { "user1": "123"} http://dolphinflashcards.com/api/calculate-card-stats
-
+    Curl  -X POST  -H "Content-Type: application/json” -d { "userID": "user1"} http://dolphinflashcards.com/api/update-heatmap
 ```
 
 ## Response Example
 
 **Success Response**<br>
 HTTP Status: 200
+
+Returns:
+```
+{
+    "error": "User does not exist!"
+}
+```
+
+
+Instead of:
 ```
 {
     "2030-01-01": "8",
@@ -32,19 +41,48 @@ HTTP Status: 200
     "2030-01-03": "5",
     "2030-01-04": "15"
 }
-
-
 ```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+|                 |                |   | 
+
+
+
+
 
 **Error Response**<br>
 HTTP Status: 400
 ```
 {
-    "error": Your supplied json keys do not match the expected format. The request     should be in the format: {'userID': ' '}
+    "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ''}"
 }
 
 ```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible solution.               | string  | 
 
+
+
+HTTP Status: 500
+```
+{
+    "error": "User does not exist!"
+}
+
+```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Provides details about the nature of the error.                                   | string  | 
+
+
+
+
+
+<br></br>
 **********************************
 
 ## Get Heatmap
@@ -59,14 +97,14 @@ Retrieve the user's heatmap data.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the user whose heatmap data is to be retrieved.                               | String  | Required          |
+| userID       | Identifies the owner of the heatmap data.                                       | String  | Required          |
 
 
 
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d { "user1": "123"} http://dolphinflashcards.com/api/get-heatmap
+    Curl  -X POST  -H "Content-Type: application/json” -d { "userID": "user1"} http://dolphinflashcards.com/api/get-heatmap
 
 ```
 
@@ -74,6 +112,16 @@ Retrieve the user's heatmap data.
 
 **Success Response**<br>
 HTTP Status: 200
+
+Returns:
+```
+{
+    "error": "User does not exist!"
+}
+```
+
+
+Instead of:
 ```
 {
    "2030-01-01": "1",
@@ -84,22 +132,51 @@ HTTP Status: 200
 
 ```
 
+
+
+
+
 **Error Response**<br>
 HTTP Status: 400
+
 ```
 {
-    "error": Your supplied json keys do not match the expected format. The request     should be in the format: {'userID': ' '}
+    "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ''}"
 }
+```
 
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible solution.               | string  | 
+
+
+
+
+
+HTTP Status: 500
 
 ```
+{
+    "error": "User does not exist!"
+}
+```
+
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Provides details about the nature of the error.                                   | string  | 
+
+
+
+
 
 **********************************
 
 ## Calculate Streak
 ### **Endpoint:** /calculate-streak
 ### **Method:** POST
-Calculate the user's streak, and increase it if needed.
+Calculate the user's streak, and increase it if necessary.
 
 
 ### Parameters
@@ -108,7 +185,7 @@ Calculate the user's streak, and increase it if needed.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| increase       | Can be added to the streak to increase it, if needed                                    | String  | Required          |
+| increase     | Can be added to the query string to increase a user's streak. If needed, set `increase = true` | Boolean  | Optional       |
 
 
 
@@ -116,14 +193,14 @@ Calculate the user's streak, and increase it if needed.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the user whose streak is to be calculated                                      | String  | Required          |
+| userID       | Identifies the owner of the streak.                                                       | String  | Required          |
 
 
 
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d { "user1": "123"} http://dolphinflashcards.com/api/calculate-streak?increase=true
+    Curl  -X POST  -H "Content-Type: application/json” -d { "userID": "user1"} http://dolphinflashcards.com/api/calculate-streak?increase=true
 
 ```
 
@@ -131,6 +208,17 @@ Calculate the user's streak, and increase it if needed.
 
 **Success Response**<br>
 HTTP Status: 200
+
+Returns:
+
+```
+{
+    "error": "'NoneType' object is not subscriptable"
+}
+```
+
+
+Instead of:
 ```
 {
     "success": true
@@ -138,11 +226,32 @@ HTTP Status: 200
 
 ```
 
+
+
+
 **Error Response**<br>
 HTTP Status: 400
 ```
 {
-    "error": Your supplied json keys do not match the expected format. The request     should be in the format: {'userID': ' '}
+    "error": Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ' '}
 }
 
 ```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible solution.               | string  | 
+
+
+HTTP Status: 500
+```
+{
+    "error": "'NoneType' object is not subscriptable"
+}
+
+```
+
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible reason.               | string  | 
