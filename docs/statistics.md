@@ -1,7 +1,7 @@
 ## Update Heat map 
 ### **Endpoint:** /update-heatmap
 ### **Method:** POST
- Called when streak is updated.
+ Called when streak is updated. Streak is the number of cards that have been looked at in the set this session before getting one wrong.
 
 
 ### Parameters
@@ -53,6 +53,8 @@ Instead of:
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 ```
 {
     "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ''}"
@@ -97,7 +99,7 @@ Retrieve the user's heatmap data.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the owner of the heatmap data.                                       | String  | Required          |
+| userID       | Identifies the owner of the heatmap data.                                                 | String  | Required          |
 
 
 
@@ -138,6 +140,7 @@ Instead of:
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
 
 ```
 {
@@ -176,7 +179,7 @@ HTTP Status: 500
 ## Calculate Streak
 ### **Endpoint:** /calculate-streak
 ### **Method:** POST
-Calculate the user's streak, and increase it if necessary.
+Calculate the user's streak, and increase it if necessary. Streak is the number of cards that have been looked at in the set this session before getting one wrong.
 
 
 ### Parameters
@@ -244,6 +247,8 @@ HTTP Status: 400
 
 
 HTTP Status: 500
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 ```
 {
     "error": "'NoneType' object is not subscriptable"

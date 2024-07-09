@@ -44,6 +44,9 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
+
 ```
 {
     "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': '', 'goalXP': '', 'endDate': ''}"
@@ -107,6 +110,9 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
+
 ```
 {
     "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': '', 'cardsToRevise': '', 'endDate': ''}"
@@ -195,6 +201,9 @@ Update the status of a goal. The possible values for the status of a goal are `c
 
 **Error Response**
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
+
 ```
 {
     "error": Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ''} 
@@ -261,6 +270,9 @@ HTTP Status: 200 **
 Returns an error when supplied with an invalid goal or user ID.
 
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
+
 ```
 {
     "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': '', 'goalID': '', 'newEndDate': '', 'newTitle': '', 'newCardsToRevise': ''}"
@@ -343,6 +355,9 @@ HTTP Status: 200
 
 **Error Responses**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
+
 ```
 {
     "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': '', 'goalID': '', 'newEndDate': '', 'newTitle': '', 'newGoalXP': ''}"
@@ -424,6 +439,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
 ```
 {
     "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': '', 'goalID': ''}"

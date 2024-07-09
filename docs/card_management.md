@@ -45,6 +45,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
 
 ```
 
@@ -99,6 +101,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
 
 ```
 
@@ -171,6 +175,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
 
 ```
 {
@@ -240,6 +246,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
 
 ```
 {
@@ -306,6 +314,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 
 ```
 {
@@ -369,6 +379,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 
 ```
 {
@@ -476,6 +488,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters is not in the expected JSON format.
+
 
 ```
 {
@@ -582,6 +596,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 
 ```
 {
@@ -647,6 +663,8 @@ HTTP Status: 200
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format.
+
 
 ```
 {
