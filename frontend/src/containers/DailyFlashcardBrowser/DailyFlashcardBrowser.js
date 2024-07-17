@@ -42,7 +42,20 @@ function TotalFlashcardBrowser() {
     return nextFib;
   }
 
+  function isDateBeforeToday(dateString) {
+    // Parse the given date string into a Date object
+    const givenDate = new Date(dateString);
   
+    // Get the current date
+    const today = new Date();
+  
+    // Set the time of the current date to midnight to compare only the date part
+    today.setHours(0, 0, 0, 0);
+  
+    // Compare the dates
+    return givenDate < today;
+  }
+
   const collectCardIDs = (cards, flashcardIDs) => {
     const cardIDs = [];
     const reviewStatuses = {};
@@ -165,7 +178,42 @@ function TotalFlashcardBrowser() {
 
     setUpdatedCardData(newCardData);
     if (cardIndex < updatedCardData.length - 1) {
-      setCardIndex(cardIndex + 1);
+      // TODO: Only show cards with a review status of 0.x
+      // or that were last revised before yesterday
+      let cardIndexValid = false;
+      let newIndex = cardIndex + 1;
+      let cardsRevised = 0;
+      while (cardIndexValid == false) {
+        console.log(updatedCardData[newIndex])
+        let reviewStatus = updatedCardData[newIndex].review_status
+        let lastReview = updatedCardData[newIndex].last_review
+        let daily = parseFloat(reviewStatus[0]);
+
+        if (daily == 0 || isDateBeforeToday(lastReview)) {
+          cardIndexValid = true;
+        } else {
+          newIndex += 1;
+          cardsRevised += 1;
+        }
+
+        // Switch to the first card if the last is reached
+        if (newIndex >= updatedCardData.length) {
+          newIndex = 0;
+        }
+
+        // If no card is valid
+        if (cardsRevised >= updatedCardData.length) {
+          alert ("No cards left");
+          setUpdatedCardData([]);
+          newIndex = -1;
+          cardIndexValid = true;
+        }
+      }
+
+      if (newIndex != -1) {
+        setCardIndex(newIndex);
+      }
+      
     } else {
       setCardIndex(0);
     }
