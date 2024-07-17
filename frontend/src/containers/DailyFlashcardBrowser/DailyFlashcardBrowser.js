@@ -22,6 +22,27 @@ function TotalFlashcardBrowser() {
 
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
+
+  function nextFibonacci(num) {
+    // Edge cases for very small numbers
+    if (num < 0) return 0;
+    if (num === 0) return 1;
+  
+    let a = 0;
+    let b = 1;
+    let nextFib = a + b;
+  
+    // Generate Fibonacci numbers until we find one greater than num
+    while (nextFib <= num) {
+      a = b;
+      b = nextFib;
+      nextFib = a + b;
+    }
+  
+    return nextFib;
+  }
+
+  
   const collectCardIDs = (cards, flashcardIDs) => {
     const cardIDs = [];
     const reviewStatuses = {};
@@ -121,6 +142,24 @@ function TotalFlashcardBrowser() {
         }
         return card;
       });
+    } else if (response === "This is easy") {
+      const reviewStatus = updatedCardData[cardIndex].review_status.split(".");
+      let daily = parseFloat(reviewStatus[0]);
+      let subDaily = parseFloat(reviewStatus[1]);
+      
+      subDaily = 0;
+      daily = nextFibonacci(daily);
+
+      newCardData = updatedCardData.map(card => {
+        if (card.cardID === updatedCardData[cardIndex].cardID) {
+          return {
+            ...card,
+            review_status: `${daily}.${subDaily}`,
+            last_review: new Date().toISOString().slice(0, 10)
+          };
+        }
+        return card;
+      });
     }
   
 
@@ -131,10 +170,6 @@ function TotalFlashcardBrowser() {
       setCardIndex(0);
     }
   };
-
-  useEffect(() => {
-    console.log(updatedCardData);
-  }, [updatedCardData]);
 
   return (
     <>
