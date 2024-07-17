@@ -18,12 +18,11 @@ function TotalFlashcardBrowser() {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
-  
+  const [addedReviewDataToCards, setAddedReviewDataToCards] = useState(false);
+
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
-
   const collectCardIDs = (cards, flashcardIDs) => {
-    console.log("Line 26");
     const cardIDs = [];
     const reviewStatuses = {};
 
@@ -61,30 +60,38 @@ function TotalFlashcardBrowser() {
   const { cardData, cardsExist } = useCardData(cardIDs);
 
   useEffect(() => {
-    console.log("line 63");
-    if (cardData.length > 0) {
-      const newCardData = cardData.map(card => {
-        if (reviewStatuses[card.cardID]) {
-          return {
-            ...card,
-            review_status: reviewStatuses[card.cardID].reviewStatus,
-            last_review: reviewStatuses[card.cardID].lastReview
-          };
-        }
-        return card;
-      });
+    /*
+    This code should only populate card data once, otherwise it'll
+    rerun and reset the card data every time a user revises a card
+    */
+    if (addedReviewDataToCards === false) {
+      if (cardData.length > 0) {
+        const newCardData = cardData.map(card => {
+          if (reviewStatuses[card.cardID]) {
+            return {
+              ...card,
+              review_status: reviewStatuses[card.cardID].reviewStatus,
+              last_review: reviewStatuses[card.cardID].lastReview
+            };
+          }
+          return card;
+        });
 
-      setUpdatedCardData(prevCardData => {
-        if (JSON.stringify(newCardData) !== JSON.stringify(prevCardData)) {
-          return newCardData;
-        }
-        return prevCardData;
-      });
+        setUpdatedCardData(prevCardData => {
+          if (JSON.stringify(newCardData) !== JSON.stringify(prevCardData)) {
+            return newCardData;
+          }
+          return prevCardData;
+        });
+      }
+      // Again, make sure it only populates card data once
+      if (cardData.length !== 0) {
+        setAddedReviewDataToCards(true);
+      }
     }
   }, [cardData, reviewStatuses]);
 
   const setResponse = (response) => {
-    console.log ("Set response function");
     let newCardData = updatedCardData;
     if (response === "I'm not sure" && updatedCardData.length > 0) {
       newCardData = updatedCardData.map(card => {
@@ -98,8 +105,11 @@ function TotalFlashcardBrowser() {
       let daily = parseFloat(reviewStatus[0]);
       let subDaily = parseFloat(reviewStatus[1]);
       
-      daily += 1;
-      subDaily = 0;
+      subDaily += 3;
+      if (subDaily > 10) {
+        subDaily = 0;
+        daily += 1;
+      }
 
       newCardData = updatedCardData.map(card => {
         if (card.cardID === updatedCardData[cardIndex].cardID) {
@@ -113,10 +123,8 @@ function TotalFlashcardBrowser() {
       });
     }
   
-    console.log(newCardData);
-    console.log("Setting new data")
+
     setUpdatedCardData(newCardData);
-  
     if (cardIndex < updatedCardData.length - 1) {
       setCardIndex(cardIndex + 1);
     } else {
