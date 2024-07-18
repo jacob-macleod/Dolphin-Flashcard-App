@@ -3,6 +3,8 @@ import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
 import { getTodayCardsFromStorage } from '../../hooks/useTodayCards';
 import useCardData from '../../hooks/useCardData';
+import apiManager from '../../api/Api';
+import { getCookie } from '../../api/Authentication';
 import '../../App.css';
 import CardOverview from '../CardOverview/CardOverview';
 
@@ -19,7 +21,7 @@ function TotalFlashcardBrowser() {
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
   const [addedReviewDataToCards, setAddedReviewDataToCards] = useState(false);
-
+  const [newDataSaved, setNewDataSaved] = useState(false);
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
 
@@ -42,9 +44,20 @@ function TotalFlashcardBrowser() {
     return nextFib;
   }
 
+  function saveFlashcards() {
+    /*TODO: Add function to backend
+  
+    The function should be able to be passed card IDs and data
+    (whatever is accessible easily to the frontend) and should
+    update the review statuses and last review of all cards provided
+  
+    This function needs to be unit tested, then called here
+    */
+  }
+
   function isDateBeforeToday(dateString) {
     // Parse the given date string into a Date object
-    const givenDate = new Date(dateString);
+    const givenDate = new Date(dateString.split('/').reverse().join('/'));
   
     // Get the current date
     const today = new Date();
@@ -105,7 +118,7 @@ function TotalFlashcardBrowser() {
             return {
               ...card,
               review_status: reviewStatuses[card.cardID].reviewStatus,
-              last_review: reviewStatuses[card.cardID].lastReview
+              last_review: reviewStatuses[card.cardID].lastReview.split('-').reverse().join('/')
             };
           }
           return card;
@@ -150,7 +163,7 @@ function TotalFlashcardBrowser() {
           return {
             ...card,
             review_status: `${daily}.${subDaily}`,
-            last_review: new Date().toISOString().slice(0, 10)
+            last_review: new Date().toLocaleDateString('en-GB').split('/').reverse().join('/')
           };
         }
         return card;
@@ -168,7 +181,7 @@ function TotalFlashcardBrowser() {
           return {
             ...card,
             review_status: `${daily}.${subDaily}`,
-            last_review: new Date().toISOString().slice(0, 10)
+            last_review: new Date().toLocaleDateString('en-GB').split('/').reverse().join('/')
           };
         }
         return card;
@@ -203,7 +216,8 @@ function TotalFlashcardBrowser() {
 
         // If no card is valid
         if (cardsRevised >= updatedCardData.length) {
-          alert ("No cards left");
+          saveFlashcards();
+          alert ("No cards left - saving changes");
           setUpdatedCardData([]);
           newIndex = -1;
           cardIndexValid = true;
