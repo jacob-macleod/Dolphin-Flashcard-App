@@ -61,6 +61,11 @@ MOVE_FLASHCARD_SET = {
     "moveLocation": ""
 }
 
+UPDATE_CARD_PROGRESS = {
+    "userID": "",
+    "cardData": []
+}
+
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
@@ -280,5 +285,32 @@ def move_flashcard_set():
                 + "/flashcards/" + current_location + "/" + flashcard_name
                 + " has been moved to " + move_location}
         ), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/update-card-progress", methods=["POST"])
+@validate_json(UPDATE_CARD_PROGRESS)
+def update_card_progress():
+    """
+    Update the progress (last review, date studied) for multiple cards
+    Example request:
+    {
+        "userID": "my-id",
+        "cardData": [
+            {
+                "cardID": "my-card-id",
+                "reviewStatus": "0.0",
+                "lastReview": "dd/mm/yyyy"
+            }
+        ]
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        card_data = request.json.get("cardData")
+
+        db.folders.update_card_progress(user_id, card_data)
+
+        return jsonify({"success": "Card progress updated"}), 200
     except Exception as e:
         return jsonify(str(e)), 500
