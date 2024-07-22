@@ -1,5 +1,5 @@
 """ Routes relating to general card management """
-import hashlib
+import uuid
 from flask import Blueprint, request, jsonify
 from database.database import database as db
 from routes.api.validation_wrapper import validate_json
@@ -12,14 +12,8 @@ def hash_to_numeric(input_string):
     """ Hash a string, convert it to a number, then return a string version of the number
         Importantly, this is deterministic - the same value will be returned
         every time it is hashed"""
-    # Convert the input string to its hash using SHA-256
-    hashed_string = hashlib.sha256(input_string.encode()).hexdigest()
-
-    # Convert the hexadecimal hash to an integer (base 16)
-    hashed_numeric = int(hashed_string, 16)
-
-    # Return the numeric representation of the hash
-    return str(hashed_numeric)
+    # Convert the input string to its
+    return str(uuid.uuid5(uuid.NAMESPACE_DNS, input_string))
 
 CREATE_FLASHCARD_FORMAT = {
     "userID": "",

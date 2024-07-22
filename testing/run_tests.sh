@@ -9,16 +9,22 @@ echo "Waiting $SECONDS_TO_WAIT seconds for emulator to start..."
 sleep $SECONDS_TO_WAIT
 
 # Run unit tests
-python3 -m venv env
-source env/bin/activate
-pip3 install -r requirements.txt
+echo "Installing requirements..."
+python3 -m venv env > /dev/null 2>&1
+source env/bin/activate > /dev/null 2>&1
+pip3 install -r requirements.txt > /dev/null 2>&1
+
+# Reset terminal formatting without clearing the screen
+echo \n
+tput sgr0
 
 # Run pytest and capture the return status
 pytest testing/
 ERROR_RETURN_STATUS=$?
 
 # Stop Firestore emulator
-docker stop $(docker ps -aq --filter "ancestor=mtlynch/firestore-emulator-docker")
+echo "\nStopping Docker image..."
+docker stop $(docker ps -aq --filter "ancestor=mtlynch/firestore-emulator-docker") > /dev/null 2>&1
 
 # Exit with the pytest return status
 exit $ERROR_RETURN_STATUS
