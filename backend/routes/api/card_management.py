@@ -108,7 +108,7 @@ def create_flashcard():
 
         # Generate the card_ids
         card_ids = [
-            hash_to_numeric(user_id + folder + card["front"])
+            hash_to_numeric(user_id + folder + flashcard_name + card["front"])
             for card in cards
         ]
 
