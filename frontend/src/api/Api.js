@@ -259,6 +259,18 @@ class ApiManager {
             setFlashcardItem(flashcardItem[0]);
         });
     }
+
+    updateCardProgress(userID, cardData, setCardsRevised) {
+        const url = 'update-card-progress';
+        const data = {
+            "userID": userID,
+            "cardData": cardData
+        }
+
+        this.fetchData(data, url, response => {
+            setCardsRevised(response);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

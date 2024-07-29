@@ -53,6 +53,8 @@ function TotalFlashcardBrowser() {
   
     This function needs to be unit tested, then called here
     */
+   console.log("New card data");
+   console.log(updatedCardData);
   }
 
   function isDateBeforeToday(dateString) {
@@ -118,7 +120,7 @@ function TotalFlashcardBrowser() {
             return {
               ...card,
               review_status: reviewStatuses[card.cardID].reviewStatus,
-              last_review: reviewStatuses[card.cardID].lastReview.split('-').reverse().join('/')
+              last_review: reviewStatuses[card.cardID]
             };
           }
           return card;
@@ -163,7 +165,7 @@ function TotalFlashcardBrowser() {
           return {
             ...card,
             review_status: `${daily}.${subDaily}`,
-            last_review: new Date().toLocaleDateString('en-GB').split('/').reverse().join('/')
+            last_review: new Date().toLocaleDateString('en-GB')
           };
         }
         return card;
@@ -181,7 +183,7 @@ function TotalFlashcardBrowser() {
           return {
             ...card,
             review_status: `${daily}.${subDaily}`,
-            last_review: new Date().toLocaleDateString('en-GB').split('/').reverse().join('/')
+            last_review: new Date().toLocaleDateString('en-GB')
           };
         }
         return card;
@@ -197,7 +199,6 @@ function TotalFlashcardBrowser() {
       let newIndex = cardIndex + 1;
       let cardsRevised = 0;
       while (cardIndexValid == false) {
-        console.log(updatedCardData[newIndex])
         let reviewStatus = updatedCardData[newIndex].review_status
         let lastReview = updatedCardData[newIndex].last_review
         let daily = parseFloat(reviewStatus[0]);
