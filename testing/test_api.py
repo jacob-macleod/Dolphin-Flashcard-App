@@ -193,7 +193,6 @@ class TestApi(unittest.TestCase):
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
-        print(response_json)
         self.assertTrue(
             expr=response_json["success"],
             msg="Dummy account creation should be successful.",
@@ -388,7 +387,6 @@ class TestApi(unittest.TestCase):
 
         # Test the received data is as expected
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
-        print(response)
         assert response == {
             "My new set": {
                 "cards": {
@@ -507,7 +505,6 @@ class TestApi(unittest.TestCase):
 
         # Test the received data is as expected
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
-        print(response)
         assert response == {
             "My new set": {
                 "cards": {
@@ -816,19 +813,7 @@ class TestApi(unittest.TestCase):
                 "title": "Revise 5 cards by 01/01/2022",
                 "type": "Card",
             },
-            "7a49423d-172b-5fa1-962d-15112158bc0d": {
-                "data": {
-                    "goal_xp": 0,
-                    "start_date": date.get_current_date(),
-                    "starting_xp": "0",
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "completed",
-                "title": f"Gain 0 XP by {date.get_current_date()}",
-                "type": "XP",
-            },
-            "98057f8e-b24f-5412-8a97-d5a9228c5f07": {
+            "c69b25f2-9650-5fd6-abd9-5dba60ebcee2": {
                 "data": {
                     "goal_xp": 5,
                     "start_date": date.get_current_date(),
@@ -840,6 +825,18 @@ class TestApi(unittest.TestCase):
                 "title": f"Gain 5 XP by {date.get_current_date()}",
                 "type": "XP",
             },
+            "d8a228a2-1984-5ad0-86c1-7465a7e50402": {
+                "data": {
+                    "goal_xp": 0,
+                    "start_date": date.get_current_date(),
+                    "starting_xp": "0",
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": f"Gain 0 XP by {date.get_current_date()}",
+                "type": "XP",
+            }
         }
 
         # Test case 2: The card exists
@@ -871,7 +868,7 @@ class TestApi(unittest.TestCase):
         # Test case 4: Editing a valid XP card
         request_data = {
             "userID": "test_update_goal_status",
-            "goalID": "98057f8e-b24f-5412-8a97-d5a9228c5f07",
+            "goalID": "c69b25f2-9650-5fd6-abd9-5dba60ebcee2",
             "newEndDate": "29/05/2027",
             "newTitle": "My new xp title",
             "newGoalXP": 50,
@@ -898,7 +895,7 @@ class TestApi(unittest.TestCase):
         request_data = {"userID": "test_update_goal_status"}
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS["url"], request_data)
         assert response == {
-            "7a49423d-172b-5fa1-962d-15112158bc0d": {
+            "d8a228a2-1984-5ad0-86c1-7465a7e50402": {
                 "data": {
                     "goal_xp": 0,
                     "start_date": date.get_current_date(),
@@ -910,7 +907,7 @@ class TestApi(unittest.TestCase):
                 "title": "Gain 0 XP by " + date.get_current_date(),
                 "type": "XP",
             },
-            "98057f8e-b24f-5412-8a97-d5a9228c5f07": {
+            "c69b25f2-9650-5fd6-abd9-5dba60ebcee2": {
                 "data": {
                     "goal_xp": 50,
                     "start_date": date.get_current_date(),
@@ -935,7 +932,7 @@ class TestApi(unittest.TestCase):
         # Test case 7: A valid goal is deleted
         request_data = {
             "userID": "test_update_goal_status",
-            "goalID": "98057f8e-b24f-5412-8a97-d5a9228c5f07",
+            "goalID": "c69b25f2-9650-5fd6-abd9-5dba60ebcee2",
         }
         response = self.delete_api(Routes.ROUTE_DELETE_GOAL["url"], request_data)
         assert response == {"success": "Goal deleted successfully"}
@@ -952,7 +949,7 @@ class TestApi(unittest.TestCase):
         request_data = {"userID": "test_update_goal_status"}
         response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS["url"], request_data)
         assert response == {
-            "7a49423d-172b-5fa1-962d-15112158bc0d": {
+            "d8a228a2-1984-5ad0-86c1-7465a7e50402": {
                 "data": {
                     "goal_xp": 0,
                     "start_date": date.get_current_date(),

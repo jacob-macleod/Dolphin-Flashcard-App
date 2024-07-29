@@ -234,6 +234,10 @@ function TotalFlashcardBrowser() {
     }
   };
 
+  useEffect(() => {
+    console.log(updatedCardData);
+  }, [updatedCardData]);
+
   return (
     <>
       {
