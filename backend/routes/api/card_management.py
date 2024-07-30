@@ -299,13 +299,12 @@ def update_card_progress():
         ]
     }
     """
-    # try:
-    if 1==1:
+    try:
         user_id = request.json.get("userID")
         card_data = request.json.get("cardData")
 
         db.folders.update_card_progress(user_id, card_data)
 
         return jsonify({"success": "Card progress updated"}), 200
-    # except Exception as e:
-    #     return jsonify(str(e)), 500
+    except Exception as e:
+        return jsonify(str(e)), 500

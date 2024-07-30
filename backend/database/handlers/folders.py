@@ -249,8 +249,8 @@ class Folders(DatabaseHandler):
 
         for card in card_data:
             card_id = card.get("cardID")
-            review_status = card.get("reviewStatus")
-            last_review = card.get("lastReview")
+            review_status = card.get("review_status")
+            last_review = card.get("last_review")
 
             # Get the current folder location of the card
             card_location = self.get_card_location(user_id, card_id, folder_data)
