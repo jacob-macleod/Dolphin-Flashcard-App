@@ -7,6 +7,8 @@ import apiManager from '../../api/Api';
 import { getCookie } from '../../api/Authentication';
 import '../../App.css';
 import CardOverview from '../CardOverview/CardOverview';
+import Heading5 from '../../componments/Text/Heading5';
+import DelayedElement from '../DelayedElement';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -49,7 +51,6 @@ function TotalFlashcardBrowser() {
     /*
     Save the flashcard data
     */
-   alert ("Running save functuion")
    apiManager.updateCardProgress(
     getCookie("userID"),
     updatedCardData,
@@ -136,6 +137,9 @@ function TotalFlashcardBrowser() {
       // Again, make sure it only populates card data once
       if (cardData.length !== 0) {
         setAddedReviewDataToCards(true);
+        setCardsSaved(false);
+      } else {
+        setCardsSaved(true);
       }
     }
   }, [cardData, reviewStatuses]);
@@ -218,7 +222,6 @@ function TotalFlashcardBrowser() {
         // If no card is valid
         if (cardsRevised >= updatedCardData.length) {
           saveFlashcards();
-          alert ("No cards left - saving changes");
           setUpdatedCardData([]);
           newIndex = -1;
           cardIndexValid = true;
@@ -249,7 +252,15 @@ function TotalFlashcardBrowser() {
             setResponse={setResponse}
             height="264px"
           />
-          : null
+          : cardsSaved === false ? <>
+          <div style={{display: "inline-block"}}>
+            <DelayedElement child={null} childValue={null} />
+            <Heading5 text="Saving cards..." />
+          </div>
+          </>
+          : <>
+          <Heading5 text="No cards left to study today!" />
+          </>
       }
     </>
   );
