@@ -24,6 +24,7 @@ function TotalFlashcardBrowser() {
   const [newDataSaved, setNewDataSaved] = useState(false);
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
+  const [cardsSaved, setCardsSaved] = useState(false);
 
   function nextFibonacci(num) {
     // Edge cases for very small numbers
@@ -45,16 +46,15 @@ function TotalFlashcardBrowser() {
   }
 
   function saveFlashcards() {
-    /*TODO: Add function to backend
-  
-    The function should be able to be passed card IDs and data
-    (whatever is accessible easily to the frontend) and should
-    update the review statuses and last review of all cards provided
-  
-    This function needs to be unit tested, then called here
+    /*
+    Save the flashcard data
     */
-   console.log("New card data");
-   console.log(updatedCardData);
+   alert ("Running save functuion")
+   apiManager.updateCardProgress(
+    getCookie("userID"),
+    updatedCardData,
+    setCardsSaved
+   )
   }
 
   function isDateBeforeToday(dateString) {

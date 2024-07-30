@@ -185,7 +185,7 @@ class Folders(DatabaseHandler):
             }
         )
 
-    def get_card_location(self, user_id:str, card_id: str, folder_data:dict):
+    def get_card_location(self, user_id: str, card_id: str, folder_data: dict):
         """
         Get the location of a card in the folder structure
         recursive function since folders can have any number of subfolders
@@ -194,15 +194,20 @@ class Folders(DatabaseHandler):
             user_id (str): The user who owns the card
             card_id (str): The card ID to find
             folder_data (dict): The generated card data
+
+        Returns:
+            list: The path to the card as a list of folder names, or None if the card is not found
         """
         for key, value in folder_data.items():
-            if key == "cards":
-                if card_id in value.keys():
-                    return []
-            else:
+            if "cards" in value:
+                if card_id in value["cards"]:
+                    return [key]
+            elif isinstance(value, dict):
                 location = self.get_card_location(user_id, card_id, value)
                 if location is not None:
                     return [key] + location
+        return None
+
 
     def update_card_data(self, folder_data: dict, location: list, card_id: str, review_status: str, last_review: str):
         """

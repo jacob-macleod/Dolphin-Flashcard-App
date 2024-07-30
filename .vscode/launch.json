@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: main.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "backend/main.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python Debugger: Flask",
             "type": "debugpy",
             "request": "launch",
@@ -15,8 +22,6 @@
             },
             "args": [
                 "run",
-                "--no-debugger",
-                "--no-reload"
             ],
             "jinja": true,
             "autoStartBrowser": false
