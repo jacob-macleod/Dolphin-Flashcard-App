@@ -124,7 +124,7 @@ function ViewFlashcards() {
               <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
 
               {mode === "daily"
-                ? <DailyFlashcardBrowser />
+                ? <DailyFlashcardBrowser view={view}/>
                 : <TotalFlashcardBrowser
                     folder={folder}
                     flashcardName={flashcardName}

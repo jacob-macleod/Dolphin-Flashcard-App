@@ -9,6 +9,7 @@ import '../../App.css';
 import CardOverview from '../CardOverview/CardOverview';
 import Heading5 from '../../componments/Text/Heading5';
 import DelayedElement from '../DelayedElement';
+import ReviewBarChart from '../../containers/ReviewBarChart';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -18,7 +19,7 @@ const slideVariants = {
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
 
-function TotalFlashcardBrowser() {
+function TotalFlashcardBrowser({ view }) {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
@@ -27,6 +28,9 @@ function TotalFlashcardBrowser() {
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
   const [cardsSaved, setCardsSaved] = useState(false);
+  const [studying, setStudying] = useState(0);
+  const [reviewing, setReviewing] = useState(0);
+  const [notStarted, setNotStarted] = useState(0);
 
   function nextFibonacci(num) {
     // Edge cases for very small numbers
@@ -241,17 +245,41 @@ function TotalFlashcardBrowser() {
     console.log(updatedCardData);
   }, [updatedCardData]);
 
+  // Count the types of cards
+  useEffect(() => {
+    console.log(updatedCardData)
+    var notStartedCards = 0;
+    var studyingCards = 0;
+    var recappingCards = 0;
+    for (let key in updatedCardData) {
+     let reviewStatus = updatedCardData[key].review_status;
+     if (reviewStatus == 0.0) {
+      notStartedCards++;
+     } else if (reviewStatus < 1.0) {
+      studyingCards++;
+     } else {
+      recappingCards++;
+     }
+    }
+    setStudying(studyingCards);
+    setReviewing(recappingCards);
+    setNotStarted(notStartedCards);
+  }, [updatedCardData]);
+
   return (
     <>
       {
         updatedCardData.length !== 0 ?
-          <CardOverview
-            text={updatedCardData[cardIndex].front}
-            description={updatedCardData[cardIndex].back}
-            showResponseOptions={true}
-            setResponse={setResponse}
-            height="264px"
-          />
+        <>
+            <CardOverview
+              text={updatedCardData[cardIndex].front}
+              description={updatedCardData[cardIndex].back}
+              showResponseOptions={true}
+              setResponse={setResponse}
+              height="264px"
+            />
+            <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
+          </>
           : cardsSaved === false ? <>
           <div style={{display: "inline-block"}}>
             <DelayedElement child={null} childValue={null} />
