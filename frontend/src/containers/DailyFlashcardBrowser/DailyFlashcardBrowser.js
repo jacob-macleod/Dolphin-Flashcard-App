@@ -206,7 +206,7 @@ function DailyFlashcardBrowser({ view }) {
     setUpdatedCardData(newCardData);
     console.log(cardIndex);
     console.log(updatedCardData.length);
-    if (cardIndex < updatedCardData.length) {
+    if (cardIndex < updatedCardData.length - 1 || cardIndex === 0) {
       console.log("If statement entered");
       // TODO: Only show cards with a review status of 0.x
       // or that were last revised before yesterday
@@ -296,13 +296,13 @@ function DailyFlashcardBrowser({ view }) {
               setResponse={setResponse}
               height="264px"
             />
-            <ReviewBarChartKey />
+            <ReviewBarChartKey style={{paddingTop: "8px"}}/>
             <div className={"review-bar-chart-wrapper"} >
               <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
               <Heading4 text={
                 ((learnedCards / (studying + reviewing + notStarted)) *100)
                 + "%"
-              } />
+              } style={{padding: "0px"}}/>
             </div>
           </>
           : cardsSaved === false ? <>

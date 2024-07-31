@@ -8,7 +8,7 @@
             "name": "Python Debugger: main.py",
             "type": "debugpy",
             "request": "launch",
-            "program": "testing/test_api.py",
+            "program": "backend/main.py",
             "console": "integratedTerminal"
         },
         {
