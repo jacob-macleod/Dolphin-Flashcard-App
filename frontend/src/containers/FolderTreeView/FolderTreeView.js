@@ -9,8 +9,9 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
     if (visible[0] !== "User has no flashcards") {
         visible = {"Your Account": visible}
     };
-    console.log("Visible is");
-    console.log(visible);
+    console.log("DATA");
+    console.log (selectedPath);
+    console.log (visible);
 
     const renderElement = (element, folderName, path="") => {
         if (path !== "") {

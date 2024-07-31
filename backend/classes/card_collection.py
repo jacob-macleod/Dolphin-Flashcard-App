@@ -1,7 +1,7 @@
 """Utilities to iterate through a collection of flashcards (all the cards belonging to a user)
 """
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from classes.date import Date
 
 class FlashcardCollection():
@@ -29,9 +29,12 @@ class FlashcardCollection():
         Args:
             flashcard_data (dict): The data for an individual flashcard
         """
+        review_status = card["review_status"]
+        days_until_next_review = int(float(review_status))
         if datetime.strptime(
-            card["last_review"], "%d/%m/%Y"
-        ) <= current_date:
+            card["last_review"],
+            "%d/%m/%Y"
+        ) + timedelta(days=days_until_next_review) <= current_date:
             # Work out if the card is new, being learned, or learned
             daily_review = card["review_status"].split(".")[0]
             sub_daily_review = card["review_status"].split(".")[1]
@@ -59,35 +62,37 @@ class FlashcardCollection():
 
         Args:
             flashcards (dict): The flashcard data to be iterated through
+            item_to_append_to (dict): The structure to append the processed flashcards and folders to
         """
         current_date = datetime.strptime(
             Date().get_current_date(), "%d/%m/%Y"
         )
-        for _, flashcard_data in enumerate(flashcards):
-            # Check if the item is a flashcard or a folder
-            is_folder = "cards" not in flashcards[flashcard_data]
-            if is_folder:
-                # If it's a folder, iterate through the folder
-                item_to_append_to[flashcard_data] = {}
-                self._iter_flashcards(flashcards[flashcard_data], item_to_append_to[flashcard_data])
-            else:
-                # If it's a flashcard set, add it to the list
-                current_card = flashcards[flashcard_data]
-                item_to_append_to[flashcard_data] = {}
 
-                item_to_append_to[flashcard_data]["flashcardID"] = current_card["flashcard_id"]
-                item_to_append_to[flashcard_data]["flashcardName"] = flashcard_data
-                item_to_append_to[flashcard_data]["cards"] = {}
+        for flashcard_name, flashcard_data in flashcards.items():
+            # Check if the item is a folder or a flashcard set
+            is_folder = "cards" not in flashcard_data
+            if is_folder:
+                # If it's a folder, create a new sub-folder in the result and iterate through it
+                item_to_append_to[flashcard_name] = {}
+                self._iter_flashcards(flashcard_data, item_to_append_to[flashcard_name])
+            else:
+                # If it's a flashcard set, process it
+                current_card = flashcard_data
+                item_to_append_to[flashcard_name] = {}
+
+                item_to_append_to[flashcard_name]["flashcardID"] = current_card["flashcard_id"]
+                item_to_append_to[flashcard_name]["flashcardName"] = flashcard_name
+                item_to_append_to[flashcard_name]["cards"] = {}
 
                 # Reset the card counts
                 self._not_started = 0
                 self._actively_studying = 0
                 self._recapping = 0
 
-                # If each individual flashcard is for today, add it to the set
-                for _, card in enumerate(current_card["cards"]):
-                    if self._is_for_today(current_card["cards"][card], current_date):
-                        item_to_append_to[flashcard_data]["cards"][card] = current_card["cards"][card]
+                # Process each individual card in the flashcard set
+                for card_name, card_data in current_card["cards"].items():
+                    if self._is_for_today(card_data, current_date):
+                        item_to_append_to[flashcard_name]["cards"][card_name] = card_data
 
     @property
     def today_card_list(self):

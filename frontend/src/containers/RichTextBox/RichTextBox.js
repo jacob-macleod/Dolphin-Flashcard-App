@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
+import { SketchPicker } from 'react-color';
+import closeOnOutsideClick from '../../hooks/closeOnOutsideClick';
 import StarterKit from '@tiptap/starter-kit';
 import Bold from '@tiptap/extension-bold';
 import Italic from '@tiptap/extension-italic';
@@ -10,7 +12,6 @@ import OrderedList from '@tiptap/extension-ordered-list';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Color from '@tiptap/extension-color'; // Add this import
-import { SketchPicker } from 'react-color';
 import BoldParagraph from '../../componments/Text/BoldParagraph/BoldParagraph';
 import Image from '../../componments/Image/Image';
 import Button from '../../componments/Button/Button';
@@ -22,6 +23,9 @@ import './RichTextBox.css';
 function RichTextBox({ flashcardData, setFlashcardData, type }) {
   const [selectedColor, setSelectedColor] = useState('#000000');
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const dropdownRef = useRef(null);
+
+  closeOnOutsideClick(dropdownRef, setShowColorPicker, "BUTTON");
 
   const editor = useEditor({
     extensions: [
@@ -85,10 +89,6 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
           {showColorPicker && (
             <div style={{ position: 'absolute', zIndex: 2 }}>
               <SketchPicker color={selectedColor} onChange={handleColorChange} />
-              <div className="text-effects">
-                <GhostButton text="Cancel" onClick={() => setShowColorPicker(false)} />
-                <Button text="Apply" onClick={() => setShowColorPicker(false)} />
-              </div>
             </div>
           )}
         </div>

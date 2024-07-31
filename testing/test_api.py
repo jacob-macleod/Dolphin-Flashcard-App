@@ -1,12 +1,14 @@
 """ Includes all tests for the project """
+
 import sys
 import os
 import unittest
+import pytest
 
 from api_routes import Routes
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, '..', 'backend')
+src_path = os.path.join(current_dir, "..", "backend")
 sys.path.append(src_path)
 from verification.api_error_checking import check_request_json
 from classes.date import Date
@@ -21,32 +23,32 @@ if type != "local":
         f"The database type in src/database/database_config.py is set to '{type}', not 'local'!"
     )
 
-headers = {
-    'Content-Type': 'application/json'
-}
+headers = {"Content-Type": "application/json"}
 
 date = Date()
 
+
 class TestApi(unittest.TestCase):
-    """Test the API
-    """
+    """Test the API"""
+
     def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime
         """
 
         response = get(
-            f'http://127.0.0.1:{server_addr[1]}{route}',
+            f"http://127.0.0.1:{server_addr[1]}{route}",
             headers=headers,
             data=dumps(data),
-            timeout=5
+            timeout=5,
         )
 
         self.assertNotEqual(
-            response.status_code, 500,
-            "An unhandled exception caused an Internal Server Error " +
-            f"({response.status_code}) in " +
-            f"{route}"
+            response.status_code,
+            500,
+            "An unhandled exception caused an Internal Server Error "
+            + f"({response.status_code}) in "
+            + f"{route}",
         )
 
         return loads(response.text)
@@ -57,16 +59,17 @@ class TestApi(unittest.TestCase):
         """
 
         response = post(
-            f'http://127.0.0.1:{server_addr[1]}{route}',
+            f"http://127.0.0.1:{server_addr[1]}{route}",
             data=dumps(data),
             headers=headers,
-            timeout=5
+            timeout=5,
         )
 
         self.assertNotEqual(
-            response.status_code, 500,
+            response.status_code,
+            500,
             f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
-            f"{route}"
+            f"{route}",
         )
 
         return loads(response.text)
@@ -77,378 +80,331 @@ class TestApi(unittest.TestCase):
         """
 
         response = delete(
-            f'http://127.0.0.1:{server_addr[1]}{route}',
+            f"http://127.0.0.1:{server_addr[1]}{route}",
             data=dumps(data),
             headers=headers,
-            timeout=5
+            timeout=5,
         )
 
         self.assertNotEqual(
-            response.status_code, 500,
+            response.status_code,
+            500,
             f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
-            f"{route}"
+            f"{route}",
         )
 
         return loads(response.text)
 
+    @pytest.mark.run(order=1)
     def test_example(self) -> None:
         """
         Brief description
         """
-        data = {
-            "key1": "value1",
-            "key2": "value2"
-        }
+        data = {"key1": "value1", "key2": "value2"}
 
         # TODO: Warning / Question tho who is coding the backend
 
         response = True
 
-        self.assertTrue(response, 'Should be True, but was {}'.format(response))
+        self.assertTrue(response, "Should be True, but was {}".format(response))
 
+    @pytest.mark.run(order=2)
     def test_check_request_json(self) -> None:
-        """Check the check_request_json function works as expected
-        """
+        """Check the check_request_json function works as expected"""
 
         # Test with a valid request
-        result = check_request_json(
-            {
-                "key1": "",
-                "key2": ""},
-            {
-                "key1": "",
-                "key2": ""}
-        )
+        result = check_request_json({"key1": "", "key2": ""}, {"key1": "", "key2": ""})
 
         self.assertTrue(result)
 
         # Test with a valid request but keys have different values
         result = check_request_json(
-            {
-                "key1": "val1",
-                "key2": "value2"},
-            {
-                "key1": "",
-                "key2": ""}
+            {"key1": "val1", "key2": "value2"}, {"key1": "", "key2": ""}
         )
 
         self.assertEqual(result, True)
 
         # Test with a valid request but keys are in different order
-        result = check_request_json(
-            {
-                "key2": "",
-                "key1": ""},
-            {
-                "key1": "",
-                "key2": ""}
+        result = check_request_json({"key2": "", "key1": ""}, {"key1": "", "key2": ""})
+        self.assertEqual(
+            result,
+            "Your supplied json keys do not match the expected format",
+            "Your supplied json keys do not match the expected format",
         )
-        self.assertEqual(result, 'Your supplied json keys do not match the expected format',
-                         'Your supplied json keys do not match the expected format')
 
         # Test with valid keys and some extra ones
         result = check_request_json(
-            {
-                "key1": "",
-                "key2": "",
-                "key3": ""},
-            {
-                "key1": "",
-                "key2": ""}
+            {"key1": "", "key2": "", "key3": ""}, {"key1": "", "key2": ""}
         )
-        self.assertEqual(result, 'Your supplied json keys do not match the expected format',
-                         'Your supplied json keys do not match the expected format')
+        self.assertEqual(
+            result,
+            "Your supplied json keys do not match the expected format",
+            "Your supplied json keys do not match the expected format",
+        )
 
         # Test with invalid keys
-        result = check_request_json(
-            {
-                "key3": "",
-                "key4": ""},
-            {
-                "key1": "",
-                "key2": ""}
-        )
+        result = check_request_json({"key3": "", "key4": ""}, {"key1": "", "key2": ""})
 
-        self.assertEqual(result, 'Your supplied json keys do not match the expected format',
-                         'Your supplied json keys do not match the expected format')
+        self.assertEqual(
+            result,
+            "Your supplied json keys do not match the expected format",
+            "Your supplied json keys do not match the expected format",
+        )
 
         # Test with valid regex pattern
         expected_format = {
-            "name" : "",
-            "age"  : r'\d+',
-            "email": r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+'
+            "name": "",
+            "age": r"\d+",
+            "email": r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+",
         }
 
         request_data = {
-            "name" : "John Doe",
-            "age"  : "30",
+            "name": "John Doe",
+            "age": "30",
             "email": "john@example.com",
         }
         result = check_request_json(expected_format, request_data)
-        self.assertTrue(result, msg='Invalid regex pattern')
+        self.assertTrue(result, msg="Invalid regex pattern")
 
         expected_format = {
-            "name"   : "",
-            "age"    : "",
-            "email"  : "",
-            "address": {
-                "street"  : "",
-                "city"    : "",
-                "postcode": ""
-            }
+            "name": "",
+            "age": "",
+            "email": "",
+            "address": {"street": "", "city": "", "postcode": ""},
         }
 
         request_data = {
-            "name"   : "",
-            "age"    : "",
-            "email"  : "",
-            "address": {
-                "street"  : "",
-                "city"    : "",
-                "postcode": ""
-            }
+            "name": "",
+            "age": "",
+            "email": "",
+            "address": {"street": "", "city": "", "postcode": ""},
         }
 
         result = check_request_json(expected_format, request_data)
-        self.assertTrue(result, 'Invalid json format for keys and sub keys.')
+        self.assertTrue(result, "Invalid json format for keys and sub keys.")
 
     # Authentication
+    @pytest.mark.run(order=3)
     def test_create_account_valid(self) -> None:
         """
         Valid account
         """
-        valid_dummy = {
-            "userID": "1",
-            "displayName": "Dummy"
-        }
+        valid_dummy = {"userID": "1", "displayName": "Dummy"}
 
-        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT['url'], valid_dummy)
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
-        print (response_json)
-        self.assertTrue(expr=response_json['success'],
-                        msg='Dummy account creation should be successful.')
+        self.assertTrue(
+            expr=response_json["success"],
+            msg="Dummy account creation should be successful.",
+        )
 
+    @pytest.mark.run(order=4)
     def test_get_user(self) -> None:
-        """Get the newly created user
-        """
-        valid_dummy = {
-            "userID": "1"
-        }
+        """Get the newly created user"""
+        valid_dummy = {"userID": "1"}
 
-        response = self.get_api(Routes.ROUTE_GET_USER['url'], valid_dummy)
+        response = self.get_api(Routes.ROUTE_GET_USER["url"], valid_dummy)
         response_json = response[0]
-        assert response_json == {'name': 'Dummy'}
+        assert response_json == {"name": "Dummy"}
 
+    @pytest.mark.run(order=5)
     def test_get_invalid_user(self):
-        """Get a user that does not exist
-        """
-        invalid_dummy = {
-            "userID": "2"
-        }
+        """Get a user that does not exist"""
+        invalid_dummy = {"userID": "2"}
 
-        response = self.get_api(Routes.ROUTE_GET_USER['url'], invalid_dummy)
+        response = self.get_api(Routes.ROUTE_GET_USER["url"], invalid_dummy)
         response_json = response[0]
         assert response_json is None
 
+    @pytest.mark.run(order=6)
     def test_get_user_stats(self):
-        """Get the statistics for the user that has been created
-        """
+        """Get the statistics for the user that has been created"""
         # Test case 1: Get the user stats
-        valid_dummy = {
-            "userID": "1"
-        }
+        valid_dummy = {"userID": "1"}
 
-        response = self.get_api(Routes.ROUTE_GET_USER_STATS['url'], valid_dummy)
+        response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], valid_dummy)
         response_json = response[0]
         assert response_json == {
-            'lastStreak': date.get_current_date(),
-            'streak': 0,
-            'weeklyXP': 0,
-            'totalXP': 0,
-            'heatmap_data': {
-                date.get_current_date().replace("/", "-"): "1"
-            }
+            "lastStreak": date.get_current_date(),
+            "streak": 0,
+            "weeklyXP": 0,
+            "totalXP": 0,
+            "heatmap_data": {date.get_current_date().replace("/", "-"): "1"},
         }
 
         # Test case 2: Update the heatmap
 
+    @pytest.mark.run(order=7)
     def test_get_invalid_user_stats(self):
-        """Get the statistics for a user that does not exist
-        """
-        invalid_dummy = {
-            "userID": "2"
-        }
+        """Get the statistics for a user that does not exist"""
+        invalid_dummy = {"userID": "2"}
 
-        response = self.get_api(Routes.ROUTE_GET_USER_STATS['url'], invalid_dummy)
+        response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], invalid_dummy)
         response_json = response[0]
         assert response_json is None
 
+    @pytest.mark.run(order=8)
     def test_create_flashcard_set(self):
-        """Create a flashcard set for the newly created user
-        """
-        flashcard_data ={
+        """Create a flashcard set for the newly created user"""
+        flashcard_data = {
             "userID": "1",
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
             "folder": "parent-name",
             "cards": [
                 {
-                    "front":"Front 1",
+                    "front": "Front 1",
                     "back": "Back 1",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
                 },
                 {
-                    "front":"Front 2",
+                    "front": "Front 2",
                     "back": "Back 2",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
-                }
-            ]
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
+                },
+            ],
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], flashcard_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
         response_json = response[0]
-        assert response_json['success']
+        assert response_json == {"flashcardID": "96cfaa8d-0ca1-5230-86fe-1e28ee9d2741"}
 
+    @pytest.mark.run(order=9)
     def test_get_flashcard_set(self):
-        """Get the flashcard set that has been created
-        """
-        flashcard_set_data = {
-            "userID": "1",
-            "folder": "parent-name",
-            "flashcardName": "My new set"
-        }
+        """Get the flashcard set that has been created"""
+        flashcard_set_data = {"flashcardID": "96cfaa8d-0ca1-5230-86fe-1e28ee9d2741"}
 
-        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], flashcard_set_data)
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response[0]
         assert response_json == {
-            'cards': [
-                '111197372349526489549352770627451434124951736187783527272260257031167665344330',
-                '105807173781801679610690871524240887702929777887954072430940584241217379438024'
+            "cards": [
+                "b8ff5c10-0c28-53ea-b5c8-301364c8910d",
+                "e88e17da-94b2-556f-8836-dfdd1ec9098f",
             ],
-            'description': 'This is\nmy description',
-            'name': 'My new set'
+            "description": "This is\nmy description",
+            "name": "My new set",
         }
 
+    @pytest.mark.run(order=10)
     def test_get_invalid_flashcard_set(self):
-        """Get a flashcard set that does not exist
-        """
-        flashcard_set_data = {
-            "userID": "1",
-            "folder": "parent-name",
-            "flashcardName": "My new set 2"
-        }
+        """Get a flashcard set that does not exist"""
+        flashcard_set_data = {"flashcardID": "invalid id"}
 
-        response = self.get_api(Routes.ROUTE_GET_FLASHCARD['url'], flashcard_set_data)
+        response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response[0]
         assert response_json is None
 
+    @pytest.mark.run(order=11)
     def test_get_valid_cards(self):
-        """Get the cards that have just been created
-        """
+        """Get the cards that have just been created"""
         card_ids = [
-            '111197372349526489549352770627451434124951736187783527272260257031167665344330',
-            '105807173781801679610690871524240887702929777887954072430940584241217379438024'
+            "b8ff5c10-0c28-53ea-b5c8-301364c8910d",
+            "e88e17da-94b2-556f-8836-dfdd1ec9098f",
         ]
         card_datas = [
-            {
-                "front": "Front 1",
-                "back": "Back 1"
-            },
-            {
-                "front": "Front 2",
-                "back": "Back 2"
-            }
+            {"front": "Front 1", "back": "Back 1"},
+            {"front": "Front 2", "back": "Back 2"},
         ]
         for index, card_id in enumerate(card_ids):
-            response = self.get_api(Routes.ROUTE_GET_FLASHCARD_ITEM['url'], {"cardID": card_id})
+            response = self.get_api(
+                Routes.ROUTE_GET_FLASHCARD_ITEM["url"], {"cardID": card_id}
+            )
             response_json = response[0]
             assert response_json == card_datas[index]
 
+    @pytest.mark.run(order=12)
     def test_get_invalid_card_ids(self):
-        """Get a card which does not exist
-        """
-        response = self.get_api(Routes.ROUTE_GET_FLASHCARD_ITEM['url'], {"cardID": "123"})
+        """Get a card which does not exist"""
+        response = self.get_api(
+            Routes.ROUTE_GET_FLASHCARD_ITEM["url"], {"cardID": "123"}
+        )
         response_json = response[0]
         assert response_json is None
 
+    @pytest.mark.run(order=13)
     def test_get_all_cards(self):
-        """Get the newly created cards
-        """
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "1"})
+        """Get the newly created cards"""
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "1"})
         assert response == {
-            'parent-name': {
-                'My new set': {
-                    'cards': {
-                        '105807173781801679610690871524240887702929777887954072430940584241217379438024':{
-                            'last_review': date.get_current_date(),
-                            'review_status': '0.0'
+            "parent-name": {
+                "My new set": {
+                    "cards": {
+                        "b8ff5c10-0c28-53ea-b5c8-301364c8910d": {
+                            "last_review": date.get_current_date(),
+                            "review_status": "0.0",
                         },
-                        '111197372349526489549352770627451434124951736187783527272260257031167665344330': {
-                            'last_review': date.get_current_date(),
-                            'review_status': '0.0'
-                        }
+                        "e88e17da-94b2-556f-8836-dfdd1ec9098f": {
+                            "last_review": date.get_current_date(),
+                            "review_status": "0.0",
+                        },
                     },
-                    'flashcardID': '110677275635593279644085421081590251557524150041496894982504548493525112413991',
-                    'flashcardName': 'My new set'
+                    "flashcardID": "96cfaa8d-0ca1-5230-86fe-1e28ee9d2741",
+                    "flashcardName": "My new set",
                 }
             }
         }
 
+    @pytest.mark.run(order=14)
     def test_get_all_cards_invalid_user(self):
-        """Get the cards for a user that does not exist
-        """
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "invalidUser"})
-        assert response == ['User has no flashcards']
+        """Get the cards for a user that does not exist"""
+        response = self.post_api(
+            Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "invalidUser"}
+        )
+        assert response == ["User has no flashcards"]
 
+    @pytest.mark.run(order=15)
     def test_create_set_with_no_folder(self):
         """
         Test to create a flashcard set where no folder needs to be created
         """
         # Create the flashcard set
-        flashcard_data ={
+        flashcard_data = {
             "userID": "2",
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
             "folder": "",
             "cards": [
                 {
-                    "front":"Front 1",
+                    "front": "Front 1",
                     "back": "Back 1",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
                 },
                 {
-                    "front":"Front 2",
+                    "front": "Front 2",
                     "back": "Back 2",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
-                }
-            ]
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
+                },
+            ],
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], flashcard_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
         response_json = response[0]
-        assert response_json['success']
+        assert response_json == {"flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916"}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
         assert response == {
-            'My new set': {
-                'cards': {
-                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
+            "My new set": {
+                "cards": {
+                    "2f5442b6-5e87-5cad-9aa5-b56bfcbc73fe": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
                     },
-                    '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
+                    "5db1550a-1531-5b0c-aaaa-a2134f33e950": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
                 },
-                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
-                'flashcardName': 'My new set'
+                "flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916",
+                "flashcardName": "My new set",
             }
         }
 
+    @pytest.mark.run(order=16)
     def test_create_set_with_no_folder_again(self):
         """
         Test to create a flashcard set where no folder needs to be created
@@ -456,59 +412,65 @@ class TestApi(unittest.TestCase):
         the first flashcard set
         """
         # Create the flashcard set
-        flashcard_data ={
+        flashcard_data = {
             "userID": "2",
             "flashcardName": "My second set",
             "flashcardDescription": "This is my second description",
             "folder": "",
             "cards": [
                 {
-                    "front":"Set 2 Front 1",
+                    "front": "Set 2 Front 1",
                     "back": "Set 2 Back 1",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
                 },
                 {
-                    "front":"Set 2 Front 2",
+                    "front": "Set 2 Front 2",
                     "back": "Set 2 Back 2",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
-                }
-            ]
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
+                },
+            ],
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], flashcard_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
         response_json = response[0]
-        assert response_json['success']
+        assert response_json == {'flashcardID': '5da32188-ae6d-58f5-a898-04d08ccd43f7'}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
         assert response == {
-            'My new set': {
-                'cards': {
-                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }, '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
-                },
-                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
-                'flashcardName': 'My new set'
-            },
-            'My second set': {
-                'cards': {
-                    '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
+            "My new set": {
+                "cards": {
+                    "2f5442b6-5e87-5cad-9aa5-b56bfcbc73fe": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
                     },
-                    '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
+                    "5db1550a-1531-5b0c-aaaa-a2134f33e950": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
                 },
-                'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147',
-                'flashcardName': 'My second set'
-            }
+                "flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916",
+                "flashcardName": "My new set",
+            },
+            "My second set": {
+                "cards": {
+                    "2fb53831-b180-5ac2-82b2-712e62e9b8c7": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                    "a653b455-8c9f-5da3-9a87-da030412af39": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                },
+                "flashcardID": "5da32188-ae6d-58f5-a898-04d08ccd43f7",
+                "flashcardName": "My second set",
+            },
         }
 
+    @pytest.mark.run(order=17)
     def test_create_set_with_two_folders(self):
         """
         Test to create a flashcard set where 2 folders need to be created.
@@ -523,75 +485,83 @@ class TestApi(unittest.TestCase):
             "folder": "my_folder1/my_second_folder",
             "cards": [
                 {
-                    "front":"Set 3 Front 1",
+                    "front": "Set 3 Front 1",
                     "back": "Set 3 Back 1",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
                 },
                 {
-                    "front":"Set 3 Front 2",
+                    "front": "Set 3 Front 2",
                     "back": "Set 3 Back 2",
-                    "reviewStatus":"0.0",
-                    "lastReview": "27/04/2024"
-                }
-            ]
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
+                },
+            ],
         }
 
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD['url'], flashcard_data)
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
         response_json = response[0]
-        assert response_json['success']
+        assert response_json == {'flashcardID': '758c6b3c-cc9b-52f3-865e-ac32255ce544'}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
-        print (response)
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
         assert response == {
-            'My new set': {
-                'cards': {
-                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
+            "My new set": {
+                "cards": {
+                    "2f5442b6-5e87-5cad-9aa5-b56bfcbc73fe": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
                     },
-                    '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
-                },
-                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
-                'flashcardName': 'My new set'
-            },
-            'My second set': {
-                'cards': {
-                    '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
+                    "5db1550a-1531-5b0c-aaaa-a2134f33e950": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
                     },
-                    '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
                 },
-                'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147', 'flashcardName': 'My second set'
+                "flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916",
+                "flashcardName": "My new set",
             },
-            'my_folder1': {
-                'my_second_folder': {
-                    'Set with two folders': {
-                        'cards': {
-                            '14905360164829162384003180375530029836752830300568461727668114186655222344365': {
-                                'last_review': date.get_current_date(), 'review_status': '0.0'
+            "My second set": {
+                "cards": {
+                    "2fb53831-b180-5ac2-82b2-712e62e9b8c7": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                    "a653b455-8c9f-5da3-9a87-da030412af39": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                },
+                "flashcardID": "5da32188-ae6d-58f5-a898-04d08ccd43f7",
+                "flashcardName": "My second set",
+            },
+            "my_folder1": {
+                "my_second_folder": {
+                    "Set with two folders": {
+                        "cards": {
+                            "41b574fd-bf2f-54d1-968e-a7d401d586a1": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
                             },
-                            '87153283362492593072257432791028666090314536797789089922601298297131913616718': {
-                                'last_review': date.get_current_date(), 'review_status': '0.0'
-                            }
+                            "81036c16-e825-51eb-b410-4dfd5a4de002": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
+                            },
                         },
-                        'flashcardID': '14360501735762204737125532220923305690523298304800903823506033410378709611982',
-                        'flashcardName': 'Set with two folders'
+                        "flashcardID": "758c6b3c-cc9b-52f3-865e-ac32255ce544",
+                        "flashcardName": "Set with two folders",
                     }
                 }
-            }
+            },
         }
 
+    @pytest.mark.run(order=18)
     def test_create_set_that_already_exists(self):
         """
         Test to create a flashcard set that already exists. At the moment, this passes, overwwriting card data
         """
-        self.test_create_set_with_no_folder()
+        self.test_create_set_with_two_folders()
 
+    @pytest.mark.run(order=19)
     def test_move_card_to_location_that_exists(self):
         """
         Test to move flashcard set to a new location that exists and stores folders and sets
@@ -599,471 +569,511 @@ class TestApi(unittest.TestCase):
         request_data = {
             "userID": "2",
             "currentLocation": "",
-            "flashcardID": "My second set",
-            "moveLocation": "my_folder1"
+            "flashcardName": "My second set",
+            "moveLocation": "my_folder1",
         }
-        response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD['url'], request_data)
-        assert response == {'success': 'The flashcard set at /users/2/flashcards//My second set has been moved to my_folder1'}
+        response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD["url"], request_data)
+        assert response == {
+            "success": "The flashcard set at /users/2/flashcards//My second set has been moved to my_folder1"
+        }
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
         assert response == {
-            'My new set': {
-                'cards': {
-                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
+            "My new set": {
+                "cards": {
+                    "2f5442b6-5e87-5cad-9aa5-b56bfcbc73fe": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
                     },
-                    '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
+                    "5db1550a-1531-5b0c-aaaa-a2134f33e950": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                },
+                "flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916",
+                "flashcardName": "My new set",
+            },
+            "my_folder1": {
+                "My second set": {
+                    "cards": {
+                        "2fb53831-b180-5ac2-82b2-712e62e9b8c7": {
+                            "last_review": date.get_current_date(),
+                            "review_status": "0.0",
+                        },
+                        "a653b455-8c9f-5da3-9a87-da030412af39": {
+                            "last_review": date.get_current_date(),
+                            "review_status": "0.0",
+                        },
+                    },
+                    "flashcardID": "5da32188-ae6d-58f5-a898-04d08ccd43f7",
+                    "flashcardName": "My second set",
+                },
+                "my_second_folder": {
+                    "Set with two folders": {
+                        "cards": {
+                            "41b574fd-bf2f-54d1-968e-a7d401d586a1": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
+                            },
+                            "81036c16-e825-51eb-b410-4dfd5a4de002": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
+                            },
+                        },
+                        "flashcardID": "758c6b3c-cc9b-52f3-865e-ac32255ce544",
+                        "flashcardName": "Set with two folders",
                     }
                 },
-                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
-                'flashcardName': 'My new set'
             },
-            'my_folder1': {
-                'My second set': {
-                    'cards': {
-                        '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                            'last_review': date.get_current_date(), 'review_status': '0.0'
-                        },
-                        '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                            'last_review': date.get_current_date(), 'review_status': '0.0'
-                        }},
-                        'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147',
-                        'flashcardName': 'My second set'
-                    },
-                    'my_second_folder': {
-                        'Set with two folders': {
-                            'cards': {
-                                '14905360164829162384003180375530029836752830300568461727668114186655222344365': {
-                                    'last_review': date.get_current_date(), 'review_status': '0.0'
-                                },
-                                '87153283362492593072257432791028666090314536797789089922601298297131913616718': {
-                                    'last_review': date.get_current_date(), 'review_status': '0.0'
-                                }
-                            },
-                            'flashcardID': '14360501735762204737125532220923305690523298304800903823506033410378709611982',
-                            'flashcardName': 'Set with two folders'
-                        }
-                    }
-                }
-            }
+        }
 
+    @pytest.mark.run(order=20)
     def test_move_card_to_new_location(self):
         """
         Test to move flashcard set to a new location that does not exist
         """
+        # Create the user - this relies on previous tests to make sure it's working
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy"}
+
+        self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
         request_data = {
             "userID": "2",
             "currentLocation": "my_folder1",
-            "flashcardID": "My second set",
-            "moveLocation": "languages/spanish"
+            "flashcardName": "My second set",
+            "moveLocation": "languages/spanish",
         }
-        response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD['url'], request_data)
+        response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD["url"], request_data)
         assert response == {
-            'success':
-                'The flashcard set at /users/2/flashcards/my_folder1/My second set' +
-                ' has been moved to languages/spanish'
+            "success": "The flashcard set at /users/2/flashcards/my_folder1/My second set"
+            + " has been moved to languages/spanish"
         }
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
         assert response == {
-            'languages': {
-                'spanish': {
-                    'My second set': {
-                        'cards': {
-                            '14411345015462126881349419665216417076805164447810086262725740317480970246813': {
-                                'last_review': date.get_current_date(), 'review_status': '0.0'
+            "languages": {
+                "spanish": {
+                    "My second set": {
+                        "cards": {
+                            "2fb53831-b180-5ac2-82b2-712e62e9b8c7": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
                             },
-                            '41774605504006205489430517012726202664719091872724290275059093038754913584254': {
-                                'last_review': date.get_current_date(), 'review_status': '0.0'
-                            }
+                            "a653b455-8c9f-5da3-9a87-da030412af39": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
+                            },
                         },
-                        'flashcardID': '71410789987014373933418573187523171269852949556947239129649365019529198596147',
-                        'flashcardName': 'My second set'
+                        "flashcardID": "5da32188-ae6d-58f5-a898-04d08ccd43f7",
+                        "flashcardName": "My second set",
                     },
-                }
-            },
-            'My new set': {
-                'cards': {
-                    '11165224605748429605987133234806552926285448832647417238217554731459014968083': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    },
-                    '8966254591474678100251503343246943264986821768409576781069854701084739560388': {
-                        'last_review': date.get_current_date(), 'review_status': '0.0'
-                    }
                 },
-                'flashcardID': '77010080963356010550306826583619446652751483887907545209219499696331438679804',
-                'flashcardName': 'My new set'
             },
-            'my_folder1': {
-                    'my_second_folder': {
-                        'Set with two folders': {
-                            'cards': {
-                                '14905360164829162384003180375530029836752830300568461727668114186655222344365': {
-                                    'last_review': date.get_current_date(), 'review_status': '0.0'
-                                },
-                                '87153283362492593072257432791028666090314536797789089922601298297131913616718': {
-                                    'last_review': date.get_current_date(), 'review_status': '0.0'
-                                }
+            "My new set": {
+                "cards": {
+                    "2f5442b6-5e87-5cad-9aa5-b56bfcbc73fe": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                    "5db1550a-1531-5b0c-aaaa-a2134f33e950": {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                },
+                "flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916",
+                "flashcardName": "My new set",
+            },
+            "my_folder1": {
+                "my_second_folder": {
+                    "Set with two folders": {
+                        "cards": {
+                            "41b574fd-bf2f-54d1-968e-a7d401d586a1": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
                             },
-                            'flashcardID': '14360501735762204737125532220923305690523298304800903823506033410378709611982',
-                            'flashcardName': 'Set with two folders'
-                        }
+                            "81036c16-e825-51eb-b410-4dfd5a4de002": {
+                                "last_review": date.get_current_date(),
+                                "review_status": "0.0",
+                            },
+                        },
+                        "flashcardID": "758c6b3c-cc9b-52f3-865e-ac32255ce544",
+                        "flashcardName": "Set with two folders",
                     }
                 }
-            }
+            },
+        }
 
+    @pytest.mark.run(order=21)
     def test_move_non_existant_set(self):
         """
         Test to move a flashcard set that does not exist
         """
+        # Create the user - this relies on previous tests to make sure it's working
+        valid_dummy = {"userID": "2", "displayName": "Dummy"}
+
+        self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
         request_data = {
             "userID": "2",
             "currentLocation": "my_invalid_folder",
             "flashcardID": "My non existant set",
-            "moveLocation": "my_new_folder"
+            "moveLocation": "my_new_folder",
         }
         try:
             # This should return an error
-            self.post_api(Routes.ROUTE_MOVE_FLASHCARD['url'], request_data)
+            self.post_api(Routes.ROUTE_MOVE_FLASHCARD["url"], request_data)
             assert False
         except Exception:
             assert True
 
+    @pytest.mark.run(order=22)
     def test_create_card_goal(self):
         """
         Test to create a card goal that should be failed
         """
-        request_data = {
-            "userID": "2",
-            "cardsToRevise": 5,
-            "endDate": "01/01/2022"
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL['url'], request_data)
-        assert response == {'success': 'Goal created successfully'}
+        # Create the user - this relies on previous tests to make sure it's working
+        valid_dummy = {"userID": "2", "displayName": "Dummy"}
 
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
+        request_data = {"userID": "2", "cardsToRevise": 5, "endDate": "01/01/2022"}
+        response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL["url"], request_data)
+        assert response == {"success": "Goal created successfully"}
+
+    @pytest.mark.run(order=23)
     def test_create_xp_goal(self):
         """
         Test to create an XP goal that should be in progress
         """
-        request_data = {
-            "userID": "2",
-            "goalXP": 5,
-            "endDate": date.get_current_date()
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL['url'], request_data)
-        assert response == {'success': 'Goal created successfully'}
+        # Create the user - this relies on previous tests to make sure it's working
+        valid_dummy = {"userID": "2", "displayName": "Dummy"}
 
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
+        request_data = {"userID": "2", "goalXP": 5, "endDate": date.get_current_date()}
+        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
+        assert response == {"success": "Goal created successfully"}
+
+    @pytest.mark.run(order=24)
     def test_create_completed_goal(self):
         """
         Test for a goal that should be completed
         """
-        request_data = {
-            "userID": "2",
-            "goalXP": 0,
-            "endDate": date.get_current_date()
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL['url'], request_data)
-        assert response == {'success': 'Goal created successfully'}
+        # Create the user - this relies on previous tests to make sure it's working
+        valid_dummy = {"userID": "2", "displayName": "Dummy"}
 
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
+        request_data = {"userID": "2", "goalXP": 0, "endDate": date.get_current_date()}
+        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
+        assert response == {"success": "Goal created successfully"}
+
+    @pytest.mark.run(order=25)
     def test_update_goal_status(self):
         """
         Make sure the update-goal-status route works
         """
+        # Create the user - this relies on previous tests to make sure it's working
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy"}
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
+        # Create the goal data for testing - again relies on previous tests
+        request_data = {
+            "userID": "test_update_goal_status",
+            "cardsToRevise": 5,
+            "endDate": "01/01/2022",
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL["url"], request_data)
+
         # Test case 1: The function works
         request_data = {
-            "userID": "2"
+            "userID": "test_update_goal_status",
+            "goalXP": 0,
+            "endDate": date.get_current_date(),
         }
-        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
-        print (response)
+        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
+        request_data = {
+            "userID": "test_update_goal_status",
+            "goalXP": 5,
+            "endDate": date.get_current_date(),
+        }
+        response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
+        request_data = {"userID": "test_update_goal_status"}
+        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS["url"], request_data)
+        print(response)
         assert response == {
-            "108306610645735586517710945367449524557703445027507625534591857121533567415291": {
-                "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "completed",
-                "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
-            },
-            "75191742364696932274146301907464615914899504390171228056356306916367417048791": {
-                "data": {
-                "goal_xp": 5,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
-                },
-                "end_date": date.get_current_date(),
-                "fail_date": "",
-                "status": "in progress",
-                "title": "Gain 5 XP by " + date.get_current_date(),
-                "type": "XP"
-            },
-            "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
-                "data": {
-                "cards_revised_so_far": "0",
-                "cards_to_revise": 5
-                },
+            "50f2cb1e-dd15-59eb-bdd1-2befcac7407a": {
+                "data": {"cards_revised_so_far": "0", "cards_to_revise": 5},
                 "end_date": "01/01/2022",
                 "fail_date": date.get_current_date(),
                 "status": "failed",
                 "title": "Revise 5 cards by 01/01/2022",
-                "type": "Card"
+                "type": "Card",
+            },
+            "8a7b155f-f499-5c4c-a775-5deca8aad3e4": {
+                "data": {
+                    "goal_xp": 5,
+                    "start_date": date.get_current_date(),
+                    "starting_xp": "0",
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "in progress",
+                "title": f"Gain 5 XP by {date.get_current_date()}",
+                "type": "XP",
+            },
+            "950dbba2-9254-5010-80fe-0fe59fef23e4": {
+                "data": {
+                    "goal_xp": 0,
+                    "start_date": date.get_current_date(),
+                    "starting_xp": "0",
+                },
+                "end_date": date.get_current_date(),
+                "fail_date": "",
+                "status": "completed",
+                "title": f"Gain 0 XP by {date.get_current_date()}",
+                "type": "XP",
             }
         }
 
         # Test case 2: The card exists
         request_data = {
-            "userID": "2",
-            "goalID": "9902473624918826751793822303272600295431210547080501995768909442922844439697",
+            "userID": "test_update_goal_status",
+            "goalID": "50f2cb1e-dd15-59eb-bdd1-2befcac7407a",
             "newEndDate": "28/05/2027",
             "newTitle": "My new title",
-            "newCardsToRevise": 200
+            "newCardsToRevise": 200,
         }
-        response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL['url'], request_data)
-        assert response == {'success': 'Goal updated successfully'}
+        response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL["url"], request_data)
+        assert response == {"success": "Goal updated successfully"}
 
         # Test case 3: The card does not exist
         request_data = {
-            "userID": "2",
+            "userID": "test_update_goal_status",
             "goalID": "This card does not exist",
             "newEndDate": "28/05/2027",
             "newTitle": "My new title",
-            "newCardsToRevise": 200
+            "newCardsToRevise": 200,
         }
         try:
             # This line should fail
-            response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL['url'], request_data)
+            response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL["url"], request_data)
             assert False
         except Exception:
             assert True
 
         # Test case 4: Editing a valid XP card
         request_data = {
-            "userID": "2",
-            "goalID": "75191742364696932274146301907464615914899504390171228056356306916367417048791",
+            "userID": "test_update_goal_status",
+            "goalID": "8a7b155f-f499-5c4c-a775-5deca8aad3e4",
             "newEndDate": "29/05/2027",
             "newTitle": "My new xp title",
-            "newGoalXP": 50
+            "newGoalXP": 50,
         }
-        response = self.post_api(Routes.ROUTE_EDIT_XP_GOAL['url'], request_data)
-        assert response == {'success': 'Goal updated successfully'}
+        response = self.post_api(Routes.ROUTE_EDIT_XP_GOAL["url"], request_data)
+        assert response == {"success": "Goal updated successfully"}
 
         # Test case 5: Editing an XP card which does not exist
         request_data = {
-            "userID": "2",
+            "userID": "test_update_goal_status",
             "goalID": "This goal does not exist",
             "newEndDate": "29/05/2027",
             "newTitle": "My new xp title",
-            "newGoalXP": 50
+            "newGoalXP": 50,
         }
         try:
             # This line should fail
-            response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL['url'], request_data)
+            response = self.post_api(Routes.ROUTE_EDIT_CARD_GOAL["url"], request_data)
             assert False
         except Exception:
             assert True
 
         # Test case 6: The cards have been edited properly
-        request_data = {
-            "userID": "2"
-        }
-        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
+        request_data = {"userID": "test_update_goal_status"}
+        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS["url"], request_data)
         assert response == {
-            "108306610645735586517710945367449524557703445027507625534591857121533567415291": {
+            "950dbba2-9254-5010-80fe-0fe59fef23e4": {
                 "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
+                    "goal_xp": 0,
+                    "start_date": date.get_current_date(),
+                    "starting_xp": "0",
                 },
                 "end_date": date.get_current_date(),
                 "fail_date": "",
                 "status": "completed",
                 "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
+                "type": "XP",
             },
-            "75191742364696932274146301907464615914899504390171228056356306916367417048791": {
+            "8a7b155f-f499-5c4c-a775-5deca8aad3e4": {
                 "data": {
-                "goal_xp": 50,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
+                    "goal_xp": 50,
+                    "start_date": date.get_current_date(),
+                    "starting_xp": "0",
                 },
                 "end_date": "29/05/2027",
                 "fail_date": "",
                 "status": "in progress",
                 "title": "My new xp title",
-                "type": "XP"
+                "type": "XP",
             },
-            "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
-                "data": {
-                "cards_revised_so_far": "0",
-                "cards_to_revise": 200
-                },
+            "50f2cb1e-dd15-59eb-bdd1-2befcac7407a": {
+                "data": {"cards_revised_so_far": "0", "cards_to_revise": 200},
                 "end_date": "28/05/2027",
                 "fail_date": date.get_current_date(),
-                "status": "failed", # Failed because it was already failed before end_date was updated
+                "status": "failed",  # Failed because it was already failed before end_date was updated
                 "title": "My new title",
-                "type": "Card"
-            }
+                "type": "Card",
+            },
         }
 
         # Test case 7: A valid goal is deleted
         request_data = {
-            "userID": "2",
-            "goalID": "75191742364696932274146301907464615914899504390171228056356306916367417048791"
+            "userID": "test_update_goal_status",
+            "goalID": "8a7b155f-f499-5c4c-a775-5deca8aad3e4",
         }
-        response = self.delete_api(Routes.ROUTE_DELETE_GOAL['url'], request_data)
-        assert response == {'success': 'Goal deleted successfully'}
+        response = self.delete_api(Routes.ROUTE_DELETE_GOAL["url"], request_data)
+        assert response == {"success": "Goal deleted successfully"}
 
         # Test case 8: An invalid goal is deleted - this does not actually have an error
         request_data = {
-            "userID": "2",
-            "goalID": "Invalid goal id"
+            "userID": "test_update_goal_status",
+            "goalID": "Invalid goal id",
         }
-        response = self.delete_api(Routes.ROUTE_DELETE_GOAL['url'], request_data)
-        assert response == {'success': 'Goal deleted successfully'}
+        response = self.delete_api(Routes.ROUTE_DELETE_GOAL["url"], request_data)
+        assert response == {"success": "Goal deleted successfully"}
 
         # Test case 8: Check the goal is actually deleted
-        request_data = {
-            "userID": "2"
-        }
-        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS['url'], request_data)
+        request_data = {"userID": "test_update_goal_status"}
+        response = self.post_api(Routes.ROUTE_UPDATE_GOAL_STATUS["url"], request_data)
         assert response == {
-            "108306610645735586517710945367449524557703445027507625534591857121533567415291": {
+            "950dbba2-9254-5010-80fe-0fe59fef23e4": {
                 "data": {
-                "goal_xp": 0,
-                "start_date": date.get_current_date(),
-                "starting_xp": "0"
+                    "goal_xp": 0,
+                    "start_date": date.get_current_date(),
+                    "starting_xp": "0",
                 },
                 "end_date": date.get_current_date(),
                 "fail_date": "",
                 "status": "completed",
                 "title": "Gain 0 XP by " + date.get_current_date(),
-                "type": "XP"
+                "type": "XP",
             },
-            "9902473624918826751793822303272600295431210547080501995768909442922844439697": {
-                "data": {
-                "cards_revised_so_far": "0",
-                "cards_to_revise": 200
-                },
+            "50f2cb1e-dd15-59eb-bdd1-2befcac7407a": {
+                "data": {"cards_revised_so_far": "0", "cards_to_revise": 200},
                 "end_date": "28/05/2027",
                 "fail_date": date.get_current_date(),
-                "status": "failed", # Failed because it was already failed before end_date was updated
+                "status": "failed",  # Failed because it was already failed before end_date was updated
                 "title": "My new title",
-                "type": "Card"
-            }
+                "type": "Card",
+            },
         }
 
+    @pytest.mark.run(order=26)
     def test_update_heatmap(self):
         """
         Test the update-heatmap method
         """
+        # Create the user (relies on previous tests to ensure it is working)
+        valid_dummy = {"userID": "test_update_heatmap", "displayName": "Dummy"}
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+
         # Test case 1: User exists
-        request_data = {
-            "userID": "1"
-        }
+        request_data = {"userID": "test_update_heatmap"}
         today = date.get_current_date().replace("/", "-")
-        response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
+        response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP["url"], request_data)
         assert response == {today: "2"}
 
         # Test case 2: User does not exist
-        request_data = {
-            "userID": "Invalid User"
-        }
+        request_data = {"userID": "Invalid User"}
         try:
             # This should not run
-            response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP['url'], request_data)
+            response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP["url"], request_data)
             assert False
         except:
             assert True
 
         # Test case 3: User exists when fetching heatmap data
-        request_data = {
-            "userID": "1"
-        }
-        response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], request_data)
+        request_data = {"userID": "test_update_heatmap"}
+        response = self.post_api(Routes.ROUTE_GET_HEATMAP["url"], request_data)
         assert response == {today: "2"}
 
         # Test case 4: User does not exist when fetching heatmap data
-        request_data = {
-            "userID": "Invalid User"
-        }
+        request_data = {"userID": "Invalid User"}
         try:
             # This should not run
-            response = self.post_api(Routes.ROUTE_GET_HEATMAP['url'], request_data)
+            response = self.post_api(Routes.ROUTE_GET_HEATMAP["url"], request_data)
             assert False
         except:
             assert True
 
+    @pytest.mark.run(order=27)
     def test_create_folder(self):
         """
         Test to create a folder
         """
-        get_today_cards = {
-            "userID": "folderUser"
-        }
+        get_today_cards = {"userID": "folderUser1"}
         # Test case 1: Valid folder
-        request_data = {
-            "userID": "folderUser",
-            "folder": "my_folder/folder1"
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
-        assert response == {'success': 'Folder my_folder/folder1 created'}
+        request_data = {"userID": "folderUser1", "folder": "my_folder/folder1"}
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
+        assert response == {"success": "Folder my_folder/folder1 created"}
 
         # Check the folder has been created
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
-        assert response == {
-            'my_folder': {
-                'folder1': {}
-            }
-        }
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], get_today_cards)
+        assert response == {"my_folder": {"folder1": {}}}
 
         # Test case 2: Create a folder with parent folder that contains data
-        request_data = {
-            "userID": "folderUser",
-            "folder": "my_folder/folder2"
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
-        assert response == {'success': 'Folder my_folder/folder2 created'}
+        request_data = {"userID": "folderUser1", "folder": "my_folder/folder2"}
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
+        assert response == {"success": "Folder my_folder/folder2 created"}
 
         # Check the folder has been created
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
-        assert response == {
-            'my_folder': {
-                'folder1': {},
-                'folder2': {}
-            }
-        }
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], get_today_cards)
+        assert response == {"my_folder": {"folder1": {}, "folder2": {}}}
 
         # Test case 3: Folder which exists
-        request_data = {
-            "userID": "folderUser",
-            "folder": "my_folder/folder1"
-        }
-        response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
-        assert response == {'success': 'Folder my_folder/folder1 created'}
+        request_data = {"userID": "folderUser1", "folder": "my_folder/folder1"}
+        response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
+        assert response == {"success": "Folder my_folder/folder1 created"}
 
         # Check the folder has been created
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS['url'], get_today_cards)
-        assert response == {
-            'my_folder': {
-                'folder1': {},
-                'folder2': {}
-            }
-        }
-
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], get_today_cards)
+        assert response == {"my_folder": {"folder1": {}, "folder2": {}}}
         # Test case 4: Invalid folder name
-        request_data = {
-            "userID": "folderUser",
-            "folder": "//my_fol/der/folder2/"
-        }
+        request_data = {"userID": "folderUser1", "folder": "//my_fol/der/folder2/"}
         try:
             # This should fail
-            response = self.post_api(Routes.ROUTE_CREATE_FOLDER['url'], request_data)
+            response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
             assert False
         except Exception:
             assert True
+
+# api = TestApi()
+# api.test_create_account_valid()
+# api.test_get_user()
+# api.test_get_invalid_user()
+# api.test_get_user_stats()
+# api.test_get_invalid_user_stats()
+# api.test_create_flashcard_set()
+# api.test_get_flashcard_set()
+# api.test_get_invalid_flashcard_set()
+# api.test_get_valid_cards()
+# api.test_get_invalid_card_ids()
+# api.test_get_all_cards()
+# api.test_get_all_cards_invalid_user()
+# api.test_create_set_with_no_folder()
+# api.test_create_set_with_no_folder_again()
+# api.test_create_set_with_two_folders()
+# api.test_create_set_that_already_exists()
+# api.test_move_card_to_location_that_exists()
+# api.test_move_card_to_new_location()
+# api.test_move_non_existant_set()
+# api.test_create_card_goal()
+# api.test_create_xp_goal()
+# api.test_create_completed_goal()
+# api.test_update_goal_status()
+# api.test_update_heatmap()
+# api.test_create_folder()

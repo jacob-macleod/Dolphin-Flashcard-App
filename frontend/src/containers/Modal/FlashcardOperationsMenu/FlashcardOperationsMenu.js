@@ -1,4 +1,5 @@
-import {React, useEffect} from 'react';
+import {React, useEffect, useRef} from 'react';
+import closeOnOutsideClick from '../../../hooks/closeOnOutsideClick';
 import MenuItem from '../../MenuItem';
 
 import renameIcon from '../../../static/rename-icon.svg';
@@ -9,26 +10,9 @@ import '../CardOperationsPopup/CardOperationsPopup.css';
 
 function CardOperationsPopup({ visible, showEditPopup, setVisible, view, setInitialTerm, setInitialDefinition, front, back}) {
     const float = view == "mobile" ? "left" : null;
+    const dropdownRef = useRef(null);
 
-    useEffect(() => {
-        const closeDropdown = e => {
-            let targetElement = e.target;
-    
-            // Traverse up the DOM tree until we find a matching tag name or reach the document body
-            while (targetElement && targetElement.tagName !== 'IMG') {
-                targetElement = targetElement.parentNode;
-            }
-    
-            // If targetElement is null, it means we reached the document body without finding a BUTTON element
-            if (!targetElement) {
-                setVisible(false);
-            }
-        };
-
-        document.body.addEventListener('click', closeDropdown);
-
-        return () => document.body.removeEventListener('click', closeDropdown);
-    }, []);
+    closeOnOutsideClick(dropdownRef, setVisible);
 
     return (
         visible ?

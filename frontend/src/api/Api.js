@@ -174,12 +174,12 @@ class ApiManager {
         });
     }
 
-    moveFlashcard(userID, currentLocation, flashcardID, moveLocation, setPopupVisible, setReload) {
+    moveFlashcard(userID, currentLocation, flashcardName, moveLocation, setPopupVisible, setReload) {
         const url = 'move-flashcard-set';
         const data = {
             "userID": userID,
             "currentLocation": currentLocation,
-            "flashcardID": flashcardID,
+            "flashcardName": flashcardName,
             "moveLocation": moveLocation
         }
 
@@ -211,8 +211,11 @@ class ApiManager {
                 "cards": cards
             }
         }
+        console.log("Data is ")
+        console.log(data)
 
         this.fetchData(data, url, status => {
+            data.flashcardID = status[0].flashcardID;
             loadEditFlashcardPage(data);
         });
     
@@ -231,15 +234,17 @@ class ApiManager {
         });
     }
 
-    getFlashcard(userID, folder, flashcardName, setFlashcardData) {
+    getFlashcard(flashcardID, setFlashcardData) {
         const url = 'get-flashcard';
         const data = {
-            "userID": userID,
-            "folder": folder,
-            "flashcardName": flashcardName
+            "flashcardID": flashcardID,
         }
+        console.log("GETTING FLASHCARD DATA WITH REQUEST DATA");
+        console.log(data);
 
         this.fetchData(data, url, flashcardData => {
+            console.log("Returned data:");
+            console.log(flashcardData)
             setFlashcardData(flashcardData[0]);
         });
     }
@@ -252,6 +257,18 @@ class ApiManager {
 
         this.fetchData(data, url, flashcardItem => {
             setFlashcardItem(flashcardItem[0]);
+        });
+    }
+
+    updateCardProgress(userID, cardData, setCardsRevised) {
+        const url = 'update-card-progress';
+        const data = {
+            "userID": userID,
+            "cardData": cardData
+        }
+
+        this.fetchData(data, url, response => {
+            setCardsRevised(response);
         });
     }
 }

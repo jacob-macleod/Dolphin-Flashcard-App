@@ -18,16 +18,18 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
         display: "inline-grid",
         margin: "0px 16px"
     }
-    const flashcardID = visible.flashcardID;
+    const flashcardName = visible.flashcardName;
     const currentPath = visible.path;
-
+    console.log("VISIBLE");
+    console.log(visible);
     function moveFlashcard() {
       if (selectedPath != null) {
         setLoadingIconVisible(null);
+
         apiManager.moveFlashcard(
           getCookie("userID"),
           currentPath,
-          flashcardID,
+          flashcardName,
           selectedPath,
           setVisible,
           setReload
@@ -52,7 +54,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
                 <Heading3 text="Choose a folder:" />
 
                 <div className="card-overview">
-                  <FolderTreeView visible={visible} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
+                  <FolderTreeView visible={visible.flashcardData} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
                 </div>
 
                 <div className='button-container'>
