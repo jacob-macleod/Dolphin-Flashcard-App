@@ -6,10 +6,13 @@ import useCardData from '../../hooks/useCardData';
 import apiManager from '../../api/Api';
 import { getCookie } from '../../api/Authentication';
 import '../../App.css';
+import './DailyFlashcardBrowser.css';
 import CardOverview from '../CardOverview/CardOverview';
 import Heading5 from '../../componments/Text/Heading5';
 import DelayedElement from '../DelayedElement';
 import ReviewBarChart from '../../containers/ReviewBarChart';
+import ReviewBarChartKey from '../ReviewBarChartKey/ReviewBarChartKey';
+import Heading4 from '../../componments/Text/Heading4';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -19,7 +22,7 @@ const slideVariants = {
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
 
-function TotalFlashcardBrowser({ view }) {
+function DailyFlashcardBrowser({ view }) {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
@@ -31,6 +34,7 @@ function TotalFlashcardBrowser({ view }) {
   const [studying, setStudying] = useState(0);
   const [reviewing, setReviewing] = useState(0);
   const [notStarted, setNotStarted] = useState(0);
+  const [learnedCards, setLearnedCards] = useState(0);
 
   function nextFibonacci(num) {
     // Edge cases for very small numbers
@@ -125,7 +129,7 @@ function TotalFlashcardBrowser({ view }) {
             return {
               ...card,
               review_status: reviewStatuses[card.cardID].reviewStatus,
-              last_review: reviewStatuses[card.cardID]
+              last_review: reviewStatuses[card.cardID].lastReview
             };
           }
           return card;
@@ -200,22 +204,35 @@ function TotalFlashcardBrowser({ view }) {
   
 
     setUpdatedCardData(newCardData);
-    if (cardIndex < updatedCardData.length - 1) {
+    console.log(cardIndex);
+    console.log(updatedCardData.length);
+    if (cardIndex < updatedCardData.length) {
+      console.log("If statement entered");
       // TODO: Only show cards with a review status of 0.x
       // or that were last revised before yesterday
       let cardIndexValid = false;
+      // See if the next card is valid. The below code handles a special
+      // case where there only is one card, so you can't go to the next one
       let newIndex = cardIndex + 1;
+      if (updatedCardData.length === 1) {
+        newIndex = 0
+      }
       let cardsRevised = 0;
+  
       while (cardIndexValid == false) {
+        console.log("Card index valid is false");
         let reviewStatus = updatedCardData[newIndex].review_status
         let lastReview = updatedCardData[newIndex].last_review
         let daily = parseFloat(reviewStatus[0]);
 
         if (daily == 0 || isDateBeforeToday(lastReview)) {
           cardIndexValid = true;
+          console.log("Card is valid");
         } else {
+          console.log("Card not valid");
           newIndex += 1;
           cardsRevised += 1;
+          setLearnedCards(learnedCards + 1);
         }
 
         // Switch to the first card if the last is reached
@@ -237,6 +254,7 @@ function TotalFlashcardBrowser({ view }) {
       }
       
     } else {
+      console.log("Resetting");
       setCardIndex(0);
     }
   };
@@ -278,7 +296,14 @@ function TotalFlashcardBrowser({ view }) {
               setResponse={setResponse}
               height="264px"
             />
-            <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
+            <ReviewBarChartKey />
+            <div className={"review-bar-chart-wrapper"} >
+              <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
+              <Heading4 text={
+                ((learnedCards / (studying + reviewing + notStarted)) *100)
+                + "%"
+              } />
+            </div>
           </>
           : cardsSaved === false ? <>
           <div style={{display: "inline-block"}}>
@@ -294,4 +319,4 @@ function TotalFlashcardBrowser({ view }) {
   );
 }
 
-export default TotalFlashcardBrowser;
+export default DailyFlashcardBrowser;

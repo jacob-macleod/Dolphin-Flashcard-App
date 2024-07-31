@@ -1,0 +1,5 @@
+.review-bar-chart-wrapper{
+    display: grid;
+    grid-template-columns: auto 60px;
+    width: 100%
+}
