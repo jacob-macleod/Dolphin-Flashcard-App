@@ -118,9 +118,11 @@ class Folders(DatabaseHandler):
             flashcard_data = flashcard_data.get("data")
 
         current_location_list = current_location.split("/")
-        edited_flashcard_data = flashcard_data.copy()
-        for item in current_location_list:
-            edited_flashcard_data = edited_flashcard_data.get(item)
+        edited_flashcard_data = flashcard_data
+        # Handle a scenario where the flashcard is currently in the root foldr
+        if current_location_list != [""]:
+            for item in current_location_list:
+                edited_flashcard_data = edited_flashcard_data.get(item)
 
         # Handle the case where the flashcard is in the root folder
         if edited_flashcard_data is None:
@@ -178,6 +180,92 @@ class Folders(DatabaseHandler):
         current[folder_path[-1]] = {}
 
         folder.set(
+            {
+                "data": folder_data
+            }
+        )
+
+    def get_card_location(self, user_id: str, card_id: str, folder_data: dict):
+        """
+        Get the location of a card in the folder structure
+        recursive function since folders can have any number of subfolders
+
+        Args:
+            user_id (str): The user who owns the card
+            card_id (str): The card ID to find
+            folder_data (dict): The generated card data
+
+        Returns:
+            list: The path to the card as a list of folder names, or None if the card is not found
+        """
+        for key, value in folder_data.items():
+            if "cards" in value:
+                if card_id in value["cards"]:
+                    return [key]
+            elif isinstance(value, dict):
+                location = self.get_card_location(user_id, card_id, value)
+                if location is not None:
+                    return [key] + location
+        return None
+
+
+    def update_card_data(self, folder_data: dict, location: list, card_id: str, review_status: str, last_review: str):
+        """
+        Update the card data in the folder structure
+
+        Args:
+            folder_data (dict): The folder data to update
+            location (list): The location of the card in the folder structure
+            card_id (str): The card ID to update
+            review_status (str): The review status to update
+            last_review (str): The last review date to update
+        """
+        current = folder_data
+        for key in location:
+            current = current.get(key)
+        current["cards"][card_id]["review_status"] = review_status
+        current["cards"][card_id]["last_review"] = last_review
+
+        return folder_data
+
+    def update_card_progress(
+        self,
+        user_id: str,
+        card_data: list
+    ):
+        """
+        Update the progress (review status and last review) for multiple cards
+
+        Args:
+            user_id (str): The user who owns the cards
+            card_data (list): The card data to update (dictionary containing cardID, review_status and last_review)
+        """
+        # Get the current folder data
+        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if folder_data is None:
+            return None
+        else:
+            folder_data = folder_data.get("data")
+
+        for card in card_data:
+            card_id = card.get("cardID")
+            review_status = card.get("review_status")
+            last_review = card.get("last_review")
+
+            # Get the current folder location of the card
+            card_location = self.get_card_location(user_id, card_id, folder_data)
+
+            # Update the card data
+            folder_data = self.update_card_data(
+                folder_data,
+                card_location,
+                card_id,
+                review_status,
+                last_review
+            )
+
+        # Save the updated folder data
+        self._context.collection(self._db_name).document(user_id).set(
             {
                 "data": folder_data
             }

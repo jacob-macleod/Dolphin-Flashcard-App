@@ -6,3 +6,4 @@ pylint
 flask-cors
 pytest
 setuptools
+pytest-ordering

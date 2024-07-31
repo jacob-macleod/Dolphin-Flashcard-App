@@ -24,3 +24,12 @@
     font-weight: 400;
     line-height: 20px; /* 125% */
 }
+
+.grey {
+    color: var(--Grey-Text-Colour, #747474);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 125% */
+}

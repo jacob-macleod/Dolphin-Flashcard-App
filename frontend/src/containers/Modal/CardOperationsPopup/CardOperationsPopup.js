@@ -7,14 +7,14 @@ import deleteIcon from '../../../static/bin-icon.svg';
 
 import './CardOperationsPopup.css'
 
-function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flashcardID, view }) {
+function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flashcardName, view }) {
     const float = view == "mobile" ? "left" : null;
-
     const cardData = {
         "flashcardData": flashcardData,
         "path": path,
-        "flashcardID": flashcardID
+        "flashcardName": flashcardName
     }
+
     return (
         visible ?
         <div className={view == "mobile" ? 'card-operations-popup-wrapper-mobile' : 'card-operations-popup-wrapper'}>
