@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 3.5.1 - 2024-08-01
+
+### Fixed
+
+- /delete-goal now gives an error message if the goal does not exist
+
 ## 3.5.0 - 2024-07-31
 
 ### Added

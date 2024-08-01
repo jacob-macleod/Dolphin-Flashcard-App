@@ -171,7 +171,10 @@ def delete_goal():
     goal_id = request.json.get("goalID")
 
     try:
-        db.goals.delete_goal(user_id, goal_id)
+        # Assuming delete_goal returns a boolean indicating success
+        result = db.goals.delete_goal(user_id, goal_id)
+        if not result:
+            return jsonify({"error": "Goal not found or could not be deleted"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
