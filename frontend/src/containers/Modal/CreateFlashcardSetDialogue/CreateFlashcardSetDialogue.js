@@ -69,12 +69,13 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     }
 
     useEffect(() => {
-      if (loadEditFlashcardPage) {
+      if (loadEditFlashcardPage != false) {
         setLoadingIconVisible(false);
         window.open(
           "/edit-flashcard-set?newSet=true&flashcardName="
           + flashcardName + "&folder=" + selectedPath
-          + "&flashcardDescription=" + flashcardDescription,
+          + "&flashcardDescription=" + flashcardDescription
+          + "&flashcardID=" + loadEditFlashcardPage.flashcardID,
           "_self"
         );
       }

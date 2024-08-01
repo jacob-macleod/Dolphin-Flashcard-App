@@ -32,6 +32,7 @@
     color: #FFF;
     /* Other Panel Drop Shadow */
     box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
+    cursor: pointer;
 }
 
 .ghost-button-disabled {
@@ -60,4 +61,5 @@
     margin: auto;
     margin-top: 16px;
     margin-bottom: 16px;
+    cursor: pointer;
 }

@@ -14,19 +14,19 @@ import threeDots from '../../../static/three-dots.svg';
 
 import '../FlashcardItem.css';
 
-function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, path="", view }) {
+function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, path="", view, selected, setSelected }) {
     const title = element.flashcardName;
     const numOfCards = Object.keys(element.cards).length;
-
-    // onSelectClick is run on component mount, and selected is set to false
-    const [selected, setSelected] = React.useState(true);
     const [operationsPopupVisible, setOperationsPopupVisible] = React.useState(false);
+    const [newSelectedList, setNewSelectedList] = React.useState(selected);
 
     function onSelectClick() {
-        if (selected) {
-            setSelected(false);
+        console.log("SELECTED IS: ")
+        console.log(selected);
+        if (selected.includes(path + "/" + title)) {
+            setSelected(prevItems => prevItems.filter(selected => selected !== path + "/" + title));
         } else {
-            setSelected(true);
+            setSelected(prevItems => [...prevItems, path + "/" + title]);
         }
     }
 
@@ -43,7 +43,10 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
     }
 
     function studyCard() {
-        alert ("Clicked!");
+        window.open(
+            "/view?flashcardID[]=" + element.flashcardID + "&folder[]=" + path + "&flashcardName[]=" + element.flashcardName,
+            "_self"
+        );
     }
 
     useEffect(() => {
@@ -94,7 +97,10 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
         >
             <GridItem style={gridItemStyle}>
                 <div className='flashcard-item'>
-                    <Image url={selected ? emptyCircle : circledTick} width="16px" height="16px" onClick={onSelectClick}/>
+                    <Image url={
+                        selected.includes(path + "/" + title)
+                        ? circledTick : emptyCircle
+                    } width="16px" height="16px" onClick={onSelectClick}/>
                     <Paragraph text={title} style={{
                         margin: "0px",
                         lineHeight: "2",
@@ -136,7 +142,7 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
                         showMovePopup={setMoveFolderDialogueVisible}
                         flashcardData={flashcardData}
                         path={path}
-                        flashcardID={element.flashcardID}
+                        flashcardName={element.flashcardName}
                         view={view}
                     />
                 </div>
