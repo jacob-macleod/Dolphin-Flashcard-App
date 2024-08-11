@@ -38,7 +38,7 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
         let flashcardIDData = "";
         let folderData = "";
         let flashcardNameData = "";
-        // Iterate through all the flashcards and from the url data. This assumes flashcardIDList
+        // Iterate through all the flashcards and form the url data. This assumes flashcardIDList
         // and flashcardFolderList have the same length with the item at x index of one corrosponding to
         // the item at x index of the other, which should be true
         for (let i = 0; i < flashcardIDList.length; i++) {
@@ -72,6 +72,8 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
         Object.values(data).forEach(item => {
             if (item.cards) {
                 cards += Object.keys(item.cards).length;
+                console.log(item);
+                console.log(item.flashcardID);
                 flashcardIDs.push(item.flashcardID);
                 flashcardFolders.push(folder);
                 flashcardNames.push(item.flashcardName);
@@ -105,9 +107,14 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
                 studying += subStudying;
                 recapping += subRecapping;
                 notStarted += subNotStarted;
-                flashcardIDs = subFlashcardIDs;
-                flashcardFolders = subFlashcardFolders;
-                flashcardNames: subFlashcardNames
+
+                // Assumes subFlashcardIDs, subFlashcardFolders and subFlashcardNames have same length,
+                // Which should be the case
+                for (let i = 0; i < subFlashcardIDs.length; i++) {
+                    flashcardIDs.push(subFlashcardIDs[i]);
+                    flashcardFolders.push(subFlashcardFolders[i]);
+                    flashcardNames.push(subFlashcardNames[i]);
+                }
             }
             itemNumber ++;
         });
