@@ -28,15 +28,35 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
     const [notStartedCount, setNotStartedCount] = useState(0);
     const [flashcardIDList, setFlashcardIDs] = useState([]);
     const [flashcardFolderList, setFlashcardFolders] = useState([]);
+    const [flashcardNameList, setFlashcardNameList] = useState([]);
 
     function toggleChildren() {
         setShowChildren(!showChildren);
     }
 
     function studyCard() {
-        alert ("Clicked!");
-        console.log(flashcardIDList);
-        console.log(flashcardFolderList);
+        let flashcardIDData = "";
+        let folderData = "";
+        let flashcardNameData = "";
+        // Iterate through all the flashcards and from the url data. This assumes flashcardIDList
+        // and flashcardFolderList have the same length with the item at x index of one corrosponding to
+        // the item at x index of the other, which should be true
+        for (let i = 0; i < flashcardIDList.length; i++) {
+            // The first data item should have ?, not & at the start
+            if (flashcardIDData === "") {
+                flashcardIDData += "?flashcardID[]=" + flashcardIDList[i];
+            } else {
+                flashcardIDData += "&flashcardID[]=" + flashcardIDList[i];
+            }
+            folderData += "&folder[]=" + flashcardFolderList[i];
+            flashcardNameData += "&flashcardName[]=" + flashcardNameList[i];
+        };
+
+        // Open the actual URL
+        window.open(
+            "/view" + flashcardIDData + folderData + flashcardNameData,
+            "_self"
+        );
     }
 
     function countCards(data, folder=path) {
@@ -46,13 +66,15 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
         let notStarted = 0;
         let flashcardIDs = []; // The IDs of each flashcard in the folder
         let flashcardFolders = []; // The absolute folder path of each flashcard in the folder
+        let flashcardNames = []; // The name of each flashcard
         let itemNumber = 0; // The item of data being examined
 
         Object.values(data).forEach(item => {
             if (item.cards) {
                 cards += Object.keys(item.cards).length;
-                let cardIndex = 0;
-                let cardIDs = Object.keys(item.cards);
+                flashcardIDs.push(item.flashcardID);
+                flashcardFolders.push(folder);
+                flashcardNames.push(item.flashcardName);
 
                 Object.values(item.cards).forEach(card => {
                     let reviewStatus = parseFloat(card.reviewStatus);
@@ -63,10 +85,6 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
                     } else {
                         recapping++;
                     }
-
-                    flashcardIDs.push(cardIDs[cardIndex]);
-                    flashcardFolders.push(folder);
-                    cardIndex ++;
                 });
             } else {
                 let newFolder = folder;
@@ -80,7 +98,8 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
                     recapping: subRecapping,
                     notStarted: subNotStarted,
                     flashcardIDs: subFlashcardIDs,
-                    flashcardFolders: subFlashcardFolders
+                    flashcardFolders: subFlashcardFolders,
+                    flashcardNames: subFlashcardNames
                 } = countCards(item, folder=newFolder);
                 cards += subCards;
                 studying += subStudying;
@@ -88,21 +107,23 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
                 notStarted += subNotStarted;
                 flashcardIDs = subFlashcardIDs;
                 flashcardFolders = subFlashcardFolders;
+                flashcardNames: subFlashcardNames
             }
             itemNumber ++;
         });
 
-        return { cards, studying, recapping, notStarted, flashcardIDs, flashcardFolders };
+        return { cards, studying, recapping, notStarted, flashcardIDs, flashcardFolders, flashcardNames };
     }
 
     useEffect(() => {
-        const { cards, studying, recapping, notStarted, flashcardIDs, flashcardFolders } = countCards(element);
+        const { cards, studying, recapping, notStarted, flashcardIDs, flashcardFolders, flashcardNames } = countCards(element);
         setCardsCount(cards);
         setStudyingCount(studying);
         setRecappingCount(recapping);
         setNotStartedCount(notStarted);
         setFlashcardIDs(flashcardIDs);
         setFlashcardFolders(flashcardFolders);
+        setFlashcardNameList(flashcardNames);
     }, [element]);
 
     return (
