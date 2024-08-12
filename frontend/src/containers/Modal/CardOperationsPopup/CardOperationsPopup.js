@@ -7,7 +7,7 @@ import deleteIcon from '../../../static/bin-icon.svg';
 
 import './CardOperationsPopup.css'
 
-function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flashcardName, view }) {
+function CardOperationsPopup({ visible, showMovePopup, showDeleteConfirmation, flashcardData, path, flashcardName, view }) {
     const float = view == "mobile" ? "left" : null;
     const cardData = {
         "flashcardData": flashcardData,
@@ -21,7 +21,7 @@ function CardOperationsPopup({ visible, showMovePopup, flashcardData, path, flas
             <div className='card-operations-container'>
                 <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" float={float}/>
                 <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}} float={float}/>
-                <MenuItem text="Delete" imgUrl={deleteIcon} margin="0px" float={float}/>
+                <MenuItem text="Delete" imgUrl={deleteIcon} onClick={() => {showDeleteConfirmation(true)}} margin="0px" float={float}/>
             </div>
         </div>
         : <></>

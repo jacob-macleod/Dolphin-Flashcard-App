@@ -17,6 +17,7 @@ import SearchBar from '../componments/SearchBar/SearchBar';
 import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
+import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
 import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
@@ -33,6 +34,7 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
+  const [deleteConfirmationVisible, showDeleteConfirmation] = useState(false);
   const [selected, setSelected] = useState([]);
 
   // Set variables for the size
@@ -98,6 +100,7 @@ function Flashcards() {
       <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload} />
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
+      <DeleteFlashcardConfirmation visible={deleteConfirmationVisible} setVisible={showDeleteConfirmation} view={view} setReload={setReload} />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
         {view !== "mobile" ? <SidePanel selectedItem="flashcards" /> : <></>}
@@ -136,6 +139,7 @@ function Flashcards() {
                   <FlashcardOverview
                     flashcardData={todayCards}
                     setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                    showDeleteConfirmation={showDeleteConfirmation}
                     view={view}
                     selected={selected}
                     setSelected={setSelected}
