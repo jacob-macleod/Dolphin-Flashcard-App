@@ -21,8 +21,6 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, flashcardData, p
     const [newSelectedList, setNewSelectedList] = React.useState(selected);
 
     function onSelectClick() {
-        console.log("SELECTED IS: ")
-        console.log(selected);
         if (selected.includes(path + "/" + title)) {
             setSelected(prevItems => prevItems.filter(selected => selected !== path + "/" + title));
         } else {

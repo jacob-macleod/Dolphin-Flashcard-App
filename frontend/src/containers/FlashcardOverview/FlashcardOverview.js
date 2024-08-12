@@ -33,6 +33,7 @@ function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, view, 
           folderKey={folderName + element.flashcardID}
           child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
           view={view}
+          path={path}
         />
       );
     }

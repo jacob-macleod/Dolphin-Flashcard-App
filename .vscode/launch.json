@@ -12,6 +12,13 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Python Debugger: Run Unit Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "testing/test_api.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python Debugger: Flask",
             "type": "debugpy",
             "request": "launch",

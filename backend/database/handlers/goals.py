@@ -267,4 +267,9 @@ class Goals(DatabaseHandler):
             user_id (str): The user id of the goal to delete
             goal_id (str): The goal id to delete
         """
-        self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id).delete()
+        data = self._context.collection("goals").document(user_id).collection("goal_data").document(goal_id)
+        if data is not None:
+            data.delete()
+            return True
+        else:
+            return None

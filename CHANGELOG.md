@@ -22,6 +22,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 4.0.0 - 2024-08-11
+
+### Added
+
+- The study button next to the folder now allows you to study all cards in the folder
+
+### Changed
+
+- This is version `4.0.0` because 3.5.0 included breaking API changes, so the version should have been MAJOR
+
 ## 3.5.1 - 2024-08-01
 
 ### Fixed
