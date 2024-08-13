@@ -60,6 +60,11 @@ UPDATE_CARD_PROGRESS = {
     "cardData": []
 }
 
+DELETE_FLASHCARD_FORMAT = {
+    "userID": "",
+    "flashcardID": ""
+}
+
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
@@ -306,5 +311,30 @@ def update_card_progress():
         db.folders.update_card_progress(user_id, card_data)
 
         return jsonify({"success": "Card progress updated"}), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/delete-flashcard", methods=["DELETE"])
+@validate_json(DELETE_FLASHCARD_FORMAT)
+def delete_flashcard():
+    """
+    Delete a flashcard set
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+
+        result = db.folders.delete_flashcard(user_id, flashcard_id)
+
+        if result is not None:
+            return jsonify({"success": f"Flashcard {flashcard_id} deleted"}), 200
+        else:
+            return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
+
     except Exception as e:
         return jsonify(str(e)), 500
