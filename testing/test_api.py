@@ -772,9 +772,7 @@ class TestApi(unittest.TestCase):
 
     """@pytest.mark.run(order=25)
     def test_update_goal_status(self):
-        """
         Make sure the update-goal-status route works
-        """
         # Create the user - this relies on previous tests to make sure it's working
         valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy"}
 
