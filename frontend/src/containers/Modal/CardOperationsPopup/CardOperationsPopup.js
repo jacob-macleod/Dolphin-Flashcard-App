@@ -21,7 +21,7 @@ function CardOperationsPopup({ visible, showMovePopup, showDeleteConfirmation, f
             <div className='card-operations-container'>
                 <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" float={float}/>
                 <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}} float={float}/>
-                <MenuItem text="Delete" imgUrl={deleteIcon} onClick={() => {showDeleteConfirmation(true)}} margin="0px" float={float}/>
+                <MenuItem text="Delete" imgUrl={deleteIcon} onClick={() => {showDeleteConfirmation(cardData)}} margin="0px" float={float}/>
             </div>
         </div>
         : <></>

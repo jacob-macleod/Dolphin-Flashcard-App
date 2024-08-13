@@ -13,15 +13,14 @@ import { dropIn } from '../../../animations/animations';
 
 function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
-    const [loadingIconVisible, setLoadingIconVisible] = useState("visisnle"); // If null, loading icon shows
+    const [loadingIconVisible, setLoadingIconVisible] = useState("visible"); // If null, loading icon shows
     const buttonStyle = {
         display: "inline-grid",
         margin: "0px 16px"
     }
     const flashcardName = visible.flashcardName;
     const currentPath = visible.path;
-    console.log("VISIBLE");
-    console.log(visible);
+
     function moveFlashcard() {
       if (selectedPath != null) {
         setLoadingIconVisible(null);

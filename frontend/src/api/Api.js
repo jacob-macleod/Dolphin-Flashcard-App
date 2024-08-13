@@ -239,8 +239,6 @@ class ApiManager {
         const data = {
             "flashcardID": flashcardID,
         }
-        console.log("GETTING FLASHCARD DATA WITH REQUEST DATA");
-        console.log(data);
 
         this.fetchData(data, url, flashcardData => {
             console.log("Returned data:");
@@ -270,6 +268,19 @@ class ApiManager {
         this.fetchData(data, url, response => {
             setCardsRevised(response);
         });
+    }
+
+    deleteFlashcard(userID, flashcardID, setPopupVisible, setReload) {
+        const url = 'delete-flashcard';
+        const data = {
+            "userID": userID,
+            "flashcardID": flashcardID
+        }
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+            setReload(true);
+        }, "DELETE");
     }
 }
 
