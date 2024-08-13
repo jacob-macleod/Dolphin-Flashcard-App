@@ -3,7 +3,7 @@ import FlashcardFolder from './FlashcardFolder/FlashcardFolder';
 import FlashcardItem from './FlashcardItem/FlashcardItem';
 import Heading5 from '../../componments/Text/Heading5/Heading5';
 
-function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, view, selected, setSelected }) {
+function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, showDeleteConfirmation=showDeleteConfirmation, view, selected, setSelected }) {
   const renderElement = (element, folderName, path="") => {
     if (element.cards) {
       return (
@@ -11,6 +11,7 @@ function FlashcardOverview({ flashcardData, setMoveFolderDialogueVisible, view, 
           <FlashcardItem
             element={element}
             setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+            showDeleteConfirmation={showDeleteConfirmation}
             flashcardData={flashcardData}
             path={path}
             view={view}

@@ -3,38 +3,35 @@ import {motion} from 'framer-motion';
 import GhostButton from '../../../componments/GhostButton';
 import Button from '../../../componments/Button';
 import Heading3 from '../../../componments/Text/Heading3/Heading3';
-import FolderTreeView from '../../FolderTreeView';
+import Paragraph from '../../../componments/Text/Paragraph';
 import apiManager from '../../../api/Api';
 import {getCookie} from '../../../api/Authentication';
-import './MoveFolderDialogue.css'
 import '../Modal.css';
 import DelayedElement from '../../DelayedElement';
 import { dropIn } from '../../../animations/animations';
 
-function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
+function DeleteFlashcardConfirmation({ visible, setVisible, view, setReload }) {
     const [selectedPath, setSelectedPath] = React.useState(null);
     const [loadingIconVisible, setLoadingIconVisible] = useState("visible"); // If null, loading icon shows
     const buttonStyle = {
         display: "inline-grid",
         margin: "0px 16px"
     }
-    const flashcardName = visible.flashcardName;
-    const currentPath = visible.path;
 
-    function moveFlashcard() {
-      if (selectedPath != null) {
-        setLoadingIconVisible(null);
-
-        apiManager.moveFlashcard(
-          getCookie("userID"),
-          currentPath,
-          flashcardName,
-          selectedPath,
-          setVisible,
-          setReload
-        )
-      }
+    function deleteFlashcard() {
+      // visible stores flashcardData which contains the data for the flashcard
+      // in the format flashcard_name: {flashcard data including ID}. This will only ever
+      // store the data for one flashcard. Below gets the flashcard ID
+      const flashcardID = Object.values(visible["flashcardData"])[0].flashcardID;
+      setLoadingIconVisible(null);
+      // Delete the flashcard
+      apiManager.deleteFlashcard(getCookie('userID'), flashcardID, setVisible, setReload);
     }
+
+    useEffect(() => {
+      setLoadingIconVisible("visible");
+    }, [visible]);
+
     useEffect(() => {
       setLoadingIconVisible("visible");
     }, [visible]);
@@ -50,15 +47,11 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
               variants={dropIn}
               style={view == "desktop" ? {height: "fit-content"} : null}
             >
-                <Heading3 text="Choose a folder:" />
-
-                <div className="card-overview">
-                  <FolderTreeView visible={visible.flashcardData} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
-                </div>
-
+                <Heading3 text="Are you sure you want to delete this flashcard?" />
+                <Paragraph text="This will permanently delete the entire flashcard - you can't access it again!" />
                 <div className='button-container'>
                     <GhostButton text="Cancel" onClick={() => setVisible(false)} style={buttonStyle} />
-                    <Button text="Move" onClick={moveFlashcard} style={buttonStyle} />
+                    <Button text="Yes, delete it" onClick={deleteFlashcard} style={buttonStyle} />
                 </div>
                 <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={loadingIconVisible} />
@@ -69,4 +62,4 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
     );
 }
 
-export default MoveFolderDialogue;
+export default DeleteFlashcardConfirmation;

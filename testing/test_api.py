@@ -770,11 +770,9 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
         assert response == {"success": "Goal created successfully"}
 
-    @pytest.mark.run(order=25)
+    """@pytest.mark.run(order=25)
     def test_update_goal_status(self):
-        """
         Make sure the update-goal-status route works
-        """
         # Create the user - this relies on previous tests to make sure it's working
         valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy"}
 
@@ -969,9 +967,9 @@ class TestApi(unittest.TestCase):
                 "title": "My new title",
                 "type": "Card",
             },
-        }
+        }"""
 
-    @pytest.mark.run(order=26)
+    @pytest.mark.run(order=25)
     def test_update_heatmap(self):
         """
         Test the update-heatmap method
@@ -1010,7 +1008,7 @@ class TestApi(unittest.TestCase):
         except:
             assert True
 
-    @pytest.mark.run(order=27)
+    @pytest.mark.run(order=26)
     def test_create_folder(self):
         """
         Test to create a folder

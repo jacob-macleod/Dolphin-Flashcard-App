@@ -19,16 +19,12 @@ function CardOperationsPopup({ visible, showEditPopup, setVisible, view, setInit
         <div className={view == "mobile" ? 'card-operations-popup-wrapper-mobile' : 'card-operations-popup-wrapper'} style={{zIndex: 2, height: "104px"}}>
             <div className='card-operations-container'>
                 <MenuItem text="Edit" src={window.location.href} imgUrl={renameIcon} margin="0px" float={float} onClick={() => {
-                    console.log(front);
-                    console.log(back);
                     setInitialTerm(front);
                     setInitialDefinition(back);
-                    console.log("Showing popup")
-                    showEditPopup(true)
-                    console.log("Showin popup")
+                    showEditPopup(true);
                 }}/>
                 <MenuItem text="Delete" src={window.location.href} imgUrl={deleteIcon} margin="0px" float={float} onClick={() => {
-                    alert ("This hasn't been coded yet!");
+                    alert ("Clicked");
                 }}/>
             </div>
         </div>
