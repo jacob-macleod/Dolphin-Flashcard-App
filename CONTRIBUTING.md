@@ -48,7 +48,7 @@ Here's what you need to do before beginning development on Dolphin:
 * `cd Dolphin-Flashcard-App`
 * `cd frontend`
 
-###  1.2. <a name='RunningtheReactFrontendApp'></a>Running the React Frontend App
+###  1.3. <a name='RunningtheReactFrontendApp'></a>Running the React Frontend App
 
 Enter the following commands:
 
