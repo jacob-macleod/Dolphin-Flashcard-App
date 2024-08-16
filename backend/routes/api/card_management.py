@@ -71,6 +71,12 @@ RENAME_FLASHCARD_FORMAT = {
     "newName": ""
 }
 
+RENAME_FOLDER_FORMAT = {
+    "userID": "",
+    "currentName": "",
+    "newName": ""
+}
+
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
@@ -371,3 +377,29 @@ def rename_flashcard():
             return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/rename-folder", methods=["POST"])
+@validate_json(RENAME_FOLDER_FORMAT)
+def rename_folder():
+    """
+    Rename a  folder
+    Example request:
+    {
+        "userID": "my-id",
+        "currentName": "my-folder",
+        "newName": "new-name"
+    }
+    """
+    #try:
+    user_id = request.json.get("userID")
+    folder_name = request.json.get("currentName")
+    new_name = request.json.get("newName")
+
+    result = db.folders.rename_folder(user_id, folder_name, new_name)
+
+    if result is not None:
+        return jsonify({"success": f"Flashcard {folder_name} renamed to {new_name}"}), 200
+    else:
+        return jsonify({"error": f"Flashcard {folder_name} does not exist"}), 404
+    # except Exception as e:
+    #     return jsonify(str(e)), 500

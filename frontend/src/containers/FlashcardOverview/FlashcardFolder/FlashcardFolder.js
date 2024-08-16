@@ -7,6 +7,7 @@ import GridContainer from '../../../componments/GridContainer/GridContainer';
 import GridItem from '../../../componments/GridItem/GridItem';
 import ReviewBarChart from '../../ReviewBarChart';
 import Button from '../../../componments/Button';
+import CardOperationsPopup from '../../Modal/CardOperationsPopup/CardOperationsPopup';
 import { easeIn } from '../../../animations/animations';
 
 import horizontalTriangle from '../../../static/horizontal-triangle.svg';
@@ -16,7 +17,18 @@ import threeDots from '../../../static/three-dots.svg'
 import '../FlashcardFolder.css';
 import '../FlashcardItem.css';
 
-function FlashcardFolder({ element, name, child, folderKey, view, path }) {
+function FlashcardFolder({
+    element,
+    name,
+    child,
+    folderKey,
+    setMoveFolderDialogueVisible,
+    showDeleteConfirmation,
+    setRenameFlashcardSetPopupVisible,
+    flashcardData,
+    view,
+    path
+}) {
     const gridItemStyle = {
         padding: "0px",
     }
@@ -29,9 +41,18 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
     const [flashcardIDList, setFlashcardIDs] = useState([]);
     const [flashcardFolderList, setFlashcardFolders] = useState([]);
     const [flashcardNameList, setFlashcardNameList] = useState([]);
+    const [operationsPopupVisible, setOperationsPopupVisible] = React.useState(false);
 
     function toggleChildren() {
         setShowChildren(!showChildren);
+    }
+
+    function toggleOperationsPopup() {
+        if (operationsPopupVisible) {
+            setOperationsPopupVisible(false);
+        } else {
+            setOperationsPopupVisible(true);
+        }
     }
 
     function studyCard() {
@@ -182,7 +203,18 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
                             onClick={studyCard}
                             />
                         : <></>}
-                        <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px'/>
+                        <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px' onClick={toggleOperationsPopup}/>
+                        <CardOperationsPopup
+                        visible={operationsPopupVisible}
+                        setVisible={setOperationsPopupVisible} 
+                        showMovePopup={setMoveFolderDialogueVisible}
+                        showDeleteConfirmation={showDeleteConfirmation}
+                        setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                        flashcardData={flashcardData}
+                        path={path}
+                        flashcardName={name}
+                        view={view}
+                    />
                     </div>
                 </GridItem>
             </GridContainer>

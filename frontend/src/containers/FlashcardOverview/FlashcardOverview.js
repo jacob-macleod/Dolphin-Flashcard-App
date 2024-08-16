@@ -49,6 +49,10 @@ function FlashcardOverview({
           element={element}
           name={folderName}
           folderKey={folderName + element.flashcardID}
+          setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+          showDeleteConfirmation={showDeleteConfirmation}
+          setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+          flashcardData={element}
           child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
           view={view}
           path={path}

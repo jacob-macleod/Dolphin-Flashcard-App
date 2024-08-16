@@ -16,6 +16,8 @@ function CardOperationsPopup({ visible, showMovePopup, showDeleteConfirmation, s
         "path": path,
         "flashcardName": flashcardName
     };
+    console.log("CARD DATA");
+    console.log("cardData: ", cardData);
 
     return (
         visible ?

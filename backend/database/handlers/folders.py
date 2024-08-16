@@ -231,6 +231,29 @@ class Folders(DatabaseHandler):
                     return [key] + location
         return None
 
+    def get_folder_location(self, user_id: str, folder_name: str, folder_data: dict):
+        """
+        Get the location of an individual folder in the folder structure
+        recursive function since folders can have any number of subfolders
+
+        Args:
+            user_id (str): The user who owns the card
+            folder_name (str): The folder name to find
+            folder_data (dict): The generated card data
+
+        Returns:
+            list: The path to the card as a list of folder names, or None if the card is not found
+        """
+        for key, value in folder_data.items():
+            if isinstance(value, dict):
+                if folder_name == key:
+                    return [key]
+                else:
+                    location = self.get_folder_location(user_id, folder_name, value)
+                    if location is not None:
+                        return [key] + location
+        return None
+
     def update_card_data(self, folder_data: dict, location: list, card_id: str, review_status: str, last_review: str):
         """
         Update the card data in the folder structure
@@ -332,11 +355,11 @@ class Folders(DatabaseHandler):
 
     def rename_flashcard(self, user_id:str, flashcard_id:str, new_name:str):
         """
-        Delete a flashcard from the folder structure
+        Rename a flashcard
 
         Args:
             user_id (str): The user who owns the flashcard
-            flashcard_id (str): The flashcard ID to delete
+            flashcard_id (str): The flashcard ID to rename
             new_name (str): The new name for the flashcard
         """
         # Get the current folder data
@@ -348,6 +371,46 @@ class Folders(DatabaseHandler):
 
         # Get the current folder location of the card
         card_location = self.get_flashcard_location(user_id, flashcard_id, folder_data)
+
+        if card_location is None:
+            return None
+
+        # Remove the flashcard as a whole from the folder structure
+        current = folder_data
+        for key in card_location:
+            if key == card_location[-1]:
+                temp = current[key]
+                current.pop(key, None)
+                current[new_name] = temp
+            else:
+                current = current.get(key)
+
+        # Save the updated folder data
+        self._context.collection(self._db_name).document(user_id).set(
+            {
+                "data": folder_data
+            }
+        )
+        return folder_data
+
+    def rename_folder(self, user_id:str, folder_name:str, new_name:str):
+        """
+        Rename a flashcard
+
+        Args:
+            user_id (str): The user who owns the flashcard
+            folder_name (str): The folder to rename
+            new_name (str): The new name for the flashcard
+        """
+        # Get the current folder data
+        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if folder_data is None:
+            return None
+        else:
+            folder_data = folder_data.get("data")
+
+        # Get the current folder location of the card
+        card_location = self.get_folder_location(user_id, folder_name, folder_data)
 
         if card_location is None:
             return None
