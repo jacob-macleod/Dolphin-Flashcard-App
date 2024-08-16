@@ -14,7 +14,17 @@ import threeDots from '../../../static/three-dots.svg';
 
 import '../FlashcardItem.css';
 
-function FlashcardItem({ element, setMoveFolderDialogueVisible, showDeleteConfirmation, flashcardData, path="", view, selected, setSelected }) {
+function FlashcardItem({
+    element,
+    setMoveFolderDialogueVisible,
+    showDeleteConfirmation,
+    setRenameFlashcardSetPopupVisible,
+    flashcardData,
+    path="",
+    view,
+    selected,
+    setSelected
+}) {
     const title = element.flashcardName;
     const numOfCards = Object.keys(element.cards).length;
     const [operationsPopupVisible, setOperationsPopupVisible] = React.useState(false);
@@ -139,6 +149,7 @@ function FlashcardItem({ element, setMoveFolderDialogueVisible, showDeleteConfir
                         setVisible={setOperationsPopupVisible} 
                         showMovePopup={setMoveFolderDialogueVisible}
                         showDeleteConfirmation={showDeleteConfirmation}
+                        setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
                         flashcardData={flashcardData}
                         path={path}
                         flashcardName={element.flashcardName}

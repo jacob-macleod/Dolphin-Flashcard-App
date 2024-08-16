@@ -37,7 +37,7 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
       setFlashcardItems(cardData);
       setFlashcardsExist(true);
       };
-      console.log(flashcardData);
+
       if (flashcardData && flashcardData.cards.length) {
           fetchCardData();
       } else if (flashcardData && flashcardData.cards.length === 0) {

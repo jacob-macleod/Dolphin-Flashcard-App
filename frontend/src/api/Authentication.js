@@ -12,8 +12,6 @@ export function signInWithGoogle(setUserID) {
         .then((result) => {
             // Successful sign-in, you can access user information here
             const user = result.user;
-            console.log(user);
-            console.log(user.displayName);
             createAccount(user.uid, user.displayName);
             setUserID(user.uid);
             createCookie('userName', user.displayName)

@@ -65,6 +65,12 @@ DELETE_FLASHCARD_FORMAT = {
     "flashcardID": ""
 }
 
+RENAME_FLASHCARD_FORMAT = {
+    "userID": "",
+    "flashcardID": "",
+    "newName": ""
+}
+
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
@@ -336,5 +342,31 @@ def delete_flashcard():
         else:
             return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
 
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/rename-flashcard", methods=["POST"])
+@validate_json(RENAME_FLASHCARD_FORMAT)
+def rename_flashcard():
+    """
+    Rename a flashcard set
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id",
+        "newName": "new-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+        new_name = request.json.get("newName")
+
+        result = db.folders.rename_flashcard(user_id, flashcard_id, new_name)
+
+        if result is not None:
+            return jsonify({"success": f"Flashcard {flashcard_id} renamed to {new_name}"}), 200
+        else:
+            return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500

@@ -329,3 +329,43 @@ class Folders(DatabaseHandler):
             }
         )
         return folder_data
+
+    def rename_flashcard(self, user_id:str, flashcard_id:str, new_name:str):
+        """
+        Delete a flashcard from the folder structure
+
+        Args:
+            user_id (str): The user who owns the flashcard
+            flashcard_id (str): The flashcard ID to delete
+            new_name (str): The new name for the flashcard
+        """
+        # Get the current folder data
+        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if folder_data is None:
+            return None
+        else:
+            folder_data = folder_data.get("data")
+
+        # Get the current folder location of the card
+        card_location = self.get_flashcard_location(user_id, flashcard_id, folder_data)
+
+        if card_location is None:
+            return None
+
+        # Remove the flashcard as a whole from the folder structure
+        current = folder_data
+        for key in card_location:
+            if key == card_location[-1]:
+                temp = current[key]
+                current.pop(key, None)
+                current[new_name] = temp
+            else:
+                current = current.get(key)
+
+        # Save the updated folder data
+        self._context.collection(self._db_name).document(user_id).set(
+            {
+                "data": folder_data
+            }
+        )
+        return folder_data

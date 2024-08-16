@@ -72,8 +72,6 @@ function FlashcardFolder({ element, name, child, folderKey, view, path }) {
         Object.values(data).forEach(item => {
             if (item.cards) {
                 cards += Object.keys(item.cards).length;
-                console.log(item);
-                console.log(item.flashcardID);
                 flashcardIDs.push(item.flashcardID);
                 flashcardFolders.push(folder);
                 flashcardNames.push(item.flashcardName);

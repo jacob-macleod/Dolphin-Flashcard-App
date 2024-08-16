@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 4.2.0 - 2024-08-16
+
+### Added
+
+- Flashcards can now be renamed - this includes a new backend API route and a new front end component
+
 ## 4.1.0 - 2024-08-13
 
 ### Added
