@@ -315,6 +315,7 @@ def update_card_progress():
         card_data = request.json.get("cardData")
 
         db.folders.update_card_progress(user_id, card_data)
+        db.statistics.increase_xp(user_id, len(card_data) * 10)
 
         return jsonify({"success": "Card progress updated"}), 200
     except Exception as e:
