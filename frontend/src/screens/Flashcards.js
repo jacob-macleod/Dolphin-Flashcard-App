@@ -19,6 +19,7 @@ import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolde
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
 import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
 import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
+import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -35,6 +36,7 @@ function Flashcards() {
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
   const [deleteConfirmationVisible, showDeleteConfirmation] = useState(false);
+  const [renameFlashcardSetPopupVisible, setRenameFlashcardSetPopupVisible] = useState(false);
   const [selected, setSelected] = useState([]);
 
   // Set variables for the size
@@ -101,6 +103,7 @@ function Flashcards() {
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
       <DeleteFlashcardConfirmation visible={deleteConfirmationVisible} setVisible={showDeleteConfirmation} view={view} setReload={setReload} />
+      <RenameFlashcardSetPopup visible={renameFlashcardSetPopupVisible} setVisible={setRenameFlashcardSetPopupVisible} view={view} setReload={setReload} />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
         {view !== "mobile" ? <SidePanel selectedItem="flashcards" /> : <></>}
@@ -140,6 +143,7 @@ function Flashcards() {
                     flashcardData={todayCards}
                     setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
                     showDeleteConfirmation={showDeleteConfirmation}
+                    setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
                     view={view}
                     selected={selected}
                     setSelected={setSelected}

@@ -58,8 +58,6 @@ function NewFlashcardPopup({
         var flashcardDataRequest = {}
         flashcardDataRequest.cards = newFlashcardItems;
         flashcardDataRequest.userID = getCookie("userID");
-        console.log("FLASHCARD DATA");
-        console.log(flashcardData);
         flashcardDataRequest.flashcardName = flashcardData.name;
         flashcardDataRequest.flashcardDescription = flashcardData.description;
         flashcardDataRequest.folder = folder;
@@ -71,7 +69,6 @@ function NewFlashcardPopup({
             newFlashcardItems,
             setRequestResponse
         );
-        console.log(newFlashcardItems);
         setLoadingIconVisible(null);
         setFlashcardItems(newFlashcardItems);
         
@@ -86,7 +83,6 @@ function NewFlashcardPopup({
     }
 
     useEffect(() => {
-        console.log(requestResponse);
         setVisible(false);
         setLoadingIconVisible("visible");
     }, [requestResponse]);

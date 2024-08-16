@@ -211,8 +211,6 @@ class ApiManager {
                 "cards": cards
             }
         }
-        console.log("Data is ")
-        console.log(data)
 
         this.fetchData(data, url, status => {
             data.flashcardID = status[0].flashcardID;
@@ -241,8 +239,6 @@ class ApiManager {
         }
 
         this.fetchData(data, url, flashcardData => {
-            console.log("Returned data:");
-            console.log(flashcardData)
             setFlashcardData(flashcardData[0]);
         });
     }
@@ -281,6 +277,20 @@ class ApiManager {
             setPopupVisible(false);
             setReload(true);
         }, "DELETE");
+    }
+
+    renameFlashcard(userID, flashcardID, newName, setPopupVisible, setReload) {
+        const url = 'rename-flashcard';
+        const data = {
+            "userID": userID,
+            "flashcardID": flashcardID,
+            "newName": newName
+        }
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+            setReload(true);
+        });
     }
 }
 
