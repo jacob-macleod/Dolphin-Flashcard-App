@@ -20,6 +20,8 @@ import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDi
 import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
 import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
 import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
+import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
+import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -35,8 +37,10 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
-  const [deleteConfirmationVisible, showDeleteConfirmation] = useState(false);
+  const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] = useState(false);
   const [renameFlashcardSetPopupVisible, setRenameFlashcardSetPopupVisible] = useState(false);
+  const [deleteFolderConfirmationVisible, setDeleteFolderConfirmationVisible] = useState(false);
+  const [renameFolderPopupVisible, setRenameFolderPopupVisible] = useState(false);
   const [selected, setSelected] = useState([]);
 
   // Set variables for the size
@@ -102,8 +106,10 @@ function Flashcards() {
       <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload} />
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
-      <DeleteFlashcardConfirmation visible={deleteConfirmationVisible} setVisible={showDeleteConfirmation} view={view} setReload={setReload} />
+      <DeleteFlashcardConfirmation visible={deleteFlashcardConfirmationVisible} setVisible={showDeleteFlashcardConfirmation} view={view} setReload={setReload} />
       <RenameFlashcardSetPopup visible={renameFlashcardSetPopupVisible} setVisible={setRenameFlashcardSetPopupVisible} view={view} setReload={setReload} />
+      <DeleteFolderConfirmation visible={deleteFolderConfirmationVisible} setVisible={setDeleteFolderConfirmationVisible} view={view} setReload={setReload} />
+      <RenameFolderPopup visible={renameFolderPopupVisible} setVisible={setRenameFolderPopupVisible} view={view} setReload={setReload} />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
         {view !== "mobile" ? <SidePanel selectedItem="flashcards" /> : <></>}
@@ -142,8 +148,10 @@ function Flashcards() {
                   <FlashcardOverview
                     flashcardData={todayCards}
                     setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
-                    showDeleteConfirmation={showDeleteConfirmation}
+                    showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
                     setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                    setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
+                    setRenameFolderPopupVisible={setRenameFolderPopupVisible}
                     view={view}
                     selected={selected}
                     setSelected={setSelected}

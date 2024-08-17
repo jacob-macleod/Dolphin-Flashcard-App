@@ -292,6 +292,33 @@ class ApiManager {
             setReload(true);
         });
     }
+
+    deleteFolder(userID, folderPath, setPopupVisible, setReload) {
+        const url = 'delete-folder';
+        const data = {
+            "userID": userID,
+            "folder": folderPath
+        }
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+            setReload(true);
+        }, "DELETE");
+    }
+
+    renameFolder(userID, folderPath, newName, setPopupVisible, setReload) {
+        const url = 'rename-folder';
+        const data = {
+            "userID": userID,
+            "currentName": folderPath,
+            "newName": newName
+        }
+
+        this.fetchData(data, url, status => {
+            setPopupVisible(false);
+            setReload(true);
+        });
+    }
 }
 
 const apiManager = new ApiManager();
