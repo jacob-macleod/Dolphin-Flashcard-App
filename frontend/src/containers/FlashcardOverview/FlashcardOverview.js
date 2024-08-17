@@ -6,8 +6,10 @@ import Heading5 from '../../componments/Text/Heading5/Heading5';
 function FlashcardOverview({
   flashcardData,
   setMoveFolderDialogueVisible,
-  showDeleteConfirmation,
+  showDeleteFlashcardConfirmation,
   setRenameFlashcardSetPopupVisible,
+  setDeleteFolderConfirmationVisible,
+  setRenameFolderPopupVisible,
   view,
   selected,
   setSelected
@@ -27,7 +29,7 @@ function FlashcardOverview({
           <FlashcardItem
             element={element}
             setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
-            showDeleteConfirmation={showDeleteConfirmation}
+            showDeleteConfirmation={showDeleteFlashcardConfirmation}
             setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
             flashcardData={filterFlashcardSet(flashcardData, element.flashcardName)}
             path={path}
@@ -49,9 +51,8 @@ function FlashcardOverview({
           element={element}
           name={folderName}
           folderKey={folderName + element.flashcardID}
-          setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
-          showDeleteConfirmation={showDeleteConfirmation}
-          setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+          showDeleteConfirmation={setDeleteFolderConfirmationVisible}
+          setRenameFolderPopupVisible={setRenameFolderPopupVisible}
           flashcardData={element}
           child={Object.entries(element).map(([key, value]) => renderElement(value, key, path))}
           view={view}

@@ -89,6 +89,8 @@ class Folders(DatabaseHandler):
         data = self._context.collection(self._db_name).document(user_id).get().to_dict()
         if data is not None:
             data = data.get("data")
+        if data == {}:
+            return None
         return data
 
     def move_flashcard_set(

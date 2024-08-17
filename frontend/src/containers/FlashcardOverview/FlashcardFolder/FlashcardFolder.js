@@ -7,7 +7,7 @@ import GridContainer from '../../../componments/GridContainer/GridContainer';
 import GridItem from '../../../componments/GridItem/GridItem';
 import ReviewBarChart from '../../ReviewBarChart';
 import Button from '../../../componments/Button';
-import CardOperationsPopup from '../../Modal/CardOperationsPopup/CardOperationsPopup';
+import FolderOperationsPopup from '../../Modal/FolderOperationsPopup';
 import { easeIn } from '../../../animations/animations';
 
 import horizontalTriangle from '../../../static/horizontal-triangle.svg';
@@ -24,7 +24,7 @@ function FlashcardFolder({
     folderKey,
     setMoveFolderDialogueVisible,
     showDeleteConfirmation,
-    setRenameFlashcardSetPopupVisible,
+    setRenameFolderPopupVisible,
     flashcardData,
     view,
     path
@@ -204,12 +204,11 @@ function FlashcardFolder({
                             />
                         : <></>}
                         <Image url={threeDots} width='16px' height='16px' minWidth='16px' paddingRight='0px' paddingLeft='8px' onClick={toggleOperationsPopup}/>
-                        <CardOperationsPopup
+                        <FolderOperationsPopup
                         visible={operationsPopupVisible}
                         setVisible={setOperationsPopupVisible} 
-                        showMovePopup={setMoveFolderDialogueVisible}
                         showDeleteConfirmation={showDeleteConfirmation}
-                        setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                        setRenameFolderPopupVisible={setRenameFolderPopupVisible}
                         flashcardData={flashcardData}
                         path={path}
                         flashcardName={name}
