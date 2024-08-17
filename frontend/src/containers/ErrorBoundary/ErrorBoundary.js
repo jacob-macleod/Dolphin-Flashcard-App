@@ -103,6 +103,7 @@ class ErrorBoundary extends Component {
                 <div style={{ maxWidth: "1200px", margin: "auto" }}>
                   <Heading3 text="We've run into an error..." />
                   <Paragraph text={error && error.message} />
+                  <Paragraph text="Please report this error using the form here: https://forms.gle/GSYxwyub6BJrcFsr9 - this will mean we can fix it as soon as possible" />
                   <a className="link" href="/dashboard">Return to the dashboard</a>
                 </div>
               </WhiteOverlay>

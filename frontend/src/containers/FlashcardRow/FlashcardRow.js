@@ -14,8 +14,8 @@ function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setIni
 
     return (
         <div className='flashcard-row'>
-            <CardOverview text={front} />
-            <CardOverview text={back} />
+            <CardOverview text={front} turnOverCardOnSpaceKey={false} />
+            <CardOverview text={back} turnOverCardOnSpaceKey={false} />
             <FlashcardOperationsMenu
                 view={view}
                 showEditPopup={showEditPopup}
