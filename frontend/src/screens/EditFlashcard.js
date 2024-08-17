@@ -60,12 +60,8 @@ function Flashcards() {
   useEffect(() => {
     if (flashcardData === null) {
       setCardsLoaded(false);
-      console.log("Flashcard data is null");
-      console.log(flashcardData);
     } else {
       setCardsLoaded(true);
-      console.log("Flashcard data is not null");
-      console.log(flashcardData);
     }
   }, [flashcardData]);
 
