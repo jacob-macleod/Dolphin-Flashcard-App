@@ -30,6 +30,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Added new 404 error page
 - Added new ErrorBoundary component to show when there is a Frontend React error
 - Added checking to see if the user is signed in for all pages
+- Added ability to sign out
 
 ### Fixed
 
