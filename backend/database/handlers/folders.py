@@ -432,3 +432,40 @@ class Folders(DatabaseHandler):
             }
         )
         return folder_data
+
+    def delete_folder(self, user_id:str, folder_name:str):
+        """
+        Delete a folder from the folder structure
+
+        Args:
+            user_id (str): The user who owns the folder
+            folder_name (str): The name of the folder to delete
+        """
+        # Get the current folder data
+        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if folder_data is None:
+            return None
+        else:
+            folder_data = folder_data.get("data")
+
+        # Get the current folder location of the card
+        card_location = self.get_folder_location(user_id, folder_name, folder_data)
+
+        if card_location is None:
+            return None
+
+        # Remove the flashcard as a whole from the folder structure
+        current = folder_data
+        for key in card_location:
+            if key == card_location[-1]:
+                current.pop(key, None)
+            else:
+                current = current.get(key)
+
+        # Save the updated folder data
+        self._context.collection(self._db_name).document(user_id).set(
+            {
+                "data": folder_data
+            }
+        )
+        return folder_data
