@@ -29,6 +29,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - New backend methods and frontend components to allow folders to be renamed and deleted
 - Added new 404 error page
 - Added new ErrorBoundary component to show when there is a Frontend React error
+- Added checking to see if the user is signed in for all pages
 
 ### Fixed
 

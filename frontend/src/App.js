@@ -9,6 +9,22 @@ import PageNotFound from './screens/PageNotFound';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import { getCookie } from './api/Authentication';
 
+function PromptLoginIfNotLoggedIn({ child, userID, setUserID }) {
+  return (
+    <>
+      {userID ? child : <SignInPage setUserID={setUserID}/>}
+    </>
+  )
+}
+
+function ErrorChecking({ userID, setUserID, child }) {
+  /* Add the ErrorBoundary and PromptLoginIfNotLoggedIn components */
+  return (
+    <ErrorBoundary>
+      <PromptLoginIfNotLoggedIn child={child} userID={userID} setUserID={setUserID}/>
+    </ErrorBoundary>
+  )
+}
 
 function App() {
   const [userID, setUserID] = useState(getCookie("userID"));
@@ -16,12 +32,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ErrorBoundary><SignInPage active={false}/></ErrorBoundary>} />
-          <Route path="/dashboard" element={<ErrorBoundary><MainPage userID={userID} setUserID={setUserID}/></ErrorBoundary>} />
-          <Route path="/flashcards" element={<ErrorBoundary><Flashcards /></ErrorBoundary>} />
-          <Route path="/edit-flashcard-set" element={<ErrorBoundary><EditFlashcard /></ErrorBoundary>} />
-          <Route path="/view" element={<ErrorBoundary><ViewFlashcards /></ErrorBoundary>} />
-          <Route path="*" element={<ErrorBoundary><PageNotFound /></ErrorBoundary>} />
+          <Route path="/" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<SignInPage active={false}/>} />} />
+          <Route path="/dashboard" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<MainPage userID={userID} setUserID={setUserID}/>} />} />
+          <Route path="/flashcards" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<Flashcards />} />} />
+          <Route path="/edit-flashcard-set" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<EditFlashcard />} />} />
+          <Route path="/view" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<ViewFlashcards />} />} />
+          <Route path="*" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<PageNotFound />} />} />
         </Routes>
       </BrowserRouter>
     </>
