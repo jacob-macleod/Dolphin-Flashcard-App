@@ -24,7 +24,7 @@ function CardOperationsPopup({ visible, showEditPopup, setVisible, view, setInit
                     showEditPopup(true);
                 }}/>
                 <MenuItem text="Delete" src={window.location.href} imgUrl={deleteIcon} margin="0px" float={float} onClick={() => {
-                    alert ("Clicked");
+                    alert ("TODO: Implement!");
                 }}/>
             </div>
         </div>

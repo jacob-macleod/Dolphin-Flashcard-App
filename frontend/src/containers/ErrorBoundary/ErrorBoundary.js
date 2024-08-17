@@ -12,7 +12,7 @@ import '../../componments/Text/Link/Link.css';
 import '../../componments/Text/BoldParagraph/Bold.css';
 import Heading3 from '../../componments/Text/Heading3';
 import Paragraph from '../../componments/Text/Paragraph';
-import useWindowSize from '../../hooks/useWindowSize'; // Assuming you have a custom hook for this
+import Heading5 from "../../componments/Text/Heading5/Heading5";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -102,8 +102,11 @@ class ErrorBoundary extends Component {
               >
                 <div style={{ maxWidth: "1200px", margin: "auto" }}>
                   <Heading3 text="We've run into an error..." />
-                  <Paragraph text={error && error.message} />
-                  <Paragraph text="Please report this error using the form here: https://forms.gle/GSYxwyub6BJrcFsr9 - this will mean we can fix it as soon as possible" />
+                  <Paragraph text="The error message is below, which the developers can use to diagnose the issue"/>
+                  <Heading5 text={error && error.message} />
+                  <Paragraph text="Please report this error using the form here - this will mean we can fix it as soon as possible:" />
+                  <a className="link" href="https://forms.gle/GSYxwyub6BJrcFsr9">https://forms.gle/GSYxwyub6BJrcFsr9</a>
+                  <br></br>
                   <a className="link" href="/dashboard">Return to the dashboard</a>
                 </div>
               </WhiteOverlay>

@@ -1,5 +1,5 @@
 // Flashcards.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import '../App.css';
@@ -34,6 +34,7 @@ function Flashcards() {
   const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] = useState(false);
   const [initialTerm, setInitialTerm] = useState("");
   const [initialDefinition, setInitialDefinition] = useState("");
+  const [cardsLoaded, setCardsLoaded] = useState(false);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -55,6 +56,18 @@ function Flashcards() {
   } = useFlashcardData(newSet, folder, flashcardID, description, flashcardName);
 
   const handleOptionChange = (event) => setSortType(event.target.value);
+
+  useEffect(() => {
+    if (flashcardData === null) {
+      setCardsLoaded(false);
+      console.log("Flashcard data is null");
+      console.log(flashcardData);
+    } else {
+      setCardsLoaded(true);
+      console.log("Flashcard data is not null");
+      console.log(flashcardData);
+    }
+  }, [flashcardData]);
 
   return (
     <div style={{ top: "0px" }}>
@@ -119,11 +132,12 @@ function Flashcards() {
                 <BoldParagraph text="Definition:" />
               </div>
 
-              {flashcardData === null
+              {
+              flashcardData === null
                 ? <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={null} />
                 </div>
-                : flashcardsExist
+                : flashcardData.cards?.length !== 0
                   ? flashcardItems.map((item) => (
                     <FlashcardRow
                       key={item.id}
