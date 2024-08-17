@@ -22,6 +22,17 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 4.3.0 - 2024-07-17
+
+### Added
+
+- New backend methods and frontend components to allow folders to be renamed and deleted
+- Added new 404 error page
+
+### Fixed
+
+- Issue where the XP, streak and heatmap were not updated when a user revised cards
+
 ## 4.2.0 - 2024-08-16
 
 ### Added

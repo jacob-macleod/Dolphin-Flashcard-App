@@ -5,6 +5,7 @@ import MainPage from "./screens/MainPage";
 import Flashcards from './screens/Flashcards';
 import EditFlashcard from './screens/EditFlashcard';
 import ViewFlashcards from './screens/ViewFlashcards';
+import PageNotFound from './screens/PageNotFound';
 import { getCookie } from './api/Authentication';
 
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/edit-flashcard-set" element={<EditFlashcard />} />
           <Route path="/view" element={<ViewFlashcards />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </>
