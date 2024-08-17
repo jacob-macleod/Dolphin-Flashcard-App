@@ -2,7 +2,6 @@ import React from 'react';
 import FlashcardFolder from './FlashcardFolder/FlashcardFolder';
 import FlashcardItem from './FlashcardItem/FlashcardItem';
 import Heading5 from '../../componments/Text/Heading5/Heading5';
-
 function FlashcardOverview({
   flashcardData,
   setMoveFolderDialogueVisible,

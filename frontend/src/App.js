@@ -6,6 +6,7 @@ import Flashcards from './screens/Flashcards';
 import EditFlashcard from './screens/EditFlashcard';
 import ViewFlashcards from './screens/ViewFlashcards';
 import PageNotFound from './screens/PageNotFound';
+import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import { getCookie } from './api/Authentication';
 
 
@@ -15,12 +16,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignInPage active={false}/>} />
-          <Route path="/dashboard" element={<MainPage userID={userID} setUserID={setUserID}/>} />
-          <Route path="/flashcards" element={<Flashcards />} />
-          <Route path="/edit-flashcard-set" element={<EditFlashcard />} />
-          <Route path="/view" element={<ViewFlashcards />} />
-          <Route path="*" element={<PageNotFound />} />
+          <Route path="/" element={<ErrorBoundary><SignInPage active={false}/></ErrorBoundary>} />
+          <Route path="/dashboard" element={<ErrorBoundary><MainPage userID={userID} setUserID={setUserID}/></ErrorBoundary>} />
+          <Route path="/flashcards" element={<ErrorBoundary><Flashcards /></ErrorBoundary>} />
+          <Route path="/edit-flashcard-set" element={<ErrorBoundary><EditFlashcard /></ErrorBoundary>} />
+          <Route path="/view" element={<ErrorBoundary><ViewFlashcards /></ErrorBoundary>} />
+          <Route path="*" element={<ErrorBoundary><PageNotFound /></ErrorBoundary>} />
         </Routes>
       </BrowserRouter>
     </>

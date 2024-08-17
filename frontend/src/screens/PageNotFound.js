@@ -16,7 +16,7 @@ import Paragraph from '../componments/Text/Paragraph';
 
 function PageNotFound() {
   // Set general variables
-  const title = "Flashcards";
+  const title = "A page was not found";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
 
   // Set variables for the size
