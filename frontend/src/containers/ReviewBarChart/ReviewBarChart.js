@@ -8,17 +8,41 @@ function ReviewBarChart({ studying, recapping, notStarted, view }) {
     const recappingPercentage = (recapping / totalCards) * 100;
     const notStartedPercentage = (notStarted / totalCards) * 100;
 
+    const notStartedMinWidth = notStartedPercentage === 0 ? "0px" : "51px";
+    const studyingMinWidth = studyingPercentage === 0 ? "0px" : "50px";
+    const recappingMinWidth = recappingPercentage === 0 ? "0px" : "51px";
+
+    console.log(notStartedMinWidth, studyingMinWidth, recappingMinWidth);
+
     return (
         <div className={view == "mobile" ? 'bar-chart-wrapper-mobile' : 'bar-chart-wrapper'}>
-            <div className='not-started-bar' style={{width: notStartedPercentage + '%'}}>
+            <div
+                className='not-started-bar' 
+                style={{
+                    width: notStartedPercentage + '%',
+                    minWidth: notStartedMinWidth
+                }}
+            >
                 {notStarted != 0 ? <Heading5 text={notStarted + " cards"} style={{color: "#FFFFFF"}}/> : <></>}
             </div>
 
-            <div className='studying-bar' style={{width: studyingPercentage + '%'}}>
+            <div
+                className='studying-bar'
+                style={{
+                    width: studyingPercentage + '%',
+                    minWidth: studyingMinWidth
+                }}
+            >
                 {studying != 0 ? <Heading5 text={studying + " cards"} style={{color: "#FFFFFF"}}/> : <></>}
             </div>
 
-            <div className='recapping-bar' style={{width: recappingPercentage + '%'}}>
+            <div
+                className='recapping-bar'
+                style={{
+                    width: recappingPercentage + '%',
+                    minWidth: recappingMinWidth
+                }}
+            >
                 {recapping != 0 ? <Heading5 text={recapping + " cards"} style={{color: "#FFFFFF"}}/> : <></>}
             </div>
         </div>
