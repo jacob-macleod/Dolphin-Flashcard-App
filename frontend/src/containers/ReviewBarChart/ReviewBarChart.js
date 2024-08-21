@@ -8,11 +8,10 @@ function ReviewBarChart({ studying, recapping, notStarted, view }) {
     const recappingPercentage = (recapping / totalCards) * 100;
     const notStartedPercentage = (notStarted / totalCards) * 100;
 
-    const notStartedMinWidth = notStartedPercentage === 0 ? "0px" : "51px";
-    const studyingMinWidth = studyingPercentage === 0 ? "0px" : "50px";
-    const recappingMinWidth = recappingPercentage === 0 ? "0px" : "51px";
-
-    console.log(notStartedMinWidth, studyingMinWidth, recappingMinWidth);
+    console.log(studying);
+    const notStartedMinWidth = notStarted === 0 ? "0px" : "51px";
+    const studyingMinWidth = studying === 0 ? "0px" : "50px";
+    const recappingMinWidth = recapping === 0 ? "0px" : "51px";
 
     return (
         <div className={view == "mobile" ? 'bar-chart-wrapper-mobile' : 'bar-chart-wrapper'}>
