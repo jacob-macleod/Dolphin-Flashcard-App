@@ -169,14 +169,14 @@ function Flashcards() {
                     text="+ New Folder"
                     style={{display: "inline-block", marginRight: "16px"}}
                     onClick={() => {
-                      setCreateFolderDialogueVisible(true);
+                      setCreateFolderDialogueVisible(todayCards);
                     }}
                   />
                   <Button
                     text="+ New Set"
                     style={{display: "inline-block"}}
                     onClick={() => {
-                      setCreateCardDialogueVisible(true);
+                      setCreateCardDialogueVisible(todayCards);
                     }}
                   />
                 </div>
