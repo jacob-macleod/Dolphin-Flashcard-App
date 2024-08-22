@@ -232,9 +232,10 @@ class ApiManager {
         });
     }
 
-    getFlashcard(flashcardID, setFlashcardData) {
+    getFlashcard(userID, flashcardID, setFlashcardData) {
         const url = 'get-flashcard';
         const data = {
+            "userID": userID,
             "flashcardID": flashcardID,
         }
 
@@ -250,7 +251,7 @@ class ApiManager {
         }
 
         this.fetchData(data, url, flashcardItem => {
-            setFlashcardItem(flashcardItem[0]);
+            setFlashcardItem({...flashcardItem[0], cardID: cardID});
         });
     }
 
@@ -318,6 +319,19 @@ class ApiManager {
             setPopupVisible(false);
             setReload(true);
         });
+    }
+
+    deleteCard(userID, cardID, setLoadingIconVisible, setReload) {
+        const url = 'delete-card';
+        const data = {
+            "userID": userID,
+            "cardID": cardID
+        }
+
+        this.fetchData(data, url, status => {
+            setLoadingIconVisible(null);
+            setReload(true);
+        }, "DELETE");
     }
 }
 

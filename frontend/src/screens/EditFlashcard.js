@@ -35,6 +35,7 @@ function Flashcards() {
   const [initialTerm, setInitialTerm] = useState("");
   const [initialDefinition, setInitialDefinition] = useState("");
   const [cardsLoaded, setCardsLoaded] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -48,6 +49,14 @@ function Flashcards() {
 
   const flashcardBoxHorizontalPadding = view === "mobile" ? "8px" : "16px";
 
+  useEffect(() => {
+    if (reload === true) {
+      setReload(false);
+      // Reload the page
+      window.location.reload();
+    }
+  }, [reload]);
+
   const {
     flashcardData,
     flashcardsExist,
@@ -58,12 +67,14 @@ function Flashcards() {
   const handleOptionChange = (event) => setSortType(event.target.value);
 
   useEffect(() => {
+    console.log(flashcardData);
     if (flashcardData === null) {
       setCardsLoaded(false);
     } else {
       setCardsLoaded(true);
     }
   }, [flashcardData]);
+
 
   return (
     <div style={{ top: "0px" }}>
@@ -137,12 +148,14 @@ function Flashcards() {
                   ? flashcardItems.map((item) => (
                     <FlashcardRow
                       key={item.id}
+                      cardID={item.cardID}
                       front={item.front}
                       back={item.back}
                       view={view}
                       showEditPopup={setEditFlashcardPopupVisible}
                       setInitialTerm={setInitialTerm}
                       setInitialDefinition={setInitialDefinition}
+                      setReload={setReload}
                     />
                   ))
                   : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />

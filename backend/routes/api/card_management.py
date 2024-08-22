@@ -36,6 +36,7 @@ CREATE_FOLDER_FORMAT = {
 }
 
 GET_FLASHCARD_FORMAT = {
+    "userID": "",
     "flashcardID": ""
 }
 
@@ -80,6 +81,11 @@ RENAME_FOLDER_FORMAT = {
 DELETE_FOLDER_FORMAT = {
     "userID": "",
     "folder": ""
+}
+
+DELETE_CARD_FORMAT = {
+    "userID": "",
+    "cardID": ""
 }
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
@@ -184,12 +190,14 @@ def get_flashcard():
     """ Get a flashcard set based on the name and user ID
         Add json to request as in:
         {
+            "userID": "my-id",
             "flashcardID": "my-flashcard-id"
         }
     """
     try:
         flashcard_id = request.json.get("flashcardID")
-        flashcard_data = db.flashcard_set.get_flashcard_set(flashcard_id)
+        user_id = request.json.get("userID")
+        flashcard_data = db.folders.get_flashcard(user_id, flashcard_id)
 
         return jsonify(
             flashcard_data, 200
@@ -430,5 +438,29 @@ def delete_folder():
             return jsonify({"success": f"Folder {folder_name} deleted"}), 200
         else:
             return jsonify({"error": f"Folder {folder_name} does not exist"}), 404
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/delete-card", methods=["DELETE"])
+@validate_json(DELETE_CARD_FORMAT)
+def delete_card():
+    """
+    Delete a card
+    Example request:
+    {
+        "userID": "my-id",
+        "cardID": "my-card-id"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        card_id = request.json.get("cardID")
+
+        result = db.folders.delete_individual_card(user_id, card_id)
+
+        if result is not None:
+            return jsonify({"success": f"Card {card_id} deleted"}), 200
+        else:
+            return jsonify({"error": f"Card {card_id} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500

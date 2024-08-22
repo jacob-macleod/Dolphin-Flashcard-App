@@ -17,15 +17,17 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
       setFlashcardsExist(false);
       } else {
       apiManager.getFlashcard(
-          flashcardID,
-          setFlashcardData
+        getCookie("userID"),
+        flashcardID,
+        setFlashcardData
       );
       }
   }, [newSet, folder, flashcardName, description]);
 
   useEffect(() => {
+    if (flashcardData != null  && flashcardData.cards) {
       const fetchCardData = async () => {
-      const cardPromises = flashcardData.cards.map((cardID) => {
+      const cardPromises = Object.keys(flashcardData.cards).map((cardID) => {
           return new Promise((resolve) => {
               apiManager.getFlashcardItem(cardID, (item) => {
                   resolve(item);
@@ -38,11 +40,12 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
       setFlashcardsExist(true);
       };
 
-      if (flashcardData && flashcardData.cards.length) {
+      if (flashcardData && Object.keys(flashcardData.cards).length) {
           fetchCardData();
       } else if (flashcardData && flashcardData.cards.length === 0) {
           setFlashcardsExist(false);
       }
+    }
   }, [flashcardData]);
 
   return { flashcardData, flashcardsExist, flashcardItems, setFlashcardItems };

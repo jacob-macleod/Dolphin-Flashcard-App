@@ -22,7 +22,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 4.3.0 - 2024-07-17
+## 5.0.0 - 2024-07-17
 
 ### Added
 
@@ -31,6 +31,8 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Added new ErrorBoundary component to show when there is a Frontend React error
 - Added checking to see if the user is signed in for all pages
 - Added ability to sign out
+- Added ability to delete flashcards
+- BREAKING: Changed get-flashcards so it reads flashcard data from your own flashcard data list. It now needs the user ID in the API request
 
 ### Fixed
 

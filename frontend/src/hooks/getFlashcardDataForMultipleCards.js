@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiManager from '../api/Api';
+import { getCookie } from '../api/Authentication';
 
 const getFlashcardDataForMultipleCards = (folders, flashcardIDs, flashcardNames) => {
   const [flashcardData, setFlashcardData] = useState([]);
@@ -17,7 +18,7 @@ const getFlashcardDataForMultipleCards = (folders, flashcardIDs, flashcardNames)
         const flashcardName = flashcardNames[i];
 
         const temporaryFlashcardData = await new Promise((resolve) => {
-          apiManager.getFlashcard(flashcardID, resolve);
+          apiManager.getFlashcard(getCookie("userID"), flashcardID, resolve);
         });
 
         flashcardDataArray.push({ ...temporaryFlashcardData, folder, flashcardName });
@@ -26,10 +27,10 @@ const getFlashcardDataForMultipleCards = (folders, flashcardIDs, flashcardNames)
       setFlashcardData(flashcardDataArray);
 
       const allCardData = [];
-
       for (let data of flashcardDataArray) {
-        if (data.cards && data.cards.length > 0) {
-          const cardPromises = data.cards.map((cardID) => {
+        if (data.cards && Object.keys(data.cards).length > 0) {
+          const cardPromises = Object.keys(data.cards).map((cardID) => {
+            console.log(cardID);
             return new Promise((resolve) => {
               apiManager.getFlashcardItem(cardID, (item) => {
                 resolve(item);
