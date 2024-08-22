@@ -160,28 +160,28 @@ function Flashcards() {
                 childValue={todayCards}
               />
               <div style={{
-                display: "flex", 
+                display: view !== "desktop" ? "block": "flex", 
                 justifyContent: "space-between",
                 paddingTop: "16px"
               }}>
-                <div style={{float: "left"}}>
+                <div style={{float: view !== "mobile" ? "left" : "", display: view !== "desktop" ? "flex": "", }}>
                   <GhostButton
                     text="+ New Folder"
-                    style={{display: "inline-block", marginRight: "16px"}}
+                    style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
                     onClick={() => {
                       setCreateFolderDialogueVisible(todayCards);
                     }}
                   />
                   <Button
                     text="+ New Set"
-                    style={{display: "inline-block"}}
+                    style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
                     onClick={() => {
                       setCreateCardDialogueVisible(todayCards);
                     }}
                   />
                 </div>
               
-              <div style={{float: "right"}}>
+              <div style={{float: view !== "desktop" ? "": "right"}}>
                 <Button
                   text="Study Multiple"
                   disabled={selected.length <= 1}
@@ -189,7 +189,8 @@ function Flashcards() {
                     paddingTop: "11px",
                     paddingBottom: "11px",
                     paddingLeft: "15px",
-                    paddingRight: "15px"
+                    paddingRight: "15px",
+                    marginLeft: view === "mobile" ? "0px" : ""
                   }}
                   onClick={studyMultipleCards}
                 />

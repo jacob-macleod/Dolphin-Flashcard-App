@@ -100,9 +100,9 @@ function NewFlashcardPopup({
     return (
         <Modal visible={visible} view={view} style={{height: "fit-content", width: "100%", maxWidth: "1000px"}}>
             <Heading3 text={editExistingFlashcard ? "Edit flashcard:" : "Create a new flashcard:"} />
-            <div className="text-box-container">
-                <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm}/>
-                <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition}/>
+            <div className={view !== "desktop" ? "text-box-container-mobile" : "text-box-container"}>
+                <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm} view={view}/>
+                <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition} view={view}/>
             </div>
 
             <div style={{display: "flex", justifyContent: "flex-end"}}>

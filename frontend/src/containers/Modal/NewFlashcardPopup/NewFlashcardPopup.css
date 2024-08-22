@@ -2,3 +2,9 @@
     display: grid;
     grid-template-columns: auto auto;
 }
+
+.text-box-container-mobile{
+    display: grid;
+    grid-template-columns: auto;
+    width: 90%;
+}
