@@ -274,23 +274,31 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=9)
     def test_get_flashcard_set(self):
         """Get the flashcard set that has been created"""
-        flashcard_set_data = {"flashcardID": "96cfaa8d-0ca1-5230-86fe-1e28ee9d2741"}
+        flashcard_set_data = {
+            "userID": "1",
+            "flashcardID": "96cfaa8d-0ca1-5230-86fe-1e28ee9d2741"
+        }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response[0]
+        print (response_json)
         assert response_json == {
-            "cards": [
-                "b8ff5c10-0c28-53ea-b5c8-301364c8910d",
-                "e88e17da-94b2-556f-8836-dfdd1ec9098f",
-            ],
-            "description": "This is\nmy description",
-            "name": "My new set",
+            'cards': {
+                'b8ff5c10-0c28-53ea-b5c8-301364c8910d': {
+                    'last_review': '22/08/2024', 'review_status': '0.0'
+                },
+                'e88e17da-94b2-556f-8836-dfdd1ec9098f': {
+                    'last_review': '22/08/2024', 'review_status': '0.0'
+                }
+            },
+            'flashcard_id': '96cfaa8d-0ca1-5230-86fe-1e28ee9d2741'
         }
+
 
     @pytest.mark.run(order=10)
     def test_get_invalid_flashcard_set(self):
         """Get a flashcard set that does not exist"""
-        flashcard_set_data = {"flashcardID": "invalid id"}
+        flashcard_set_data = {"userID": "2", "flashcardID": "invalid id"}
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response[0]
