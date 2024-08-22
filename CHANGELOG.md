@@ -33,6 +33,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Added ability to sign out
 - Added ability to delete flashcards
 - BREAKING: Changed get-flashcards so it reads flashcard data from your own flashcard data list. It now needs the user ID in the API request
+- Made disabled buttons unclickable
 
 ### Fixed
 
