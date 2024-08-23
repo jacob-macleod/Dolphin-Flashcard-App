@@ -9,10 +9,13 @@ export function signInWithGoogle(setUserID) {
   
     // Sign in
     firebase.auth().signInWithPopup(provider)
-        .then((result) => {
+        .then(async (result) => {
             // Successful sign-in, you can access user information here
             const user = result.user;
-            createAccount(user.uid, user.displayName);
+            const idToken = await user.getIdToken();
+            const isNewUser = result.additionalUserInfo.isNewUser;
+
+            createAccount(user.uid, user.displayName, idToken);
             setUserID(user.uid);
             createCookie('userName', user.displayName)
             createCookie('userID', user.uid);
@@ -25,11 +28,12 @@ export function signInWithGoogle(setUserID) {
   };
   
 
-export function createAccount(userID, displayName) {
+export function createAccount(userID, displayName, idToken) {
     const endpoint = serverURL + 'create-account';
     const data = {
         userID: userID,
-        displayName: displayName
+        displayName: displayName,
+        idToken: idToken
     }; // JSON payload
 
     fetch(endpoint, {
