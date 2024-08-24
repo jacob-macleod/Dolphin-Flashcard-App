@@ -91,6 +91,8 @@ function Flashcards() {
         flashcardItems={flashcardItems}
         setFlashcardItems={setFlashcardItems}
         folder={folder}
+        flashcardName={flashcardName}
+        flashcardDescription={description}
       />
       <NewFlashcardPopup
         visible={editFlashcardPopupVisible}
@@ -103,6 +105,8 @@ function Flashcards() {
         editExistingFlashcard={true}
         initialTerm={initialTerm}
         initialDefinition={initialDefinition}
+        flashcardName={flashcardName}
+        flashcardDescription={description}
       />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">

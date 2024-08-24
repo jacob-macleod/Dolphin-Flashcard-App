@@ -11,12 +11,12 @@ from routes.api.validation_wrapper import validate_json
 statistics_routes = Blueprint('statistics_routes', __name__)
 
 UPDATE_HEATMAP_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
 }
 
 GET_HEATMAP_FORMAT = UPDATE_HEATMAP_FORMAT
 CALCULATE_STREAK_FORMAT = {
-    "userID": ""
+    "jwtToken": ""
 }
 
 def increase_xp(user_id, increment_amount) :

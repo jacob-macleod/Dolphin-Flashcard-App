@@ -4,7 +4,7 @@ import serverURL from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-export function signInWithGoogle(setUserID) {
+export function signInWithGoogle(setJwtToken) {
     const provider = new firebase.auth.GoogleAuthProvider();
   
     // Sign in
@@ -15,10 +15,9 @@ export function signInWithGoogle(setUserID) {
             const idToken = await user.getIdToken();
             const isNewUser = result.additionalUserInfo.isNewUser;
 
-            createAccount(user.uid, user.displayName, idToken);
-            setUserID(user.uid);
+            createAccount(user.uid, user.displayName, idToken, setJwtToken);
+            //createCookie('userID', user.uid);
             createCookie('userName', user.displayName)
-            createCookie('userID', user.uid);
             createCookie("profileImage", user.photoURL);
             })
             .catch((error) => {
@@ -28,7 +27,7 @@ export function signInWithGoogle(setUserID) {
   };
   
 
-export function createAccount(userID, displayName, idToken) {
+export function createAccount(userID, displayName, idToken, setJwtToken) {
     const endpoint = serverURL + 'create-account';
     const data = {
         userID: userID,
@@ -46,13 +45,14 @@ export function createAccount(userID, displayName, idToken) {
     })
     .then(response => {
         if (response.ok) {
-        return response.json(); // Parse response JSON if successful
+            return response.json(); // Parse response JSON if successful
         }
         throw new Error('Network response was not ok.');
     })
     .then(data => {
         console.log('Account creation successful:', data);
-        // Handle success response here
+        createCookie("jwtToken", data[0]["token"]);
+        setJwtToken(data[0]["token"])
     })
     .catch(error => {
         console.error('There was an error creating the account:', error);

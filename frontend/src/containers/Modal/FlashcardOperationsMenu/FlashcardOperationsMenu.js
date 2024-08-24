@@ -19,7 +19,7 @@ function CardOperationsPopup({ visible, showEditPopup, setVisible, view, setInit
     function deleteCard() {
         console.log(cardID);
         apiManager.deleteCard(
-            getCookie("userID"),
+            getCookie("jwtToken"),
             cardID,
             setLoadingIconVisible,
             setReload

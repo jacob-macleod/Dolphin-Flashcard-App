@@ -26,8 +26,8 @@ function StreakWidget () {
       }
 
       useEffect(() => {
-        apiManager.calculateStreak(getCookie("userID"), setStreak);
-        apiManager.getXP(getCookie("userID"), setWeeklyXP, setTotalXP);
+        apiManager.calculateStreak(getCookie("jwtToken"), setStreak);
+        apiManager.getXP(getCookie("jwtToken"), setWeeklyXP, setTotalXP);
       }, []);
 
     return <>

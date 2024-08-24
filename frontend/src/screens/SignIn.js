@@ -22,7 +22,7 @@ import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 
-function SignInPage({ userID, setUserID, active=true }) {
+function SignInPage({ jwtToken, setJwtToken, active=true }) {
   const title = "Login";
   const [width, setWidth] = useState(window.innerWidth);
   const mobileBreakpoint = 878;
@@ -78,7 +78,7 @@ function SignInPage({ userID, setUserID, active=true }) {
         "appId": "1:481940183221:web:67bdc346eef4a5306286fc",
         "measurementId": "G-76Y8VTC390"
     });
-      signInWithGoogle(setUserID);
+      signInWithGoogle(setJwtToken);
     }}/> : <Button text="Coming soon..." disabled={true} />
 
   return (

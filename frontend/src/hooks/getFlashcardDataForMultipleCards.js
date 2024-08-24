@@ -18,7 +18,7 @@ const getFlashcardDataForMultipleCards = (folders, flashcardIDs, flashcardNames)
         const flashcardName = flashcardNames[i];
 
         const temporaryFlashcardData = await new Promise((resolve) => {
-          apiManager.getFlashcard(getCookie("userID"), flashcardID, resolve);
+          apiManager.getFlashcard(getCookie("jwtToken"), flashcardID, resolve);
         });
 
         flashcardDataArray.push({ ...temporaryFlashcardData, folder, flashcardName });

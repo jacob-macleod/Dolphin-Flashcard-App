@@ -9,23 +9,23 @@ from routes.api.validation_wrapper import validate_json
 goal_routes = Blueprint('goal_routes', __name__)
 
 CREATE_XP_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalXP": NUMBER,
     "endDate": DATE_REGEX
 }
 
 CREATE_CARD_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "cardsToRevise": NUMBER,
     "endDate": DATE_REGEX
 }
 
 UPDATE_GOAL_STATUS_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
 }
 
 EDIT_CARD_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalID": "",
     "newEndDate": DATE_REGEX,
     "newTitle": "",
@@ -33,7 +33,7 @@ EDIT_CARD_GOAL_FORMAT = {
 }
 
 EDIT_XP_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalID": "",
     "newEndDate": DATE_REGEX,
     "newTitle": "",
@@ -41,7 +41,7 @@ EDIT_XP_GOAL_FORMAT = {
 }
 
 DELETE_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalID": ""
 }
 

@@ -16,7 +16,7 @@ def hash_to_numeric(input_string):
     return str(uuid.uuid5(uuid.NAMESPACE_DNS, input_string))
 
 CREATE_FLASHCARD_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "flashcardName": "",
     "flashcardDescription": "",
     "folder": "",
@@ -31,12 +31,12 @@ CREATE_FLASHCARD_FORMAT = {
 }
 
 CREATE_FOLDER_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "folder": ""
 }
 
 GET_FLASHCARD_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "flashcardID": ""
 }
 
@@ -45,46 +45,46 @@ GET_FLASHCARD_ITEM = {
 }
 
 GET_TODAY_CARDS = {
-    "userID": ""
+    "jwtToken": ""
 }
 GET_ALL_CARDS = GET_TODAY_CARDS
 
 MOVE_FLASHCARD_SET = {
-    "userID": "",
+    "jwtToken": "",
     "currentLocation": "",
     "flashcardName": "",
     "moveLocation": ""
 }
 
 UPDATE_CARD_PROGRESS = {
-    "userID": "",
+    "jwtToken": "",
     "cardData": []
 }
 
 DELETE_FLASHCARD_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "flashcardID": ""
 }
 
 RENAME_FLASHCARD_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "flashcardID": "",
     "newName": ""
 }
 
 RENAME_FOLDER_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "currentName": "",
     "newName": ""
 }
 
 DELETE_FOLDER_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "folder": ""
 }
 
 DELETE_CARD_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "cardID": ""
 }
 

@@ -4,7 +4,7 @@ Handle the JWT token
 
 import time
 from authlib.jose import jwt
-from authlib.jose.errors import InvalidClaimError
+from authlib.jose.errors import InvalidClaimError, DecodeError
 
 class JwtHandler:
     """
@@ -60,24 +60,24 @@ class JwtHandler:
         }
         return str(jwt.encode(self._header, payload, self._private_key), encoding="utf-8")
 
-    def decode(self, token:bytes):
+    def decode(self, token:str):
         """
         Decode a JWT token
 
         Args:
-            token (bytes): The jwt token
+            token (str): The jwt token
         """
         token = bytes(token, "utf-8")
         claims_options = {
             "iss": { "essential": True, "value": self._iss },
             "aud": { "essential": True, "value": self._aud }
         }
-        claims = jwt.decode(token, self._public_key, claims_options=claims_options)
         try:
+            claims = jwt.decode(token, self._public_key, claims_options=claims_options)
             claims.validate()
             return {
                 "userID": claims["sub"],
                 "accessToken": claims["access_token"]
             }
-        except InvalidClaimError:
+        except (InvalidClaimError, DecodeError):
             return None

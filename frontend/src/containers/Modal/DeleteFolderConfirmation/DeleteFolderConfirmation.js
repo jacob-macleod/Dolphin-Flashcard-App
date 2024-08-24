@@ -28,7 +28,7 @@ function DeleteFolderConfirmation({ visible, setVisible, view, setReload }) {
       // store the data for one flashcard. Below gets the flashcard ID
       setLoadingIconVisible(null);
       // Delete the flashcard
-      apiManager.deleteFolder(getCookie('userID'), folderName, setVisible, setReload);
+      apiManager.deleteFolder(getCookie('jwtToken'), folderName, setVisible, setReload);
     }
 
     useEffect(() => {

@@ -20,7 +20,9 @@ function NewFlashcardPopup({
     folder,
     editExistingFlashcard=false,
     initialTerm="",
-    initialDefinition=""
+    initialDefinition="",
+    flashcardName,
+    flashcardDescription
     }) {
     const [term, setTerm] = useState(initialTerm);
     const [definition, setDefinition] = useState(initialDefinition);
@@ -55,16 +57,16 @@ function NewFlashcardPopup({
             }
         }
 
-        var flashcardDataRequest = {}
-        flashcardDataRequest.cards = newFlashcardItems;
-        flashcardDataRequest.userID = getCookie("userID");
-        flashcardDataRequest.flashcardName = flashcardData.name;
-        flashcardDataRequest.flashcardDescription = flashcardData.description;
-        flashcardDataRequest.folder = folder;
+        // var flashcardDataRequest = {}
+        // flashcardDataRequest.cards = newFlashcardItems;
+        // flashcardDataRequest.userID = getCookie("jwtToken");
+        // flashcardDataRequest.flashcardName = flashcardData.name;
+        // flashcardDataRequest.flashcardDescription = flashcardData.description;
+        //flashcardDataRequest.folder = folder;
         apiManager.createFlashcard(
-            getCookie("userID"),
-            flashcardData.name,
-            flashcardData.description,
+            getCookie("jwtToken"),
+            flashcardName,
+            flashcardDescription,
             folder,
             newFlashcardItems,
             setRequestResponse

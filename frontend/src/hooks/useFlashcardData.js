@@ -17,7 +17,7 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
       setFlashcardsExist(false);
       } else {
       apiManager.getFlashcard(
-        getCookie("userID"),
+        getCookie("jwtToken"),
         flashcardID,
         setFlashcardData
       );
@@ -45,8 +45,11 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
       } else if (flashcardData && flashcardData.cards.length === 0) {
           setFlashcardsExist(false);
       }
+
     }
+
   }, [flashcardData]);
+
 
   return { flashcardData, flashcardsExist, flashcardItems, setFlashcardItems };
 };

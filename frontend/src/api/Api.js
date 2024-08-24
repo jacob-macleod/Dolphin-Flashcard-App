@@ -33,9 +33,9 @@ class ApiManager {
         });
     }
 
-    calculateStreak(userID, setStreak) {
+    calculateStreak(jwtToken, setStreak) {
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         };
         const url = 'calculate-streak';
 
@@ -47,9 +47,9 @@ class ApiManager {
         });
     }
 
-    updateGoals(userID, setGoals) {
+    updateGoals(jwtToken, setGoals) {
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         };
         const url = 'update-goal-status';
 
@@ -58,10 +58,10 @@ class ApiManager {
         });
     }
 
-    createXpGoal(userID, goalXp, endDate, setStatus) {
+    createXpGoal(jwtToken, goalXp, endDate, setStatus) {
         const url = 'create-xp-goal';
         const data = {
-            userID: userID,
+            jwtToken: jwtToken,
             goalXP: goalXp,
             endDate: endDate
         };
@@ -71,10 +71,10 @@ class ApiManager {
         });
     }
 
-    createCardGoal(userID, numOfCards, endDate, setStatus) {
+    createCardGoal(jwtToken, numOfCards, endDate, setStatus) {
         const url = 'create-card-goal';
         const data = {
-            userID: userID,
+            jwtToken: jwtToken,
             cardsToRevise: numOfCards,
             endDate: endDate
         };
@@ -84,10 +84,10 @@ class ApiManager {
         });
     }
 
-    editCardGoal(userID, goalID, newEndDate, newTitle, newCardsToRevise, setPopupVisible) {
+    editCardGoal(jwtToken, goalID, newEndDate, newTitle, newCardsToRevise, setPopupVisible) {
         const url = 'edit-card-goal';
         const data = {
-            userID: userID,
+            jwtToken: jwtToken,
             goalID: goalID,
             newEndDate: newEndDate,
             newTitle: newTitle,
@@ -97,10 +97,10 @@ class ApiManager {
         this.fetchData(data, url, setPopupVisible.bind(null, false));
     }
 
-    editXpGoal(userID, goalID, newEndDate, newTitle, newGoalXP, setPopupVisible) {
+    editXpGoal(jwtToken, goalID, newEndDate, newTitle, newGoalXP, setPopupVisible) {
         const url = 'edit-xp-goal';
         const data = {
-            userID: userID,
+            jwtToken: jwtToken,
             goalID: goalID,
             newEndDate: newEndDate,
             newTitle: newTitle,
@@ -110,10 +110,10 @@ class ApiManager {
         this.fetchData(data, url, setPopupVisible.bind(null, false));
     }
 
-    deleteGoal(userID, goalID, reloadPage) {
+    deleteGoal(jwtToken, goalID, reloadPage) {
         const url = 'delete-goal';
         const data = {
-            userID: userID,
+            jwtToken: jwtToken,
             goalID: goalID
         }
         this.fetchData(data, url, status => {
@@ -122,10 +122,10 @@ class ApiManager {
     
     }
 
-    getHeatmap(userID, setHeatmap) {
+    getHeatmap(jwtToken, setHeatmap) {
         const url = 'get-heatmap';
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         };
         this.fetchData(data, url, heatmapData => {
             setHeatmap(heatmapData);
@@ -133,40 +133,40 @@ class ApiManager {
     }
 
 
-    getXP(userID, setWeeklyXP, setTotalXP) {
+    getXP(jwtToken, setWeeklyXP, setTotalXP) {
         const url = 'get-user-stats';
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         };
         this.fetchData(data, url, xpData => {
             setWeeklyXP(xpData[0].weeklyXP);
             setTotalXP(xpData[0].totalXP);
         }, "POST");
     }
-    getWeeklyXp(userID, setWeeklyXp) {
+    getWeeklyXp(jwtToken, setWeeklyXp) {
         const url = 'get-weekly-xp';
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         };
         this.fetchData(data, url, weeklyXp => {
             setWeeklyXp(weeklyXp);
         });
     }
 
-    getTotalXp(userID, setTotalXP) {
+    getTotalXp(jwtToken, setTotalXP) {
         const url = 'get-total-xp';
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         };
         this.fetchData(data, url, totalXp => {
             setTotalXP(totalXp);
         });
     }
 
-    getTodayCards(userID, setTodayCards) {
+    getTodayCards(jwtToken, setTodayCards) {
         const url = 'get-today-cards';
         const data = {
-            userID: userID
+            jwtToken: jwtToken
         }
 
         this.fetchData(data, url, todayCards => {
@@ -174,10 +174,10 @@ class ApiManager {
         });
     }
 
-    moveFlashcard(userID, currentLocation, flashcardName, moveLocation, setPopupVisible, setReload) {
+    moveFlashcard(jwtToken, currentLocation, flashcardName, moveLocation, setPopupVisible, setReload) {
         const url = 'move-flashcard-set';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "currentLocation": currentLocation,
             "flashcardName": flashcardName,
             "moveLocation": moveLocation
@@ -190,7 +190,7 @@ class ApiManager {
     }
 
     createFlashcard(
-        userID,
+        jwtToken,
         flashcardName,
         flashcardDescription,
         folder,
@@ -204,13 +204,14 @@ class ApiManager {
         const url = 'create-flashcard';
         if (data === null) {
             data = {
-                "userID": userID,
+                "jwtToken": jwtToken,
                 "flashcardName": flashcardName,
                 "flashcardDescription": flashcardDescription,
                 "folder": folder,
                 "cards": cards
             }
         }
+        console.log(data);
 
         this.fetchData(data, url, status => {
             data.flashcardID = status[0].flashcardID;
@@ -219,10 +220,10 @@ class ApiManager {
     
     }
 
-    createFolder(userID, folderPath, setPopupVisible, setReload) {
+    createFolder(jwtToken, folderPath, setPopupVisible, setReload) {
         const url = 'create-folder';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "folder": folderPath
         }
 
@@ -232,10 +233,10 @@ class ApiManager {
         });
     }
 
-    getFlashcard(userID, flashcardID, setFlashcardData) {
+    getFlashcard(jwtToken, flashcardID, setFlashcardData) {
         const url = 'get-flashcard';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "flashcardID": flashcardID,
         }
 
@@ -255,10 +256,10 @@ class ApiManager {
         });
     }
 
-    updateCardProgress(userID, cardData, setCardsRevised) {
+    updateCardProgress(jwtToken, cardData, setCardsRevised) {
         const url = 'update-card-progress';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "cardData": cardData
         }
 
@@ -267,10 +268,10 @@ class ApiManager {
         });
     }
 
-    deleteFlashcard(userID, flashcardID, setPopupVisible, setReload) {
+    deleteFlashcard(jwtToken, flashcardID, setPopupVisible, setReload) {
         const url = 'delete-flashcard';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "flashcardID": flashcardID
         }
 
@@ -280,10 +281,10 @@ class ApiManager {
         }, "DELETE");
     }
 
-    renameFlashcard(userID, flashcardID, newName, setPopupVisible, setReload) {
+    renameFlashcard(jwtToken, flashcardID, newName, setPopupVisible, setReload) {
         const url = 'rename-flashcard';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "flashcardID": flashcardID,
             "newName": newName
         }
@@ -294,10 +295,10 @@ class ApiManager {
         });
     }
 
-    deleteFolder(userID, folderPath, setPopupVisible, setReload) {
+    deleteFolder(jwtToken, folderPath, setPopupVisible, setReload) {
         const url = 'delete-folder';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "folder": folderPath
         }
 
@@ -307,10 +308,10 @@ class ApiManager {
         }, "DELETE");
     }
 
-    renameFolder(userID, folderPath, newName, setPopupVisible, setReload) {
+    renameFolder(jwtToken, folderPath, newName, setPopupVisible, setReload) {
         const url = 'rename-folder';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "currentName": folderPath,
             "newName": newName
         }
@@ -321,10 +322,10 @@ class ApiManager {
         });
     }
 
-    deleteCard(userID, cardID, setLoadingIconVisible, setReload) {
+    deleteCard(jwtToken, cardID, setLoadingIconVisible, setReload) {
         const url = 'delete-card';
         const data = {
-            "userID": userID,
+            "jwtToken": jwtToken,
             "cardID": cardID
         }
 

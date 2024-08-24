@@ -60,7 +60,7 @@ function DailyFlashcardBrowser({ view }) {
     Save the flashcard data
     */
    apiManager.updateCardProgress(
-    getCookie("userID"),
+    getCookie("jwtToken"),
     updatedCardData,
     setCardsSaved
    )
