@@ -9,7 +9,7 @@ authentication_routes = Blueprint('api_routes', __name__)
 CORS(authentication_routes)
 
 CREATE_ACCOUNT_FORMAT = {
-    "jwtToken": "",
+    "userID": "",
     "displayName": "",
     "idToken": ""
 }
