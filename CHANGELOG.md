@@ -39,6 +39,10 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Issue where the XP, streak and heatmap were not updated when a user revised cards
 
+### Changed
+
+- BREAKING: jwtToken (the json web token provided by create-account) is now passed instead of userID to all functions, allowing for greater security
+
 ## 4.2.0 - 2024-08-16
 
 ### Added

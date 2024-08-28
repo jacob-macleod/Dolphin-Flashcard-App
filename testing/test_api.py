@@ -15,12 +15,16 @@ from classes.date import Date
 from json import loads, dumps
 from requests import get, post, delete
 from main import server_addr
-from database.database_config import type
+from database.database_config import type, jwt_key_type
 
 # Check the database is set to local
 if type != "local":
     raise ValueError(
         f"The database type in src/database/database_config.py is set to '{type}', not 'local'!"
+    )
+if jwt_key_type != "testing":
+    raise ValueError(
+        f"The jwt_key_type in src/database/database_config.py is set to '{jwt_key_type}', not 'testing'!"
     )
 
 headers = {"Content-Type": "application/json"}
@@ -30,6 +34,8 @@ date = Date()
 
 class TestApi(unittest.TestCase):
     """Test the API"""
+    def __init__(self, *args, **kwargs):
+        super(TestApi, self).__init__(*args, **kwargs)
 
     def get_api(self, route: str, data: dict = None) -> dict:
         """
@@ -94,6 +100,19 @@ class TestApi(unittest.TestCase):
         )
 
         return loads(response.text)
+
+    def create_user(self, user_id:str):
+        """
+        Create a user
+
+        Args:
+            user_id (str): The user ID to create
+        """
+        valid_dummy = {"userID": user_id, "displayName": "Dummy", "idToken": "test"}
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+        response_json = response[0]
+        return response_json["token"]
 
     @pytest.mark.run(order=1)
     def test_example(self) -> None:
@@ -189,7 +208,7 @@ class TestApi(unittest.TestCase):
         """
         Valid account
         """
-        valid_dummy = {"userID": "1", "displayName": "Dummy"}
+        valid_dummy = {"userID": "1", "displayName": "Dummy", "idToken": "test"}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -201,7 +220,9 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=4)
     def test_get_user(self) -> None:
         """Get the newly created user"""
-        valid_dummy = {"userID": "1"}
+        user_1_jwt_token = self.create_user("1")
+
+        valid_dummy = {"jwtToken": user_1_jwt_token}
 
         response = self.get_api(Routes.ROUTE_GET_USER["url"], valid_dummy)
         response_json = response[0]
@@ -210,7 +231,7 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=5)
     def test_get_invalid_user(self):
         """Get a user that does not exist"""
-        invalid_dummy = {"userID": "2"}
+        invalid_dummy = {"jwtToken": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IkhlbGxvIHdvcmxkIiwiZXhwIjoxNzI1MTMwNTMyLCJpYXQiOjE3MjQ1MjU3MzJ9.ZJDKnJGTfFQV-_cEcAPoVbd3aj56uLacOBX8pJ0vU2aekZX3p3DhFr8aqn32u5qW-WLdBk_-Qiqditr1yOKeow"}
 
         response = self.get_api(Routes.ROUTE_GET_USER["url"], invalid_dummy)
         response_json = response[0]
@@ -219,8 +240,10 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=6)
     def test_get_user_stats(self):
         """Get the statistics for the user that has been created"""
+        user_1_jwt_token = self.create_user("1")
+
         # Test case 1: Get the user stats
-        valid_dummy = {"userID": "1"}
+        valid_dummy = {"jwtToken": user_1_jwt_token}
 
         response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], valid_dummy)
         response_json = response[0]
@@ -237,7 +260,7 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=7)
     def test_get_invalid_user_stats(self):
         """Get the statistics for a user that does not exist"""
-        invalid_dummy = {"userID": "2"}
+        invalid_dummy = {"jwtToken": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IkhlbGxvIHdvcmxkIiwiZXhwIjoxNzI1MTMwNTMyLCJpYXQiOjE3MjQ1MjU3MzJ9.ZJDKnJGTfFQV-_cEcAPoVbd3aj56uLacOBX8pJ0vU2aekZX3p3DhFr8aqn32u5qW-WLdBk_-Qiqditr1yOKeow"}
 
         response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], invalid_dummy)
         response_json = response[0]
@@ -246,8 +269,10 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=8)
     def test_create_flashcard_set(self):
         """Create a flashcard set for the newly created user"""
+        user_1_jwt_token = self.create_user("1")
+
         flashcard_data = {
-            "userID": "1",
+            "jwtToken": user_1_jwt_token,
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
             "folder": "parent-name",
@@ -274,8 +299,10 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=9)
     def test_get_flashcard_set(self):
         """Get the flashcard set that has been created"""
+        user_1_jwt_token = self.create_user("1")
+
         flashcard_set_data = {
-            "userID": "1",
+            "jwtToken": user_1_jwt_token,
             "flashcardID": "96cfaa8d-0ca1-5230-86fe-1e28ee9d2741"
         }
 
@@ -285,10 +312,10 @@ class TestApi(unittest.TestCase):
         assert response_json == {
             'cards': {
                 'b8ff5c10-0c28-53ea-b5c8-301364c8910d': {
-                    'last_review': '22/08/2024', 'review_status': '0.0'
+                    'last_review': date.get_current_date(), 'review_status': '0.0'
                 },
                 'e88e17da-94b2-556f-8836-dfdd1ec9098f': {
-                    'last_review': '22/08/2024', 'review_status': '0.0'
+                    'last_review': date.get_current_date(), 'review_status': '0.0'
                 }
             },
             'flashcard_id': '96cfaa8d-0ca1-5230-86fe-1e28ee9d2741'
@@ -298,7 +325,10 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=10)
     def test_get_invalid_flashcard_set(self):
         """Get a flashcard set that does not exist"""
-        flashcard_set_data = {"userID": "2", "flashcardID": "invalid id"}
+        flashcard_set_data = {
+            "jwtToken": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IkhlbGxvIHdvcmxkIiwiZXhwIjoxNzI1MTMwNTMyLCJpYXQiOjE3MjQ1MjU3MzJ9.ZJDKnJGTfFQV-_cEcAPoVbd3aj56uLacOBX8pJ0vU2aekZX3p3DhFr8aqn32u5qW-WLdBk_-Qiqditr1yOKeow",
+            "flashcardID":"invalid id"
+        }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response[0]
@@ -334,7 +364,9 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=13)
     def test_get_all_cards(self):
         """Get the newly created cards"""
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "1"})
+        user_1_jwt_token = self.create_user("1")
+
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_1_jwt_token})
         assert response == {
             "parent-name": {
                 "My new set": {
@@ -358,7 +390,9 @@ class TestApi(unittest.TestCase):
     def test_get_all_cards_invalid_user(self):
         """Get the cards for a user that does not exist"""
         response = self.post_api(
-            Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "invalidUser"}
+            Routes.ROUTE_GET_TODAY_CARDS["url"], {
+                "jwtToken": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IkhlbGxvIHdvcmxkIiwiZXhwIjoxNzI1MTMwNTMyLCJpYXQiOjE3MjQ1MjU3MzJ9.ZJDKnJGTfFQV-_cEcAPoVbd3aj56uLacOBX8pJ0vU2aekZX3p3DhFr8aqn32u5qW-WLdBk_-Qiqditr1yOKeow"
+            }
         )
         assert response == ["User has no flashcards"]
 
@@ -367,9 +401,16 @@ class TestApi(unittest.TestCase):
         """
         Test to create a flashcard set where no folder needs to be created
         """
+        # Create the account
+        valid_dummy = {"userID": "2", "displayName": "Dummy", "idToken": "test"}
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+        response_json = response[0]
+        user_2_jwt_token = self.create_user("2")
+
         # Create the flashcard set
         flashcard_data = {
-            "userID": "2",
+            "jwtToken": user_2_jwt_token,
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
             "folder": "",
@@ -394,7 +435,7 @@ class TestApi(unittest.TestCase):
         assert response_json == {"flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916"}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token})
         assert response == {
             "My new set": {
                 "cards": {
@@ -419,9 +460,11 @@ class TestApi(unittest.TestCase):
         but root node already has a flashcard set. The previous method created
         the first flashcard set
         """
+        user_2_jwt_token = self.create_user("2")
+
         # Create the flashcard set
         flashcard_data = {
-            "userID": "2",
+            "jwtToken": user_2_jwt_token,
             "flashcardName": "My second set",
             "flashcardDescription": "This is my second description",
             "folder": "",
@@ -446,7 +489,7 @@ class TestApi(unittest.TestCase):
         assert response_json == {'flashcardID': '5da32188-ae6d-58f5-a898-04d08ccd43f7'}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token})
         assert response == {
             "My new set": {
                 "cards": {
@@ -485,9 +528,11 @@ class TestApi(unittest.TestCase):
         Note that the userID is still 2 - this makes sure it works, even when
         there's multiple random cards in the root folder
         """
+        user_2_jwt_token = self.create_user("2")
+
         # Create the flashcard set
         flashcard_data = {
-            "userID": "2",
+            "jwtToken": user_2_jwt_token,
             "flashcardName": "Set with two folders",
             "flashcardDescription": "This set is within two folders",
             "folder": "my_folder1/my_second_folder",
@@ -512,7 +557,7 @@ class TestApi(unittest.TestCase):
         assert response_json == {'flashcardID': '758c6b3c-cc9b-52f3-865e-ac32255ce544'}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token,})
         assert response == {
             "My new set": {
                 "cards": {
@@ -574,8 +619,10 @@ class TestApi(unittest.TestCase):
         """
         Test to move flashcard set to a new location that exists and stores folders and sets
         """
+        user_2_jwt_token = self.create_user("2")
+
         request_data = {
-            "userID": "2",
+            "jwtToken": user_2_jwt_token,
             "currentLocation": "",
             "flashcardName": "My second set",
             "moveLocation": "my_folder1",
@@ -586,7 +633,7 @@ class TestApi(unittest.TestCase):
         }
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token,})
         assert response == {
             "My new set": {
                 "cards": {
@@ -641,13 +688,22 @@ class TestApi(unittest.TestCase):
         """
         Test to move flashcard set to a new location that does not exist
         """
+        user_2_jwt_token = self.create_user("2")
+
+        # Create the account
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "idToken": "test"}
+
+        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+        response_json = response[0]
+        test_update_goal_status_jwt_token = response_json["token"]
+
         # Create the user - this relies on previous tests to make sure it's working
         valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy"}
 
         self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
 
         request_data = {
-            "userID": "2",
+            "jwtToken": user_2_jwt_token,
             "currentLocation": "my_folder1",
             "flashcardName": "My second set",
             "moveLocation": "languages/spanish",
@@ -659,7 +715,7 @@ class TestApi(unittest.TestCase):
         }
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"userID": "2"})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token,})
         assert response == {
             "languages": {
                 "spanish": {
@@ -718,13 +774,11 @@ class TestApi(unittest.TestCase):
         """
         Test to move a flashcard set that does not exist
         """
-        # Create the user - this relies on previous tests to make sure it's working
-        valid_dummy = {"userID": "2", "displayName": "Dummy"}
+        user_2_jwt_token = self.create_user("2")
 
-        self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
 
         request_data = {
-            "userID": "2",
+            "jwtToken": user_2_jwt_token,
             "currentLocation": "my_invalid_folder",
             "flashcardID": "My non existant set",
             "moveLocation": "my_new_folder",
@@ -741,12 +795,14 @@ class TestApi(unittest.TestCase):
         """
         Test to create a card goal that should be failed
         """
+        user_2_jwt_token = self.create_user("2")
+
         # Create the user - this relies on previous tests to make sure it's working
-        valid_dummy = {"userID": "2", "displayName": "Dummy"}
+        valid_dummy = {"jwtToken": user_2_jwt_token, "displayName": "Dummy"}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
 
-        request_data = {"userID": "2", "cardsToRevise": 5, "endDate": "01/01/2022"}
+        request_data = {"jwtToken": user_2_jwt_token, "cardsToRevise": 5, "endDate": "01/01/2022"}
         response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL["url"], request_data)
         assert response == {"success": "Goal created successfully"}
 
@@ -755,12 +811,14 @@ class TestApi(unittest.TestCase):
         """
         Test to create an XP goal that should be in progress
         """
+        user_2_jwt_token = self.create_user("2")
+
         # Create the user - this relies on previous tests to make sure it's working
-        valid_dummy = {"userID": "2", "displayName": "Dummy"}
+        valid_dummy = {"jwtToken": user_2_jwt_token, "displayName": "Dummy"}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
 
-        request_data = {"userID": "2", "goalXP": 5, "endDate": date.get_current_date()}
+        request_data = {"jwtToken": user_2_jwt_token, "goalXP": 5, "endDate": date.get_current_date()}
         response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
         assert response == {"success": "Goal created successfully"}
 
@@ -769,13 +827,16 @@ class TestApi(unittest.TestCase):
         """
         Test for a goal that should be completed
         """
+        user_2_jwt_token = self.create_user("2")
+
         # Create the user - this relies on previous tests to make sure it's working
-        valid_dummy = {"userID": "2", "displayName": "Dummy"}
+        valid_dummy = {"jwtToken": user_2_jwt_token, "displayName": "Dummy"}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
 
-        request_data = {"userID": "2", "goalXP": 0, "endDate": date.get_current_date()}
+        request_data = {"jwtToken": user_2_jwt_token, "goalXP": 0, "endDate": date.get_current_date()}
         response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
+        print (response)
         assert response == {"success": "Goal created successfully"}
 
     """@pytest.mark.run(order=25)
@@ -982,13 +1043,17 @@ class TestApi(unittest.TestCase):
         """
         Test the update-heatmap method
         """
-        # Create the user (relies on previous tests to ensure it is working)
-        valid_dummy = {"userID": "test_update_heatmap", "displayName": "Dummy"}
+        test_update_goal_status_jwt_token = self.create_user("test_update_goal_status")
+
+        # Create the user
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "idToken": "test"}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
+        response_json = response[0]
+        test_update_goal_status_jwt_token = response_json["token"]
 
         # Test case 1: User exists
-        request_data = {"userID": "test_update_heatmap"}
+        request_data = {"jwtToken": test_update_goal_status_jwt_token}
         today = date.get_current_date().replace("/", "-")
         response = self.post_api(Routes.ROUTE_UPDATE_HEATMAP["url"], request_data)
         assert response == {today: "2"}
@@ -1003,7 +1068,7 @@ class TestApi(unittest.TestCase):
             assert True
 
         # Test case 3: User exists when fetching heatmap data
-        request_data = {"userID": "test_update_heatmap"}
+        request_data = {"jwtToken": test_update_goal_status_jwt_token}
         response = self.post_api(Routes.ROUTE_GET_HEATMAP["url"], request_data)
         assert response == {today: "2"}
 
@@ -1021,9 +1086,12 @@ class TestApi(unittest.TestCase):
         """
         Test to create a folder
         """
-        get_today_cards = {"userID": "folderUser1"}
+        # Create the user (relies on previous tests to ensure it is working)
+        User1_jwt_token = self.create_user("folderUser1")
+
+        get_today_cards = {"jwtToken":User1_jwt_token}
         # Test case 1: Valid folder
-        request_data = {"userID": "folderUser1", "folder": "my_folder/folder1"}
+        request_data = {"jwtToken":User1_jwt_token, "folder": "my_folder/folder1"}
         response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
         assert response == {"success": "Folder my_folder/folder1 created"}
 
@@ -1032,7 +1100,7 @@ class TestApi(unittest.TestCase):
         assert response == {"my_folder": {"folder1": {}}}
 
         # Test case 2: Create a folder with parent folder that contains data
-        request_data = {"userID": "folderUser1", "folder": "my_folder/folder2"}
+        request_data = {"jwtToken":User1_jwt_token, "folder": "my_folder/folder2"}
         response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
         assert response == {"success": "Folder my_folder/folder2 created"}
 
@@ -1041,7 +1109,7 @@ class TestApi(unittest.TestCase):
         assert response == {"my_folder": {"folder1": {}, "folder2": {}}}
 
         # Test case 3: Folder which exists
-        request_data = {"userID": "folderUser1", "folder": "my_folder/folder1"}
+        request_data = {"jwtToken":User1_jwt_token, "folder": "my_folder/folder1"}
         response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
         assert response == {"success": "Folder my_folder/folder1 created"}
 
@@ -1049,7 +1117,7 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], get_today_cards)
         assert response == {"my_folder": {"folder1": {}, "folder2": {}}}
         # Test case 4: Invalid folder name
-        request_data = {"userID": "folderUser1", "folder": "//my_fol/der/folder2/"}
+        request_data = {"jwtToken": User1_jwt_token, "folder": "//my_fol/der/folder2/"}
         try:
             # This should fail
             response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
