@@ -4,6 +4,7 @@ from database.database import database as db
 from routes.api.validation_wrapper import validate_json
 from classes.date import Date
 from database.jwt_handler import JwtHandler
+from routes.api.card_management import hash_to_numeric
 
 authentication_routes = Blueprint('api_routes', __name__)
 CORS(authentication_routes)
@@ -11,7 +12,8 @@ CORS(authentication_routes)
 CREATE_ACCOUNT_FORMAT = {
     "userID": "",
     "displayName": "",
-    "idToken": ""
+    "rawIdToken": "",
+    "idToken": "",
 }
 
 GET_USER_FORMAT = {
@@ -27,9 +29,15 @@ def create_account():
     user_id = request.json.get("userID")
     name = request.json.get("displayName")
     id_token = request.json.get("idToken")
+    raw_id_token = request.json.get("rawIdToken")
 
     if db.verify_id_token(id_token, user_id) is False:
         return jsonify({"success": False, "error": "User ID does not match token."}), 403
+
+    if id_token != hash_to_numeric(raw_id_token):
+        return jsonify(
+            {"error": f"ID Token '{id_token}' does not match raw ID token '{raw_id_token}'"}
+        ), 403
 
     date = Date()
     today = date.get_current_date().replace('/', '-')
@@ -38,7 +46,11 @@ def create_account():
     db.statistics.create_new_user_stats(user_id, today)
 
     jwt_handler = JwtHandler()
-    token = jwt_handler.encode(user_id, "Hello world")
+
+    try:
+        token = jwt_handler.encode(user_id, raw_id_token, id_token)
+    except Exception as e:
+        return jsonify({"error": str(e)}, 500)
 
     return jsonify({"success": True, "token": token}, 200)
 

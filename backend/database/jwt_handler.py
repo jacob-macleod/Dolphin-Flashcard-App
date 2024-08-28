@@ -1,5 +1,6 @@
 import time
 import json
+import uuid
 from authlib.jose import jwt
 from authlib.jose.errors import InvalidClaimError, DecodeError
 from database.database_config import jwt_key_type
@@ -69,6 +70,7 @@ class JwtHandler:
     def encode(
         self,
         user_id: str,
+        access_token_raw:str,
         access_token: str,
         iat=int(time.time()),
         exp=int(time.time()) + 604800,
@@ -78,7 +80,8 @@ class JwtHandler:
 
         Args:
             user_id (str): The user ID to package
-            access_token (str): The access token to package
+            access_token_raw (str): The raw (unhashed) access token to package
+            access_token (str): The (hashed) access token to package
             iat (int, optional): The time the token was issued at. Defaults to int(time.time()).
             exp (int, optional): The time the token expires. Defaults to int(time.time())+604800 - 7 days in the future.
         """
@@ -87,6 +90,7 @@ class JwtHandler:
             "aud": self._aud,
             "sub": user_id,
             "access_token": access_token,
+            "access_token_raw": access_token_raw,
             "exp": exp,
             "iat": iat
         }
@@ -107,8 +111,11 @@ class JwtHandler:
         try:
             claims = jwt.decode(token, self._public_key, claims_options=claims_options)
             claims.validate()
+            if claims["access_token"] != str(uuid.uuid5(uuid.NAMESPACE_DNS, claims["access_token_raw"])):
+                return None
             return {
                 "userID": claims["sub"],
+                "accessTokenRaw": claims["access_token_raw"],
                 "accessToken": claims["access_token"]
             }
         except (InvalidClaimError, DecodeError):
