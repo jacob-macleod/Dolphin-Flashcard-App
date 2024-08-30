@@ -15,16 +15,12 @@ from classes.date import Date
 from json import loads, dumps
 from requests import get, post, delete
 from main import server_addr
-from database.database_config import type, jwt_key_type
+from database.database_config import type
 
 # Check the database is set to local
 if type != "local":
     raise ValueError(
         f"The database type in src/database/database_config.py is set to '{type}', not 'local'!"
-    )
-if jwt_key_type != "testing":
-    raise ValueError(
-        f"The jwt_key_type in src/database/database_config.py is set to '{jwt_key_type}', not 'testing'!"
     )
 
 headers = {"Content-Type": "application/json"}

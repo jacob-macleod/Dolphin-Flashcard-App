@@ -1,4 +1,4 @@
-from backend.database.database_config import type, jwt_key_type
+from backend.database.database_config import type
 FRONTEND_CONFIG_FILE = "frontend/src/api/config.js"
 
 def strip_whitespace(line):
@@ -41,8 +41,3 @@ if type != "production":
     raise ValueError("Database config is not set to production!")
 else:
     print("Database config is set to production correctly")
-
-if jwt_key_type != "production":
-    raise ValueError("JWT key type is not set to production!")
-else:
-    print("JWT key type is set to production correctly")

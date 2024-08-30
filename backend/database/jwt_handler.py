@@ -3,7 +3,7 @@ import json
 import uuid
 from authlib.jose import jwt
 from authlib.jose.errors import InvalidClaimError, DecodeError
-from database.database_config import jwt_key_type
+from database.database_config import type
 
 class JwtHandler:
     """
@@ -18,7 +18,7 @@ class JwtHandler:
 
     def __init__(self):
         if not hasattr(self, '_initialized'):
-            if jwt_key_type=="testing":
+            if type=="local":
                 # Set the default private key
                 print ("Using default JWT key")
                 self._private_key = {
@@ -41,7 +41,7 @@ class JwtHandler:
                     "x": "-uTmTQCbfm2jcQjwEa4cO7cunz5xmWZWIlzHZODEbwk",
                     "y": "MwetqNLq70yDUnw-QxirIYqrL-Bpyfh4Z0vWVs_hWCM"
                 }
-            elif jwt_key_type=="production":
+            elif type=="production":
                 # Read the private key from jwt_key.json
                 print ("Reading JWT key from jwt_key.json")
                 with open("jwt_key.json", "r", encoding="utf-8") as jwt_file:
@@ -60,7 +60,7 @@ class JwtHandler:
                     "kid": "6d7b8cab4d5b8c4cfd9f214a53924b00"
                 }
             else:
-                raise ValueError(f"Invalid jwt_key_type {jwt_key_type} in database_config.py")
+                raise ValueError(f"Invalid jwt_key_type {type} in database_config.py")
             self._aud = "api"
             self._iss = "http://dolphinflashcards.com"
             self._header = {"alg": "ES256"}
