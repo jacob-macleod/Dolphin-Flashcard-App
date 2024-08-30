@@ -9,7 +9,7 @@ const useTodayCards = (reload, setReload, apiManager, getCookie) => {
   useEffect(() => {
     if (reload) {
       setReload(false);
-      apiManager.getTodayCards(getCookie("userID"), (data) => {
+      apiManager.getTodayCards(getCookie("jwtToken"), (data) => {
         setTodayCards(data);
         sessionStorage.setItem('todayCards', JSON.stringify(data));
       });

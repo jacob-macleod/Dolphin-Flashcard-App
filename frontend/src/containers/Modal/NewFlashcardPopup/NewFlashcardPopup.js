@@ -20,7 +20,9 @@ function NewFlashcardPopup({
     folder,
     editExistingFlashcard=false,
     initialTerm="",
-    initialDefinition=""
+    initialDefinition="",
+    flashcardName,
+    flashcardDescription
     }) {
     const [term, setTerm] = useState(initialTerm);
     const [definition, setDefinition] = useState(initialDefinition);
@@ -55,16 +57,16 @@ function NewFlashcardPopup({
             }
         }
 
-        var flashcardDataRequest = {}
-        flashcardDataRequest.cards = newFlashcardItems;
-        flashcardDataRequest.userID = getCookie("userID");
-        flashcardDataRequest.flashcardName = flashcardData.name;
-        flashcardDataRequest.flashcardDescription = flashcardData.description;
-        flashcardDataRequest.folder = folder;
+        // var flashcardDataRequest = {}
+        // flashcardDataRequest.cards = newFlashcardItems;
+        // flashcardDataRequest.userID = getCookie("jwtToken");
+        // flashcardDataRequest.flashcardName = flashcardData.name;
+        // flashcardDataRequest.flashcardDescription = flashcardData.description;
+        //flashcardDataRequest.folder = folder;
         apiManager.createFlashcard(
-            getCookie("userID"),
-            flashcardData.name,
-            flashcardData.description,
+            getCookie("jwtToken"),
+            flashcardName,
+            flashcardDescription,
             folder,
             newFlashcardItems,
             setRequestResponse
@@ -100,9 +102,9 @@ function NewFlashcardPopup({
     return (
         <Modal visible={visible} view={view} style={{height: "fit-content", width: "100%", maxWidth: "1000px"}}>
             <Heading3 text={editExistingFlashcard ? "Edit flashcard:" : "Create a new flashcard:"} />
-            <div className="text-box-container">
-                <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm}/>
-                <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition}/>
+            <div className={view !== "desktop" ? "text-box-container-mobile" : "text-box-container"}>
+                <RichTextBox text="" type="Term:" flashcardData={term} setFlashcardData={setTerm} view={view}/>
+                <RichTextBox text="" type="Definition:" flashcardData={definition} setFlashcardData={setDefinition} view={view}/>
             </div>
 
             <div style={{display: "flex", justifyContent: "flex-end"}}>

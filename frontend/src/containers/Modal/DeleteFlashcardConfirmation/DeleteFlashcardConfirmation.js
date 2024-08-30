@@ -25,7 +25,7 @@ function DeleteFlashcardConfirmation({ visible, setVisible, view, setReload }) {
       const flashcardID = Object.values(visible["flashcardData"])[0].flashcardID;
       setLoadingIconVisible(null);
       // Delete the flashcard
-      apiManager.deleteFlashcard(getCookie('userID'), flashcardID, setVisible, setReload);
+      apiManager.deleteFlashcard(getCookie('jwtToken'), flashcardID, setVisible, setReload);
     }
 
     useEffect(() => {

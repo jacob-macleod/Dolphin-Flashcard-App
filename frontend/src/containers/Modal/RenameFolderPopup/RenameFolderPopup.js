@@ -52,7 +52,7 @@ function RenameFolderPopup({ visible, setVisible, view, setReload }) {
         const flashcardName = Object.keys(visible["flashcardData"])[0];
 
         apiManager.renameFolder(
-          getCookie("userID"),
+          getCookie("jwtToken"),
           flashcardName,
           newFlashcardName,
           setVisible,

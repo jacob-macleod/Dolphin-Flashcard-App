@@ -18,8 +18,6 @@ function FolderOperationsPopup({ setVisible, visible, showDeleteConfirmation, se
         "path": path,
         "flashcardName": flashcardName
     };
-    console.log("CARD DATA");
-    console.log("cardData: ", cardData);
 
     const dropdownRef = useRef(null);
 

@@ -22,7 +22,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 4.3.0 - 2024-07-17
+## 5.0.0 - 2024-07-17
 
 ### Added
 
@@ -31,10 +31,18 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Added new ErrorBoundary component to show when there is a Frontend React error
 - Added checking to see if the user is signed in for all pages
 - Added ability to sign out
+- Added ability to delete flashcards
+- BREAKING: Changed get-flashcards so it reads flashcard data from your own flashcard data list. It now needs the user ID in the API request
+- Made disabled buttons unclickable
+- A valid access link is required to sign in to the frontend
 
 ### Fixed
 
 - Issue where the XP, streak and heatmap were not updated when a user revised cards
+
+### Changed
+
+- BREAKING: jwtToken (the json web token provided by create-account) is now passed instead of userID to all functions, allowing for greater security
 
 ## 4.2.0 - 2024-08-16
 

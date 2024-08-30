@@ -26,7 +26,7 @@ function MoveFolderDialogue({ visible, setVisible, view, setReload }) {
         setLoadingIconVisible(null);
 
         apiManager.moveFlashcard(
-          getCookie("userID"),
+          getCookie("jwtToken"),
           currentPath,
           flashcardName,
           selectedPath,

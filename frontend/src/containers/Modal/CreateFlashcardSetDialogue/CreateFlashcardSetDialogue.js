@@ -57,7 +57,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
         if (selectedPath != null) {
           setLoadingIconVisible(null);
           apiManager.createFlashcard(
-            getCookie("userID"),
+            getCookie("jwtToken"),
             flashcardName,
             flashcardDescription,
             selectedPath,

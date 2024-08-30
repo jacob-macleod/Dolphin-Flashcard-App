@@ -52,7 +52,7 @@ function RenameFlashcardSetPopup({ visible, setVisible, view, setReload }) {
         const flashcardID = Object.values(visible["flashcardData"])[0].flashcardID;
 
         apiManager.renameFlashcard(
-          getCookie("userID"),
+          getCookie("jwtToken"),
           flashcardID,
           newFlashcardName,
           setVisible,

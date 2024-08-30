@@ -1,0 +1,4 @@
+.sign-in-button-wrapper {
+    display: grid;
+    justify-content: space-evenly;
+}

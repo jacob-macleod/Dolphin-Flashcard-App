@@ -9,35 +9,35 @@ import PageNotFound from './screens/PageNotFound';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import { getCookie } from './api/Authentication';
 
-function PromptLoginIfNotLoggedIn({ child, userID, setUserID }) {
+function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   return (
     <>
-      {userID ? child : <SignInPage setUserID={setUserID}/>}
+      {jwtToken ? child : <SignInPage setJwtToken={setJwtToken}/>}
     </>
   )
 }
 
-function ErrorChecking({ userID, setUserID, child }) {
+function ErrorChecking({ jwtToken, setJwtToken, child }) {
   /* Add the ErrorBoundary and PromptLoginIfNotLoggedIn components */
   return (
     <ErrorBoundary>
-      <PromptLoginIfNotLoggedIn child={child} userID={userID} setUserID={setUserID}/>
+      <PromptLoginIfNotLoggedIn child={child} jwtToken={jwtToken} setJwtToken={setJwtToken}/>
     </ErrorBoundary>
   )
 }
 
 function App() {
-  const [userID, setUserID] = useState(getCookie("userID"));
+  const [jwtToken, setJwtToken] = useState(getCookie("jwtToken"));
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<SignInPage active={false}/>} />} />
-          <Route path="/dashboard" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<MainPage userID={userID} setUserID={setUserID}/>} />} />
-          <Route path="/flashcards" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<Flashcards />} />} />
-          <Route path="/edit-flashcard-set" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<EditFlashcard />} />} />
-          <Route path="/view" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<ViewFlashcards />} />} />
-          <Route path="*" element={<ErrorChecking userID={userID} setUserID={setUserID} child={<PageNotFound />} />} />
+          <Route path="/" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<SignInPage active={false}/>} />} />
+          <Route path="/dashboard" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<MainPage jwtToken={jwtToken} setJwtToken={setJwtToken}/>} />} />
+          <Route path="/flashcards" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<Flashcards />} />} />
+          <Route path="/edit-flashcard-set" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<EditFlashcard />} />} />
+          <Route path="/view" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<ViewFlashcards />} />} />
+          <Route path="*" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<PageNotFound />} />} />
         </Routes>
       </BrowserRouter>
     </>

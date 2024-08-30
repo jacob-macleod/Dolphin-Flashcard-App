@@ -60,7 +60,7 @@ function DailyFlashcardBrowser({ view }) {
     Save the flashcard data
     */
    apiManager.updateCardProgress(
-    getCookie("userID"),
+    getCookie("jwtToken"),
     updatedCardData,
     setCardsSaved
    )
@@ -291,7 +291,7 @@ function DailyFlashcardBrowser({ view }) {
             <div className={"review-bar-chart-wrapper"} >
               <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
               <Heading4 text={
-                ((learnedCards / (studying + reviewing + notStarted)) *100)
+                Math.floor((learnedCards + reviewing / (studying + notStarted + learnedCards + reviewing)) *100)
                 + "%"
               } style={{padding: "0px"}}/>
             </div>

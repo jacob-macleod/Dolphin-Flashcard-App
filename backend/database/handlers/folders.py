@@ -471,3 +471,59 @@ class Folders(DatabaseHandler):
             }
         )
         return folder_data
+
+    def delete_individual_card(self, user_id:str, card_id:str):
+        """
+        Delete an individual card from the folder structure
+        """
+        # Get the current folder data
+        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        if folder_data is None:
+            return None
+        else:
+            folder_data = folder_data.get("data")
+
+        # Get the current folder location of the card
+        card_location = self.get_individual_card_location(user_id, card_id, folder_data)
+
+        if card_location is None:
+            return None
+
+        # Remove the individual as a whole from the folder structure, which is stored in the cards list
+        current = folder_data
+        for key in card_location:
+            if key == card_location[-1]:
+                current[key]["cards"].pop(card_id, None)
+            else:
+                current = current.get(key)
+
+        # Save the updated folder data
+        self._context.collection(self._db_name).document(user_id).set(
+            {
+                "data": folder_data
+            }
+        )
+        return folder_data
+
+    def get_flashcard(self, user_id:str, flashcard_id:str):
+        """
+        Get a flashcard from the folder structure
+
+        Args:
+            user_id (str): The userID to get the flashcard from
+            flashcard_id (str): The flashcard ID to get
+        """
+        folder_data = self.get_user_data(user_id)
+        if folder_data is None:
+            return None
+
+        flashcard_location = self.get_flashcard_location(user_id, flashcard_id, folder_data)
+
+        if flashcard_location is None:
+            return None
+
+        current = folder_data
+        for key in flashcard_location:
+            current = current.get(key)
+
+        return current

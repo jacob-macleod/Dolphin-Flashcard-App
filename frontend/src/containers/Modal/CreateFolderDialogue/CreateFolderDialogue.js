@@ -60,7 +60,7 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
           }
 
           apiManager.createFolder(
-            getCookie("userID"),
+            getCookie("jwtToken"),
             pathToUse + folderName,
             setVisible,
             setReload

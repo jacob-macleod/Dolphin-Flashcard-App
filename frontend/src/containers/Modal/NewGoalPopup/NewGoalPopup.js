@@ -35,13 +35,13 @@ function NewGoalPopup({ visible, setVisible, view }) {
         if (option === "xp") {
             // If values have been set
             if (value !== "" && date !== "none") {
-                apiManager.createXpGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
+                apiManager.createXpGoal(getCookie("jwtToken"), value, formatDate(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
         } else {
             if (value !== "" && date !== "none") {
-                apiManager.createCardGoal(getCookie("userID"), value, formatDate(date), setGoalStatus);
+                apiManager.createCardGoal(getCookie("jwtToken"), value, formatDate(date), setGoalStatus);
                 setValue("");
                 setDate("none");
             }
