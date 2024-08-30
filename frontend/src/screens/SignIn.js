@@ -2,8 +2,9 @@ import { React, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import firebase from 'firebase/compat/app';
-import { signInWithGoogle } from '../api/Authentication';
+import { signInWithGoogle, getCookie } from '../api/Authentication';
 import BlobBackground from '../containers/BlobBackground';
+import ErrorText from '../componments/Text/ErrorText';
 import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
 import Header from '../componments/Text/Header/Header';
@@ -21,6 +22,7 @@ import cardEditor from '../static/card-editor.png';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
+import './SignIn.css';
 
 function SignInPage({ jwtToken, setJwtToken, active=true }) {
   const title = "Login";
@@ -28,6 +30,7 @@ function SignInPage({ jwtToken, setJwtToken, active=true }) {
   const mobileBreakpoint = 878;
   const tabletBreakpoint = 1200;
   const [view, setView] = useState(width < mobileBreakpoint ? "mobile" : "desktop");
+  const [signInErrorMessage, setSignInErrorMessage] = useState("");
 
   /*const goalsDesktopSize = {width: "465px", height: "465px"};
   const goalsTabletSize = {width: "310px", height: "310px"};
@@ -43,6 +46,18 @@ function SignInPage({ jwtToken, setJwtToken, active=true }) {
   const cardDesktopSize = {width: "80%", height: "373px"};
   const cardTabletSize = {width: "80%", height: "249px"};
 
+  const queryParams = new URLSearchParams(location.search);
+
+  // Set the accessTokens from the URL or cookies
+  const [accessToken, setAccessToken] = useState(
+    queryParams.get("idToken") == null ? getCookie("accessToken") : queryParams.get("idToken")
+  );
+  const [rawAccessToken, setRawAccessToken] = useState(
+    queryParams.get("rawIdToken") == null ? getCookie("rawAccessToken") : queryParams.get("rawIdToken")
+  );
+
+  console.log(accessToken);
+  console.log(rawAccessToken);
 
   useEffect(() => {
     function handleResize() {
@@ -65,21 +80,34 @@ function SignInPage({ jwtToken, setJwtToken, active=true }) {
     setView(width < mobileBreakpoint ? "mobile" : "desktop");
   }, [width]);
 
-  const signInButton = active ? <Button text="Continue with Google" onClick={ () => {
-      // Initialise the firebase project and sign in with google
-      // This should be fine to expose - if its not I need to resolve it ASAP
-      firebase.initializeApp({
-        "apiKey": "AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M",
-        "authDomain": "dolphin-flashcards.firebaseapp.com",
-        "databaseURL": "https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app",
-        "projectId": "dolphin-flashcards",
-        "storageBucket": "dolphin-flashcards.appspot.com",
-        "messagingSenderId": "481940183221",
-        "appId": "1:481940183221:web:67bdc346eef4a5306286fc",
-        "measurementId": "G-76Y8VTC390"
-    });
-      signInWithGoogle(setJwtToken);
-    }}/> : <Button text="Coming soon..." disabled={true} />
+  function signIn() {
+    // Initialise the firebase project and sign in with google
+    // This should be fine to expose - if its not I need to resolve it ASAP
+    firebase.initializeApp({
+      "apiKey": "AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M",
+      "authDomain": "dolphin-flashcards.firebaseapp.com",
+      "databaseURL": "https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app",
+      "projectId": "dolphin-flashcards",
+      "storageBucket": "dolphin-flashcards.appspot.com",
+      "messagingSenderId": "481940183221",
+      "appId": "1:481940183221:web:67bdc346eef4a5306286fc",
+      "measurementId": "G-76Y8VTC390"
+  });
+    signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setSignInErrorMessage);
+  }
+
+  const signInButton = active ?
+    <div className='sign-in-button-wrapper'>
+      <Button text="Continue with Google" onClick={ () => {
+        if (accessToken == null || rawAccessToken == null) {
+          setSignInErrorMessage("You need to sign in with a valid access link!")
+        } else {
+          signIn();
+        }
+      }}/>
+      <ErrorText text={signInErrorMessage} />
+    </div>
+    : <Button text="Coming soon..." disabled={true} />
 
   return (
     <div style={{height: "fit-content"}}>

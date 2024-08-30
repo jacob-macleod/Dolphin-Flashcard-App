@@ -12,7 +12,8 @@ CORS(authentication_routes)
 CREATE_ACCOUNT_FORMAT = {
     "userID": "",
     "displayName": "",
-    "rawIdToken": "",
+    "rawAccessToken": "",
+    "accessToken": "",
     "idToken": "",
 }
 
@@ -29,14 +30,15 @@ def create_account():
     user_id = request.json.get("userID")
     name = request.json.get("displayName")
     id_token = request.json.get("idToken")
-    raw_id_token = request.json.get("rawIdToken")
+    access_token = request.json.get("accessToken")
+    raw_access_token = request.json.get("rawAccessToken")
 
     if db.verify_id_token(id_token, user_id) is False:
         return jsonify({"success": False, "error": "User ID does not match token."}), 403
 
-    if id_token != hash_to_numeric(raw_id_token):
+    if access_token != hash_to_numeric(raw_access_token):
         return jsonify(
-            {"error": f"ID Token '{id_token}' does not match raw ID token '{raw_id_token}'"}
+            {"error": f"Access Token '{access_token}' does not match raw access token '{raw_access_token}'"}
         ), 403
 
     date = Date()
@@ -48,7 +50,7 @@ def create_account():
     jwt_handler = JwtHandler()
 
     try:
-        token = jwt_handler.encode(user_id, raw_id_token, id_token)
+        token = jwt_handler.encode(user_id, raw_access_token, access_token)
     except Exception as e:
         return jsonify({"error": str(e)}, 500)
 

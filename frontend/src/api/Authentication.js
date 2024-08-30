@@ -4,7 +4,7 @@ import serverURL from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-export function signInWithGoogle(setJwtToken) {
+export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
     const provider = new firebase.auth.GoogleAuthProvider();
   
     // Sign in
@@ -15,7 +15,7 @@ export function signInWithGoogle(setJwtToken) {
             const idToken = await user.getIdToken();
             const isNewUser = result.additionalUserInfo.isNewUser;
 
-            createAccount(user.uid, user.displayName, idToken, setJwtToken);
+            createAccount(user.uid, user.displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
             //createCookie('userID', user.uid);
             createCookie('userName', user.displayName)
             createCookie("profileImage", user.photoURL);
@@ -27,11 +27,13 @@ export function signInWithGoogle(setJwtToken) {
   };
   
 
-export function createAccount(userID, displayName, idToken, setJwtToken) {
+export function createAccount(userID, displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
     const endpoint = serverURL + 'create-account';
     const data = {
         userID: userID,
         displayName: displayName,
+        rawAccessToken: rawAccessToken,
+        accessToken: accessToken,
         idToken: idToken
     }; // JSON payload
 
@@ -53,9 +55,13 @@ export function createAccount(userID, displayName, idToken, setJwtToken) {
         console.log('Account creation successful:', data);
         createCookie("jwtToken", data[0]["token"]);
         setJwtToken(data[0]["token"])
+        // Set the accessTokens as cookies
+        createCookie("accessToken", accessToken);
+        createCookie("rawAccessToken", rawAccessToken);
     })
     .catch(error => {
         console.error('There was an error creating the account:', error);
+        setErrorMessage("There was an error creating the account");
         // Handle error here
     });
 }

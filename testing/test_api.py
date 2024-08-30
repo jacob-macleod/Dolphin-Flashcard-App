@@ -108,7 +108,7 @@ class TestApi(unittest.TestCase):
         Args:
             user_id (str): The user ID to create
         """
-        valid_dummy = {"userID": user_id, "displayName": "Dummy", "rawIdToken": "test", "idToken": "4be0643f-1d98-573b-97cd-ca98a65347dd"}
+        valid_dummy = {"userID": user_id, "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -208,7 +208,7 @@ class TestApi(unittest.TestCase):
         """
         Valid account
         """
-        valid_dummy = {"userID": "1", "displayName": "Dummy", "rawIdToken": "test", "idToken": "4be0643f-1d98-573b-97cd-ca98a65347dd"}
+        valid_dummy = {"userID": "1", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -402,7 +402,7 @@ class TestApi(unittest.TestCase):
         Test to create a flashcard set where no folder needs to be created
         """
         # Create the account
-        valid_dummy = {"userID": "2", "displayName": "Dummy", "rawIdToken": "test", "idToken": "4be0643f-1d98-573b-97cd-ca98a65347dd"}
+        valid_dummy = {"userID": "2", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -691,7 +691,7 @@ class TestApi(unittest.TestCase):
         user_2_jwt_token = self.create_user("2")
 
         # Create the account
-        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawIdToken": "test", "idToken": "4be0643f-1d98-573b-97cd-ca98a65347dd"}
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -1046,7 +1046,7 @@ class TestApi(unittest.TestCase):
         test_update_goal_status_jwt_token = self.create_user("test_update_goal_status")
 
         # Create the user
-        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawIdToken": "test", "idToken": "4be0643f-1d98-573b-97cd-ca98a65347dd"}
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
