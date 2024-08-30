@@ -66,7 +66,7 @@ function Heatmap() {
     const monthDates = getMonthDates(year);
 
     useEffect(() => {
-        apiManager.getHeatmap(getCookie("userID"), setHeatmapData);
+        apiManager.getHeatmap(getCookie("jwtToken"), setHeatmapData);
     }, []);
 
     return (

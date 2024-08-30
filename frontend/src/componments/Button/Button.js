@@ -8,7 +8,7 @@ function Button({ text, disabled=false, onClick=() => {}, style={}}) {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={ disabled ? "button-disabled" : "button" }
-            onClick={onClick}
+            onClick={disabled ? () => {} : onClick}
             style={style}
         >
             {text}

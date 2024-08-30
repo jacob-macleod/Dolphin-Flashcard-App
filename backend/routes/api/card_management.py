@@ -16,7 +16,7 @@ def hash_to_numeric(input_string):
     return str(uuid.uuid5(uuid.NAMESPACE_DNS, input_string))
 
 CREATE_FLASHCARD_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "flashcardName": "",
     "flashcardDescription": "",
     "folder": "",
@@ -31,11 +31,12 @@ CREATE_FLASHCARD_FORMAT = {
 }
 
 CREATE_FOLDER_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "folder": ""
 }
 
 GET_FLASHCARD_FORMAT = {
+    "jwtToken": "",
     "flashcardID": ""
 }
 
@@ -44,20 +45,47 @@ GET_FLASHCARD_ITEM = {
 }
 
 GET_TODAY_CARDS = {
-    "userID": ""
+    "jwtToken": ""
 }
 GET_ALL_CARDS = GET_TODAY_CARDS
 
 MOVE_FLASHCARD_SET = {
-    "userID": "",
+    "jwtToken": "",
     "currentLocation": "",
     "flashcardName": "",
     "moveLocation": ""
 }
 
 UPDATE_CARD_PROGRESS = {
-    "userID": "",
+    "jwtToken": "",
     "cardData": []
+}
+
+DELETE_FLASHCARD_FORMAT = {
+    "jwtToken": "",
+    "flashcardID": ""
+}
+
+RENAME_FLASHCARD_FORMAT = {
+    "jwtToken": "",
+    "flashcardID": "",
+    "newName": ""
+}
+
+RENAME_FOLDER_FORMAT = {
+    "jwtToken": "",
+    "currentName": "",
+    "newName": ""
+}
+
+DELETE_FOLDER_FORMAT = {
+    "jwtToken": "",
+    "folder": ""
+}
+
+DELETE_CARD_FORMAT = {
+    "jwtToken": "",
+    "cardID": ""
 }
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
@@ -162,12 +190,14 @@ def get_flashcard():
     """ Get a flashcard set based on the name and user ID
         Add json to request as in:
         {
+            "userID": "my-id",
             "flashcardID": "my-flashcard-id"
         }
     """
     try:
         flashcard_id = request.json.get("flashcardID")
-        flashcard_data = db.flashcard_set.get_flashcard_set(flashcard_id)
+        user_id = request.json.get("userID")
+        flashcard_data = db.folders.get_flashcard(user_id, flashcard_id)
 
         return jsonify(
             flashcard_data, 200
@@ -304,7 +334,133 @@ def update_card_progress():
         card_data = request.json.get("cardData")
 
         db.folders.update_card_progress(user_id, card_data)
+        db.statistics.increase_xp(user_id, len(card_data) * 10)
 
         return jsonify({"success": "Card progress updated"}), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/delete-flashcard", methods=["DELETE"])
+@validate_json(DELETE_FLASHCARD_FORMAT)
+def delete_flashcard():
+    """
+    Delete a flashcard set
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+
+        result = db.folders.delete_flashcard(user_id, flashcard_id)
+
+        if result is not None:
+            return jsonify({"success": f"Flashcard {flashcard_id} deleted"}), 200
+        else:
+            return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
+
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/rename-flashcard", methods=["POST"])
+@validate_json(RENAME_FLASHCARD_FORMAT)
+def rename_flashcard():
+    """
+    Rename a flashcard set
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id",
+        "newName": "new-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+        new_name = request.json.get("newName")
+
+        result = db.folders.rename_flashcard(user_id, flashcard_id, new_name)
+
+        if result is not None:
+            return jsonify({"success": f"Flashcard {flashcard_id} renamed to {new_name}"}), 200
+        else:
+            return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/rename-folder", methods=["POST"])
+@validate_json(RENAME_FOLDER_FORMAT)
+def rename_folder():
+    """
+    Rename a  folder
+    Example request:
+    {
+        "userID": "my-id",
+        "currentName": "my-folder",
+        "newName": "new-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        folder_name = request.json.get("currentName")
+        new_name = request.json.get("newName")
+
+        result = db.folders.rename_folder(user_id, folder_name, new_name)
+
+        if result is not None:
+            return jsonify({"success": f"Flashcard {folder_name} renamed to {new_name}"}), 200
+        else:
+            return jsonify({"error": f"Flashcard {folder_name} does not exist"}), 404
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/delete-folder", methods=["DELETE"])
+@validate_json(DELETE_FOLDER_FORMAT)
+def delete_folder():
+    """
+    Delete a folder
+    Example request:
+    {
+        "userID": "my-id",
+        "folder": "folder-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        folder_name = request.json.get("folder")
+
+        result = db.folders.delete_folder(user_id, folder_name)
+
+        if result is not None:
+            return jsonify({"success": f"Folder {folder_name} deleted"}), 200
+        else:
+            return jsonify({"error": f"Folder {folder_name} does not exist"}), 404
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/delete-card", methods=["DELETE"])
+@validate_json(DELETE_CARD_FORMAT)
+def delete_card():
+    """
+    Delete a card
+    Example request:
+    {
+        "userID": "my-id",
+        "cardID": "my-card-id"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        card_id = request.json.get("cardID")
+
+        result = db.folders.delete_individual_card(user_id, card_id)
+
+        if result is not None:
+            return jsonify({"success": f"Card {card_id} deleted"}), 200
+        else:
+            return jsonify({"error": f"Card {card_id} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500

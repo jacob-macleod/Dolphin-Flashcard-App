@@ -23,7 +23,7 @@ function SidePanel ({ selectedItem }) {
     return <div className='grid-item' style={gridItemStyle}>
         <div className="side-panel">
             <UserProfileHeader setAccountDropdownVisibility={ setAccountDropdownVisibility } accountDropdownVisibility={accountDropdownVisibility}/>
-            <AccountDropown visible={accountDropdownVisibility}/>
+            <AccountDropown setVisible={setAccountDropdownVisibility} visible={accountDropdownVisibility}/>
             <MenuItem
                 text="Dashboard"
                 src="/dashboard"

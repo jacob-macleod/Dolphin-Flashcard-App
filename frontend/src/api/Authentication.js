@@ -4,20 +4,20 @@ import serverURL from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-export function signInWithGoogle(setUserID) {
+export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
     const provider = new firebase.auth.GoogleAuthProvider();
   
     // Sign in
     firebase.auth().signInWithPopup(provider)
-        .then((result) => {
+        .then(async (result) => {
             // Successful sign-in, you can access user information here
             const user = result.user;
-            console.log(user);
-            console.log(user.displayName);
-            createAccount(user.uid, user.displayName);
-            setUserID(user.uid);
+            const idToken = await user.getIdToken();
+            const isNewUser = result.additionalUserInfo.isNewUser;
+
+            createAccount(user.uid, user.displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+            //createCookie('userID', user.uid);
             createCookie('userName', user.displayName)
-            createCookie('userID', user.uid);
             createCookie("profileImage", user.photoURL);
             })
             .catch((error) => {
@@ -27,11 +27,14 @@ export function signInWithGoogle(setUserID) {
   };
   
 
-export function createAccount(userID, displayName) {
+export function createAccount(userID, displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
     const endpoint = serverURL + 'create-account';
     const data = {
         userID: userID,
-        displayName: displayName
+        displayName: displayName,
+        rawAccessToken: rawAccessToken,
+        accessToken: accessToken,
+        idToken: idToken
     }; // JSON payload
 
     fetch(endpoint, {
@@ -44,16 +47,21 @@ export function createAccount(userID, displayName) {
     })
     .then(response => {
         if (response.ok) {
-        return response.json(); // Parse response JSON if successful
+            return response.json(); // Parse response JSON if successful
         }
         throw new Error('Network response was not ok.');
     })
     .then(data => {
         console.log('Account creation successful:', data);
-        // Handle success response here
+        createCookie("jwtToken", data[0]["token"]);
+        setJwtToken(data[0]["token"])
+        // Set the accessTokens as cookies
+        createCookie("accessToken", accessToken);
+        createCookie("rawAccessToken", rawAccessToken);
     })
     .catch(error => {
         console.error('There was an error creating the account:', error);
+        setErrorMessage("There was an error creating the account");
         // Handle error here
     });
 }

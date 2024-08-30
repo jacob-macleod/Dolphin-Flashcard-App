@@ -17,7 +17,11 @@ import SearchBar from '../componments/SearchBar/SearchBar';
 import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
+import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
 import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
+import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
+import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
+import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -33,6 +37,10 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
+  const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] = useState(false);
+  const [renameFlashcardSetPopupVisible, setRenameFlashcardSetPopupVisible] = useState(false);
+  const [deleteFolderConfirmationVisible, setDeleteFolderConfirmationVisible] = useState(false);
+  const [renameFolderPopupVisible, setRenameFolderPopupVisible] = useState(false);
   const [selected, setSelected] = useState([]);
 
   // Set variables for the size
@@ -98,6 +106,10 @@ function Flashcards() {
       <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload} />
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
+      <DeleteFlashcardConfirmation visible={deleteFlashcardConfirmationVisible} setVisible={showDeleteFlashcardConfirmation} view={view} setReload={setReload} />
+      <RenameFlashcardSetPopup visible={renameFlashcardSetPopupVisible} setVisible={setRenameFlashcardSetPopupVisible} view={view} setReload={setReload} />
+      <DeleteFolderConfirmation visible={deleteFolderConfirmationVisible} setVisible={setDeleteFolderConfirmationVisible} view={view} setReload={setReload} />
+      <RenameFolderPopup visible={renameFolderPopupVisible} setVisible={setRenameFolderPopupVisible} view={view} setReload={setReload} />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
         {view !== "mobile" ? <SidePanel selectedItem="flashcards" /> : <></>}
@@ -136,6 +148,10 @@ function Flashcards() {
                   <FlashcardOverview
                     flashcardData={todayCards}
                     setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                    showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                    setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                    setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
+                    setRenameFolderPopupVisible={setRenameFolderPopupVisible}
                     view={view}
                     selected={selected}
                     setSelected={setSelected}
@@ -144,28 +160,28 @@ function Flashcards() {
                 childValue={todayCards}
               />
               <div style={{
-                display: "flex", 
+                display: view !== "desktop" ? "block": "flex", 
                 justifyContent: "space-between",
                 paddingTop: "16px"
               }}>
-                <div style={{float: "left"}}>
+                <div style={{float: view !== "mobile" ? "left" : "", display: view !== "desktop" ? "flex": "", }}>
                   <GhostButton
                     text="+ New Folder"
-                    style={{display: "inline-block", marginRight: "16px"}}
+                    style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
                     onClick={() => {
-                      setCreateFolderDialogueVisible(true);
+                      setCreateFolderDialogueVisible(todayCards);
                     }}
                   />
                   <Button
                     text="+ New Set"
-                    style={{display: "inline-block"}}
+                    style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
                     onClick={() => {
-                      setCreateCardDialogueVisible(true);
+                      setCreateCardDialogueVisible(todayCards);
                     }}
                   />
                 </div>
               
-              <div style={{float: "right"}}>
+              <div style={{float: view !== "desktop" ? "": "right"}}>
                 <Button
                   text="Study Multiple"
                   disabled={selected.length <= 1}
@@ -173,7 +189,8 @@ function Flashcards() {
                     paddingTop: "11px",
                     paddingBottom: "11px",
                     paddingLeft: "15px",
-                    paddingRight: "15px"
+                    paddingRight: "15px",
+                    marginLeft: view === "mobile" ? "0px" : ""
                   }}
                   onClick={studyMultipleCards}
                 />

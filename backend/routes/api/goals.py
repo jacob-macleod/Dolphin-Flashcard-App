@@ -9,23 +9,23 @@ from routes.api.validation_wrapper import validate_json
 goal_routes = Blueprint('goal_routes', __name__)
 
 CREATE_XP_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalXP": NUMBER,
     "endDate": DATE_REGEX
 }
 
 CREATE_CARD_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "cardsToRevise": NUMBER,
     "endDate": DATE_REGEX
 }
 
 UPDATE_GOAL_STATUS_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
 }
 
 EDIT_CARD_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalID": "",
     "newEndDate": DATE_REGEX,
     "newTitle": "",
@@ -33,7 +33,7 @@ EDIT_CARD_GOAL_FORMAT = {
 }
 
 EDIT_XP_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalID": "",
     "newEndDate": DATE_REGEX,
     "newTitle": "",
@@ -41,7 +41,7 @@ EDIT_XP_GOAL_FORMAT = {
 }
 
 DELETE_GOAL_FORMAT = {
-    "userID": "",
+    "jwtToken": "",
     "goalID": ""
 }
 
@@ -171,7 +171,10 @@ def delete_goal():
     goal_id = request.json.get("goalID")
 
     try:
-        db.goals.delete_goal(user_id, goal_id)
+        # Assuming delete_goal returns a boolean indicating success
+        result = db.goals.delete_goal(user_id, goal_id)
+        if not result:
+            return jsonify({"error": "Goal not found or could not be deleted"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

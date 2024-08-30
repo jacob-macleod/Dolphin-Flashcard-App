@@ -60,7 +60,7 @@ function DailyFlashcardBrowser({ view }) {
     Save the flashcard data
     */
    apiManager.updateCardProgress(
-    getCookie("userID"),
+    getCookie("jwtToken"),
     updatedCardData,
     setCardsSaved
    )
@@ -204,10 +204,7 @@ function DailyFlashcardBrowser({ view }) {
   
 
     setUpdatedCardData(newCardData);
-    console.log(cardIndex);
-    console.log(updatedCardData.length);
     if (cardIndex < updatedCardData.length - 1 || cardIndex === 0) {
-      console.log("If statement entered");
       // TODO: Only show cards with a review status of 0.x
       // or that were last revised before yesterday
       let cardIndexValid = false;
@@ -220,16 +217,13 @@ function DailyFlashcardBrowser({ view }) {
       let cardsRevised = 0;
   
       while (cardIndexValid == false) {
-        console.log("Card index valid is false");
         let reviewStatus = updatedCardData[newIndex].review_status
         let lastReview = updatedCardData[newIndex].last_review
         let daily = parseFloat(reviewStatus[0]);
 
         if (daily == 0 || isDateBeforeToday(lastReview)) {
           cardIndexValid = true;
-          console.log("Card is valid");
         } else {
-          console.log("Card not valid");
           newIndex += 1;
           cardsRevised += 1;
           setLearnedCards(learnedCards + 1);
@@ -254,18 +248,15 @@ function DailyFlashcardBrowser({ view }) {
       }
       
     } else {
-      console.log("Resetting");
       setCardIndex(0);
     }
   };
 
   useEffect(() => {
-    console.log(updatedCardData);
   }, [updatedCardData]);
 
   // Count the types of cards
   useEffect(() => {
-    console.log(updatedCardData)
     var notStartedCards = 0;
     var studyingCards = 0;
     var recappingCards = 0;
@@ -300,7 +291,7 @@ function DailyFlashcardBrowser({ view }) {
             <div className={"review-bar-chart-wrapper"} >
               <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
               <Heading4 text={
-                ((learnedCards / (studying + reviewing + notStarted)) *100)
+                Math.floor((learnedCards + reviewing / (studying + notStarted + learnedCards + reviewing)) *100)
                 + "%"
               } style={{padding: "0px"}}/>
             </div>
