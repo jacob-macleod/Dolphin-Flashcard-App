@@ -32,6 +32,7 @@ jobs:
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
       - name: Install node
         run: |
           sudo apt-get update

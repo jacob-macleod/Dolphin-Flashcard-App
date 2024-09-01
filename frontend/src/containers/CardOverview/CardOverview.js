@@ -111,11 +111,11 @@ function CardOverview({
                             justifyContent: "space-evenly",
                             marginTop: "20px",
                         }}>
-                            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
-                                setResponse("I know");
-                            }}/>
                             <GhostButton text="I'm not sure" style={ghostButtonStyle} onClick={() => {
                                 setResponse("I'm not sure");
+                            }}/>
+                            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
+                                setResponse("I know");
                             }}/>
                             <GhostButton text="This is easy" style={ghostButtonStyle} onClick={() => {
                                 setResponse("This is easy");
