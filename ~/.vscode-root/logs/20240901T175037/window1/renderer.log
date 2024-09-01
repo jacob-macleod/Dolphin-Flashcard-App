@@ -1,0 +1,4 @@
+2024-09-01 17:50:38.879 [info] Started local extension host with pid 27522.
+2024-09-01 17:50:39.003 [info] Started initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2024-09-01 17:50:39.390 [info] Completed initializing default profile extensions in extensions installation folder. file:///root/.vscode/extensions
+2024-09-01 17:50:42.280 [info] [perf] Render performance baseline is 38ms
