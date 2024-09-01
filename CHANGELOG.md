@@ -22,7 +22,17 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 5.0.0 - 2024-07-17
+## 5.1.0 - 2024-09-01
+
+### Fixed
+
+- Fixed bug where JWT_PRIVATE_KEY was not successfully stored in docker
+
+### Changed
+
+- Rewrote spaced repetition algorithm to improve it and make it more flexible
+
+## 5.0.0 - 2024-08-17
 
 ### Added
 
