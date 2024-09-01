@@ -302,6 +302,9 @@ class Folders(DatabaseHandler):
             # Get the current folder location of the card
             card_location = self.get_individual_card_location(user_id, card_id, folder_data)
 
+            if card_location is None:
+                raise ValueError(f"Card {card_id} does not exist!")
+
             # Update the card data
             folder_data = self.update_card_data(
                 folder_data,

@@ -14,6 +14,8 @@ import ReviewBarChart from '../../containers/ReviewBarChart';
 import ReviewBarChartKey from '../ReviewBarChartKey/ReviewBarChartKey';
 import Heading4 from '../../componments/Text/Heading4';
 
+import flashcardReviewer from '../../classes/FlashcardReviewer';
+
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
   hiddenRight: { x: '100%', opacity: 0, position: 'fixed' },
@@ -34,7 +36,25 @@ function DailyFlashcardBrowser({ view }) {
   const [studying, setStudying] = useState(0);
   const [reviewing, setReviewing] = useState(0);
   const [notStarted, setNotStarted] = useState(0);
-  const [learnedCards, setLearnedCards] = useState(0);
+  const [currentCard, setCurrentCard] = useState(null);
+  const [cardReviewer, setCardReviewer] = useState(null);
+
+  function saveFlashcards(newCardData) {
+    /*
+    Save the flashcard data
+    */
+   apiManager.updateCardProgress(
+    getCookie("jwtToken"),
+    newCardData,
+    setCardsSaved
+   )
+  }
+
+  useEffect(() => {
+    let reviewer = new flashcardReviewer(updatedCardData, saveFlashcards);
+    setCardReviewer(reviewer);
+    setCurrentCard(reviewer.next());
+  }, [updatedCardData]);
 
   function nextFibonacci(num) {
     // Edge cases for very small numbers
@@ -53,17 +73,6 @@ function DailyFlashcardBrowser({ view }) {
     }
   
     return nextFib;
-  }
-
-  function saveFlashcards() {
-    /*
-    Save the flashcard data
-    */
-   apiManager.updateCardProgress(
-    getCookie("jwtToken"),
-    updatedCardData,
-    setCardsSaved
-   )
   }
 
   function isDateBeforeToday(dateString) {
@@ -117,6 +126,7 @@ function DailyFlashcardBrowser({ view }) {
   const { cardIDs, reviewStatuses } = collectCardIDs(todayCards, flashcardID);
   const { cardData, cardsExist } = useCardData(cardIDs);
 
+
   useEffect(() => {
     /*
     This code should only populate card data once, otherwise it'll
@@ -153,103 +163,8 @@ function DailyFlashcardBrowser({ view }) {
   }, [cardData, reviewStatuses]);
 
   const setResponse = (response) => {
-    let newCardData = updatedCardData;
-    if (response === "I'm not sure" && updatedCardData.length > 0) {
-      newCardData = updatedCardData.map(card => {
-        if (card.cardID === updatedCardData[cardIndex].cardID) {
-          return { ...card, review_status: "0.0" };
-        }
-        return card;
-      });
-    } else if (response === "I know") {
-      const reviewStatus = updatedCardData[cardIndex].review_status.split(".");
-      let daily = parseFloat(reviewStatus[0]);
-      let subDaily = parseFloat(reviewStatus[1]);
-      
-      subDaily += 3;
-      if (subDaily > 10) {
-        subDaily = 0;
-        daily += 1;
-      }
-
-      newCardData = updatedCardData.map(card => {
-        if (card.cardID === updatedCardData[cardIndex].cardID) {
-          return {
-            ...card,
-            review_status: `${daily}.${subDaily}`,
-            last_review: new Date().toLocaleDateString('en-GB')
-          };
-        }
-        return card;
-      });
-    } else if (response === "This is easy") {
-      const reviewStatus = updatedCardData[cardIndex].review_status.split(".");
-      let daily = parseFloat(reviewStatus[0]);
-      let subDaily = parseFloat(reviewStatus[1]);
-      
-      subDaily = 0;
-      daily = nextFibonacci(daily);
-
-      newCardData = updatedCardData.map(card => {
-        if (card.cardID === updatedCardData[cardIndex].cardID) {
-          return {
-            ...card,
-            review_status: `${daily}.${subDaily}`,
-            last_review: new Date().toLocaleDateString('en-GB')
-          };
-        }
-        return card;
-      });
-    }
-  
-
-    setUpdatedCardData(newCardData);
-    if (cardIndex < updatedCardData.length - 1 || cardIndex === 0) {
-      // TODO: Only show cards with a review status of 0.x
-      // or that were last revised before yesterday
-      let cardIndexValid = false;
-      // See if the next card is valid. The below code handles a special
-      // case where there only is one card, so you can't go to the next one
-      let newIndex = cardIndex + 1;
-      if (updatedCardData.length === 1) {
-        newIndex = 0
-      }
-      let cardsRevised = 0;
-  
-      while (cardIndexValid == false) {
-        let reviewStatus = updatedCardData[newIndex].review_status
-        let lastReview = updatedCardData[newIndex].last_review
-        let daily = parseFloat(reviewStatus[0]);
-
-        if (daily == 0 || isDateBeforeToday(lastReview)) {
-          cardIndexValid = true;
-        } else {
-          newIndex += 1;
-          cardsRevised += 1;
-          setLearnedCards(learnedCards + 1);
-        }
-
-        // Switch to the first card if the last is reached
-        if (newIndex >= updatedCardData.length) {
-          newIndex = 0;
-        }
-
-        // If no card is valid
-        if (cardsRevised >= updatedCardData.length) {
-          saveFlashcards();
-          setUpdatedCardData([]);
-          newIndex = -1;
-          cardIndexValid = true;
-        }
-      }
-
-      if (newIndex != -1) {
-        setCardIndex(newIndex);
-      }
-      
-    } else {
-      setCardIndex(0);
-    }
+    cardReviewer.reviseCard(currentCard, response);
+    setCurrentCard(cardReviewer.next()); 
   };
 
   useEffect(() => {
@@ -278,20 +193,29 @@ function DailyFlashcardBrowser({ view }) {
   return (
     <>
       {
-        updatedCardData.length !== 0 ?
+        cardReviewer != null && cardReviewer.allCardsRevised() !== true ?
         <>
             <CardOverview
-              text={updatedCardData[cardIndex].front}
-              description={updatedCardData[cardIndex].back}
+              text={currentCard.front}
+              description={currentCard.back}
               showResponseOptions={true}
               setResponse={setResponse}
               height="264px"
             />
             <ReviewBarChartKey style={{paddingTop: "8px"}}/>
             <div className={"review-bar-chart-wrapper"} >
-              <ReviewBarChart studying={studying} recapping={reviewing} notStarted={notStarted} view={view}/>
+              <ReviewBarChart
+                studying={cardReviewer.countCards().studying}
+                recapping={cardReviewer.countCards().recapping}
+                notStarted={cardReviewer.countCards().notStarted}
+                view={view}
+              />
               <Heading4 text={
-                Math.floor((learnedCards + reviewing / (studying + notStarted + learnedCards + reviewing)) *100)
+                Math.floor((
+                  cardReviewer.learnedCards / (
+                    cardReviewer.countCards().studying + cardReviewer.countCards().notStarted + cardReviewer.countCards().recapping
+                  )
+                ) *100)
                 + "%"
               } style={{padding: "0px"}}/>
             </div>
