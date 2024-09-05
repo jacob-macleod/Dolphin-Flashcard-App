@@ -63,7 +63,11 @@ class JwtHandler:
                 raise ValueError(f"Invalid jwt_key_type {type} in database_config.py")
             self._aud = "api"
             self._iss = "http://dolphinflashcards.com"
-            self._header = {"alg": "ES256"}
+            self._header = {
+                "typ": "JWT",
+                "alg": "ES256",
+                "kid": self._public_key["kid"]
+            }
 
             self._initialized = True
 
