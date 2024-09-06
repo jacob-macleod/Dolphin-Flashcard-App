@@ -28,7 +28,7 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
       }
 
       useEffect(() => {
-        apiManager.updateGoals(getCookie("userID"), setGoals);
+        apiManager.updateGoals(getCookie("jwtToken"), setGoals);
       }, [newGoalPopupVisible, editGoalPopupVisible]);
 
     return <>

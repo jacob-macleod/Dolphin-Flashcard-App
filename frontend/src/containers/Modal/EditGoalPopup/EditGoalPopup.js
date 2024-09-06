@@ -113,7 +113,7 @@ function EditGoalPopup({ visible, setVisible, view }) {
             // If values have been set
             if (value !== "" && date !== "none") {
                 apiManager.editXpGoal(
-                    getCookie("userID"),
+                    getCookie("jwtToken"),
                     id,
                     formatDateToPythonFormat(date),
                     title,
@@ -128,7 +128,7 @@ function EditGoalPopup({ visible, setVisible, view }) {
         } else {
             if (value !== "" && date !== "none") {
                 apiManager.editCardGoal(
-                    getCookie("userID"),
+                    getCookie("jwtToken"),
                     id,
                     formatDateToPythonFormat(date),
                     title,

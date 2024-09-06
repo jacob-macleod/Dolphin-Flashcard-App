@@ -22,11 +22,78 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 3.5.1 - 2024-08-17
+## 5.2.1 - 2024-09-06
 
 ### Changed
 
 - Adjusted CONTRIBUTING.md to give more detail
+
+## 5.2.0 - 2024-09-05
+
+### Added
+
+- Solve bug in server and added sign-in method
+
+## 5.1.0 - 2024-09-01
+
+### Fixed
+
+- Fixed bug where JWT_PRIVATE_KEY was not successfully stored in docker
+
+### Changed
+
+- Rewrote spaced repetition algorithm to improve it and make it more flexible
+
+## 5.0.0 - 2024-08-17
+
+### Added
+
+- New backend methods and frontend components to allow folders to be renamed and deleted
+- Added new 404 error page
+- Added new ErrorBoundary component to show when there is a Frontend React error
+- Added checking to see if the user is signed in for all pages
+- Added ability to sign out
+- Added ability to delete flashcards
+- BREAKING: Changed get-flashcards so it reads flashcard data from your own flashcard data list. It now needs the user ID in the API request
+- Made disabled buttons unclickable
+- A valid access link is required to sign in to the frontend
+
+### Fixed
+
+- Issue where the XP, streak and heatmap were not updated when a user revised cards
+
+### Changed
+
+- BREAKING: jwtToken (the json web token provided by create-account) is now passed instead of userID to all functions, allowing for greater security
+
+## 4.2.0 - 2024-08-16
+
+### Added
+
+- Flashcards can now be renamed - this includes a new backend API route and a new front end component
+
+## 4.1.0 - 2024-08-13
+
+### Added
+
+- Flashcards can be deleted - this includes new frontend code and a new backend component
+- Also test_update_goal_status is commented out for now - the unit tests keep failing due to minor changes in generated output. I need to work out how to solve this
+
+## 4.0.0 - 2024-08-11
+
+### Added
+
+- The study button next to the folder now allows you to study all cards in the folder
+
+### Changed
+
+- This is version `4.0.0` because 3.5.0 included breaking API changes, so the version should have been MAJOR
+
+## 3.5.1 - 2024-08-01
+
+### Fixed
+
+- /delete-goal now gives an error message if the goal does not exist
 
 ## 3.5.0 - 2024-07-31
 

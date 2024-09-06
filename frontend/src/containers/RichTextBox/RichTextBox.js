@@ -20,7 +20,7 @@ import UnnumberedListIcon from '../../static/unnumbered-list-icon.svg';
 import NumberedListIcon from '../../static/numbered-list-icon.svg';
 import './RichTextBox.css';
 
-function RichTextBox({ flashcardData, setFlashcardData, type }) {
+function RichTextBox({ flashcardData, setFlashcardData, type, view="desktop" }) {
   const [selectedColor, setSelectedColor] = useState('#000000');
   const [showColorPicker, setShowColorPicker] = useState(false);
   const dropdownRef = useRef(null);
@@ -96,7 +96,7 @@ function RichTextBox({ flashcardData, setFlashcardData, type }) {
         {renderButton(() => editor.chain().focus().toggleBulletList().run(), <Image url={UnnumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('bulletList'))}
         {renderButton(() => editor.chain().focus().toggleOrderedList().run(), <Image url={NumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('orderedList'))}
       </div>
-      <EditorContent editor={editor} className="rich-text-box" />
+      <EditorContent editor={editor} className={view === "mobile" ? "rich-text-box-mobile" : "rich-text-box"} />
     </div>
   );
 }

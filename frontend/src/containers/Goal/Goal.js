@@ -60,7 +60,7 @@ function Goal({ data, id, clickEvent }) {
                 <p className="link" style={{display: "flex", width: "fit-content", paddingTop: "8px", margin: "0px"}} onClick={clickEvent}>Edit</p>
             </div>
             <Image width={iconWidth} height={iconHeight} minWidth={iconWidth} url={deleteIcon} onClick={() => {apiManager.deleteGoal(
-                getCookie("userID"), id, () => {window.location.reload()}
+                getCookie("jwtToken"), id, () => {window.location.reload()}
             )}}/>
         </div>
     );

@@ -23,7 +23,15 @@ const ghostButtonStyle = {
     marginRight: "0px",
 };
 
-function CardOverview({ text, description: back = "", showResponseOptions = false, showTurnOverButton = false, height="fit-content", setResponse=()=>{} }) {
+function CardOverview({
+    text,
+    description: back = "",
+    showResponseOptions = false,
+    showTurnOverButton = false,
+    height="fit-content",
+    setResponse=()=>{},
+    turnOverCardOnSpaceKey=true
+}) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -55,7 +63,7 @@ function CardOverview({ text, description: back = "", showResponseOptions = fals
     }, [text]);
 
     function handleKeyDown(event) {
-        if (event.key === " ") {
+        if (event.key === " " && turnOverCardOnSpaceKey) {
             event.preventDefault(); // Prevent the default action of the space key
             turnOverCard();
         }
@@ -103,11 +111,11 @@ function CardOverview({ text, description: back = "", showResponseOptions = fals
                             justifyContent: "space-evenly",
                             marginTop: "20px",
                         }}>
-                            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
-                                setResponse("I know");
-                            }}/>
                             <GhostButton text="I'm not sure" style={ghostButtonStyle} onClick={() => {
                                 setResponse("I'm not sure");
+                            }}/>
+                            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
+                                setResponse("I know");
                             }}/>
                             <GhostButton text="This is easy" style={ghostButtonStyle} onClick={() => {
                                 setResponse("This is easy");

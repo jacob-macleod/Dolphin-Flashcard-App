@@ -57,7 +57,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
         if (selectedPath != null) {
           setLoadingIconVisible(null);
           apiManager.createFlashcard(
-            getCookie("userID"),
+            getCookie("jwtToken"),
             flashcardName,
             flashcardDescription,
             selectedPath,
@@ -72,7 +72,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
       if (loadEditFlashcardPage != false) {
         setLoadingIconVisible(false);
         window.open(
-          "/edit-flashcard-set?newSet=true&flashcardName="
+          "/edit-flashcard-set?flashcardName="
           + flashcardName + "&folder=" + selectedPath
           + "&flashcardDescription=" + flashcardDescription
           + "&flashcardID=" + loadEditFlashcardPage.flashcardID,

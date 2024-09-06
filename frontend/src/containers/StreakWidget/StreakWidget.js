@@ -26,16 +26,15 @@ function StreakWidget () {
       }
 
       useEffect(() => {
-        apiManager.calculateStreak(getCookie("userID"), setStreak);
-        apiManager.getXP(getCookie("userID"), setWeeklyXP, setTotalXP);
+        apiManager.calculateStreak(getCookie("jwtToken"), setStreak);
+        apiManager.getXP(getCookie("jwtToken"), setWeeklyXP, setTotalXP);
       }, []);
 
     return <>
     <WhiteOverlay style={overlayStyle}>
-        <Heading5 text="Streak" style={panelTitleStyle} />
         <div style={{display: "inline-flex"}}>
         <DelayedElement child={<Header text={streak} style={{margin: "8px", marginTop: "0px"}}/>} childValue={streak} />
-        <Heading4 color="blue" text="days" style={{justifyContent: "space-around", alignItems: "center", padding: "8px", paddingTop: "0px", paddingLeft: "0px"}}/>
+        <Heading4 color="blue" text="days streak" style={{justifyContent: "space-around", alignItems: "center", padding: "8px", paddingTop: "0px", paddingLeft: "0px"}}/>
         </div>
         <br></br>
         <div style={{display: "inline-flex", width: "100%"}}>

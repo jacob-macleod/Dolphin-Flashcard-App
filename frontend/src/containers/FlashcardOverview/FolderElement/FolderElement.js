@@ -22,16 +22,12 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
             setSelectedPath(null);
             setSelected(false);
         } else{
-            console.log(path);
             setSelectedPath(path);
             setSelected(true);
         }
     }
 
     useEffect(() => {
-        console.log("Selected path and path");
-        console.log(selectedPath);
-        console.log(path);
         if (selectedPath !== path) {
             setSelected(false);
         }
