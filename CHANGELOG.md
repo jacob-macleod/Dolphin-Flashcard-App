@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.2.0 - 2024-09-05
+
+### Added
+
+- Solve bug in server and added sign-in method
+
 ## 5.1.0 - 2024-09-01
 
 ### Fixed
