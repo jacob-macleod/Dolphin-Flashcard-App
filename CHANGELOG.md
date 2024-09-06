@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.2.1 - 2024-09-06
+
+### Changed
+
+- Adjusted CONTRIBUTING.md to give more detail
+
 ## 5.2.0 - 2024-09-05
 
 ### Added

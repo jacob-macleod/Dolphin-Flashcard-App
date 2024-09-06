@@ -41,11 +41,17 @@ So the fontend and backend are independent of each other. The frontend can be ru
 The frontend, stored in the `frontend` folder is a React app. Therefore, you need to install everything you normally would for a React project, including `npm`.
 The frontend will always communicate with the deployed api server `http://dolphinflashcards.com/api`. You can change this URL in frontend/src/api/config.js if needed, but remember to revert it before making a pull request (the file should be in the gitignore).
 
-###  1.2. <a name='RunningtheReactFrontendApp'></a>Running the React Frontend App
+### 1.2. <a name='InitialSetup'></a> Initial setting up
+Here's what you need to do before beginning development on Dolphin:
+* Fork the main repository at `https://github.com/jacob-macleod/Dolphin-Flashcard-App`
+* Clone the fork (with `git clone [...]`)
+* `cd Dolphin-Flashcard-App`
+* `cd frontend`
+
+###  1.3. <a name='RunningtheReactFrontendApp'></a>Running the React Frontend App
 
 Enter the following commands:
 
-* `cd frontend`
 * `npm install` which will install everything in `frontend/package.json`
 * `npm serve`
 
