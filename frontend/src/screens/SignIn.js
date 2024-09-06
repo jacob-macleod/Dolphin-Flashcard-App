@@ -56,8 +56,10 @@ function SignInPage({ jwtToken, setJwtToken, active=true }) {
     queryParams.get("rawIdToken") == null ? getCookie("rawAccessToken") : queryParams.get("rawIdToken")
   );
 
-  console.log(accessToken);
-  console.log(rawAccessToken);
+  const [forceRecreate, setForceRecreate] = useState(
+    queryParams.get("forceRecreate") == null ? false : queryParams.get("forceRecreate")
+  );
+
 
   useEffect(() => {
     function handleResize() {
@@ -93,7 +95,7 @@ function SignInPage({ jwtToken, setJwtToken, active=true }) {
       "appId": "1:481940183221:web:67bdc346eef4a5306286fc",
       "measurementId": "G-76Y8VTC390"
   });
-    signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setSignInErrorMessage);
+    signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setSignInErrorMessage, forceRecreate);
   }
 
   const signInButton = active ?

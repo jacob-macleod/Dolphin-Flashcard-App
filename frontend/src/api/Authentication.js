@@ -4,7 +4,7 @@ import serverURL from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
+export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setErrorMessage, forceRecreate) {
     const provider = new firebase.auth.GoogleAuthProvider();
   
     // Sign in
@@ -15,7 +15,11 @@ export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setEr
             const idToken = await user.getIdToken();
             const isNewUser = result.additionalUserInfo.isNewUser;
 
-            createAccount(user.uid, user.displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+            if (isNewUser || forceRecreate == "true") {
+                createAccount(user.uid, user.displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+            } else {
+                signIn(user.uid, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+            }
             //createCookie('userID', user.uid);
             createCookie('userName', user.displayName)
             createCookie("profileImage", user.photoURL);
@@ -32,6 +36,44 @@ export function createAccount(userID, displayName, idToken, setJwtToken, rawAcce
     const data = {
         userID: userID,
         displayName: displayName,
+        rawAccessToken: rawAccessToken,
+        accessToken: accessToken,
+        idToken: idToken
+    }; // JSON payload
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        // Add any other headers if required
+        },
+        body: JSON.stringify(data) // Convert data to JSON string
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // Parse response JSON if successful
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        console.log('Account creation successful:', data);
+        createCookie("jwtToken", data[0]["token"]);
+        setJwtToken(data[0]["token"])
+        // Set the accessTokens as cookies
+        createCookie("accessToken", accessToken);
+        createCookie("rawAccessToken", rawAccessToken);
+    })
+    .catch(error => {
+        console.error('There was an error creating the account:', error);
+        setErrorMessage("There was an error creating the account");
+        // Handle error here
+    });
+}
+
+export function signIn(userID, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
+    const endpoint = serverURL + 'sign-in';
+    const data = {
+        userID: userID,
         rawAccessToken: rawAccessToken,
         accessToken: accessToken,
         idToken: idToken
