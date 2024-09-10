@@ -22,16 +22,21 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+<<<<<<< HEAD
 ## 5.2.0 - 2024-09-05
 
 ### Added
 
 - Solve bug in server and added sign-in method
+=======
+## 3.5.0 - 2024-06-20
+>>>>>>> 38d80c8d2e60ebc373c4e7efa728d301afbdecbe
 
 ### Removed
 
 - Removed deprecated endpoint, /api/calculate-card-stats, from the documentation
 
+<<<<<<< HEAD
 ## 5.1.0 - 2024-09-01
 
 ### Fixed
@@ -99,6 +104,8 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Added a new view flashcards page
 
+=======
+>>>>>>> 38d80c8d2e60ebc373c4e7efa728d301afbdecbe
 ## 3.4.0 - 2024-06-15
 
 ### Changed
