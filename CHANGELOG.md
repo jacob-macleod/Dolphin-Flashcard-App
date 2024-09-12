@@ -22,6 +22,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.3.0 - 2024-09-12
+
+### Added
+
+- Added mintlify documentation
+
+### Removed
+
+- Removed deprecated endpoint, /api/calculate-card-stats, from the documentation
+
 ## 5.2.1 - 2024-09-06
 
 ### Changed
@@ -34,9 +44,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Solve bug in server and added sign-in method
 
-### Removed
-
-- Removed deprecated endpoint, /api/calculate-card-stats, from the documentation
 
 ## 5.1.0 - 2024-09-01
 
