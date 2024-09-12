@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.2.2 - 2024-09-12
+
+### Changed
+
+- Released the Alpha
+
 ## 5.2.1 - 2024-09-06
 
 ### Changed
