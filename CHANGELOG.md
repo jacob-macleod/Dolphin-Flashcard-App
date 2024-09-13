@@ -32,6 +32,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Removed deprecated endpoint, /api/calculate-card-stats, from the documentation
 
+## 5.2.3 - 2024-09-13
+
+### Fixed
+
+- Fixed issue in the card review algorithm
+
 ## 5.2.2 - 2024-09-12
 
 ### Changed
