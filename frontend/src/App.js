@@ -32,7 +32,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<SignInPage active={false}/>} />} />
+          <Route path="/" element={
+            <ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<MainPage jwtToken={jwtToken} setJwtToken={setJwtToken}/>} />
+            } />
           <Route path="/dashboard" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<MainPage jwtToken={jwtToken} setJwtToken={setJwtToken}/>} />} />
           <Route path="/flashcards" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<Flashcards />} />} />
           <Route path="/edit-flashcard-set" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<EditFlashcard />} />} />

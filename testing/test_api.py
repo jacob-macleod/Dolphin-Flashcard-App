@@ -227,7 +227,7 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=5)
     def test_get_invalid_user(self):
         """Get a user that does not exist"""
-        invalid_dummy = {"jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiZXhwIjoxNzI2MTY3NTg3LCJpYXQiOjE3MjU1NjI3ODd9.g8DSgL5xivnSd0zhMwjMd0rpO2p63gN2dpiEblNx_FxsKvNgm6VXaEybGaz3gXOP6yRpgaVgtXtmjQ8vTU2Sqg'}
+        invalid_dummy = {"jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw'}
 
         response = self.get_api(Routes.ROUTE_GET_USER["url"], invalid_dummy)
         response_json = response[0]
@@ -256,7 +256,7 @@ class TestApi(unittest.TestCase):
     @pytest.mark.run(order=7)
     def test_get_invalid_user_stats(self):
         """Get the statistics for a user that does not exist"""
-        invalid_dummy = {"jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiZXhwIjoxNzI2MTY3NTg3LCJpYXQiOjE3MjU1NjI3ODd9.g8DSgL5xivnSd0zhMwjMd0rpO2p63gN2dpiEblNx_FxsKvNgm6VXaEybGaz3gXOP6yRpgaVgtXtmjQ8vTU2Sqg'}
+        invalid_dummy = {"jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw'}
 
         response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], invalid_dummy)
         response_json = response[0]
@@ -322,7 +322,7 @@ class TestApi(unittest.TestCase):
     def test_get_invalid_flashcard_set(self):
         """Get a flashcard set that does not exist"""
         flashcard_set_data = {
-            "jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiZXhwIjoxNzI2MTY3NTg3LCJpYXQiOjE3MjU1NjI3ODd9.g8DSgL5xivnSd0zhMwjMd0rpO2p63gN2dpiEblNx_FxsKvNgm6VXaEybGaz3gXOP6yRpgaVgtXtmjQ8vTU2Sqg',
+            "jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw',
             "flashcardID":"invalid id"
         }
 
@@ -387,7 +387,7 @@ class TestApi(unittest.TestCase):
         """Get the cards for a user that does not exist"""
         response = self.post_api(
             Routes.ROUTE_GET_TODAY_CARDS["url"], {
-                "jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiZXhwIjoxNzI2MTY3NTg3LCJpYXQiOjE3MjU1NjI3ODd9.g8DSgL5xivnSd0zhMwjMd0rpO2p63gN2dpiEblNx_FxsKvNgm6VXaEybGaz3gXOP6yRpgaVgtXtmjQ8vTU2Sqg'
+                "jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw'
             }
         )
         assert response == ["User has no flashcards"]
