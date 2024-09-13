@@ -100,7 +100,6 @@ class FlashcardReviewer {
             return this._recappingCards[this._cardIndex];
         } else {
             // Go 5 cards ahead, go back to the second one, and continue from there
-
             if (this._cardLoopIndex >= 5) {
                 // Go 4 cards back
                 if (this._cardIndex - 4 >= 0) {
@@ -162,6 +161,8 @@ class FlashcardReviewer {
                 subDaily = 0;
                 // Remove the card from recapping
                 this._recappingCards.splice(cardIndex[1], 1);
+                this.learnedCards++;
+                updatedCardData = true;
             } else {
                 // Update subDaily
                 subDaily += 3;
@@ -189,7 +190,6 @@ class FlashcardReviewer {
             }
             this.learnedCards++;
         }
-
         this._cardData[cardDataIndex].review_status = `${daily}.${subDaily}`;
         this._cardData[cardDataIndex].last_review = lastReview;
 
@@ -244,10 +244,12 @@ class FlashcardReviewer {
         }
 
         // Find the index in unlearnedCards - if not found, indexes[1] and [2]will not be changed
-        for (let i=0; i<this._unlearnedCards.length; i++) {
-            if (this._unlearnedCards[i].cardID === cardID) {
-                indexes[1] = i;
-                indexes[2] = "unlearned";
+        if (indexes[1] === null) {
+            for (let i=0; i<this._unlearnedCards.length; i++) {
+                if (this._unlearnedCards[i].cardID === cardID) {
+                    indexes[1] = i;
+                    indexes[2] = "unlearned";
+                }
             }
         }
 
@@ -289,7 +291,6 @@ class FlashcardReviewer {
         if (this._recappingCards.length === 0 && this._unlearnedCards.length === 0) {
             if (this._cardsSaved === false) {
                 this._saveFlashcardData(this._cardData);
-                console.log("Saving flashcard data");
                 this._cardsSaved = true;
             }
             return true;
