@@ -1,63 +1,7 @@
-## Calculate Card Stats
-### **Endpoint:** /calculate-card-stats
-### **Method:** POST
-Calculate card statistics when a user is revising a set of cards. For each card, it calculates the next card to look at and the new card’s review times and statuses.
-
-### Parameters
-
-#### **Request Body Parameters**
-
-| Parameter    | Description                                                                               | Type    | Required/Optional |
-|--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | The user whose card statistics are being calculated                                       | String  | Required          |
-| cardStatus   | The state of the card. Possible values are "right", "wrong", or "easy."                   | String  | Required          |
-| cardStreak   | Number of cards in the set that have been examined in a session before a mistake is made. | String  | Required          |
-| currentIndex | Index of the current card being looked at                                                 | String  | Required          |
-| lastReview   | Date of the last review                                                                   | String  | Required          |
-| maxIndex     | The maximum number of cards in the set                                                    | String  | Required          |
-| reviewStatus | Indicates the review status of the card                                                   | String  | Required          |
-
-
-## Request Example
-
-```
-    Curl  -X POST  -H "Content-Type: application/json” -d {"userID": "my-id", "cardStatus": "right", "cardStreak": "3", "currentIndex": "4", "lastReview": "09/01/2024", "maxIndex": "20", "reviewStatus": "8.0"} http://dolphinflashcards.com/api/calculate-card-stats
-
-```
-
-## Response Example
-
-**Success Response**<br>
-HTTP Status: 200
-```
-    {
-        "currentIndex": "3",
-        "maxIndex": "25",
-        "cardStatus": "right",
-        "lastReview": "01/01/2024",
-        "reviewStatus": "8.0",
-        "cardStreak": "5"
-    }
-
-```
-
-**Error Response**<br>
-HTTP Status: 400
-```
-{
-    "error": Your supplied json keys do not match the expected format. The request should be in the format:  {'userID': 'my-id', 'cardStatus': 'integer', 'cardStreak': 'integer', 'currentIndex': 'integer', 'lastReview': 'string', 'maxIndex': 'integer', 'reviewStatus': 'float'} 
-}
-
-```
-
-
-*********************************
-
-
-## Update Heat map
+## Update Heat map 
 ### **Endpoint:** /update-heatmap
 ### **Method:** POST
-Update the user's heatmap data when their streak is modified.
+ Called when streak is updated. Streak is the number of cards that have been looked at in the set this session before getting one wrong.
 
 
 ### Parameters
@@ -66,21 +10,30 @@ Update the user's heatmap data when their streak is modified.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the user whose heatmap data is to be updated                                   | String  | Required          |
+| userID       | Identifies the user with an updated heatmap data.                                        | String  | Required          |
 
 
 
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d { "user1": "123"} http://dolphinflashcards.com/api/calculate-card-stats
-
+    Curl  -X POST  -H "Content-Type: application/json” -d { "userID": "user1"} http://dolphinflashcards.com/api/update-heatmap
 ```
 
 ## Response Example
 
 **Success Response**<br>
 HTTP Status: 200
+
+Returns:
+```
+{
+    "error": "User does not exist!"
+}
+```
+
+
+Instead of:
 ```
 {
     "2030-01-01": "8",
@@ -88,19 +41,50 @@ HTTP Status: 200
     "2030-01-03": "5",
     "2030-01-04": "15"
 }
-
-
 ```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+|                 |                |   | 
+
+
+
+
 
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 ```
 {
-    "error": Your supplied json keys do not match the expected format. The request     should be in the format: {'userID': ' '}
+    "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ''}"
 }
 
 ```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible solution.               | string  | 
 
+
+
+HTTP Status: 500
+```
+{
+    "error": "User does not exist!"
+}
+
+```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Provides details about the nature of the error.                                   | string  | 
+
+
+
+
+
+<br></br>
 **********************************
 
 ## Get Heatmap
@@ -115,14 +99,14 @@ Retrieve the user's heatmap data.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the user whose heatmap data is to be retrieved.                               | String  | Required          |
+| userID       | Identifies the owner of the heatmap data.                                                 | String  | Required          |
 
 
 
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d { "user1": "123"} http://dolphinflashcards.com/api/get-heatmap
+    Curl  -X POST  -H "Content-Type: application/json” -d { "userID": "user1"} http://dolphinflashcards.com/api/get-heatmap
 
 ```
 
@@ -130,6 +114,16 @@ Retrieve the user's heatmap data.
 
 **Success Response**<br>
 HTTP Status: 200
+
+Returns:
+```
+{
+    "error": "User does not exist!"
+}
+```
+
+
+Instead of:
 ```
 {
    "2030-01-01": "1",
@@ -140,22 +134,52 @@ HTTP Status: 200
 
 ```
 
+
+
+
+
 **Error Response**<br>
 HTTP Status: 400
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
 ```
 {
-    "error": Your supplied json keys do not match the expected format. The request     should be in the format: {'userID': ' '}
+    "error": "Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ''}"
 }
+```
 
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible solution.               | string  | 
+
+
+
+
+
+HTTP Status: 500
 
 ```
+{
+    "error": "User does not exist!"
+}
+```
+
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Provides details about the nature of the error.                                   | string  | 
+
+
+
+
 
 **********************************
 
 ## Calculate Streak
 ### **Endpoint:** /calculate-streak
 ### **Method:** POST
-Calculate the user's streak, and increase it if needed.
+Calculate the user's streak, and increase it if necessary. Streak is the number of cards that have been looked at in the set this session before getting one wrong.
 
 
 ### Parameters
@@ -164,7 +188,7 @@ Calculate the user's streak, and increase it if needed.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| increase       | Can be added to the streak to increase it, if needed                                    | String  | Required          |
+| increase     | Can be added to the query string to increase a user's streak. If needed, set `increase = true` | Boolean  | Optional       |
 
 
 
@@ -172,14 +196,14 @@ Calculate the user's streak, and increase it if needed.
 
 | Parameter    | Description                                                                               | Type    | Required/Optional |
 |--------------|-------------------------------------------------------------------------------------------|---------|-------------------|
-| userID       | Identifies the user whose streak is to be calculated                                      | String  | Required          |
+| userID       | Identifies the owner of the streak.                                                       | String  | Required          |
 
 
 
 ## Request Example
 
 ```
-    Curl  -X POST  -H "Content-Type: application/json” -d { "user1": "123"} http://dolphinflashcards.com/api/calculate-streak?increase=true
+    Curl  -X POST  -H "Content-Type: application/json” -d { "userID": "user1"} http://dolphinflashcards.com/api/calculate-streak?increase=true
 
 ```
 
@@ -187,6 +211,17 @@ Calculate the user's streak, and increase it if needed.
 
 **Success Response**<br>
 HTTP Status: 200
+
+Returns:
+
+```
+{
+    "error": "'NoneType' object is not subscriptable"
+}
+```
+
+
+Instead of:
 ```
 {
     "success": true
@@ -194,11 +229,34 @@ HTTP Status: 200
 
 ```
 
+
+
+
 **Error Response**<br>
 HTTP Status: 400
 ```
 {
-    "error": Your supplied json keys do not match the expected format. The request     should be in the format: {'userID': ' '}
+    "error": Your supplied json keys do not match the expected format. The request should be in the format: {'userID': ' '}
 }
 
 ```
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible solution.               | string  | 
+
+
+HTTP Status: 500
+A bad request error. Returned when the request body parameter is not in the expected JSON format.
+
+```
+{
+    "error": "'NoneType' object is not subscriptable"
+}
+
+```
+
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error and provides a possible reason.               | string  | 

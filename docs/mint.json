@@ -1,0 +1,181 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Dolphin Flashcard",
+  "logo": {
+    "dark": "/logo/dolphin_logo.svg",
+    "light": "/logo/dolphin_logo.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#6A84C5",
+    "light": "#6A84C5",
+    "dark": "#32519E",
+    "background": {
+      "light": "#0D2944",
+      "dark": "#0D2944"
+    },
+    "anchors": {
+      "from": "#6A84C5",
+      "to": "#6A84C5"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "http://dolphinflashcards.com"
+    }
+  ],
+
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Join the team on Slack",
+      "icon": "Slack",
+      "url": "https://join.slack.com/t/dolphinflashcards/shared_invite/zt-2pfey518m-Zw5D3xQbW94_PZAjDfLSUQ"
+    },
+    {
+      "name": "Github",
+      "icon": "github",
+      "url": "https://github.com/jacob-macleod/Dolphin-Flashcard-App"
+    },
+    {
+      "name": "Website",
+      "icon": "link",
+      "url": "http://dolphinflashcards.com"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Welcome",
+      "pages": [
+        "conceptual-docs/introduction"
+      ]
+    },
+    {
+      "group": "Getting Started",
+      "pages": [
+        "conceptual-docs/whydolphin",
+        "conceptual-docs/howitworks",
+        "conceptual-docs/quickstart"
+      ]
+    },
+    {
+      "group": "Extras",
+      "pages": [
+        "extras/terminology",
+        "extras/contributing",
+        "extras/changelog"
+      ]
+    },
+    {
+      "group": "API Documentation",
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/authentication"
+      ]
+    },
+    {
+      "group": "Account",        
+      "pages": [
+        {
+          "group": "Create account",
+          "pages": ["api-reference/endpoint/account/create-account"]
+        }
+      ]
+    },
+    {
+      "group": "Card management",
+      "pages": [
+        {
+          "group": "Create flashcard",
+          "pages": ["api-reference/endpoint/card-management/create-flashcard"]
+        },
+        {
+          "group": "Create folder",
+          "pages": ["api-reference/endpoint/card-management/create-folder"]
+        },
+        {
+          "group": "Get all cards",
+          "pages": ["api-reference/endpoint/card-management/get-all-cards"]
+        },
+        {
+          "group": "Get flashcard",
+          "pages": [
+            "api-reference/endpoint/card-management/get-flashcard",
+            "api-reference/endpoint/card-management/get-flashcard-1"
+          ]
+        },
+        {
+          "group": "Get flashcard item",
+          "pages": [
+            "api-reference/endpoint/card-management/get-flashcard-item",
+            "api-reference/endpoint/card-management/get-flashcard-item-1"
+          ]
+        },
+        {
+          "group": "Get today cards",
+          "pages": ["api-reference/endpoint/card-management/get-today-cards"]
+        },
+        {
+          "group": "Move flashcard set",
+          "pages": ["api-reference/endpoint/card-management/move-flashcard-set"]
+        }
+      ]
+    },
+    {
+      "group": "Goals",
+      "pages": [
+        {
+          "group": "Create card goal",
+          "pages": ["api-reference/endpoint/goal/create-card-goal"]
+        },
+        {
+          "group": "Create xp goal",
+          "pages": ["api-reference/endpoint/goal/create-xp-goal"]
+        },
+        {
+          "group": "Edit card goal",
+          "pages": ["api-reference/endpoint/goal/edit-card-goal"]
+        },
+        {
+          "group": "Create xp goal",
+          "pages": ["api-reference/endpoint/goal/edit-xp-goal"]
+        },
+        {
+          "group": "Update goal status",
+          "pages": ["api-reference/endpoint/goal/update-goal-status"]
+        },
+        {
+          "group": "Delete goal",
+          "pages": ["api-reference/endpoint/goal/delete-goal"]
+        }
+      ]
+    },
+    {
+      "group": "Statistics",
+      "pages": [
+        {
+          "group": "Calculate streak",
+          "pages": ["api-reference/endpoint/statistics/calculate-streak"]
+        },
+        {
+          "group": "Get heatmap",
+          "pages": ["api-reference/endpoint/statistics/get-heatmap"]
+        },
+        {
+          "group": "Update heatmap",
+          "pages": ["api-reference/endpoint/statistics/update-heat-map"]
+        }     
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/dolphinflshcrds",
+    "github": "https://github.com/jacob-macleod/Dolphin-Flashcard-App"
+  }
+}
