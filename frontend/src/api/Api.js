@@ -334,6 +334,13 @@ class ApiManager {
             setReload(true);
         }, "DELETE");
     }
+
+    searchForFlashcard(searchTerm, setResults) {
+        const url = 'search?name=' + searchTerm
+        this.fetchData({}, url, results => {
+            setResults(results);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

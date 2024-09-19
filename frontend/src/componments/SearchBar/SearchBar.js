@@ -6,10 +6,12 @@ function SearchBar({
     setSearchTerm,
     view,
     marginRight,
+    marginTop,
     borderRadius,
     paddingBottom,
     placeholder,
-    width
+    width,
+    float
 }) {
     return (
         <input
@@ -22,9 +24,11 @@ function SearchBar({
                 float: "left",
                 marginLeft: view === "mobile" ? "0px" : "16px",
                 marginRight: marginRight,
+                marginTop: marginTop,
                 borderRadius: borderRadius,
                 paddingBottom: paddingBottom,
-                width: width
+                width: width,
+                float: float
             }}
             type='text'
             placeholder={placeholder}

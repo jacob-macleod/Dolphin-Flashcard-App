@@ -30,7 +30,7 @@ class FlashcardSearcher:
         flashcard_found = []
         for doc in self._data:
             dict_data = doc.to_dict()
-            if search_term in dict_data["name"]:
+            if search_term.upper() in dict_data["name"].upper():
                 dict_data["id"] = doc.id
                 flashcard_found.append(dict_data)
 

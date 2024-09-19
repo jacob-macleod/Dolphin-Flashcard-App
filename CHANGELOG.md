@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.4.0 - 2024-09-19
+
+### Added
+
+- Added abilty to search for flashcards
+
 ## 5.3.0 - 2024-09-12
 
 ### Added
