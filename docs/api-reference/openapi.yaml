@@ -24,36 +24,19 @@ paths:
         - Account
       responses:
         '200':
-          description: OK. Returned when the request is successfully executed.
+          description: Sign-in successful, returns a JWT token
           content:
             application/json:
               schema:
-                type: array
-                x-examples:
-                  Example 1:
-                    - success: true
-                    - 200
-                items:
-                  type:
-                    - object
-                    - integer
-                  example: 200
-                  properties:
-                    '200':
-                      type: integer
-                      x-stoplight:
-                        id: 9ay8asg75dn11
-                      example: 200
-                    '':
-                      type: object
-                      x-stoplight:
-                        id: 57rr5zr572ubz
-                      properties:
-                        success:
-                          type: string
-                          x-stoplight:
-                            id: wrg28qp8d1bwf
-                          example: 'true'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    description: The generated JWT token for the user
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         '400':
           description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
@@ -62,12 +45,12 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''displayName'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format...'
                 properties:
                   error:
                     type: string
                     description: Describes the nature of the error and provides a possible solution.
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''displayName'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format...'
       operationId: post-create-account
       x-stoplight:
         id: 7n7de91o3dz9d
@@ -79,11 +62,17 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user7000
+                  userID: user1
                   displayName: testAccount
+                  rawAccessToken: test
+                  accessToken: duh32*£dh
+                  idToken: eu26bdj7s...
               required:
                 - userID
                 - displayName
+                - rawAccessToken
+                - accessToken
+                - idToken
               properties:
                 userID:
                   type: string
@@ -93,6 +82,112 @@ paths:
                   type: string
                   example: sampleName
                   description: A unique name or title for the new user.
+                rawAccessToken:
+                  type: string
+                  example: test
+                  description: The raw access token to use to authenticate the Alpha
+                accessToken:
+                  type: string
+                  example: duh32*£dh
+                  description: The hashed version of the rawAccessToken
+                idToken:
+                  type: string
+                  example: eu26bdj7s...
+                  description: The ID Token provided by firebase authentication
+  /sign-in:
+    post:
+      summary: Sign in
+      tags:
+        - Account
+      responses:
+        '200':
+          description: Sign-in successful, returns a JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    description: The generated JWT token for the user
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '400':
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''rawAccessToken'': '''', ''accessToken'': '''', ''idToken'': ''''}'
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''rawAccessToken'': '''', ''accessToken'': '''', ''idToken'': ''''}'
+        '403':
+          description: Forbidden, user does not exist or token mismatch
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "User ID does not match token."
+        '500':
+          description: Internal server error, JWT encoding failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "JWT encoding failed due to an unexpected error"
+      operationId: post-sign-in
+      x-stoplight:
+        id: 7n7de91o3dz9d
+      description: Create a new user account.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  userID: user123
+                  rawAccessToken: test
+                  accessToken: duh32*£dh
+                  idToken: eu26bdj7s...
+              required:
+                - userID
+                - rawAccessToken
+                - accessToken
+                - idToken
+              properties:
+                userID:
+                  type: string
+                  example: user1
+                  description: A unique identifier to be assigned to the new user.
+                rawAccessToken:
+                  type: string
+                  example: test
+                  description: The raw access token to use to authenticate the Alpha
+                accessToken:
+                  type: string
+                  example: duh32*£dh
+                  description: The hashed version of the rawAccessToken
+                idToken:
+                  type: string
+                  example: eu26bdj7s...
+                  description: The ID Token provided by firebase authentication
   /create-flashcard:
     post:
       summary: Create flashcard
@@ -127,11 +222,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
       operationId: create-flashcard
       x-stoplight:
         id: xhqqqo1sd3bqu
@@ -143,7 +238,7 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user1
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   flashcardName: Expense Tracker
                   flashcardDescription: A set of flashcards for tracking expenses
                   folder: folder-name/folder-2
@@ -161,16 +256,16 @@ paths:
                       reviewStatus: '0.0'
                       lastReview: 15-07-2024
               required:
-                - userID
+                - jwtToken
                 - flashcardName
                 - flashcardDescription
                 - folder
                 - cards
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: The unique ID of the user editing or creating flashcards.
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 flashcardName:
                   type: string
                   description: 'The name of the flashcard set. '
@@ -237,12 +332,12 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': ''''}'
                 properties:
                   error:
                     type: string
                     description: Describes the nature of the error and provides a possible solution.
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': ''''}'
       operationId: post-create-folder
       x-stoplight:
         id: 1kcsx8hucsylb
@@ -254,16 +349,16 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user7000
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   folder: firstFolder
               required:
-                - userID
+                - jwtToken
                 - folder
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: The unique identity of the user creating a folder.
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 folder:
                   type: string
                   description: 'The name or title of the folder to be created. '
@@ -308,11 +403,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
                     description: 'Describes the nature of the error and provides a possible solution.  '
       operationId: get-get-flashcard
       x-stoplight:
@@ -325,18 +420,18 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user1
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   folder: firstFolder
                   flashcardName: My new set
               required:
-                - userID
+                - jwtToken
                 - folder
                 - flashcardName
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: The unique identifier of the user who owns the flashcard.
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 folder:
                   type: string
                   description: The name of the folder containing the flashcard.
@@ -384,12 +479,12 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
                 properties:
                   error:
                     type: string
                     description: 'Describes the nature of the error and provides a possible solution.  '
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
       operationId: post-get-flashcard
       x-stoplight:
         id: 0g9zs158608yt
@@ -401,17 +496,17 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user1
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   folder: firstFolder
                   flashcardName: firstCard
               required:
-                - userID
+                - jwtToken
                 - folder
                 - flashcardName
               properties:
-                userID:
+                jwtToken:
                   type: string
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   description: 'The unique identifier of the user who owns the flashcard. '
                 folder:
                   type: string
@@ -687,16 +782,16 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''string''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''}'
                     description: Describes the nature of the error and provides a possible solution.
               examples:
                 Example 1:
                   value:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''string''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
       operationId: get-get-today-cards
       x-stoplight:
         id: 144ypjxh6u3n4
@@ -707,14 +802,14 @@ paths:
             schema:
               type: object
               required:
-                - userID
+                - jwtToken
               properties:
-                userID:
+                jwtToken:
                   type: string
                   x-stoplight:
                     id: x9opv12liwlhi
                   description: 'The identity of the user learning the flashcards. '
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
         description: ''
   /get-all-cards:
     post:
@@ -723,7 +818,7 @@ paths:
         - Card management
       responses:
         '200':
-          description: 'OK. Returns the string: `"User has no flashcards"` when supplied an invalid userID.'
+          description: 'OK. Returns the string: `"User has no flashcards"` when supplied an invalid jwtToken.'
           content:
             application/json:
               schema:
@@ -862,11 +957,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''''
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''''
                     description: Describes the nature of the error and provides a possible solution.
       operationId: post-get-all-cards
       x-stoplight:
@@ -879,13 +974,13 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user1
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
               required:
-                - userID
+                - jwtToken
               properties:
-                userID:
+                jwtToken:
                   type: string
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   description: Identifies the user who wants to retrieve their flashcards.
   /move-flashcard-set:
     post:
@@ -915,11 +1010,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
                     description: 'Describes the nature of the error and provides a possible solution. '
       operationId: post-move-flashcard-set
       x-stoplight:
@@ -932,20 +1027,20 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user1
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   currentLocation: top-level-parent-name/parent-name-2
                   flashcardID: '6796878844881'
                   moveLocation: My-third-folder
               required:
-                - userID
+                - jwtToken
                 - currentLocation
                 - flashcardID
                 - moveLocation
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: 'The identity of the user moving their flashcard set to a new location. '
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 currentLocation:
                   type: string
                   description: 'The current folder path. '
@@ -984,11 +1079,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format:  {''userID'': ''string'', ''goalXP'': ''number'', ''endDate'': ''sample-date''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format:  {''jwtToken'': ''string'', ''goalXP'': ''number'', ''endDate'': ''sample-date''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalXP'': '' '', ''endDate'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalXP'': '' '', ''endDate'': '' ''}'
                     description: 'Describes the nature of the error and provides a possible solution. '
               examples:
                 Example 1:
@@ -1005,17 +1100,17 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: '123'
+                  jwtToken: '123'
                   goalXP: '100'
                   endDate: 30/07/2024
               required:
-                - userID
+                - jwtToken
                 - goalXP
                 - endDate
               properties:
-                userID:
+                jwtToken:
                   type: string
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   description: Identifies the user who is creating an XP goal.
                 goalXP:
                   type: string
@@ -1028,7 +1123,7 @@ paths:
             examples:
               Example 1:
                 value:
-                  userID: '123'
+                  jwtToken: '123'
                   goalXP: '100'
                   endDate: 30/07/2024
       tags:
@@ -1062,12 +1157,12 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''cardsToRevise'': '''', ''endDate'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''cardsToRevise'': '''', ''endDate'': ''''}'
                 properties:
                   error:
                     type: string
                     description: ' Describes the nature of the error and provides a possible solution.   '
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''cardsToRevise'': '' '', ''endDate'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''cardsToRevise'': '' '', ''endDate'': '' ''}'
       operationId: post-create-card-goal
       x-stoplight:
         id: 35ujdrtoyfzr9
@@ -1079,18 +1174,18 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user7000
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   cardsToRevise: '4'
                   endDate: 30/07/2024
               required:
-                - userID
+                - jwtToken
                 - cardsToRevise
                 - endDate
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: Identifies the user who is creating a card goal.
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 cardsToRevise:
                   type: string
                   description: The number of cards the user intends to revise for the current goal.
@@ -1140,7 +1235,7 @@ paths:
                     type: object
                     x-stoplight:
                       id: vp5tii3oejq4d
-                    description: 'A 77-digit unique identifier or key associated with each goal. '
+                    description: 'A unique identifier or key associated with each goal. '
                     properties:
                       data:
                         type: object
@@ -1178,7 +1273,7 @@ paths:
                     type: object
                     x-stoplight:
                       id: 4f9jwlnkfq031
-                    description: 'A 77-digit unique identifier or key associated with each goal. '
+                    description: 'A unique identifier or key associated with each goal. '
                     properties:
                       data:
                         type: object
@@ -1224,30 +1319,30 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''string''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''} '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''} '
                     description: Describes the nature of the error and provides a possible solution.
       operationId: post-update-goal-status
       x-stoplight:
         id: hmtbfg51sa572
-      description: 'Update the status of a goal. The possible values for the status of a goal are `completed`, `in progress`, or `failed`. Returns an empty object when the userID provided is invalid.'
+      description: 'Update the status of a goal. The possible values for the status of a goal are `completed`, `in progress`, or `failed`. Returns an empty object when the jwtToken provided is invalid.'
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-                - userID
+                - jwtToken
               properties:
-                userID:
+                jwtToken:
                   type: string
                   x-stoplight:
                     id: z79bhm434n5vx
                   description: An identifier for the user who is updating the goal status.
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
       tags:
         - Goal
   /edit-card-goal:
@@ -1276,11 +1371,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''goalID'': '''', ''newEndDate'': '''', ''newTitle'': '''', ''newCardsToRevise'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''goalID'': '''', ''newEndDate'': '''', ''newTitle'': '''', ''newCardsToRevise'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalID'': '' '', ''newEndDate'': '''', ''newTitle'': '' '', ''newCardsToRevise'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalID'': '' '', ''newEndDate'': '''', ''newTitle'': '' '', ''newCardsToRevise'': '' ''}'
                     description: Describes the nature of the error and provides a possible solution.
         '500':
           description: Internal Server Error
@@ -1307,25 +1402,25 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user7000
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   goalID: '58748748168480479028433924465493243860761911102946223297681236368808083325563'
                   newEndDate: 30/07/2024
                   newTitle: Updated Goal
                   newCardsToRevise: 8
               required:
-                - userID
+                - jwtToken
                 - goalID
                 - newEndDate
                 - newTitle
                 - newCardsToRevise
               properties:
-                userID:
+                jwtToken:
                   type: string
-                  description: 'Identifies the user who is editing their card goal.  '
-                  example: user1
+                  description: 'Stores the user who is editing their card goal.  '
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 goalID:
                   type: string
-                  description: A 77-digit unique identifier or key associated with the card goal being edited.
+                  description: A unique identifier or key associated with the card goal being edited.
                   example: '11110748168480479028433924465493243860761911102946223297681236368808083322222'
                 newEndDate:
                   type: string
@@ -1342,7 +1437,7 @@ paths:
             examples:
               Example 1:
                 value:
-                  userID: '123'
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
                   goalID: goal1
                   newEndDate: 30/07/2024
                   newTitle: title1
@@ -1375,11 +1470,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''goalID'': '''', ''newEndDate'': ''^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$'', ''newTitle'': '''', ''newGoalXP'': ''^\\d+$''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''goalID'': '''', ''newEndDate'': ''^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$'', ''newTitle'': '''', ''newGoalXP'': ''^\\d+$''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalID'': '' '', ''newEndDate'': '' '', ''newTitle'': '' '', ''newGoalXP'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalID'': '' '', ''newEndDate'': '' '', ''newTitle'': '' '', ''newGoalXP'': '' ''}'
                     description: 'Describes the nature of the error and provides a possible solution. '
         '500':
           description: Internal Server Error.
@@ -1406,24 +1501,24 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: user7000
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   goalID: '46882192866017507647804408894345572659406282731228567391554804537877046919642'
                   newEndDate: 15/07/2024
                   newTitle: Updated Title for XP Goal
                   newGoalXP: '80'
               required:
-                - userID
+                - jwtToken
                 - goalID
                 - newEndDate
                 - newTitle
                 - newGoalXP
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: 'Identifies the user who is editing their XP goal.    '
                 goalID:
                   type: string
-                  description: A 77-digit unique identifier or key associated with the XP goal being edited.
+                  description: A unique identifier or key associated with the XP goal being edited.
                   example: '55335192866017507647804408894345572659406282731228567391554804537877046919111'
                 newEndDate:
                   type: string
@@ -1440,7 +1535,7 @@ paths:
             examples:
               Example 1:
                 value:
-                  userID: user123
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   goalID: goal1
                   newEndDate: 15/07/2024
                   newTitle: title1
@@ -1473,12 +1568,12 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''goalID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''goalID'': ''''}'
                 properties:
                   error:
                     type: string
                     description: 'Describes the nature of the error and provides a possible solution. '
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' '', ''goalID'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalID'': '' ''}'
       operationId: delete-delete-goal
       x-stoplight:
         id: nbiozq3qumve3
@@ -1490,19 +1585,19 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: '123'
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
                   goalID: goal1
               required:
-                - userID
+                - jwtToken
                 - goalID
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: 'Identifies the user deleting a goal. '
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 goalID:
                   type: string
-                  description: A 77-digit unique identifier or key associated with the goal being deleted.
+                  description: A unique identifier or key associated with the goal being deleted.
                   example: goal1
       tags:
         - Goal
@@ -1537,11 +1632,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                     description: Provides more details about the error.
         '500':
           description: Internal server error.
@@ -1568,16 +1663,16 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  user1: '123'
+                  eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp: '123'
               required:
-                - userID
+                - jwtToken
               properties:
-                userID:
+                jwtToken:
                   type: string
                   x-stoplight:
                     id: ldvlxqacihq5n
                   description: 'Identifies the user with an updated heatmap data. '
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
   /get-heatmap:
     post:
       summary: Get Heatmap
@@ -1606,12 +1701,12 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
                     description: 'Describes the nature of the error and provides a possible solution. '
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''}'
         '500':
           description: Internal Server Error.
           content:
@@ -1637,14 +1732,14 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  userID: '123'
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
               required:
-                - userID
+                - jwtToken
               properties:
-                userID:
+                jwtToken:
                   type: string
                   description: 'Identifies the user whose heatmap data is being retrieved. '
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
   /calculate-streak:
     post:
       summary: Calculate Streak
@@ -1682,11 +1777,11 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '' ''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''}'
                     description: Describes the nature of the error and provides a possible solution.
         '500':
           description: 'Internal server error. '
@@ -1718,18 +1813,18 @@ paths:
             schema:
               type: object
               required:
-                - userID
+                - jwtToken
               properties:
-                userID:
+                jwtToken:
                   type: string
                   x-stoplight:
                     id: ulxhv08jir4pf
                   description: The unique identifier of the user to calculate the streak for.
-                  example: user1
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
             examples:
               Example 1:
                 value:
-                  userID: '123'
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
 components:
   schemas: {}
   securitySchemes:

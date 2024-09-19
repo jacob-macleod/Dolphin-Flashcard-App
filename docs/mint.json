@@ -85,6 +85,10 @@
         {
           "group": "Create account",
           "pages": ["api-reference/endpoint/account/create-account"]
+        },
+        {
+          "group": "Sign in",
+          "pages": ["api-reference/endpoint/account/sign-in"]
         }
       ]
     },

@@ -2,7 +2,24 @@
 title: 'Authentication'
 ---
 
-Currently, no authentication is needed to interact with this API. However, we are actively working on implementing this feature.
+Most requests require a JWT Token to run. While we aim to add an API enpoint to generate this in the future,
+this currently requires the user to log in with the deployed website.
+
+Note that while `/api/create-account` and `/api/sign-in` do not require a JWT Token, they do require the `idToken`
+parameter, which is only provided by Firebase.
+
+To get a JWT Token, follow these steps:
+* Log in or create an account
+* Open the developer console. On Chrome, this can be done with `Ctrl-Shift-j`
+* Navigate to the "Cookies" panel
+* Find the `jwtToken` cookie, click on it, and save its value
+    * This is used for authentication - you shouldn't share it with anyone!
+
+If you want to develop a seperate frontend or some sort of automation and you need to programatically create a JWT Token for
+authentication, please create an Issue on Github, and either work on it yourself, asking for any information as needed, or
+assign it to `@jacob-macleod` and ask him to work on it
+
+An API to get the JWT Token could easily be written by following the above steps using a framework such as Selenium (Python).
 
 <br></br>
 
