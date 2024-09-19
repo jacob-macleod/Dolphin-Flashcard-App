@@ -464,3 +464,21 @@ def delete_card():
             return jsonify({"error": f"Card {card_id} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/search", methods=["POST"])
+def search_flashcard():
+    """
+    Search for a flashcard set by name
+    Example request:
+    {
+        "flashcardName": "my-flashcard-name"
+    }
+    """
+    try:
+        flashcard_name = request.args.get("name")
+
+        results = db.flashcard_set.search_flashcard(flashcard_name)
+
+        return jsonify(results), 200
+    except Exception as e:
+        return jsonify(str(e)), 500

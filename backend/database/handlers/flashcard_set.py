@@ -1,6 +1,7 @@
 """Provides utility classes for interacting with the flashcard_set database
 """
 from database.handlers.database_handler import DatabaseHandler
+from classes.flashcard_searcher import FlashcardSearcher
 
 class FlashcardSet(DatabaseHandler):
     """Provides utility classes for interacting with the flashcard_set database
@@ -45,4 +46,16 @@ class FlashcardSet(DatabaseHandler):
         Args:
             flashcard_id (str): The flashcard ID to get
         """
-        return self._context.collection(self._db_name).document(flashcard_id).get().to_dict()
+        flashcard_set = self._context.collection(self._db_name).document(flashcard_id).get().to_dict()
+        return flashcard_set
+
+    def search_flashcard(self, flashcard_name: str):
+        """Search for flashcards by name
+
+        Args:
+            flashcard_name (str): The name of the flashcard to search for
+        """
+        self.get_flashcard_set(flashcard_name)
+        docs = self._context.collection(self._db_name).select(['name']).stream()
+        searcher = FlashcardSearcher(docs)
+        return searcher.search(flashcard_name)
