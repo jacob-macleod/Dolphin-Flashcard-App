@@ -208,10 +208,10 @@ def get_heatmap() :
     }
     """
     user_id = request.json.get("userID")
-    # try:
-    return db.statistics.get_heatmap(user_id)
-    # except Exception as e:
-    #     return jsonify({"error": str(e)}), 500
+    try:
+        return db.statistics.get_heatmap(user_id)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
 @validate_json(CALCULATE_STREAK_FORMAT)
