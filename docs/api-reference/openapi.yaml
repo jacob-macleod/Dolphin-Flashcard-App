@@ -1825,6 +1825,72 @@ paths:
               Example 1:
                 value:
                   jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
+  /search:
+    post:
+      summary: Search
+      tags:
+        - Card Management
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: array
+                x-examples:
+                  Example 1:
+                    - streak: 0
+                items:
+                  type:
+                    - object
+                    - integer
+                  properties:
+                    '200':
+                      type: integer
+                      x-stoplight:
+                        id: rrojbzk2fmv0x
+                      description: HTTP status code indicating a successful operation.
+                    streak:
+                      type: array
+                      example: [{"name": "Flashcard1", "id": "1"}]
+                      description: Specifies the user's calculated streak.
+        '400':
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format...'
+                properties:
+                  error:
+                    type: string
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format...'
+                    description: Describes the nature of the error and provides a possible solution.
+        '500':
+          description: 'Internal server error. '
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    error: '(Error Message)'
+                properties:
+                  error:
+                    type: string
+                    description: Describes the nature of the error and provides a possible reason.
+                    example: User does not exist.
+      operationId: post-search
+      description: 'Search for a flashcard by it''s title. The flashcard could be owned by any user'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: 'The name of the flashcard to search for'
+
 components:
   schemas: {}
   securitySchemes:

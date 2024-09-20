@@ -11,8 +11,8 @@
     "light": "#6A84C5",
     "dark": "#32519E",
     "background": {
-      "light": "#0D2944",
-      "dark": "#0D2944"
+      "light": "#FFFFFF",
+      "dark": "#1A1B1C"
     },
     "anchors": {
       "from": "#6A84C5",
@@ -61,14 +61,15 @@
       "pages": [
         "conceptual-docs/whydolphin",
         "conceptual-docs/howitworks",
-        "conceptual-docs/quickstart"
+        "conceptual-docs/quickstart",
+        "conceptual-docs/usefulcommands",
+        "conceptual-docs/architecturediagrams"
       ]
     },
     {
       "group": "Extras",
       "pages": [
         "extras/terminology",
-        "extras/contributing",
         "extras/changelog"
       ]
     },
@@ -128,6 +129,10 @@
         {
           "group": "Move flashcard set",
           "pages": ["api-reference/endpoint/card-management/move-flashcard-set"]
+        },
+        {
+          "group": "Search",
+          "pages": ["api-reference/endpoint/card-management/search"]
         }
       ]
     },
