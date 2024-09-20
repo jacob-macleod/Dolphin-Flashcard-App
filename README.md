@@ -1,14 +1,15 @@
-# Flashcard-App
+# Dolphin-Flashcards
 
 <!-- vscode-markdown-toc -->
 * 1. [Broad Overview](#BroadOverview)
-* 2. [USPs and Points of Differentiation](#USPsandPointsofDifferentiation)
-* 3. [Broad Overview](#BroadOverview-1)
-	* 3.1. [Flashcard System](#FlashcardSystem)
-	* 3.2. [Gamified Features](#GamifiedFeatures)
-	* 3.3. [Access Control System](#AccessControlSystem)
-* 4. [Contributors](#Contributors)
-* 5. [Server setup](#Serversetup)
+* 2. [Where can I learn more?](#WherecanIlearnmore)
+* 3. [USPs and Points of Differentiation](#USPsandPointsofDifferentiation)
+* 4. [Broad Overview](#BroadOverview-1)
+	* 4.1. [Flashcard System](#FlashcardSystem)
+	* 4.2. [Gamified Features](#GamifiedFeatures)
+	* 4.3. [Access Control System](#AccessControlSystem)
+* 5. [Contributors](#Contributors)
+* 6. [Server setup](#Serversetup)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -23,20 +24,24 @@ This app is designed to improve simiar apps like Quizlet and Anki by implementin
 
 ![the dolphin landing page](https://raw.githubusercontent.com/jacob-macleod/Dolphin-Flashcard-App/main/image_2024-03-11_205932151.png)
 
-##  2. <a name='USPsandPointsofDifferentiation'></a>USPs and Points of Differentiation
+##  2. <a name='WherecanIlearnmore'></a>Where can I learn more?
+
+The [documentation](http://docs.dolphinflashcards.com/) shows detailed information on how to learn more about how the site works, including in-depth API documentation
+
+##  3. <a name='USPsandPointsofDifferentiation'></a>USPs and Points of Differentiation
 * Flashcard app with nice UI
 * Spaced Repetition
 * Gamified with lots of "juice"
 
-Anki solely fills the second point, while Quizlet serves the first point. None fully cover all points. This would provide a unique opportunity for this app 
+Anki solely fills the second point, while Quizlet serves the first point. None fully cover all points. This would provide a unique opportunity for this app
 
 <details>
 
 <summary>See the planned features</summary>
 
-##  3. <a name='BroadOverview-1'></a>Broad Overview
+##  4. <a name='BroadOverview-1'></a>Broad Overview
 A broad overview of the planned features to be made
-###  3.1. <a name='FlashcardSystem'></a>Flashcard System
+###  4.1. <a name='FlashcardSystem'></a>Flashcard System
 * Log into account
 * Create account
 * Users should be able to see a tree list of all the cards they have added. They should be able to see which folders everything is in
@@ -52,7 +57,7 @@ A broad overview of the planned features to be made
 * Anki-Like Algorithm
 * More details to follow
 
-###  3.2. <a name='GamifiedFeatures'></a>Gamified Features
+###  4.2. <a name='GamifiedFeatures'></a>Gamified Features
 * Streak, XP
 * Leader board with multiple levels. Completing a level in the top 5 pushes you to the next level
 * Quests - things like learn x cards, add x cards, get an x day Streak etc
@@ -61,7 +66,7 @@ A broad overview of the planned features to be made
 * When you win it again the badge looks the same but it has a different number associated with it - the badge number
 * Quests give you gold
 
-###  3.3. <a name='AccessControlSystem'></a>Access Control System
+###  4.3. <a name='AccessControlSystem'></a>Access Control System
 * The user that created the flashcard/folder owns the flashcard/folder. If they own the folder, they own all the cards inside it
 * Other users can view it but not edit it
 * If they want to edit it, they can first clone it
@@ -70,14 +75,14 @@ A broad overview of the planned features to be made
 
 </details>
 
-##  4. <a name='Contributors'></a>Contributors
+##  5. <a name='Contributors'></a>Contributors
 Contributors are welcome!
 
 The project uses feature branches, which are made from the development branch. It is important to keep to this rule!
 
 For more information, please go to `CONTRIBUTNG.MD`. API documentation is avaliable at `docs/`
 
-##  5. <a name='Serversetup'></a>Server setup
+##  6. <a name='Serversetup'></a>Server setup
 
 At the moment, a pipeline exists to:
 - Build the docker container

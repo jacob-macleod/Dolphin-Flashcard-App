@@ -1,0 +1,35 @@
+---
+title: 'Useful Commands'
+---
+
+Below, you can see some useful commands to use when developing features for Dolphin Flashcards
+
+## Frontend Development
+
+- Run the Frontend app
+    - `cd frontend`
+    - `npm run`
+- Install all required packages
+    - `cd frontend`
+    - `npm install -g create-react-app`
+    - `npm install`
+
+## Backend Development
+
+- Run the backend API
+    - `python backend/main.py`
+- Check the config files are correct (that they store the correct data for the production server)
+    - `python validate_config_files.py`
+- Start the local database
+    - `bash firebase_emulator.sh`
+- Stop the local database
+    - `docker stop $(docker ps -aq --filter "ancestor=mtlynch/firestore-emulator-docker")`
+- Delete all data from the local database
+    - `curl -v -X DELETE "http://localhost:8080/emulator/v1/projects/dummy-project-id/databases/(default)/documents"`
+- Run unit tests
+    - `bash testing/run_tests.sh`
+
+## Documentation Development
+
+- Run a local server for testing how the documentation looks
+    - `mintlfy dev --port 3333`

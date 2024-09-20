@@ -10,6 +10,7 @@ import leaderboard_icon from '../../static/leaderboard-icon.svg';
 import settings_icon from '../../static/settings-icon.svg';
 import dashboard_icon from '../../static/dashboard-icon.svg';
 import flashcard_icon_white from '../../static/flashcard-icon-white.svg';
+import community_icon_white from '../../static/community-icon-white.svg';
 import './SidePanel.css';
 import '../../componments/GridItem/GridItem.css';
 
@@ -36,7 +37,12 @@ function SidePanel ({ selectedItem }) {
                 clicked={selectedItem == "flashcards" ? true : false}
                 imgUrl={selectedItem == "flashcards" ? flashcard_icon_white : flashcard_icon}
             />
-            <MenuItem text="Community" src="/community" imgUrl={community_icon}/>
+            <MenuItem
+                text="Community"
+                src="/community"
+                clicked={selectedItem == "community" ? true : false}
+                imgUrl={selectedItem == "community" ? community_icon_white : community_icon}
+            />
             <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>
             <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>
             <MenuItem text="Settings" src="/settings" imgUrl={settings_icon}/>

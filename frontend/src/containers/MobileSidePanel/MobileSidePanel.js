@@ -14,6 +14,7 @@ import { getCookie } from '../../api/Authentication';
 import blueHamburger from '../../static/blue-hamburger-menu.svg';
 import dashboard_icon from '../../static/dashboard-icon.svg';
 import flashcard_icon_white from '../../static/flashcard-icon-white.svg'
+import community_icon_white from '../../static/community-icon-white.svg';
 import './MobileSidePanel.css';
 import '../../componments/GridItem/GridItem.css';
 import '../HamburgerBar/HamburgerBar.css';
@@ -48,7 +49,12 @@ function MobileSidePanel ({visible, setVisible, selectedItem}) {
                 clicked={selectedItem == "flashcards" ? true : false}
                 imgUrl={selectedItem == "flashcards" ? flashcard_icon_white : flashcard_icon}
             />
-            <MenuItem text="Community" src="/community" imgUrl={community_icon}/>
+            <MenuItem
+                text="Community"
+                src="/community"
+                clicked={selectedItem == "community" ? true : false}
+                imgUrl={selectedItem == "community" ? community_icon_white : community_icon}
+            />
             <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>
             <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>
             <MenuItem text="Settings" src="/settings" imgUrl={settings_icon}/>

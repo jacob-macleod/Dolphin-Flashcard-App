@@ -53,7 +53,7 @@ function PageNotFound() {
             justifyContent: "center",
           }}
         >
-          {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" /> : <></>}
+          {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} /> : <></>}
 
           <WhiteOverlay
             style={{

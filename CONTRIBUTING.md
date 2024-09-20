@@ -5,13 +5,15 @@ Welcome to this guide! Read more to learn how to contribute. For quick reference
 <!-- vscode-markdown-toc -->
 * 1. [Contributing to the Frontend Web App](#ContributingtotheFrontendWebApp)
 	* 1.1. [Quick Explanation](#QuickExplanation)
-	* 1.2. [Running the React Frontend App](#RunningtheReactFrontendApp)
+	* 1.2. [ Initial setting up](#Initialsettingup)
+	* 1.3. [Running the React Frontend App](#RunningtheReactFrontendApp)
 * 2. [Contributing to the Backend API](#ContributingtotheBackendAPI)
 	* 2.1. [Quick Explanation](#QuickExplanation-1)
 	* 2.2. [Using a Local Setup (Recommended)](#UsingaLocalSetupRecommended)
 	* 2.3. [Using Firebase as the database](#UsingFirebaseasthedatabase)
 	* 2.4. [Serving the frontend](#Servingthefrontend)
-* 3. [Some Extra Information...](#SomeExtraInformation...)
+* 3. [Developing Documentation](#DevelopingDocumentation)
+* 4. [Some Extra Information...](#SomeExtraInformation...)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -41,7 +43,7 @@ So the fontend and backend are independent of each other. The frontend can be ru
 The frontend, stored in the `frontend` folder is a React app. Therefore, you need to install everything you normally would for a React project, including `npm`.
 The frontend will always communicate with the deployed api server `http://dolphinflashcards.com/api`. You can change this URL in frontend/src/api/config.js if needed, but remember to revert it before making a pull request (the file should be in the gitignore).
 
-### 1.2. <a name='InitialSetup'></a> Initial setting up
+###  1.2. <a name='Initialsettingup'></a> Initial setting up
 Here's what you need to do before beginning development on Dolphin:
 * Fork the main repository at `https://github.com/jacob-macleod/Dolphin-Flashcard-App`
 * Clone the fork (with `git clone [...]`)
@@ -128,7 +130,19 @@ Whichever method you use, you can develop the frontend independently of the back
 
 This will build the React app to `frontend/build`. Then, the server will serve the static files in that folder. Therefore, the backend server must be running first.
 
-##  3. <a name='SomeExtraInformation...'></a>Some Extra Information...
+##  3. <a name='DevelopingDocumentation'></a>Developing Documentation
+
+The documentation for Dolphin Flashcards is stored in `.mdx` files. While you can read them in their raw versions, it is much easier to use the deployed documentation website at https://docs.dolphinflashcards.com.
+
+When making changes to the documentation locally, you can run these commands to run a local website storing the documentation:
+
+- `npm -i -g mintlify`
+- `cd docs`
+- `mintlify dev --port 3333`
+
+A new window will open in your browser showing the documentation
+
+##  4. <a name='SomeExtraInformation...'></a>Some Extra Information...
 
 When contributing, follow these general guidelines:
 
