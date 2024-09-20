@@ -28,6 +28,10 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Added abilty to search for flashcards
 
+### Changed
+
+- Improved documentation
+
 ## 5.3.0 - 2024-09-12
 
 ### Added
