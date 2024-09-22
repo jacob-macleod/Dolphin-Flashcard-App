@@ -1,4 +1,5 @@
 """ Routes relating to general card management """
+
 import uuid
 from flask import Blueprint, request, jsonify
 from database.database import database as db
@@ -6,14 +7,16 @@ from routes.api.validation_wrapper import validate_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 from classes.card_collection import FlashcardCollection
 
-card_management_routes = Blueprint('card_management_routes', __name__)
+card_management_routes = Blueprint("card_management_routes", __name__)
+
 
 def hash_to_numeric(input_string):
-    """ Hash a string, convert it to a number, then return a string version of the number
-        Importantly, this is deterministic - the same value will be returned
-        every time it is hashed"""
+    """Hash a string, convert it to a number, then return a string version of the number
+    Importantly, this is deterministic - the same value will be returned
+    every time it is hashed"""
     # Convert the input string to its
     return str(uuid.uuid5(uuid.NAMESPACE_DNS, input_string))
+
 
 CREATE_FLASHCARD_FORMAT = {
     "jwtToken": "",
@@ -25,98 +28,71 @@ CREATE_FLASHCARD_FORMAT = {
             "front": "",
             "back": "",
             "reviewStatus": REVIEW_STATUS_REGEX,
-            "lastReview": DATE_REGEX
+            "lastReview": DATE_REGEX,
         }
-    ]
+    ],
 }
 
-CREATE_FOLDER_FORMAT = {
-    "jwtToken": "",
-    "folder": ""
-}
+CREATE_FOLDER_FORMAT = {"jwtToken": "", "folder": ""}
 
-GET_FLASHCARD_FORMAT = {
-    "jwtToken": "",
-    "flashcardID": ""
-}
+GET_FLASHCARD_FORMAT = {"jwtToken": "", "flashcardID": ""}
 
-GET_FLASHCARD_ITEM = {
-    "cardID": ""
-}
+GET_FLASHCARD_ITEM = {"cardID": ""}
 
-GET_TODAY_CARDS = {
-    "jwtToken": ""
-}
+GET_TODAY_CARDS = {"jwtToken": ""}
 GET_ALL_CARDS = GET_TODAY_CARDS
 
 MOVE_FLASHCARD_SET = {
     "jwtToken": "",
     "currentLocation": "",
     "flashcardName": "",
-    "moveLocation": ""
+    "moveLocation": "",
 }
 
-UPDATE_CARD_PROGRESS = {
-    "jwtToken": "",
-    "cardData": []
-}
+UPDATE_CARD_PROGRESS = {"jwtToken": "", "cardData": []}
 
-DELETE_FLASHCARD_FORMAT = {
-    "jwtToken": "",
-    "flashcardID": ""
-}
+DELETE_FLASHCARD_FORMAT = {"jwtToken": "", "flashcardID": ""}
 
-RENAME_FLASHCARD_FORMAT = {
-    "jwtToken": "",
-    "flashcardID": "",
-    "newName": ""
-}
+RENAME_FLASHCARD_FORMAT = {"jwtToken": "", "flashcardID": "", "newName": ""}
 
-RENAME_FOLDER_FORMAT = {
-    "jwtToken": "",
-    "currentName": "",
-    "newName": ""
-}
+RENAME_FOLDER_FORMAT = {"jwtToken": "", "currentName": "", "newName": ""}
 
-DELETE_FOLDER_FORMAT = {
-    "jwtToken": "",
-    "folder": ""
-}
+DELETE_FOLDER_FORMAT = {"jwtToken": "", "folder": ""}
 
-DELETE_CARD_FORMAT = {
-    "jwtToken": "",
-    "cardID": ""
-}
+DELETE_CARD_FORMAT = {"jwtToken": "", "cardID": ""}
+
+ADD_PUBLIC_FLASHCARD_TO_FOLDER = {"jwtToken": "", "flashcardID": "", "folder": ""}
+
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
 def create_flashcard():
-    """ Create or edit a flashcard set for the user.
-        Flashcards have a front, back, review status and last review date
-        Set folder to none to set as a top level flashcard, otherwise set it to the parent folder name.
-        If you want to set multiple parent folders, you can add the folder name seperated by 1.
-        So for example, top-level-parent-name/parent-name-2/parent-name-3
-        Example request:
-        {
-            "userID": "my-id",
-            "flashcardName": "My new set",
-            "flashcardDescription": "This is\nmy description",
-            "folder": "parent-name",
-            "cards": [
-                {
-                    "front":"Front 1",
-                    "back": "Back 1",
-                    "reviewStatus":"0.0",
-                    "lastReview": "dd/mm/yyyy"
-                },
-                {
-                    "front":"Front 2",
-                    "back": "Back 2",
-                    "reviewStatus":"0.0",
-                    "lastReview": "dd/mm/yyyy"
-                }
-            ]
-        }
+    """Create or edit a flashcard set for the user.
+    Flashcards have a front, back, review status and last review date
+    Set folder to none to set as a top level flashcard, otherwise set it to the parent folder name.
+    If you want to set multiple parent folders, you can add the folder name seperated by 1.
+    So for example, top-level-parent-name/parent-name-2/parent-name-3
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardName": "My new set",
+        "flashcardDescription": "This is\nmy description",
+        "folder": "parent-name",
+        "cards": [
+            {
+                "front":"Front 1",
+                "back": "Back 1",
+                "reviewStatus":"0.0",
+                "lastReview": "dd/mm/yyyy"
+            },
+            {
+                "front":"Front 2",
+                "back": "Back 2",
+                "reviewStatus":"0.0",
+                "lastReview": "dd/mm/yyyy"
+            }
+        ]
+    }
     """
     try:
         user_id = request.json.get("userID")
@@ -139,7 +115,7 @@ def create_flashcard():
             flashcard_id=flashcard_id,
             flashcard_name=flashcard_name,
             flashcard_description=flashcard_description,
-            card_ids=card_ids
+            card_ids=card_ids,
         )
 
         # Create each individual flashcard
@@ -151,7 +127,7 @@ def create_flashcard():
             folder=folder,
             flashcard_id=flashcard_id,
             flashcard_name=flashcard_name,
-            card_ids=card_ids
+            card_ids=card_ids,
         )
 
         # Give the user read and write access
@@ -162,10 +138,11 @@ def create_flashcard():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/create-folder", methods=["POST"])
 @validate_json(CREATE_FOLDER_FORMAT)
 def create_folder():
-    """ Create a folder for the user
+    """Create a folder for the user
     Example request:
     {
         "userID": "my-id",
@@ -178,39 +155,37 @@ def create_folder():
 
         db.folders.create_folder(user_id, folder)
 
-        return jsonify({
-            "success": "Folder " + folder + " created"
-        }), 200
+        return jsonify({"success": "Folder " + folder + " created"}), 200
     except Exception as e:
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/get-flashcard", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_FORMAT)
 def get_flashcard():
-    """ Get a flashcard set based on the name and user ID
-        Add json to request as in:
-        {
-            "userID": "my-id",
-            "flashcardID": "my-flashcard-id"
-        }
+    """Get a flashcard set based on the name and user ID
+    Add json to request as in:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id"
+    }
     """
     try:
         flashcard_id = request.json.get("flashcardID")
         user_id = request.json.get("userID")
         flashcard_data = db.folders.get_flashcard(user_id, flashcard_id)
 
-        return jsonify(
-            flashcard_data, 200
-        )
+        return jsonify(flashcard_data, 200)
 
     except Exception as e:
         # Return the error as a json object
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/get-flashcard-item", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_ITEM)
 def get_flashcard_item():
-    """ Get a flashcard item based on the card ID. Flashcard sets store
+    """Get a flashcard item based on the card ID. Flashcard sets store
     multiple flashcard items, which are the individual flashcards
         Add json to request as in:
         {
@@ -220,27 +195,26 @@ def get_flashcard_item():
     try:
         card_id = request.json.get("cardID")
 
-        return jsonify(
-            db.flashcards.get_flashcard(card_id), 200
-        )
+        return jsonify(db.flashcards.get_flashcard(card_id), 200)
 
     except Exception as e:
         # Return the error as a json object
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/get-today-cards", methods=["POST"])
 @validate_json(GET_TODAY_CARDS)
 def get_today_cards():
-    """ Get all the flashcards to be learned today for a user
-        Requests include soley a json including userID
-        Example request:
-        {
-            "userID": "my-id"
-        }
+    """Get all the flashcards to be learned today for a user
+    Requests include soley a json including userID
+    Example request:
+    {
+        "userID": "my-id"
+    }
 
-        If a card review status is 0.0, it is not started.
-        If it is 0.x, it is actively studying
-        If it is >= 1.x, it is learned
+    If a card review status is 0.0, it is not started.
+    If it is 0.x, it is actively studying
+    If it is >= 1.x, it is learned
     """
     try:
         user_id = request.json.get("userID")
@@ -257,15 +231,16 @@ def get_today_cards():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/get-all-cards", methods=["POST"])
 @validate_json(GET_ALL_CARDS)
 def get_all_cards():
     """Get all the flashcards created by a user
 
-        Example request:
-        {
-            "userID": "my-id"
-        }
+    Example request:
+    {
+        "userID": "my-id"
+    }
     """
     try:
         user_id = request.json.get("userID")
@@ -280,6 +255,7 @@ def get_all_cards():
     except Exception as e:
         # Return the error as a json object
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/move-flashcard-set", methods=["POST"])
 @validate_json(MOVE_FLASHCARD_SET)
@@ -300,17 +276,29 @@ def move_flashcard_set():
         move_location = request.json.get("moveLocation")
         current_location = request.json.get("currentLocation")
 
-        db.folders.move_flashcard_set(user_id, flashcard_name, current_location, move_location)
+        db.folders.move_flashcard_set(
+            user_id, flashcard_name, current_location, move_location
+        )
 
-        return jsonify(
-            {
-                "success": "The flashcard set at "
-                + "/users/" + user_id
-                + "/flashcards/" + current_location + "/" + flashcard_name
-                + " has been moved to " + move_location}
-        ), 200
+        return (
+            jsonify(
+                {
+                    "success": "The flashcard set at "
+                    + "/users/"
+                    + user_id
+                    + "/flashcards/"
+                    + current_location
+                    + "/"
+                    + flashcard_name
+                    + " has been moved to "
+                    + move_location
+                }
+            ),
+            200,
+        )
     except Exception as e:
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/update-card-progress", methods=["POST"])
 @validate_json(UPDATE_CARD_PROGRESS)
@@ -340,6 +328,7 @@ def update_card_progress():
     except Exception as e:
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/delete-flashcard", methods=["DELETE"])
 @validate_json(DELETE_FLASHCARD_FORMAT)
 def delete_flashcard():
@@ -365,6 +354,7 @@ def delete_flashcard():
     except Exception as e:
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/rename-flashcard", methods=["POST"])
 @validate_json(RENAME_FLASHCARD_FORMAT)
 def rename_flashcard():
@@ -385,11 +375,15 @@ def rename_flashcard():
         result = db.folders.rename_flashcard(user_id, flashcard_id, new_name)
 
         if result is not None:
-            return jsonify({"success": f"Flashcard {flashcard_id} renamed to {new_name}"}), 200
+            return (
+                jsonify({"success": f"Flashcard {flashcard_id} renamed to {new_name}"}),
+                200,
+            )
         else:
             return jsonify({"error": f"Flashcard {flashcard_id} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/rename-folder", methods=["POST"])
 @validate_json(RENAME_FOLDER_FORMAT)
@@ -411,11 +405,15 @@ def rename_folder():
         result = db.folders.rename_folder(user_id, folder_name, new_name)
 
         if result is not None:
-            return jsonify({"success": f"Flashcard {folder_name} renamed to {new_name}"}), 200
+            return (
+                jsonify({"success": f"Flashcard {folder_name} renamed to {new_name}"}),
+                200,
+            )
         else:
             return jsonify({"error": f"Flashcard {folder_name} does not exist"}), 404
     except Exception as e:
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/delete-folder", methods=["DELETE"])
 @validate_json(DELETE_FOLDER_FORMAT)
@@ -441,6 +439,7 @@ def delete_folder():
     except Exception as e:
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/delete-card", methods=["DELETE"])
 @validate_json(DELETE_CARD_FORMAT)
 def delete_card():
@@ -465,6 +464,7 @@ def delete_card():
     except Exception as e:
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/search", methods=["POST"])
 def search_flashcard():
     """
@@ -480,5 +480,39 @@ def search_flashcard():
         results = db.flashcard_set.search_flashcard(flashcard_name)
 
         return jsonify(results), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+
+@card_management_routes.route("/api/add-flashcard-to-folder", methods=["POST"])
+@validate_json(ADD_PUBLIC_FLASHCARD_TO_FOLDER)
+def add_public_flashcard_to_folder():
+    """
+    Add a public flashcard to a folder
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id",
+        "folder": "folder-name"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+        folder = request.json.get("folder")
+
+        flashcard_data = db.flashcard_set.get_flashcard_set(flashcard_id)
+
+        db.folders.add_flashcard_to_folder(
+            user_id,
+            folder,
+            flashcard_id,
+            flashcard_data["name"],
+            flashcard_data["cards"],
+        )
+
+        return jsonify(
+            {"success": f"Flashcard '{flashcard_data['name']}' added to folder {folder}"}
+        ), 200
     except Exception as e:
         return jsonify(str(e)), 500

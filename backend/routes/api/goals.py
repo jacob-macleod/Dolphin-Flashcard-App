@@ -1,4 +1,5 @@
 """ Routes relating to goal and quest management """
+
 from classes.date import Date
 from database.database import database as db
 from routes.api.card_management import hash_to_numeric
@@ -6,18 +7,14 @@ from flask import Blueprint, request, jsonify
 from routes.api.regex_patterns import DATE_REGEX, NUMBER
 from routes.api.validation_wrapper import validate_json
 
-goal_routes = Blueprint('goal_routes', __name__)
+goal_routes = Blueprint("goal_routes", __name__)
 
-CREATE_XP_GOAL_FORMAT = {
-    "jwtToken": "",
-    "goalXP": NUMBER,
-    "endDate": DATE_REGEX
-}
+CREATE_XP_GOAL_FORMAT = {"jwtToken": "", "goalXP": NUMBER, "endDate": DATE_REGEX}
 
 CREATE_CARD_GOAL_FORMAT = {
     "jwtToken": "",
     "cardsToRevise": NUMBER,
-    "endDate": DATE_REGEX
+    "endDate": DATE_REGEX,
 }
 
 UPDATE_GOAL_STATUS_FORMAT = {
@@ -29,7 +26,7 @@ EDIT_CARD_GOAL_FORMAT = {
     "goalID": "",
     "newEndDate": DATE_REGEX,
     "newTitle": "",
-    "newCardsToRevise": NUMBER
+    "newCardsToRevise": NUMBER,
 }
 
 EDIT_XP_GOAL_FORMAT = {
@@ -37,23 +34,22 @@ EDIT_XP_GOAL_FORMAT = {
     "goalID": "",
     "newEndDate": DATE_REGEX,
     "newTitle": "",
-    "newGoalXP": NUMBER
+    "newGoalXP": NUMBER,
 }
 
-DELETE_GOAL_FORMAT = {
-    "jwtToken": "",
-    "goalID": ""
-}
+DELETE_GOAL_FORMAT = {"jwtToken": "", "goalID": ""}
+
 
 def update_goal_stats(user_id, xp_increment):
     """Update the user's goal stats
     To be run when a new card is revised"""
     db.goals.update_goal_stats(user_id, xp_increment)
 
+
 @goal_routes.route("/api/create-xp-goal", methods=["POST"])
 @validate_json(CREATE_XP_GOAL_FORMAT)
-def create_xp_goal() :
-    """ Create an XP goal for the user
+def create_xp_goal():
+    """Create an XP goal for the user
      XP goals have:
      - ID
      - type (XP)
@@ -85,10 +81,11 @@ def create_xp_goal() :
 
     return jsonify({"success": "Goal created successfully"}), 200
 
+
 @goal_routes.route("/api/create-card-goal", methods=["POST"])
 @validate_json(CREATE_CARD_GOAL_FORMAT)
-def create_card_goal() :
-    """ Create a card goal for the user
+def create_card_goal():
+    """Create a card goal for the user
     Card goals have:
      - ID
      - type (XP)
@@ -106,16 +103,19 @@ def create_card_goal() :
         desired_cards_to_revise = request.json.get("cardsToRevise")
         end_date = request.json.get("endDate")
 
-        db.goals.create_card_goal(user_id, desired_cards_to_revise, end_date, hash_to_numeric)
+        db.goals.create_card_goal(
+            user_id, desired_cards_to_revise, end_date, hash_to_numeric
+        )
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
     return jsonify({"success": "Goal created successfully"}), 200
 
+
 @goal_routes.route("/api/update-goal-status", methods=["POST"])
 @validate_json(UPDATE_GOAL_STATUS_FORMAT)
-def update_goal_status() :
-    """ Update the status of a goal (in process, completed or failed)"""
+def update_goal_status():
+    """Update the status of a goal (in process, completed or failed)"""
     try:
         user_id = request.json.get("userID")
         date = Date()
@@ -127,10 +127,11 @@ def update_goal_status() :
 
     return jsonify(new_goals), 200
 
+
 @goal_routes.route("/api/edit-card-goal", methods=["POST"])
 @validate_json(EDIT_CARD_GOAL_FORMAT)
 def edit_card_goal():
-    """ Edit an existing card goal for the user """
+    """Edit an existing card goal for the user"""
     user_id = request.json.get("userID")
     goal_id = request.json.get("goalID")
     new_end_date = request.json.get("newEndDate")
@@ -138,16 +139,19 @@ def edit_card_goal():
     new_cards_to_revise = request.json.get("newCardsToRevise")
 
     try:
-        db.goals.edit_card_goal(user_id, goal_id, new_end_date, new_title, new_cards_to_revise)
+        db.goals.edit_card_goal(
+            user_id, goal_id, new_end_date, new_title, new_cards_to_revise
+        )
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
     return jsonify({"success": "Goal updated successfully"}), 200
 
+
 @goal_routes.route("/api/edit-xp-goal", methods=["POST"])
 @validate_json(EDIT_XP_GOAL_FORMAT)
 def edit_xp_goal():
-    """ Edit an existing XP goal for the user """
+    """Edit an existing XP goal for the user"""
     user_id = request.json.get("userID")
     goal_id = request.json.get("goalID")
     new_end_date = request.json.get("newEndDate")
@@ -160,6 +164,7 @@ def edit_xp_goal():
         return jsonify({"error": str(e)}), 500
 
     return jsonify({"success": "Goal updated successfully"}), 200
+
 
 @goal_routes.route("/api/delete-goal", methods=["DELETE"])
 @validate_json(DELETE_GOAL_FORMAT)

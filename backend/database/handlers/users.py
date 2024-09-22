@@ -1,10 +1,12 @@
 """Provides utility classes for interacting with the users database
 """
+
 from database.handlers.database_handler import DatabaseHandler
 
+
 class Users(DatabaseHandler):
-    """Provides utility classes for interacting with the flashcards database
-    """
+    """Provides utility classes for interacting with the flashcards database"""
+
     def __init__(self, context):
         """Initialise the class
 

@@ -1,9 +1,12 @@
 """ Handle functions associated with cards such as incrementing review dates """
+
 from datetime import datetime, timedelta
 from classes.date import Date
 
+
 class Card:
-    """ Stores data for a single flashcard """
+    """Stores data for a single flashcard"""
+
     # The current card being looked at
     current_index = None
     # The max num of cards
@@ -16,14 +19,8 @@ class Card:
     date = None
 
     def __init__(
-            self,
-            current_index,
-            max_index,
-            card_status,
-            last_review,
-            review_status,
-            streak
-    ) :
+        self, current_index, max_index, card_status, last_review, review_status, streak
+    ):
         self.current_index = current_index
         self.max_index = max_index
         self.status = card_status
@@ -33,24 +30,23 @@ class Card:
         self.date = Date()
 
     def increase_date_by_days(self, input_date, days_to_add):
-        """ Increase a date by days_to_add """
+        """Increase a date by days_to_add"""
         # Convert the input_date string to a datetime object
-        date_object = datetime.strptime(input_date, '%d/%m/%Y')
+        date_object = datetime.strptime(input_date, "%d/%m/%Y")
 
         # Increase the date by the specified number of days
         increased_date = date_object + timedelta(days=days_to_add)
 
         # Convert the increased date back to the 'dd/mm/yyyy' format as a string
-        formatted_increased_date = increased_date.strftime('%d/%m/%Y')
+        formatted_increased_date = increased_date.strftime("%d/%m/%Y")
 
         return formatted_increased_date
 
-
-    def increment_index(self) :
-        """ Increment the flashcard index """
+    def increment_index(self):
+        """Increment the flashcard index"""
         self.streak = str(int(self.streak) + 1)
 
-        if self.streak == "6" :
+        if self.streak == "6":
             new_index = int(self.current_index) - 4
             self.streak = "0"
 
@@ -63,21 +59,21 @@ class Card:
             new_index = int(self.current_index) + 1
 
             # If the index is not too big:
-            if new_index <= int(self.max_index) :
+            if new_index <= int(self.max_index):
                 self.current_index = str(new_index)
 
-    def reset_card(self) :
-        """ Reset the card - if the answers were wrong """
+    def reset_card(self):
+        """Reset the card - if the answers were wrong"""
         self.review_status = "0.0"
         self.last_review = self.date.get_current_date()
 
-        if int(self.current_index)-5 > 0:
-            self.current_index = str(int(self.current_index) -5)
+        if int(self.current_index) - 5 > 0:
+            self.current_index = str(int(self.current_index) - 5)
         else:
             self.current_index = "0"
 
-    def increment_days(self, day) :
-        """ Increment the day part of the review status
+    def increment_days(self, day):
+        """Increment the day part of the review status
         For now, progression follows the Fibonacci sequence, because:
             - My instinctive understanding broadly follows this sequence
             - On first inspection, it seems like this sequence would work
@@ -99,8 +95,8 @@ class Card:
         self.last_review = self.increase_date_by_days(self.last_review, day)
         return str(day)
 
-    def increment_daily_reviews(self, daily_reviews, day) :
-        """ Increment the daily reviews by 2 """
+    def increment_daily_reviews(self, daily_reviews, day):
+        """Increment the daily reviews by 2"""
         daily_reviews = int(daily_reviews)
         daily_reviews += 2
 
@@ -110,8 +106,8 @@ class Card:
 
         return daily_reviews, day
 
-    def increment_review_status(self) :
-        """ Increment the review status of cards"""
+    def increment_review_status(self):
+        """Increment the review status of cards"""
         days = self.review_status.split(".")[0]
         daily_reviews = self.review_status.split(".")[1]
 
@@ -124,8 +120,8 @@ class Card:
 
         self.review_status = str(days) + "." + str(daily_reviews)
 
-    def easy_button(self) :
-        """ When the easy button is clicked """
+    def easy_button(self):
+        """When the easy button is clicked"""
         days = self.review_status.split(".")[0]
         daily_reviews = self.review_status.split(".")[1]
 

@@ -1,11 +1,13 @@
 """Provides utility classes for interacting with the flashcard_set database
 """
+
 from database.handlers.database_handler import DatabaseHandler
 from classes.flashcard_searcher import FlashcardSearcher
 
+
 class FlashcardSet(DatabaseHandler):
-    """Provides utility classes for interacting with the flashcard_set database
-    """
+    """Provides utility classes for interacting with the flashcard_set database"""
+
     def __init__(self, context):
         """Initialise the class
 
@@ -16,11 +18,11 @@ class FlashcardSet(DatabaseHandler):
         super().__init__(context, db_name="flashcard_set")
 
     def create_flashcard_set(
-            self,
-            flashcard_id: str,
-            flashcard_name: str,
-            flashcard_description: str,
-            card_ids:list
+        self,
+        flashcard_id: str,
+        flashcard_name: str,
+        flashcard_description: str,
+        card_ids: list,
     ):
         """Create a flashcard set
 
@@ -36,7 +38,7 @@ class FlashcardSet(DatabaseHandler):
             {
                 "name": flashcard_name,
                 "description": flashcard_description,
-                "cards": card_ids
+                "cards": card_ids,
             }
         )
 
@@ -46,7 +48,12 @@ class FlashcardSet(DatabaseHandler):
         Args:
             flashcard_id (str): The flashcard ID to get
         """
-        flashcard_set = self._context.collection(self._db_name).document(flashcard_id).get().to_dict()
+        flashcard_set = (
+            self._context.collection(self._db_name)
+            .document(flashcard_id)
+            .get()
+            .to_dict()
+        )
         return flashcard_set
 
     def search_flashcard(self, flashcard_name: str):
@@ -56,6 +63,6 @@ class FlashcardSet(DatabaseHandler):
             flashcard_name (str): The name of the flashcard to search for
         """
         self.get_flashcard_set(flashcard_name)
-        docs = self._context.collection(self._db_name).select(['name']).stream()
+        docs = self._context.collection(self._db_name).select(["name"]).stream()
         searcher = FlashcardSearcher(docs)
         return searcher.search(flashcard_name)

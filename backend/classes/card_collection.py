@@ -1,13 +1,15 @@
 """Utilities to iterate through a collection of flashcards (all the cards belonging to a user)
 """
+
 import json
 from datetime import datetime, timedelta
 from classes.date import Date
 
-class FlashcardCollection():
-    """Iterate through a collection of flashcards
-    """
-    def __init__(self, flashcard_data:dict):
+
+class FlashcardCollection:
+    """Iterate through a collection of flashcards"""
+
+    def __init__(self, flashcard_data: dict):
         """Initialise the class
 
         Args:
@@ -31,10 +33,11 @@ class FlashcardCollection():
         """
         review_status = card["review_status"]
         days_until_next_review = int(float(review_status))
-        if datetime.strptime(
-            card["last_review"],
-            "%d/%m/%Y"
-        ) + timedelta(days=days_until_next_review) <= current_date:
+        if (
+            datetime.strptime(card["last_review"], "%d/%m/%Y")
+            + timedelta(days=days_until_next_review)
+            <= current_date
+        ):
             # Work out if the card is new, being learned, or learned
             daily_review = card["review_status"].split(".")[0]
             sub_daily_review = card["review_status"].split(".")[1]
@@ -56,7 +59,6 @@ class FlashcardCollection():
         # If the card should not be added
         return False
 
-
     def _iter_flashcards(self, flashcards, item_to_append_to):
         """Iterate within flashcards
 
@@ -64,9 +66,7 @@ class FlashcardCollection():
             flashcards (dict): The flashcard data to be iterated through
             item_to_append_to (dict): The structure to append the processed flashcards and folders to
         """
-        current_date = datetime.strptime(
-            Date().get_current_date(), "%d/%m/%Y"
-        )
+        current_date = datetime.strptime(Date().get_current_date(), "%d/%m/%Y")
 
         for flashcard_name, flashcard_data in flashcards.items():
             # Check if the item is a folder or a flashcard set
@@ -80,7 +80,9 @@ class FlashcardCollection():
                 current_card = flashcard_data
                 item_to_append_to[flashcard_name] = {}
 
-                item_to_append_to[flashcard_name]["flashcardID"] = current_card["flashcard_id"]
+                item_to_append_to[flashcard_name]["flashcardID"] = current_card[
+                    "flashcard_id"
+                ]
                 item_to_append_to[flashcard_name]["flashcardName"] = flashcard_name
                 item_to_append_to[flashcard_name]["cards"] = {}
 
@@ -92,12 +94,13 @@ class FlashcardCollection():
                 # Process each individual card in the flashcard set
                 for card_name, card_data in current_card["cards"].items():
                     if self._is_for_today(card_data, current_date):
-                        item_to_append_to[flashcard_name]["cards"][card_name] = card_data
+                        item_to_append_to[flashcard_name]["cards"][
+                            card_name
+                        ] = card_data
 
     @property
     def today_card_list(self):
-        """Generate the list of cards for today
-        """
+        """Generate the list of cards for today"""
         self._iter_flashcards(self._flashcard_data, self._today_card_list)
 
         return self._today_card_list
