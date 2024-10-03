@@ -10,6 +10,7 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
+import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
@@ -34,7 +35,7 @@ function PreviewFlashcard() {
     if (flashcardData === null) {
         // Get the flashcard data
         const urlParams = new URLSearchParams(window.location.search);
-        const flashcardID = urlParams.get("flashcardID");
+        const flashcardID = urlParams.get("id");
         const jwtToken = getCookie("jwtToken");
 
         apiManager.getFlashcard(jwtToken, flashcardID, setFlashcardData);
@@ -77,7 +78,14 @@ function PreviewFlashcard() {
             }}
           >
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
-              <Heading3 text="Previewing" />
+                {flashcardData !== null
+                    ?
+                    <TotalFlashcardBrowser
+                        folder={"folder"}
+                        flashcardName={"flashcardName"}
+                        flashcardID={flashcardData.flashcard_id}
+                    />
+                  : <></>}
             </div>
           </WhiteOverlay>
         </GridItem>

@@ -1,1 +1,1 @@
-export {default} from './TotalFlashcardBrowser';
+export {default as TotalFlashcardBrowser} from './TotalFlashcardBrowser';

@@ -241,7 +241,6 @@ class ApiManager {
         }
 
         this.fetchData(data, url, flashcardData => {
-            console.log(flashcardData);
             setFlashcardData(flashcardData[0]);
         });
     }
