@@ -1121,6 +1121,43 @@ class TestApi(unittest.TestCase):
         except Exception:
             assert True
 
+    def test_add_flashcard_to_folder(self):
+        """
+        Test the method to add another user's flashcard to a folder
+        """
+        flashcard_owner = self.create_user("test_add_flashcard_to_folder_flashcard_owner")
+        second_user = self.create_user("test_add_flashcard_to_folder_second_user")
+
+        # Create the flashcard
+        flashcard_data = {
+            "jwtToken": flashcard_owner,
+            "flashcardName": "My Set",
+            "flashcardDescription": "This is my set",
+            "folder": "",
+            "cards": [
+                {
+                    "front": "Set 3 Front 1",
+                    "back": "Set 3 Back 1",
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
+                },
+                {
+                    "front": "Set 3 Front 2",
+                    "back": "Set 3 Back 2",
+                    "reviewStatus": "0.0",
+                    "lastReview": "27/04/2024",
+                },
+            ],
+        }
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
+        assert response[1] == 200
+        flashcard_id = response[0]["flashcardID"]
+
+        # Test case 1: Add the flashcard to the second user
+        # TODO: Finish off unit test!
+        response = self.post_api(Routes.ROUTE_ADD_FLASHCARD_TO_FOLDER["url"], {})
+
 # api = TestApi()
 # api.test_create_account_valid()
 # api.test_get_user()
@@ -1147,3 +1184,4 @@ class TestApi(unittest.TestCase):
 # # api.test_update_goal_status()
 # api.test_update_heatmap()
 # api.test_create_folder()
+# api.test_add_flashcard_to_folder

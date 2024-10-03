@@ -503,6 +503,9 @@ def add_public_flashcard_to_folder():
 
         flashcard_data = db.flashcard_set.get_flashcard_set(flashcard_id)
 
+        if flashcard_data is None:
+            return {"error": f"Flashcard {flashcard_id} does not exist!"}, 404
+
         db.folders.add_flashcard_to_folder(
             user_id,
             folder,

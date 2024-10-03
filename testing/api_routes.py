@@ -106,3 +106,8 @@ class Routes:
         "url": "/api/create-folder",
         "methods": ["POST"]
     }
+
+    ROUTE_ADD_FLASHCARD_TO_FOLDER = {
+        "url": "/api/add-flashcard-to-folder",
+        "methods": ["POST"]
+    }
