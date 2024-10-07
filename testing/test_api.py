@@ -12,10 +12,9 @@ src_path = os.path.join(current_dir, "..", "backend")
 sys.path.append(src_path)
 from verification.api_error_checking import check_request_json
 from classes.date import Date
-from json import loads, dumps
-from requests import get, post, delete
-from main import server_addr
 from database.database_config import type
+
+from test_api.base import BaseApiActionsMixin
 
 # Check the database is set to local
 if type != "local":
@@ -28,239 +27,9 @@ headers = {"Content-Type": "application/json"}
 date = Date()
 
 
-class TestApi(unittest.TestCase):
+class TestBasicApi(unittest.TestCase, BaseApiActionsMixin):
     """Test the API"""
-    def __init__(self, *args, **kwargs):
-        super(TestApi, self).__init__(*args, **kwargs)
-
-    def get_api(self, route: str, data: dict = None) -> dict:
-        """
-        Simple get method to not repeat "get" everytime
-        """
-
-        response = get(
-            f"http://127.0.0.1:{server_addr[1]}{route}",
-            headers=headers,
-            data=dumps(data),
-            timeout=5,
-        )
-
-        self.assertNotEqual(
-            response.status_code,
-            500,
-            "An unhandled exception caused an Internal Server Error "
-            + f"({response.status_code}) in "
-            + f"{route}",
-        )
-
-        return loads(response.text)
-
-    def post_api(self, route: str, data: dict) -> dict:
-        """
-        Simple get method to not repeat "post" everytime
-        """
-
-        response = post(
-            f"http://127.0.0.1:{server_addr[1]}{route}",
-            data=dumps(data),
-            headers=headers,
-            timeout=5,
-        )
-
-        self.assertNotEqual(
-            response.status_code,
-            500,
-            f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
-            f"{route}",
-        )
-
-        return loads(response.text)
-
-    def delete_api(self, route: str, data: dict) -> dict:
-        """
-        Simple get method to not repeat "delete" everytime
-        """
-
-        response = delete(
-            f"http://127.0.0.1:{server_addr[1]}{route}",
-            data=dumps(data),
-            headers=headers,
-            timeout=5,
-        )
-
-        self.assertNotEqual(
-            response.status_code,
-            500,
-            f"An unhandled exception caused an Internal Server Error ({response.status_code}) in "
-            f"{route}",
-        )
-
-        return loads(response.text)
-
-    def create_user(self, user_id:str):
-        """
-        Create a user
-
-        Args:
-            user_id (str): The user ID to create
-        """
-        valid_dummy = {"userID": user_id, "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
-
-        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
-        response_json = response[0]
-        return response_json["token"]
-
-    @pytest.mark.run(order=1)
-    def test_example(self) -> None:
-        """
-        Brief description
-        """
-        data = {"key1": "value1", "key2": "value2"}
-
-        # TODO: Warning / Question tho who is coding the backend
-
-        response = True
-
-        self.assertTrue(response, "Should be True, but was {}".format(response))
-
-    @pytest.mark.run(order=2)
-    def test_check_request_json(self) -> None:
-        """Check the check_request_json function works as expected"""
-
-        # Test with a valid request
-        result = check_request_json({"key1": "", "key2": ""}, {"key1": "", "key2": ""})
-
-        self.assertTrue(result)
-
-        # Test with a valid request but keys have different values
-        result = check_request_json(
-            {"key1": "val1", "key2": "value2"}, {"key1": "", "key2": ""}
-        )
-
-        self.assertEqual(result, True)
-
-        # Test with a valid request but keys are in different order
-        result = check_request_json({"key2": "", "key1": ""}, {"key1": "", "key2": ""})
-        self.assertEqual(
-            result,
-            "Your supplied json keys do not match the expected format",
-            "Your supplied json keys do not match the expected format",
-        )
-
-        # Test with valid keys and some extra ones
-        result = check_request_json(
-            {"key1": "", "key2": "", "key3": ""}, {"key1": "", "key2": ""}
-        )
-        self.assertEqual(
-            result,
-            "Your supplied json keys do not match the expected format",
-            "Your supplied json keys do not match the expected format",
-        )
-
-        # Test with invalid keys
-        result = check_request_json({"key3": "", "key4": ""}, {"key1": "", "key2": ""})
-
-        self.assertEqual(
-            result,
-            "Your supplied json keys do not match the expected format",
-            "Your supplied json keys do not match the expected format",
-        )
-
-        # Test with valid regex pattern
-        expected_format = {
-            "name": "",
-            "age": r"\d+",
-            "email": r"[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+",
-        }
-
-        request_data = {
-            "name": "John Doe",
-            "age": "30",
-            "email": "john@example.com",
-        }
-        result = check_request_json(expected_format, request_data)
-        self.assertTrue(result, msg="Invalid regex pattern")
-
-        expected_format = {
-            "name": "",
-            "age": "",
-            "email": "",
-            "address": {"street": "", "city": "", "postcode": ""},
-        }
-
-        request_data = {
-            "name": "",
-            "age": "",
-            "email": "",
-            "address": {"street": "", "city": "", "postcode": ""},
-        }
-
-        result = check_request_json(expected_format, request_data)
-        self.assertTrue(result, "Invalid json format for keys and sub keys.")
-
     # Authentication
-    @pytest.mark.run(order=3)
-    def test_create_account_valid(self) -> None:
-        """
-        Valid account
-        """
-        valid_dummy = {"userID": "1", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
-
-        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
-        response_json = response[0]
-        self.assertTrue(
-            expr=response_json["success"],
-            msg="Dummy account creation should be successful.",
-        )
-
-    @pytest.mark.run(order=4)
-    def test_get_user(self) -> None:
-        """Get the newly created user"""
-        user_1_jwt_token = self.create_user("1")
-
-        valid_dummy = {"jwtToken": user_1_jwt_token}
-
-        response = self.get_api(Routes.ROUTE_GET_USER["url"], valid_dummy)
-        response_json = response[0]
-        assert response_json == {"name": "Dummy"}
-
-    @pytest.mark.run(order=5)
-    def test_get_invalid_user(self):
-        """Get a user that does not exist"""
-        invalid_dummy = {"jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw'}
-
-        response = self.get_api(Routes.ROUTE_GET_USER["url"], invalid_dummy)
-        response_json = response[0]
-        assert response_json is None
-
-    @pytest.mark.run(order=6)
-    def test_get_user_stats(self):
-        """Get the statistics for the user that has been created"""
-        user_1_jwt_token = self.create_user("1")
-
-        # Test case 1: Get the user stats
-        valid_dummy = {"jwtToken": user_1_jwt_token}
-
-        response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], valid_dummy)
-        response_json = response[0]
-        assert response_json == {
-            "lastStreak": date.get_current_date(),
-            "streak": 0,
-            "weeklyXP": 0,
-            "totalXP": 0,
-            "heatmap_data": {date.get_current_date().replace("/", "-"): "1"},
-        }
-
-        # Test case 2: Update the heatmap
-
-    @pytest.mark.run(order=7)
-    def test_get_invalid_user_stats(self):
-        """Get the statistics for a user that does not exist"""
-        invalid_dummy = {"jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw'}
-
-        response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], invalid_dummy)
-        response_json = response[0]
-        assert response_json is None
 
     @pytest.mark.run(order=8)
     def test_create_flashcard_set(self):
@@ -304,7 +73,7 @@ class TestApi(unittest.TestCase):
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response[0]
-        print (response_json)
+        print(response_json)
         assert response_json == {
             'cards': {
                 'b8ff5c10-0c28-53ea-b5c8-301364c8910d': {
@@ -317,13 +86,12 @@ class TestApi(unittest.TestCase):
             'flashcard_id': '96cfaa8d-0ca1-5230-86fe-1e28ee9d2741'
         }
 
-
     @pytest.mark.run(order=10)
     def test_get_invalid_flashcard_set(self):
         """Get a flashcard set that does not exist"""
         flashcard_set_data = {
             "jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw',
-            "flashcardID":"invalid id"
+            "flashcardID": "invalid id"
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
@@ -398,7 +166,8 @@ class TestApi(unittest.TestCase):
         Test to create a flashcard set where no folder needs to be created
         """
         # Create the account
-        valid_dummy = {"userID": "2", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
+        valid_dummy = {"userID": "2", "displayName": "Dummy", "rawAccessToken": "test",
+                       "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -553,7 +322,7 @@ class TestApi(unittest.TestCase):
         assert response_json == {'flashcardID': '758c6b3c-cc9b-52f3-865e-ac32255ce544'}
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token,})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token, })
         assert response == {
             "My new set": {
                 "cards": {
@@ -629,7 +398,7 @@ class TestApi(unittest.TestCase):
         }
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token,})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token, })
         assert response == {
             "My new set": {
                 "cards": {
@@ -687,7 +456,8 @@ class TestApi(unittest.TestCase):
         user_2_jwt_token = self.create_user("2")
 
         # Create the account
-        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawAccessToken": "test",
+                       "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -707,11 +477,11 @@ class TestApi(unittest.TestCase):
         response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD["url"], request_data)
         assert response == {
             "success": "The flashcard set at /users/2/flashcards/my_folder1/My second set"
-            + " has been moved to languages/spanish"
+                       + " has been moved to languages/spanish"
         }
 
         # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token,})
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token, })
         assert response == {
             "languages": {
                 "spanish": {
@@ -772,7 +542,6 @@ class TestApi(unittest.TestCase):
         """
         user_2_jwt_token = self.create_user("2")
 
-
         request_data = {
             "jwtToken": user_2_jwt_token,
             "currentLocation": "my_invalid_folder",
@@ -832,7 +601,7 @@ class TestApi(unittest.TestCase):
 
         request_data = {"jwtToken": user_2_jwt_token, "goalXP": 0, "endDate": date.get_current_date()}
         response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
-        print (response)
+        print(response)
         assert response == {"success": "Goal created successfully"}
 
     """@pytest.mark.run(order=25)
@@ -1042,7 +811,8 @@ class TestApi(unittest.TestCase):
         test_update_goal_status_jwt_token = self.create_user("test_update_goal_status")
 
         # Create the user
-        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawAccessToken": "test", "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
+        valid_dummy = {"userID": "test_update_goal_status", "displayName": "Dummy", "rawAccessToken": "test",
+                       "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
@@ -1085,9 +855,9 @@ class TestApi(unittest.TestCase):
         # Create the user (relies on previous tests to ensure it is working)
         User1_jwt_token = self.create_user("folderUser1")
 
-        get_today_cards = {"jwtToken":User1_jwt_token}
+        get_today_cards = {"jwtToken": User1_jwt_token}
         # Test case 1: Valid folder
-        request_data = {"jwtToken":User1_jwt_token, "folder": "my_folder/folder1"}
+        request_data = {"jwtToken": User1_jwt_token, "folder": "my_folder/folder1"}
         response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
         assert response == {"success": "Folder my_folder/folder1 created"}
 
@@ -1096,7 +866,7 @@ class TestApi(unittest.TestCase):
         assert response == {"my_folder": {"folder1": {}}}
 
         # Test case 2: Create a folder with parent folder that contains data
-        request_data = {"jwtToken":User1_jwt_token, "folder": "my_folder/folder2"}
+        request_data = {"jwtToken": User1_jwt_token, "folder": "my_folder/folder2"}
         response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
         assert response == {"success": "Folder my_folder/folder2 created"}
 
@@ -1105,7 +875,7 @@ class TestApi(unittest.TestCase):
         assert response == {"my_folder": {"folder1": {}, "folder2": {}}}
 
         # Test case 3: Folder which exists
-        request_data = {"jwtToken":User1_jwt_token, "folder": "my_folder/folder1"}
+        request_data = {"jwtToken": User1_jwt_token, "folder": "my_folder/folder1"}
         response = self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], request_data)
         assert response == {"success": "Folder my_folder/folder1 created"}
 
@@ -1120,30 +890,3 @@ class TestApi(unittest.TestCase):
             assert False
         except Exception:
             assert True
-
-# api = TestApi()
-# api.test_create_account_valid()
-# api.test_get_user()
-# api.test_get_invalid_user()
-# api.test_get_user_stats()
-# api.test_get_invalid_user_stats()
-# api.test_create_flashcard_set()
-# api.test_get_flashcard_set()
-# api.test_get_invalid_flashcard_set()
-# api.test_get_valid_cards()
-# api.test_get_invalid_card_ids()
-# api.test_get_all_cards()
-# api.test_get_all_cards_invalid_user()
-# api.test_create_set_with_no_folder()
-# api.test_create_set_with_no_folder_again()
-# api.test_create_set_with_two_folders()
-# api.test_create_set_that_already_exists()
-# api.test_move_card_to_location_that_exists()
-# api.test_move_card_to_new_location()
-# api.test_move_non_existant_set()
-# api.test_create_card_goal()
-# api.test_create_xp_goal()
-# api.test_create_completed_goal()
-# # api.test_update_goal_status()
-# api.test_update_heatmap()
-# api.test_create_folder()
