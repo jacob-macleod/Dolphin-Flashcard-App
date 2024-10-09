@@ -4,7 +4,7 @@ import unittest
 import pytest
 
 from testing.api_routes import Routes
-from testing.builders.flashcards import create_flashcard
+from testing.builders.flashcards import create_flashcard, create_flashcard_no_db
 from testing.test_api.base import BaseApiActionsMixin
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -144,3 +144,64 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
             }
         )
         assert response == ["User has no flashcards"]
+
+    def test_create_set_with_no_folder(self, user):
+        """
+        Test to create a flashcard set where no folder needs to be created
+        """
+        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any"),
+        flashcard = create_flashcard_no_db(user["user_id"])
+
+        # Create the flashcard set
+        flashcard_data = {
+            "jwtToken": jwt_token,
+            "flashcardName": flashcard["flashcardName"],
+            "flashcardDescription": flashcard["flashcardDescription"],
+            "folder": "",
+            "cards": [
+                {
+                    "front": flashcard["cards"][0]["front"],
+                    "back": flashcard["cards"][0]["back"],
+                    "reviewStatus": flashcard["cards"][0]["reviewStatus"],
+                    "lastReview": flashcard["cards"][0]["lastReview"],
+                },
+                {
+                    "front": flashcard["cards"][1]["front"],
+                    "back": flashcard["cards"][1]["back"],
+                    "reviewStatus": flashcard["cards"][1]["reviewStatus"],
+                    "lastReview": flashcard["cards"][1]["lastReview"],
+                },
+            ],
+        }
+
+        flashcard["flashcard_id"] = hash_to_numeric(
+            user["user_id"] + flashcard_data["folder"] + flashcard_data["flashcardName"]
+        )
+
+        for card in flashcard["cards"]:
+            card["card_id"] = hash_to_numeric(
+                user["user_id"] + flashcard_data["folder"] + flashcard_data["flashcardName"] + card["front"]
+            )
+
+        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
+        response_json = response[0]
+        assert response_json == {"flashcardID": flashcard["flashcard_id"]}
+
+        # Test the received data is as expected
+        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": jwt_token})
+        assert response == {
+            flashcard["flashcardName"]: {
+                "cards": {
+                    flashcard["cards"][0]["card_id"]: {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                    flashcard["cards"][1]["card_id"]: {
+                        "last_review": date.get_current_date(),
+                        "review_status": "0.0",
+                    },
+                },
+                "flashcardID": flashcard["flashcard_id"],
+                "flashcardName": flashcard["flashcardName"],
+            },
+        }

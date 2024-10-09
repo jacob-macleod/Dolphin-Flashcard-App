@@ -31,64 +31,6 @@ class TestBasicApi(unittest.TestCase, BaseApiActionsMixin):
     """Test the API"""
     # Authentication
 
-    @pytest.mark.run(order=15)
-    def test_create_set_with_no_folder(self):
-        """
-        Test to create a flashcard set where no folder needs to be created
-        """
-        # Create the account
-        valid_dummy = {"userID": "2", "displayName": "Dummy", "rawAccessToken": "test",
-                       "accessToken": "4be0643f-1d98-573b-97cd-ca98a65347dd", "idToken": ""}
-
-        response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
-        response_json = response[0]
-        user_2_jwt_token = self.create_user("2")
-
-        # Create the flashcard set
-        flashcard_data = {
-            "jwtToken": user_2_jwt_token,
-            "flashcardName": "My new set",
-            "flashcardDescription": "This is\nmy description",
-            "folder": "",
-            "cards": [
-                {
-                    "front": "Front 1",
-                    "back": "Back 1",
-                    "reviewStatus": "0.0",
-                    "lastReview": "27/04/2024",
-                },
-                {
-                    "front": "Front 2",
-                    "back": "Back 2",
-                    "reviewStatus": "0.0",
-                    "lastReview": "27/04/2024",
-                },
-            ],
-        }
-
-        response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response[0]
-        assert response_json == {"flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916"}
-
-        # Test the received data is as expected
-        response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_2_jwt_token})
-        assert response == {
-            "My new set": {
-                "cards": {
-                    "2f5442b6-5e87-5cad-9aa5-b56bfcbc73fe": {
-                        "last_review": date.get_current_date(),
-                        "review_status": "0.0",
-                    },
-                    "5db1550a-1531-5b0c-aaaa-a2134f33e950": {
-                        "last_review": date.get_current_date(),
-                        "review_status": "0.0",
-                    },
-                },
-                "flashcardID": "48a5735c-dab7-58cc-a1d3-d3cf9a2a2916",
-                "flashcardName": "My new set",
-            }
-        }
-
     @pytest.mark.run(order=16)
     def test_create_set_with_no_folder_again(self):
         """
