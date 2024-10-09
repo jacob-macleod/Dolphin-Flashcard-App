@@ -3,11 +3,16 @@ import os
 import unittest
 import pytest
 
-from backend.classes.date import Date
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.join(current_dir, "../..", "backend")
+sys.path.append(src_path)
+
+from classes.date import Date
+from database.jwt_handler import JwtHandler
+
 from testing.api_routes import Routes
 from testing.builders.user import create_user
 from testing.test_api.base import BaseApiActionsMixin
-from backend.database.jwt_handler import JwtHandler
 
 date = Date()
 
@@ -50,7 +55,7 @@ class TestUser(unittest.TestCase, BaseApiActionsMixin):
         response_json = response[0]
         assert response_json == {"name": user["name"]}
 
-    def test_get_invalid_user(self, user):
+    def test_get_invalid_user(self):
         """Get a user that does not exist"""
 
         response = self.get_api(
@@ -62,12 +67,11 @@ class TestUser(unittest.TestCase, BaseApiActionsMixin):
 
     def test_get_user_stats(self, user):
         """Get the statistics for the user that has been created"""
-        user_1_jwt_token = self.create_user("1")
 
         # Test case 1: Get the user stats
-        valid_dummy = {"jwtToken": user_1_jwt_token}
+        token = {"jwtToken": self.jwt_handler.encode(user["user_id"], "test", "any")}
 
-        response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], valid_dummy)
+        response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], token)
         response_json = response[0]
         assert response_json == {
             "lastStreak": date.get_current_date(),
@@ -79,10 +83,10 @@ class TestUser(unittest.TestCase, BaseApiActionsMixin):
 
         # Test case 2: Update the heatmap
 
-    def test_get_invalid_user_stats(self, user):
+    def test_get_invalid_user_stats(self):
         """Get the statistics for a user that does not exist"""
         invalid_dummy = {
-            "jwtToken": 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoiaW52YWxpZHVzZXIiLCJhY2Nlc3NfdG9rZW4iOiI0YmUwNjQzZi0xZDk4LTU3M2ItOTdjZC1jYTk4YTY1MzQ3ZGQiLCJhY2Nlc3NfdG9rZW5fcmF3IjoidGVzdCIsImlhdCI6MTcyNjE3MjA1OH0.GzImS3vRSUB52dlwQsWMNc1S6NBE-Fj-4jdsaUxc00esH6N8_MEQGGZrDrsrAMgog0PPLI9MxYUsyYBsgYCiQw'
+            "jwtToken": self.jwt_handler.encode("-1", "test", "any")
         }
 
         response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], invalid_dummy)
