@@ -17,11 +17,6 @@ from testing.test_api.base import BaseApiActionsMixin
 date = Date()
 
 
-@pytest.fixture
-def user():
-    return create_user()
-
-
 class TestUser(unittest.TestCase, BaseApiActionsMixin):
 
     @property
