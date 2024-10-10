@@ -3,29 +3,35 @@ import random
 import sys
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, "..", "backend")
+src_path = os.path.join(current_dir, "../..", "backend")
 sys.path.append(src_path)
 
 from database.database import database as db
 from routes.api.card_management import hash_to_numeric
 
 
-def create_flashcard_no_db(user_id):
+def create_flashcard_no_db(
+        user_id,
+        **kwargs,
+):
     flashcard_dict = {
         "userID": user_id,
-        "flashcardName": f"flashcardName {random.randint(-1000, 1000)}",
-        "flashcardDescription": f"flashcardDescription {random.randint(-1000, 1000)}",
-        "folder": f"folder {random.randint(-1000, 1000)}",
+        "flashcardName": kwargs.get("flashcardName", f"flashcardName {random.randint(-100000, 10000000)}"),
+        "flashcardDescription": kwargs.get(
+            "flashcardDescription",
+            f"flashcardDescription {random.randint(-100000, 10000000)}"
+        ),
+        "folder": kwargs.get("folder", f"flashcardDescription {random.randint(-100000, 10000000)}"),
         "cards": [
             {
-                "front": f"front {random.randint(-1000, 1000)}",
-                "back": f"back {random.randint(-1000, 1000)}",
+                "front": f"front {random.randint(-100000, 10000000)}",
+                "back": f"back {random.randint(-100000, 10000000)}",
                 "reviewStatus": "0.0",
                 "lastReview": "27/04/2024",
             },
             {
-                "front": f"front {random.randint(-1000, 1000)}",
-                "back": f"back {random.randint(-1000, 1000)}",
+                "front": f"front {random.randint(-100000, 10000000)}",
+                "back": f"back {random.randint(-100000, 10000000)}",
                 "reviewStatus": "0.0",
                 "lastReview": "27/04/2024",
             },
@@ -45,8 +51,8 @@ def create_flashcard_no_db(user_id):
     return flashcard_dict
 
 
-def create_flashcard(user_id):
-    flashcard_dict = create_flashcard_no_db(user_id)
+def create_flashcard(user_id, **kwargs):
+    flashcard_dict = create_flashcard_no_db(user_id, **kwargs)
 
     db.flashcard_set.create_flashcard_set(
         flashcard_id=flashcard_dict["flashcard_id"],

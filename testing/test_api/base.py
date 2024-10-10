@@ -2,12 +2,17 @@ import requests
 import json
 
 from backend.main import server_addr
+from database.jwt_handler import JwtHandler
 from testing.api_routes import Routes
 
 HEADERS = {"Content-Type": "application/json"}
 
 
 class BaseApiActionsMixin:
+    @property
+    def jwt_handler(self):
+        return JwtHandler()
+
     def get_api(self, route: str, data: dict = None) -> dict:
         """
         Simple get method to not repeat "get" everytime

@@ -18,11 +18,6 @@ date = Date()
 
 
 class TestUser(unittest.TestCase, BaseApiActionsMixin):
-
-    @property
-    def jwt_handler(self):
-        return JwtHandler()
-
     def test_create_account_valid(self) -> None:
         """
         Valid account
