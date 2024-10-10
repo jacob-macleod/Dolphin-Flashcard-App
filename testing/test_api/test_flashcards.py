@@ -85,7 +85,7 @@ class TestFlashcards(BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response
+        response_json = response[0]
         assert response_json == {
             "flashcardID": hash_to_numeric(
                 user["user_id"] + flashcard_data["folder"] + flashcard_data["flashcardName"]),
@@ -102,7 +102,7 @@ class TestFlashcards(BaseApiActionsMixin):
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
-        response_json = response
+        response_json = response[0]
         assert response_json == {
             'cards': {
                 flashcard["cards"][0]["card_id"]: {
@@ -124,7 +124,7 @@ class TestFlashcards(BaseApiActionsMixin):
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
         response_json = response
-        assert response_json is None
+        assert response_json == {"error": f"Invalid JWT token '{flashcard_set_data['jwtToken']}'"}
 
     def test_get_valid_cards(self, user):
         """Get the cards that have just been created"""
@@ -174,11 +174,11 @@ class TestFlashcards(BaseApiActionsMixin):
             }
         }
 
-    def test_get_all_cards_invalid_user(self):
+    def test_get_all_cards_invalid_user(self, user):
         """Get the cards for a user that does not exist"""
         response = self.post_api(
             Routes.ROUTE_GET_TODAY_CARDS["url"], {
-                "jwtToken": self.jwt_handler.encode("-1", "test", "any")
+                "jwtToken": self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
             }
         )
         assert response == ["User has no flashcards"]
@@ -212,7 +212,7 @@ class TestFlashcards(BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response
+        response_json = response[0]
         assert response_json == {"flashcardID": flashcard["flashcard_id"]}
 
         # Test the received data is as expected
@@ -277,7 +277,7 @@ class TestFlashcards(BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response
+        response_json = response[0]
         assert response_json == {'flashcardID': flashcard_2["flashcard_id"]}
 
         # Test the received data is as expected
@@ -343,14 +343,14 @@ class TestFlashcards(BaseApiActionsMixin):
             "folder": "my_folder1/my_second_folder",
             "cards": [
                 {
-                    "front": "Set 3 Front 1",
-                    "back": "Set 3 Back 1",
+                    "front": flashcard_3["cards"][0]["front"],
+                    "back": flashcard_3["cards"][0]["back"],
                     "reviewStatus": "0.0",
                     "lastReview": "27/04/2024",
                 },
                 {
-                    "front": "Set 3 Front 2",
-                    "back": "Set 3 Back 2",
+                    "front": flashcard_3["cards"][1]["front"],
+                    "back": flashcard_3["cards"][1]["back"],
                     "reviewStatus": "0.0",
                     "lastReview": "27/04/2024",
                 },
@@ -358,7 +358,7 @@ class TestFlashcards(BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response
+        response_json = response[0]
         assert response_json == {'flashcardID': flashcard_3["flashcard_id"]}
 
         # Test the received data is as expected
@@ -473,12 +473,13 @@ class TestFlashcards(BaseApiActionsMixin):
         }
         response = self.post_api(Routes.ROUTE_MOVE_FLASHCARD["url"], request_data)
         assert response == {
-            "success": f"""The flashcard set at /users/{user['user_id']}/flashcards/my_folder1/{flashcard_1['flashcardName']} been moved to languages/spanish"""
+            "success": f"""The flashcard set at /users/{user['user_id']}/flashcards/my_folder1/{flashcard_1['flashcardName']} has been moved to languages/spanish"""
         }
 
         # Test the received data is as expected
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": jwt_token})
         assert response == {
+            "my_folder1": {},
             "languages": {
                 "spanish": {
                     flashcard_1["flashcardName"]: {

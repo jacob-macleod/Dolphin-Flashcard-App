@@ -25,41 +25,29 @@ class TestBasicApi(BaseApiActionsMixin):
         # Test with a valid request
         result = check_request_json({"key1": "", "key2": ""}, {"key1": "", "key2": ""})
 
-        self.assertTrue(result)
+        assert result
 
         # Test with a valid request but keys have different values
         result = check_request_json(
             {"key1": "val1", "key2": "value2"}, {"key1": "", "key2": ""}
         )
 
-        self.assertEqual(result, True)
+        assert result
 
         # Test with a valid request but keys are in different order
         result = check_request_json({"key2": "", "key1": ""}, {"key1": "", "key2": ""})
-        self.assertEqual(
-            result,
-            "Your supplied json keys do not match the expected format",
-            "Your supplied json keys do not match the expected format",
-        )
+        assert result == "Your supplied json keys do not match the expected format"
 
         # Test with valid keys and some extra ones
         result = check_request_json(
             {"key1": "", "key2": "", "key3": ""}, {"key1": "", "key2": ""}
         )
-        self.assertEqual(
-            result,
-            "Your supplied json keys do not match the expected format",
-            "Your supplied json keys do not match the expected format",
-        )
+        assert result == "Your supplied json keys do not match the expected format"
 
         # Test with invalid keys
         result = check_request_json({"key3": "", "key4": ""}, {"key1": "", "key2": ""})
 
-        self.assertEqual(
-            result,
-            "Your supplied json keys do not match the expected format",
-            "Your supplied json keys do not match the expected format",
-        )
+        assert result =="Your supplied json keys do not match the expected format"
 
         # Test with valid regex pattern
         expected_format = {
@@ -74,7 +62,7 @@ class TestBasicApi(BaseApiActionsMixin):
             "email": "john@example.com",
         }
         result = check_request_json(expected_format, request_data)
-        self.assertTrue(result, msg="Invalid regex pattern")
+        assert result, "Invalid regex pattern"
 
         expected_format = {
             "name": "",
@@ -91,7 +79,7 @@ class TestBasicApi(BaseApiActionsMixin):
         }
 
         result = check_request_json(expected_format, request_data)
-        self.assertTrue(result, "Invalid json format for keys and sub keys.")
+        assert result, "Invalid json format for keys and sub keys."
 
     def test_update_heatmap(self, user):
         """
