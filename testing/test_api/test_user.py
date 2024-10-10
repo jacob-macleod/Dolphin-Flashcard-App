@@ -10,14 +10,14 @@ sys.path.append(src_path)
 from classes.date import Date
 from database.jwt_handler import JwtHandler
 
-from testing.api_routes import Routes
-from testing.builders.user import create_user
-from testing.test_api.base import BaseApiActionsMixin
+from api_routes import Routes
+from builders.user import create_user
+from test_api.base import BaseApiActionsMixin
 
 date = Date()
 
 
-class TestUser(unittest.TestCase, BaseApiActionsMixin):
+class TestUser(BaseApiActionsMixin):
     def test_create_account_valid(self) -> None:
         """
         Valid account
@@ -32,14 +32,11 @@ class TestUser(unittest.TestCase, BaseApiActionsMixin):
 
         response = self.post_api(Routes.ROUTE_CREATE_ACCOUNT["url"], valid_dummy)
         response_json = response[0]
-        self.assertTrue(
-            expr=response_json["success"],
-            msg=f"Dummy account creation should be successful. Actual response is {response_json}",
-        )
+        assert response_json["success"], f"Dummy account creation should be successful. Actual response is {response_json}"
 
     def test_get_user(self, user) -> None:
         """Get the newly created user"""
-        token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
         response = self.get_api(Routes.ROUTE_GET_USER["url"], {"jwtToken": token})
         response_json = response[0]
@@ -48,21 +45,22 @@ class TestUser(unittest.TestCase, BaseApiActionsMixin):
     def test_get_invalid_user(self):
         """Get a user that does not exist"""
 
+        invalid_dummy = {"jwtToken": self.jwt_handler.encode("-1", "test", "any")}
         response = self.get_api(
             Routes.ROUTE_GET_USER["url"],
-            {"jwtToken": self.jwt_handler.encode("-1", "test", "any")},
+            invalid_dummy,
         )
-        response_json = response[0]
-        assert response_json is None
+        response_json = response
+        assert response_json == {"error": f"Invalid JWT token '{invalid_dummy['jwtToken']}'"}
 
     def test_get_user_stats(self, user):
         """Get the statistics for the user that has been created"""
 
         # Test case 1: Get the user stats
-        token = {"jwtToken": self.jwt_handler.encode(user["user_id"], "test", "any")}
+        token = {"jwtToken": self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])}
 
         response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], token)
-        response_json = response[0]
+        response_json = response[0 ]
         assert response_json == {
             "lastStreak": date.get_current_date(),
             "streak": 0,
@@ -80,5 +78,5 @@ class TestUser(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.get_api(Routes.ROUTE_GET_USER_STATS["url"], invalid_dummy)
-        response_json = response[0]
-        assert response_json is None
+        response_json = response
+        assert response_json == {"error": f"Invalid JWT token '{invalid_dummy['jwtToken']}'"}

@@ -3,10 +3,10 @@ import os
 import unittest
 import pytest
 
-from testing.api_routes import Routes
-from testing.builders.flashcards import create_flashcard, create_flashcard_no_db
-from testing.builders.goal import create_card_goal, create_xp_goal, create_xp_goal_no_db
-from testing.test_api.base import BaseApiActionsMixin
+from api_routes import Routes
+from builders.flashcards import create_flashcard, create_flashcard_no_db
+from builders.goal import create_card_goal, create_xp_goal, create_xp_goal_no_db
+from test_api.base import BaseApiActionsMixin
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, "..", "backend")
@@ -18,13 +18,12 @@ from routes.api.card_management import hash_to_numeric
 
 date = Date()
 
-
-class TestGoals(unittest.TestCase, BaseApiActionsMixin):
+class TestGoals(BaseApiActionsMixin):
     def test_create_card_goal(self, user):
         """
         Test to create a card goal that should be failed
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
         request_data = {"jwtToken": jwt_token, "cardsToRevise": 2, "endDate": "01/01/2022"}
         response = self.post_api(Routes.ROUTE_CREATE_CARD_GOAL["url"], request_data)
@@ -34,7 +33,7 @@ class TestGoals(unittest.TestCase, BaseApiActionsMixin):
         """
         Test to create an XP goal that should be in progress
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
         request_data = {"jwtToken": jwt_token, "goalXP": 1, "endDate": date.get_current_date()}
         response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)
@@ -44,7 +43,7 @@ class TestGoals(unittest.TestCase, BaseApiActionsMixin):
         """
         Test for a goal that should be completed
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
         request_data = {"jwtToken": jwt_token, "goalXP": 2, "endDate": date.get_current_date()}
         response = self.post_api(Routes.ROUTE_CREATE_XP_GOAL["url"], request_data)

@@ -3,9 +3,9 @@ import os
 import unittest
 import pytest
 
-from testing.api_routes import Routes
-from testing.builders.flashcards import create_flashcard, create_flashcard_no_db
-from testing.test_api.base import BaseApiActionsMixin
+from api_routes import Routes
+from builders.flashcards import create_flashcard, create_flashcard_no_db
+from test_api.base import BaseApiActionsMixin
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, "..", "backend")
@@ -18,13 +18,13 @@ from routes.api.card_management import hash_to_numeric
 date = Date()
 
 
-class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
+class TestFlashcards(BaseApiActionsMixin):
     def test_create_folder(self, user):
         """
         Test to create a folder
         """
         # Create the user (relies on previous tests to ensure it is working)
-        User1_jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        User1_jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
         get_today_cards = {"jwtToken": User1_jwt_token}
         # Test case 1: Valid folder
@@ -64,7 +64,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
 
     def test_create_flashcard_set(self, user):
         flashcard_data = {
-            "jwtToken": self.jwt_handler.encode(user["user_id"], "test", "any"),
+            "jwtToken": self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"]),
             "flashcardName": "My new set",
             "flashcardDescription": "This is\nmy description",
             "folder": "parent-name",
@@ -85,7 +85,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response[0]
+        response_json = response
         assert response_json == {
             "flashcardID": hash_to_numeric(
                 user["user_id"] + flashcard_data["folder"] + flashcard_data["flashcardName"]),
@@ -93,7 +93,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
 
     def test_get_flashcard_set(self, user):
         """Get the flashcard set that has been created"""
-        user_1_jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        user_1_jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         flashcard = create_flashcard(user["user_id"])
 
         flashcard_set_data = {
@@ -102,7 +102,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
-        response_json = response[0]
+        response_json = response
         assert response_json == {
             'cards': {
                 flashcard["cards"][0]["card_id"]: {
@@ -123,7 +123,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.get_api(Routes.ROUTE_GET_FLASHCARD["url"], flashcard_set_data)
-        response_json = response[0]
+        response_json = response
         assert response_json is None
 
     def test_get_valid_cards(self, user):
@@ -152,7 +152,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         """Get the newly created cards"""
         flashcard = create_flashcard(user["user_id"])
 
-        user_1_jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        user_1_jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         response = self.post_api(Routes.ROUTE_GET_TODAY_CARDS["url"], {"jwtToken": user_1_jwt_token})
 
         assert response == {
@@ -187,7 +187,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         """
         Test to create a flashcard set where no folder needs to be created
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         flashcard = create_flashcard_no_db(user["user_id"], folder="")
 
         flashcard_data = {
@@ -212,7 +212,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response[0]
+        response_json = response
         assert response_json == {"flashcardID": flashcard["flashcard_id"]}
 
         # Test the received data is as expected
@@ -239,7 +239,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         Test to create a flashcard set where no folder needs to be created
         but root node already has a flashcard set.
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         flashcard_1 = create_flashcard(
             user["user_id"],
             folder="",
@@ -277,7 +277,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response[0]
+        response_json = response
         assert response_json == {'flashcardID': flashcard_2["flashcard_id"]}
 
         # Test the received data is as expected
@@ -319,7 +319,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         Note that the userID is still 2 - this makes sure it works, even when
         there's multiple random cards in the root folder
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         flashcard_1 = create_flashcard(
             user["user_id"],
             folder="",
@@ -358,7 +358,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         }
 
         response = self.post_api(Routes.ROUTE_CREATE_FLASHCARD["url"], flashcard_data)
-        response_json = response[0]
+        response_json = response
         assert response_json == {'flashcardID': flashcard_3["flashcard_id"]}
 
         # Test the received data is as expected
@@ -416,7 +416,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         """
         Test to move flashcard set to a new location that exists and stores folders and sets
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         flashcard_1 = create_flashcard(
             user["user_id"],
             folder="",
@@ -459,7 +459,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         """
         Test to move flashcard set to a new location that does not exist
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
         flashcard_1 = create_flashcard(
             user["user_id"],
             folder="my_folder1",
@@ -503,7 +503,7 @@ class TestFlashcards(unittest.TestCase, BaseApiActionsMixin):
         """
         Test to move a flashcard set that does not exist
         """
-        jwt_token = self.jwt_handler.encode(user["user_id"], "test", "any")
+        jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
         request_data = {
             "jwtToken": jwt_token,

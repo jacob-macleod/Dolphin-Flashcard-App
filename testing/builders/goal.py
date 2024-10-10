@@ -16,7 +16,7 @@ date = Date()
 def create_card_goal_no_db(user_id, **kwargs) -> dict:
     goal = {
         "goal_type": "Card",
-        "title": "Revise " + kwargs.get("cardsToRevise", 5) + " cards by " + kwargs.get("endDate", "01/01/2022"),
+        "title": "Revise " + str(kwargs.get("cardsToRevise", 5)) + " cards by " + kwargs.get("endDate", "01/01/2022"),
         "cardsToRevise": kwargs.get("cardsToRevise", 5),
         "endDate": kwargs.get("endDate", "01/01/2022"),
         "status": "in progress",

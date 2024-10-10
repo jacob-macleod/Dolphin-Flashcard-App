@@ -1,9 +1,9 @@
 import requests
 import json
 
-from backend.main import server_addr
+from main import server_addr
 from database.jwt_handler import JwtHandler
-from testing.api_routes import Routes
+from api_routes import Routes
 
 HEADERS = {"Content-Type": "application/json"}
 
