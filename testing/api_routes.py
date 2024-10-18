@@ -1,8 +1,7 @@
-"""A collection of API routes to be used in test_api.py
-"""
+"""A collection of API routes to be used"""
 
 class Routes:
-    """A collection of API routes to be used in test_api.py
+    """A collection of API routes to be used
     """
     # authentication.py
     ROUTE_CREATE_ACCOUNT = {
