@@ -8,11 +8,14 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
+import Paragraph from '../componments/Text/Paragraph';
 import { PreviewTotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
+import './ViewFlashcards.css';
 import Heading4 from '../componments/Text/Heading4';
+import Button from '../componments/Button';
 
 function PreviewFlashcard() {
   // Set general variables
@@ -63,11 +66,19 @@ function PreviewFlashcard() {
               width: view === "desktop" ? "100%" : "calc(100% - 16px)",
             }}
           >
+            <Paragraph text="Flashcardname" type="grey-italics" />
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
               <Heading4 text="Previewing Flashcard" />
-                  <PreviewTotalFlashcardBrowser
-                      flashcardID={urlParams.get("id")}
-                  />
+
+              <PreviewTotalFlashcardBrowser
+                  flashcardID={urlParams.get("id")}
+              />
+
+              <Heading4 text="Other modes" />
+              <div className='button-container'>
+                <Button text="Generate Quiz" disabled={true} />
+                <Button text="Match Mode" disabled={true} />
+              </div>
             </div>
           </WhiteOverlay>
         </GridItem>
