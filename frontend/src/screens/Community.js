@@ -39,7 +39,9 @@ function SearchForFlashcard() {
   const [flashcardsExist, setFlashcardsExist] = useState(true);
 
   function searchForFlashcard() {
-    apiManager.searchForFlashcard(searchTerm, setFlashcardSearchData);
+    if (searchTerm !== "") {
+      apiManager.searchForFlashcard(searchTerm, setFlashcardSearchData);
+    }
   }
 
 

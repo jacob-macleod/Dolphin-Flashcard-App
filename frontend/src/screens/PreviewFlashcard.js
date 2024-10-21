@@ -1,7 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import apiManager from '../api/Api';
 import { Helmet } from 'react-helmet';
-import { getCookie } from '../api/Authentication';
 import useWindowSize from '../hooks/useWindowSize';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -10,16 +8,17 @@ import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
-import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
+import { PreviewTotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
-import Heading3 from '../componments/Text/Heading3';
+import Heading4 from '../componments/Text/Heading4';
 
 function PreviewFlashcard() {
   // Set general variables
   const title = "Preview";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
+  const urlParams = new URLSearchParams(window.location.search);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -29,19 +28,6 @@ function PreviewFlashcard() {
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
     view === "mobile" ? "8px" : "16px"
   );
-  const [flashcardData, setFlashcardData] = useState(null);
-
-  useEffect(() => {
-    if (flashcardData === null) {
-        // Get the flashcard data
-        const urlParams = new URLSearchParams(window.location.search);
-        const flashcardID = urlParams.get("id");
-        const jwtToken = getCookie("jwtToken");
-
-        apiManager.getFlashcard(jwtToken, flashcardID, setFlashcardData);
-    }
-    console.log(flashcardData);
-  }, [flashcardData]);
 
   useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
@@ -78,14 +64,10 @@ function PreviewFlashcard() {
             }}
           >
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
-                {flashcardData !== null
-                    ?
-                    <TotalFlashcardBrowser
-                        folder={"folder"}
-                        flashcardName={"flashcardName"}
-                        flashcardID={flashcardData.flashcard_id}
-                    />
-                  : <></>}
+              <Heading4 text="Previewing Flashcard" />
+                  <PreviewTotalFlashcardBrowser
+                      flashcardID={urlParams.get("id")}
+                  />
             </div>
           </WhiteOverlay>
         </GridItem>

@@ -19,6 +19,9 @@ const slideVariants = {
 };
 
 function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
+  /* An interface to access RenderTotalFlashcardBrowser. Used when viewing flashcards which
+  have been added to a folder. */
+
   const {
     flashcardData,
     flashcardsExist,
