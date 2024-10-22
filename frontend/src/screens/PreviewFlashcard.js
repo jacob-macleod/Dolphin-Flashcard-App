@@ -17,6 +17,7 @@ import './ViewFlashcards.css';
 import './PreviewFlashcard.css';
 import Heading4 from '../componments/Text/Heading4';
 import Button from '../componments/Button';
+import SaveFlashcardSetDialogue from '../containers/Modal/SaveFlashcardSetDialogue/SaveFlashcardSetDialogue';
 
 function PreviewFlashcard() {
   // Set general variables
@@ -32,10 +33,22 @@ function PreviewFlashcard() {
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
     view === "mobile" ? "8px" : "16px"
   );
+  const [saveFlashcardSetDialogueVisible, setSaveFlashcardSetDialogueVisible] = useState(false);
+  const [loadFlashcardInOwnSet, setLoadFlashcardInOwnSet] = useState(false);
 
   useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
   }, [view]);
+
+  useEffect(() => {
+    if (loadFlashcardInOwnSet !== false) {
+      setLoadFlashcardInOwnSet(false);
+      window.open(
+        "/view?flashcardID[]=" + urlParams.get("id") + "&folder[]=" + loadFlashcardInOwnSet + "&flashcardName[]=" + urlParams.get("name"),
+        "_self"
+      )
+    }
+  }, [loadFlashcardInOwnSet]);
 
   return (
     <div style={{ top: "0px" }}>
@@ -43,6 +56,12 @@ function PreviewFlashcard() {
         <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
       </Helmet>
+
+      <SaveFlashcardSetDialogue
+        visible={saveFlashcardSetDialogueVisible}
+        setVisible={setSaveFlashcardSetDialogueVisible}
+        setReload={setLoadFlashcardInOwnSet}
+      />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
         {view !== "mobile" ? <SidePanel /> : <></>}
@@ -73,7 +92,7 @@ function PreviewFlashcard() {
                 type="grey-italics"
                 style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}/
               >
-              <Button text="Save Flashcard" />
+              <Button text="Save Flashcard" onClick={() => {setSaveFlashcardSetDialogueVisible(true)}}/>
             </div>
 
             <div style={{ maxWidth: "1200px", margin: "auto" }}>

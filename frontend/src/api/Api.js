@@ -341,6 +341,20 @@ class ApiManager {
             setResults(results);
         });
     }
+
+    addFlashcardToFolder(jwtToken, flashcardID, folder, setLoadFlashcard) {
+        const url = "add-flashcard-to-folder"
+        const data = {
+            "jwtToken": jwtToken,
+            "flashcardID": flashcardID,
+            "folder": folder
+        }
+
+        this.fetchData(data, url, status => {
+            // Load the flashcard when finished
+            setLoadFlashcard(folder);
+        });
+    }
 }
 
 const apiManager = new ApiManager();
