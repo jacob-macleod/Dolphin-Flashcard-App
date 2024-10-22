@@ -14,6 +14,7 @@ import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './ViewFlashcards.css';
+import './PreviewFlashcard.css';
 import Heading4 from '../componments/Text/Heading4';
 import Button from '../componments/Button';
 
@@ -66,7 +67,15 @@ function PreviewFlashcard() {
               width: view === "desktop" ? "100%" : "calc(100% - 16px)",
             }}
           >
-            <Paragraph text="Flashcardname" type="grey-italics" />
+            <div className='top-bar'>
+              <Paragraph
+                text={urlParams.get("name")}
+                type="grey-italics"
+                style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}/
+              >
+              <Button text="Save Flashcard" />
+            </div>
+
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
               <Heading4 text="Previewing Flashcard" />
 
