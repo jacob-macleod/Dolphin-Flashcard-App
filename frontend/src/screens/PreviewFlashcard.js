@@ -26,7 +26,7 @@ function PreviewFlashcard() {
   const urlParams = new URLSearchParams(window.location.search);
 
   // Set variables for the size
-  const mobileBreakpoint = 650;
+  const mobileBreakpoint = 700;
   const tabletBreakpoint = 1090;
   const view = useWindowSize(mobileBreakpoint, tabletBreakpoint);
 
