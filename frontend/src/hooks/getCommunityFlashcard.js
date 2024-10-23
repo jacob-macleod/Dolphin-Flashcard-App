@@ -12,7 +12,7 @@ const getCommunityFlashcard = (flashcardID) => {
         const fetchFlashcardData = async () => {
 
             const temporaryFlashcardData = await new Promise((resolve) => {
-                apiManager.getFlashcard(getCookie("jwtToken"), flashcardID, resolve);
+                apiManager.getPublicFlashcard(flashcardID, resolve);
             });
 
             setFlashcardData({ ...temporaryFlashcardData });
@@ -27,10 +27,12 @@ const getCommunityFlashcard = (flashcardID) => {
 
 
     useEffect(() => {
+        console.log(flashcardData);
         const fetchIndividualFlashcards = async () => {
             const allCardData = [];
             if (flashcardData.cards !== undefined) {
-                const cardPromises = Object.keys(flashcardData.cards).map((cardID) => {
+                const cardPromises = Object.keys(flashcardData.cards).map((cardIndex) => {
+                    const cardID = flashcardData.cards[cardIndex];
                     return new Promise((resolve) => {
                     apiManager.getFlashcardItem(cardID, (item) => {
                         resolve(item);
@@ -41,7 +43,7 @@ const getCommunityFlashcard = (flashcardID) => {
                 const cardData = await Promise.all(cardPromises);
                 allCardData.push({ ...flashcardData, cards: cardData });
             }
-        
+            console.log(allCardData);
             setFlashcardItems(allCardData);
             setFlashcardsExist(allCardData.length > 0);
         };

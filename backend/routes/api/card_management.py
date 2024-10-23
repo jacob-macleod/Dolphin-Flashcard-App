@@ -37,6 +37,8 @@ CREATE_FOLDER_FORMAT = {"jwtToken": "", "folder": ""}
 
 GET_FLASHCARD_FORMAT = {"jwtToken": "", "flashcardID": ""}
 
+GET_PUBLIC_FLASHCARD_FORMAT = {"flashcardID": ""}
+
 GET_FLASHCARD_ITEM = {"cardID": ""}
 
 GET_TODAY_CARDS = {"jwtToken": ""}
@@ -181,6 +183,24 @@ def get_flashcard():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
+@card_management_routes.route("/api/get-public-flashcard", methods=["GET", "POST"])
+@validate_json(GET_PUBLIC_FLASHCARD_FORMAT)
+def get_public_flashcard():
+    """Get a flashcard from the public repository based on the ID
+    Add json to request as in:
+    {
+        "flashcardID": "my-flashcard-id"
+    }
+    """
+    try:
+        flashcard_id = request.json.get("flashcardID")
+        flashcard_data = db.flashcard_set.get_flashcard_set(flashcard_id)
+
+        return jsonify(flashcard_data, 200)
+
+    except Exception as e:
+        # Return the error as a json object
+        return jsonify(str(e)), 500
 
 @card_management_routes.route("/api/get-flashcard-item", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_ITEM)

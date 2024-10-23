@@ -245,6 +245,17 @@ class ApiManager {
         });
     }
 
+    getPublicFlashcard(flashcardID, setFlashcardData) {
+        const url = 'get-public-flashcard';
+        const data = {
+            "flashcardID": flashcardID,
+        }
+
+        this.fetchData(data, url, flashcardData => {
+            setFlashcardData(flashcardData[0]);
+        });
+    }
+
     getFlashcardItem(cardID, setFlashcardItem) {
         const url = 'get-flashcard-item';
         const data = {
