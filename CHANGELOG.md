@@ -22,6 +22,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.5.0 - 2024-10-26
+
+### Changed
+
+- Refactored Backend Tests
+- Tests work separately
+
 ## 5.4.0 - 2024-09-19
 
 ### Added
