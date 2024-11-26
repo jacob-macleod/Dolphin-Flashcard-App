@@ -61,7 +61,7 @@ RENAME_FOLDER_FORMAT = {"jwtToken": "", "currentName": "", "newName": ""}
 
 DELETE_FOLDER_FORMAT = {"jwtToken": "", "folder": ""}
 
-DELETE_CARD_FORMAT = {"jwtToken": "", "cardID": ""}
+DELETE_CARD_FORMAT = {"jwtToken": "", "flashcardID": "", "cardID": ""}
 
 ADD_PUBLIC_FLASHCARD_TO_FOLDER = {"jwtToken": "", "flashcardID": "", "folder": ""}
 
@@ -468,14 +468,17 @@ def delete_card():
     Example request:
     {
         "userID": "my-id",
+        "flashcardID": "my-flashcard-id",
         "cardID": "my-card-id"
     }
     """
     try:
         user_id = request.json.get("userID")
         card_id = request.json.get("cardID")
+        flashcard_id = request.json.get("flashcardID")
 
         result = db.folders.delete_individual_card(user_id, card_id)
+        db.flashcard_set.delete_inidividual_card(flashcard_id, card_id)
 
         if result is not None:
             return jsonify({"success": f"Card {card_id} deleted"}), 200

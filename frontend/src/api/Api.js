@@ -333,10 +333,11 @@ class ApiManager {
         });
     }
 
-    deleteCard(jwtToken, cardID, setLoadingIconVisible, setReload) {
+    deleteCard(jwtToken, flashcardID, cardID, setLoadingIconVisible, setReload) {
         const url = 'delete-card';
         const data = {
             "jwtToken": jwtToken,
+            "flashcardID": flashcardID,
             "cardID": cardID
         }
 

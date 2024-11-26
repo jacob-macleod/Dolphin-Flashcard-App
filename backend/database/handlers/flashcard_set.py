@@ -66,3 +66,22 @@ class FlashcardSet(DatabaseHandler):
         docs = self._context.collection(self._db_name).select(["name"]).stream()
         searcher = FlashcardSearcher(docs)
         return searcher.search(flashcard_name)
+
+    def delete_inidividual_card(self, flashcard_set_id:str, card_id:str):
+        """
+        Delete an individual card from a flashcard set
+
+        Args:
+            flashcard_set_id (str): The flashcard set ID to delete the card from
+            card_id (str): The card ID to delete
+        """
+        flashcard_set = self._context.collection(self._db_name).document(flashcard_set_id)
+        # Remove the card ID from the array in flashcard_set.cards
+        card_list = flashcard_set.get().to_dict()["cards"]
+        card_list.remove(card_id)
+        flashcard_set.update(
+            {
+                "cards": card_list
+            }
+        )
+
