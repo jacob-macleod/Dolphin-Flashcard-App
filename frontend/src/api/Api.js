@@ -367,6 +367,17 @@ class ApiManager {
             setLoadFlashcard(folder);
         });
     }
+
+    getUser(jwtToken, setUserData) {
+        const url = 'get-user';
+        const data = {
+            "jwtToken": jwtToken
+        }
+
+        this.fetchData(data, url, userData => {
+            setUserData(userData[0]);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

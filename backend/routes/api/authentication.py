@@ -110,7 +110,7 @@ def sign_in():
     return jsonify({"success": True, "token": token}, 200)
 
 
-@authentication_routes.route("/api/get-user", methods=["GET"])
+@authentication_routes.route("/api/get-user", methods=["GET", "POST"])
 @validate_json(GET_USER_FORMAT)
 def get_user():
     """Get the data for a user"""

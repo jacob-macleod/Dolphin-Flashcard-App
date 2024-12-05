@@ -35,6 +35,7 @@ function PreviewFlashcard() {
   );
   const [saveFlashcardSetDialogueVisible, setSaveFlashcardSetDialogueVisible] = useState(false);
   const [loadFlashcardInOwnSet, setLoadFlashcardInOwnSet] = useState(false);
+  const [flashcardOwner, setFlashcardOwner] = useState("");
 
   useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
@@ -90,8 +91,12 @@ function PreviewFlashcard() {
               <Paragraph
                 text={urlParams.get("name")}
                 type="grey-italics"
-                style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}/
-              >
+                style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
+              />
+              <Paragraph
+                text={flashcardOwner == "" ? "" : "by " + flashcardOwner.name}
+                style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
+              />
               <Button text="Save Flashcard" onClick={() => {setSaveFlashcardSetDialogueVisible(true)}}/>
             </div>
 
@@ -100,6 +105,8 @@ function PreviewFlashcard() {
 
               <PreviewTotalFlashcardBrowser
                   flashcardID={urlParams.get("id")}
+                  setFlashcardOwner={setFlashcardOwner}
+                  flashcardOwner={flashcardOwner}
               />
 
               <Heading4 text="Other modes" />
