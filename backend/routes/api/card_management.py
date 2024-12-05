@@ -118,6 +118,7 @@ def create_flashcard():
             flashcard_name=flashcard_name,
             flashcard_description=flashcard_description,
             card_ids=card_ids,
+            user_id=user_id,
         )
 
         # Create each individual flashcard
@@ -478,7 +479,7 @@ def delete_card():
         flashcard_id = request.json.get("flashcardID")
 
         result = db.folders.delete_individual_card(user_id, card_id)
-        db.flashcard_set.delete_inidividual_card(flashcard_id, card_id)
+        db.flashcard_set.delete_inidividual_card(user_id, flashcard_id, card_id)
 
         if result is not None:
             return jsonify({"success": f"Card {card_id} deleted"}), 200
