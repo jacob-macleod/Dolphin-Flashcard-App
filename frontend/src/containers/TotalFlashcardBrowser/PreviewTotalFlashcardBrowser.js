@@ -9,12 +9,16 @@ function PreviewTotalFlashcardBrowser({ flashcardID, setFlashcardOwner, flashcar
     const { flashcardData, flashcardsExist, flashcardItems, individualCards, setFlashcardItems} = getCommunityFlashcard(flashcardID);
 
     // Set the owner of the flashcard
-    if (flashcardOwner === "") {
+    if (flashcardOwner === "" && flashcardItems !== undefined && flashcardItems[0] !== undefined) {
         apiManager.getUser(
-            getCookie("jwtToken"),
+            flashcardItems[0].owner,
             setFlashcardOwner
         );
     };
+
+    console.log(flashcardData);
+    console.log(flashcardItems);
+    console.log(individualCards);
 
     return (
         <RenderTotalFlashcardBrowser

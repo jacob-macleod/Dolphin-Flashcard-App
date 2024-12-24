@@ -25,9 +25,9 @@ SIGN_IN_FORMAT = {
 }
 
 
-GET_USER_FORMAT = {"jwtToken": ""}
+# GET_USER_FORMAT = {"userID": ""}
 
-GET_USER_STATS_FORMAT = GET_USER_FORMAT
+GET_USER_STATS_FORMAT = {"jwtToken": ""}
 
 
 @authentication_routes.route("/api/create-account", methods=["POST"])
@@ -111,7 +111,6 @@ def sign_in():
 
 
 @authentication_routes.route("/api/get-user", methods=["GET", "POST"])
-@validate_json(GET_USER_FORMAT)
 def get_user():
     """Get the data for a user"""
     user_id = request.json.get("userID")

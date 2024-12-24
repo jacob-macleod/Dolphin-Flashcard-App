@@ -368,10 +368,10 @@ class ApiManager {
         });
     }
 
-    getUser(jwtToken, setUserData) {
+    getUser(userID, setUserData) {
         const url = 'get-user';
         const data = {
-            "jwtToken": jwtToken
+            "userID": userID
         }
 
         this.fetchData(data, url, userData => {
