@@ -25,9 +25,9 @@ SIGN_IN_FORMAT = {
 }
 
 
-# GET_USER_FORMAT = {"userID": ""}
+GET_USER_FORMAT = {"jwtToken": ""}
 
-GET_USER_STATS_FORMAT = {"jwtToken": ""}
+GET_USER_STATS_FORMAT = GET_USER_FORMAT
 
 
 @authentication_routes.route("/api/create-account", methods=["POST"])
@@ -120,6 +120,16 @@ def get_user():
     except Exception as e:
         return jsonify({"error": str(e)}, 400)
 
+@authentication_routes.route("/api/get-user-from-jwt", methods=["GET", "POST"])
+@validate_json(GET_USER_FORMAT)
+def get_user_from_jwt():
+    """Get the user from the JWT"""
+    user_id = request.json.get("userID")
+    try:
+        user = db.users.get_user(user_id)
+        return jsonify(user, 200)
+    except Exception as e:
+        return jsonify({"error": str(e)}, 400)
 
 @authentication_routes.route("/api/get-user-stats", methods=["GET", "POST"])
 @validate_json(GET_USER_STATS_FORMAT)

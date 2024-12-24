@@ -378,6 +378,17 @@ class ApiManager {
             setUserData(userData[0]);
         });
     }
+
+    getUserFromJwt(jwtToken, setUserData) {
+        const url = 'get-user-from-jwt';
+        const data = {
+            "jwtToken": jwtToken
+        }
+
+        this.fetchData(data, url, userData => {
+            setUserData(userData[0]);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

@@ -2,7 +2,6 @@ import React from 'react';
 import RenderTotalFlashcardBrowser from './RenderTotalFlashcardBrowser';
 import getCommunityFlashcard from '../../hooks/getCommunityFlashcard.js';
 import apiManager from '../../api/Api';
-import { getCookie } from '../../api/Authentication';
 
 function PreviewTotalFlashcardBrowser({ flashcardID, setFlashcardOwner, flashcardOwner }) {
     // Use the hook and pass flashcardID as a parameter
@@ -15,10 +14,6 @@ function PreviewTotalFlashcardBrowser({ flashcardID, setFlashcardOwner, flashcar
             setFlashcardOwner
         );
     };
-
-    console.log(flashcardData);
-    console.log(flashcardItems);
-    console.log(individualCards);
 
     return (
         <RenderTotalFlashcardBrowser

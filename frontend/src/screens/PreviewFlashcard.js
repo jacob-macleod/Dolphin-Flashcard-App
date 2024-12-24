@@ -18,6 +18,8 @@ import './PreviewFlashcard.css';
 import Heading4 from '../componments/Text/Heading4';
 import Button from '../componments/Button';
 import SaveFlashcardSetDialogue from '../containers/Modal/SaveFlashcardSetDialogue/SaveFlashcardSetDialogue';
+import apiManager from '../api/Api';
+import { getCookie } from '../api/Authentication';
 
 function PreviewFlashcard() {
   // Set general variables
@@ -36,6 +38,7 @@ function PreviewFlashcard() {
   const [saveFlashcardSetDialogueVisible, setSaveFlashcardSetDialogueVisible] = useState(false);
   const [loadFlashcardInOwnSet, setLoadFlashcardInOwnSet] = useState(false);
   const [flashcardOwner, setFlashcardOwner] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
@@ -50,6 +53,12 @@ function PreviewFlashcard() {
       )
     }
   }, [loadFlashcardInOwnSet]);
+
+  useEffect(() => {
+    if (currentUser === "") {
+      apiManager.getUserFromJwt(getCookie("jwtToken"), setCurrentUser);
+    }
+  }), [currentUser];
 
   return (
     <div style={{ top: "0px" }}>
@@ -97,7 +106,11 @@ function PreviewFlashcard() {
                 text={flashcardOwner == "" ? "" : "by " + flashcardOwner.name}
                 style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
               />
-              <Button text="Save Flashcard" onClick={() => {setSaveFlashcardSetDialogueVisible(true)}}/>
+              <Button
+                text="Save Flashcard"
+                onClick={() => {setSaveFlashcardSetDialogueVisible(true)}}
+                disabled={currentUser.name === flashcardOwner.name ? true : false}
+              />
             </div>
 
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
