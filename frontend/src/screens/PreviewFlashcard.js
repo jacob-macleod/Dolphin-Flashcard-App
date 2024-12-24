@@ -103,7 +103,7 @@ function PreviewFlashcard() {
                 style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
               />
               <Paragraph
-                text={flashcardOwner == "" ? "" : "by " + flashcardOwner.name}
+                text={flashcardOwner == "" ? "" : currentUser.name === flashcardOwner.name ? "You own this set" : "by " + flashcardOwner.name}
                 style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
               />
               <Button
