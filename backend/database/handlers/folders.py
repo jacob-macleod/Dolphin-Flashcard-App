@@ -522,3 +522,27 @@ class Folders(DatabaseHandler):
             current = current.get(key)
 
         return current
+
+    def flashcard_exists(self, user_id:str, flashcard_id:str):#
+        """
+        See if a flashcard exists in the folder structure for a particular user
+
+        Args:
+            user_id (str): The user ID to check
+            flashcard_id (str): The flashcard ID to search for
+
+        Returns:
+            bool: True if the flashcard exists, False otherwise
+        """
+        folder_data = self.get_user_data(user_id)
+        if folder_data is None:
+            return False
+
+        flashcard_location = self.get_flashcard_location(
+            user_id, flashcard_id, folder_data
+        )
+
+        if flashcard_location is None:
+            return False
+
+        return True

@@ -389,6 +389,18 @@ class ApiManager {
             setUserData(userData[0]);
         });
     }
+
+    flashcardExists(jwtToken, flashcardID, setFlashcardExists) {
+        const url = 'flashcard-exists';
+        const data = {
+            "jwtToken": jwtToken,
+            "flashcardID": flashcardID
+        }
+
+        this.fetchData(data, url, flashcardExists => {
+            setFlashcardExists(flashcardExists);
+        });
+    }
 }
 
 const apiManager = new ApiManager();

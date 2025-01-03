@@ -39,10 +39,17 @@ function PreviewFlashcard() {
   const [loadFlashcardInOwnSet, setLoadFlashcardInOwnSet] = useState(false);
   const [flashcardOwner, setFlashcardOwner] = useState("");
   const [currentUser, setCurrentUser] = useState("");
+  const [flashcardExists, setFlashcardExists] = useState(null);
 
   useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
   }, [view]);
+
+  useEffect(() => {
+    if (flashcardExists === null) {
+      apiManager.flashcardExists(getCookie("jwtToken"), urlParams.get("id"), setFlashcardExists);
+    };
+  }, [flashcardExists]);
 
   useEffect(() => {
     if (loadFlashcardInOwnSet !== false) {
@@ -109,7 +116,11 @@ function PreviewFlashcard() {
               <Button
                 text="Save Flashcard"
                 onClick={() => {setSaveFlashcardSetDialogueVisible(true)}}
-                disabled={currentUser.name === flashcardOwner.name ? true : false}
+                disabled={
+                  currentUser.name === flashcardOwner.name ? true
+                  : flashcardExists === true ? true
+                  : false
+              }
               />
             </div>
 

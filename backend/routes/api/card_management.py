@@ -65,6 +65,7 @@ DELETE_CARD_FORMAT = {"jwtToken": "", "flashcardID": "", "cardID": ""}
 
 ADD_PUBLIC_FLASHCARD_TO_FOLDER = {"jwtToken": "", "flashcardID": "", "folder": ""}
 
+FLASHCARD_EXISTS_FORMAT = {"jwtToken": "", "flashcardID": ""}
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
@@ -541,5 +542,26 @@ def add_public_flashcard_to_folder():
         return jsonify(
             {"success": f"Flashcard '{flashcard_data['name']}' added to folder {folder}"}
         ), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/flashcard-exists", methods=["POST"])
+@validate_json(FLASHCARD_EXISTS_FORMAT)
+def flashcard_exists():
+    """
+    Check if a flashcard exists
+    Example request:
+    {
+        "userID": "my-id",
+        "flashcardID": "my-flashcard-id"
+    }
+    """
+    try:
+        user_id = request.json.get("userID")
+        flashcard_id = request.json.get("flashcardID")
+
+        result = db.folders.flashcard_exists(user_id, flashcard_id)
+
+        return jsonify(result), 200
     except Exception as e:
         return jsonify(str(e)), 500
