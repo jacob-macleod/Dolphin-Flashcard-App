@@ -22,6 +22,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 5.6.0 - 2025-01-03
+
+### Added
+
+- Added community page
+- Users can now save flashcards made by others, and edit their local versions
+- Added new API routes to handle the above
+
 ## 5.5.0 - 2024-10-26
 
 ### Changed
