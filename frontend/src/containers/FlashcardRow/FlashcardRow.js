@@ -6,7 +6,7 @@ import FlashcardOperationsMenu from '../Modal/FlashcardOperationsMenu';
 import DelayedElement from '../DelayedElement';
 import "./FlashcardRow.css"
 
-function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setInitialDefinition, cardID, setReload}) {
+function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setInitialDefinition, cardID, flashcardID, setReload}) {
     const [flashcardOperationsMenuVisible, setFlashcardOperationsMenuVisible] = useState(false);
     const [loadingIconVisible, setLoadingIconVisible] = useState(false);
 
@@ -30,6 +30,7 @@ function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setIni
                 back={back}
                 setLoadingIconVisible={setLoadingIconVisible}
                 setReload={setReload}
+                flashcardID={flashcardID}
             />
             <div>
                 <Image url={ThreeDots} width="16px" minWidth="16px" maxHeight="16px" onClick={handleClick}/>

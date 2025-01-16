@@ -22,6 +22,26 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.0.0 - 2025-01-03
+
+### Added
+
+- Added community page
+- Users can now save flashcards made by others, and edit their local versions
+- Added new API routes to handle the above
+
+### Changed
+
+- BREAKING: `/api/get-user` has now been renamed `/api/get-user-from-jwt`
+- BREAKING: New route `/api/get-user` has now been added, which fetches user data from just the user ID (and no JWT token)
+
+## 5.5.0 - 2024-10-26
+
+### Changed
+
+- Refactored Backend Tests
+- Tests work separately
+
 ## 5.4.0 - 2024-09-19
 
 ### Added

@@ -5,7 +5,7 @@ import Paragraph from '../../componments/Text/Paragraph';
 
 const FlashcardSearchResult = ({ data }) => {
     function onButtonClick() {
-        window.open("/preview?id=" + data.id, "_self");
+        window.open("/preview?id=" + data.id + "&name=" + data.name, "_self");
     }
 
     return (

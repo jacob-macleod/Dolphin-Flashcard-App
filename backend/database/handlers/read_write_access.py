@@ -1,10 +1,12 @@
 """Provides utility classes for interacting with the read_write_access database
 """
+
 from database.handlers.database_handler import DatabaseHandler
 
+
 class ReadWriteAccess(DatabaseHandler):
-    """Provides utility classes for interacting with the flashcards database
-    """
+    """Provides utility classes for interacting with the flashcards database"""
+
     def __init__(self, context):
         """Initialise the class
 
@@ -26,7 +28,9 @@ class ReadWriteAccess(DatabaseHandler):
             flashcard_id (str): The flashcard ID to add
         """
         # Get the required variables
-        read_write_access = self._context.collection("read_write_access").document(flashcard_id)
+        read_write_access = self._context.collection("read_write_access").document(
+            flashcard_id
+        )
         allowed_cards = read_write_access.get().get("card_list")
 
         # Append the user to the set
@@ -37,8 +41,4 @@ class ReadWriteAccess(DatabaseHandler):
             allowed_cards.append(user_id)
 
         # Save the modified data
-        read_write_access.set(
-            {
-                "card_list": allowed_cards
-            }
-        )
+        read_write_access.set({"card_list": allowed_cards})

@@ -1,8 +1,7 @@
-"""A collection of API routes to be used in test_api.py
-"""
+"""A collection of API routes to be used"""
 
 class Routes:
-    """A collection of API routes to be used in test_api.py
+    """A collection of API routes to be used
     """
     # authentication.py
     ROUTE_CREATE_ACCOUNT = {
@@ -10,8 +9,8 @@ class Routes:
         "methods": ["POST"]
     }
 
-    ROUTE_GET_USER = {
-        "url": "/api/get-user",
+    ROUTE_GET_USER_FROM_JWT = {
+        "url": "/api/get-user-from-jwt",
         "methods": ["GET"]
     }
 
@@ -104,5 +103,10 @@ class Routes:
 
     ROUTE_CREATE_FOLDER = {
         "url": "/api/create-folder",
+        "methods": ["POST"]
+    }
+
+    ROUTE_ADD_FLASHCARD_TO_FOLDER = {
+        "url": "/api/add-flashcard-to-folder",
         "methods": ["POST"]
     }

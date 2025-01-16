@@ -12,11 +12,12 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Python Debugger: Run Unit Tests",
+            "name": "Python Debugger: Run file",
             "type": "debugpy",
             "request": "launch",
-            "program": "testing/test_api.py",
-            "console": "integratedTerminal"
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/testing/test_api"
         },
         {
             "name": "Python Debugger: Flask",

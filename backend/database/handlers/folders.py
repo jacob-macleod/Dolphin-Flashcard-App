@@ -1,11 +1,13 @@
 """Provides utility classes for interacting with the folders database
 """
+
 from database.handlers.database_handler import DatabaseHandler
 from classes.date import Date
 
+
 class Folders(DatabaseHandler):
-    """Provides utility classes for interacting with the flashcards database
-    """
+    """Provides utility classes for interacting with the flashcards database"""
+
     def __init__(self, context):
         """Initialise the class
 
@@ -22,7 +24,7 @@ class Folders(DatabaseHandler):
         folder: str,
         flashcard_id: str,
         flashcard_name: str,
-        card_ids: list
+        card_ids: list,
     ):
         """Add a flashcard to a folder, creating the folder and any sub folders as needed
 
@@ -36,7 +38,7 @@ class Folders(DatabaseHandler):
         # Initialise variables
         folder_path = folder.split("/")
         # Store whether the folder to store the flashcard in is the root folder
-        is_root_folder = (folder_path==[""])
+        is_root_folder = folder_path == [""]
         folder = self._context.collection("folders").document(user_id)
 
         folder_data = folder.get().get("data")
@@ -47,7 +49,7 @@ class Folders(DatabaseHandler):
 
         # Traverse the dictionary according to the given path
         for key in folder_path[:-1]:
-                current = current.setdefault(key, {})
+            current = current.setdefault(key, {})
 
         # Calculate the initial card review statuses
         card_review_statuses = {}
@@ -56,7 +58,7 @@ class Folders(DatabaseHandler):
         for card_id in card_ids:
             card_review_statuses[card_id] = {
                 "review_status": "0.0",
-                "last_review": current_date
+                "last_review": current_date,
             }
 
         # Set the correct data to current, which will also change folder_data
@@ -68,24 +70,19 @@ class Folders(DatabaseHandler):
             # If the data is being saved to the root folder
             current[flashcard_name] = {
                 "flashcard_id": flashcard_id,
-                "cards": card_review_statuses
+                "cards": card_review_statuses,
             }
         else:
             # If the data is being saved to a subfolder
             current[folder_path[-1]][flashcard_name] = {
                 "flashcard_id": flashcard_id,
-                "cards": card_review_statuses
+                "cards": card_review_statuses,
             }
 
-        folder.set(
-            {
-                "data": folder_data
-            }
-        )
+        folder.set({"data": folder_data})
 
-    def get_user_data(self, user_id:str):
-        """Get the folder data for a user
-        """
+    def get_user_data(self, user_id: str):
+        """Get the folder data for a user"""
         data = self._context.collection(self._db_name).document(user_id).get().to_dict()
         if data is not None:
             data = data.get("data")
@@ -98,7 +95,7 @@ class Folders(DatabaseHandler):
         user_id: str,
         flashcard_name: str,
         current_location: str,
-        move_location: str
+        move_location: str,
     ):
         """
         Move a flashcard set to a new location
@@ -113,7 +110,9 @@ class Folders(DatabaseHandler):
             KeyError: When the flashcard is not found in the current location
         """
         # Get the current flashcard data
-        flashcard_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        flashcard_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if flashcard_data is None:
             return None
         else:
@@ -139,25 +138,15 @@ class Folders(DatabaseHandler):
 
         # Remove the flashcard where it currently is
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": flashcard_data
-            }
+            {"data": flashcard_data}
         )
 
         # Save the flashcard in the new location
         self.add_flashcard_to_folder(
-            user_id,
-            move_location,
-            flashcard_id,
-            flashcard_name,
-            cards
+            user_id, move_location, flashcard_id, flashcard_name, cards
         )
 
-    def create_folder(
-        self,
-        user_id: str,
-        folder: str
-    ):
+    def create_folder(self, user_id: str, folder: str):
         """
         Create a folder in the database
 
@@ -176,18 +165,16 @@ class Folders(DatabaseHandler):
 
         # Traverse the dictionary according to the given path
         for key in folder_path[:-1]:
-                current = current.setdefault(key, {})
+            current = current.setdefault(key, {})
 
         # Set the correct data to current, which will also change folder_data
         current[folder_path[-1]] = {}
 
-        folder.set(
-            {
-                "data": folder_data
-            }
-        )
+        folder.set({"data": folder_data})
 
-    def get_individual_card_location(self, user_id: str, card_id: str, folder_data: dict):
+    def get_individual_card_location(
+        self, user_id: str, card_id: str, folder_data: dict
+    ):
         """
         Get the location of an individual card in the folder structure
         recursive function since folders can have any number of subfolders
@@ -210,7 +197,9 @@ class Folders(DatabaseHandler):
                     return [key] + location
         return None
 
-    def get_flashcard_location(self, user_id: str, flashcard_id: str, folder_data: dict):
+    def get_flashcard_location(
+        self, user_id: str, flashcard_id: str, folder_data: dict
+    ):
         """
         Get the location of an entire flashcard in the folder structure
         recursive function since folders can have any number of subfolders
@@ -256,7 +245,14 @@ class Folders(DatabaseHandler):
                         return [key] + location
         return None
 
-    def update_card_data(self, folder_data: dict, location: list, card_id: str, review_status: str, last_review: str):
+    def update_card_data(
+        self,
+        folder_data: dict,
+        location: list,
+        card_id: str,
+        review_status: str,
+        last_review: str,
+    ):
         """
         Update the card data in the folder structure
 
@@ -275,11 +271,7 @@ class Folders(DatabaseHandler):
 
         return folder_data
 
-    def update_card_progress(
-        self,
-        user_id: str,
-        card_data: list
-    ):
+    def update_card_progress(self, user_id: str, card_data: list):
         """
         Update the progress (review status and last review) for multiple cards
 
@@ -288,7 +280,9 @@ class Folders(DatabaseHandler):
             card_data (list): The card data to update (dictionary containing cardID, review_status and last_review)
         """
         # Get the current folder data
-        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        folder_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if folder_data is None:
             return None
         else:
@@ -300,28 +294,24 @@ class Folders(DatabaseHandler):
             last_review = card.get("last_review")
 
             # Get the current folder location of the card
-            card_location = self.get_individual_card_location(user_id, card_id, folder_data)
+            card_location = self.get_individual_card_location(
+                user_id, card_id, folder_data
+            )
 
             if card_location is None:
                 raise ValueError(f"Card {card_id} does not exist!")
 
             # Update the card data
             folder_data = self.update_card_data(
-                folder_data,
-                card_location,
-                card_id,
-                review_status,
-                last_review
+                folder_data, card_location, card_id, review_status, last_review
             )
 
         # Save the updated folder data
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": folder_data
-            }
+            {"data": folder_data}
         )
 
-    def delete_flashcard(self, user_id:str, flashcard_id:str):
+    def delete_flashcard(self, user_id: str, flashcard_id: str):
         """
         Delete a flashcard from the folder structure
 
@@ -330,7 +320,9 @@ class Folders(DatabaseHandler):
             flashcard_id (str): The flashcard ID to delete
         """
         # Get the current folder data
-        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        folder_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if folder_data is None:
             return None
         else:
@@ -352,13 +344,11 @@ class Folders(DatabaseHandler):
 
         # Save the updated folder data
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": folder_data
-            }
+            {"data": folder_data}
         )
         return folder_data
 
-    def rename_flashcard(self, user_id:str, flashcard_id:str, new_name:str):
+    def rename_flashcard(self, user_id: str, flashcard_id: str, new_name: str):
         """
         Rename a flashcard
 
@@ -368,7 +358,9 @@ class Folders(DatabaseHandler):
             new_name (str): The new name for the flashcard
         """
         # Get the current folder data
-        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        folder_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if folder_data is None:
             return None
         else:
@@ -392,13 +384,11 @@ class Folders(DatabaseHandler):
 
         # Save the updated folder data
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": folder_data
-            }
+            {"data": folder_data}
         )
         return folder_data
 
-    def rename_folder(self, user_id:str, folder_name:str, new_name:str):
+    def rename_folder(self, user_id: str, folder_name: str, new_name: str):
         """
         Rename a flashcard
 
@@ -408,7 +398,9 @@ class Folders(DatabaseHandler):
             new_name (str): The new name for the flashcard
         """
         # Get the current folder data
-        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        folder_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if folder_data is None:
             return None
         else:
@@ -432,13 +424,11 @@ class Folders(DatabaseHandler):
 
         # Save the updated folder data
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": folder_data
-            }
+            {"data": folder_data}
         )
         return folder_data
 
-    def delete_folder(self, user_id:str, folder_name:str):
+    def delete_folder(self, user_id: str, folder_name: str):
         """
         Delete a folder from the folder structure
 
@@ -447,7 +437,9 @@ class Folders(DatabaseHandler):
             folder_name (str): The name of the folder to delete
         """
         # Get the current folder data
-        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        folder_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if folder_data is None:
             return None
         else:
@@ -469,18 +461,18 @@ class Folders(DatabaseHandler):
 
         # Save the updated folder data
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": folder_data
-            }
+            {"data": folder_data}
         )
         return folder_data
 
-    def delete_individual_card(self, user_id:str, card_id:str):
+    def delete_individual_card(self, user_id: str, card_id: str):
         """
         Delete an individual card from the folder structure
         """
         # Get the current folder data
-        folder_data = self._context.collection(self._db_name).document(user_id).get().to_dict()
+        folder_data = (
+            self._context.collection(self._db_name).document(user_id).get().to_dict()
+        )
         if folder_data is None:
             return None
         else:
@@ -502,13 +494,11 @@ class Folders(DatabaseHandler):
 
         # Save the updated folder data
         self._context.collection(self._db_name).document(user_id).set(
-            {
-                "data": folder_data
-            }
+            {"data": folder_data}
         )
         return folder_data
 
-    def get_flashcard(self, user_id:str, flashcard_id:str):
+    def get_flashcard(self, user_id: str, flashcard_id: str):
         """
         Get a flashcard from the folder structure
 
@@ -520,7 +510,9 @@ class Folders(DatabaseHandler):
         if folder_data is None:
             return None
 
-        flashcard_location = self.get_flashcard_location(user_id, flashcard_id, folder_data)
+        flashcard_location = self.get_flashcard_location(
+            user_id, flashcard_id, folder_data
+        )
 
         if flashcard_location is None:
             return None
@@ -530,3 +522,27 @@ class Folders(DatabaseHandler):
             current = current.get(key)
 
         return current
+
+    def flashcard_exists(self, user_id:str, flashcard_id:str):#
+        """
+        See if a flashcard exists in the folder structure for a particular user
+
+        Args:
+            user_id (str): The user ID to check
+            flashcard_id (str): The flashcard ID to search for
+
+        Returns:
+            bool: True if the flashcard exists, False otherwise
+        """
+        folder_data = self.get_user_data(user_id)
+        if folder_data is None:
+            return False
+
+        flashcard_location = self.get_flashcard_location(
+            user_id, flashcard_id, folder_data
+        )
+
+        if flashcard_location is None:
+            return False
+
+        return True

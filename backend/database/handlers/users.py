@@ -1,10 +1,13 @@
 """Provides utility classes for interacting with the users database
 """
+
 from database.handlers.database_handler import DatabaseHandler
+
 
 class Users(DatabaseHandler):
     """Provides utility classes for interacting with the flashcards database
     """
+
     def __init__(self, context):
         """Initialise the class
 
@@ -14,7 +17,7 @@ class Users(DatabaseHandler):
         """
         super().__init__(context, db_name="users")
 
-    def create_user(self, user_id: str, name: str):
+    def create_user(self, user_id: str = None, name: str = ""):
         """Create a new user
 
         Args:
@@ -23,6 +26,8 @@ class Users(DatabaseHandler):
         """
         user = self._context.collection(self._db_name).document(user_id)
         user.set({"name": name})
+
+        return user.get().to_dict()
 
     def get_user(self, user_id: str):
         """Get a user from the user_id
