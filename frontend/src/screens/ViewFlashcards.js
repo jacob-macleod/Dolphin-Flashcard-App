@@ -15,7 +15,7 @@ import FlashcardHeader from '../containers/FlashcardHeader';
 import Heading4 from '../componments/Text/Heading4/Heading4';
 import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
-import TotalFlashcardBrowser from '../containers/TotalFlashcardBrowser';
+import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';

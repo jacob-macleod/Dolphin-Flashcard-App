@@ -10,16 +10,29 @@ import deleteIcon from '../../../static/bin-icon.svg';
 
 import '../CardOperationsPopup/CardOperationsPopup.css';
 
-function CardOperationsPopup({ visible, showEditPopup, setVisible, view, setInitialTerm, setInitialDefinition, front, back, cardID, setLoadingIconVisible, setReload }) {
+function CardOperationsPopup({
+    visible,
+    showEditPopup,
+    setVisible,
+    view,
+    setInitialTerm,
+    setInitialDefinition,
+    front,
+    back,
+    cardID,
+    setLoadingIconVisible,
+    flashcardID,
+    setReload
+}) {
     const float = view == "mobile" ? "left" : null;
     const dropdownRef = useRef(null);
 
     closeOnOutsideClick(dropdownRef, setVisible);
 
     function deleteCard() {
-        console.log(cardID);
         apiManager.deleteCard(
             getCookie("jwtToken"),
+            flashcardID,
             cardID,
             setLoadingIconVisible,
             setReload

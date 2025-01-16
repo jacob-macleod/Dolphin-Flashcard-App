@@ -190,7 +190,10 @@ class Statistics(DatabaseHandler):
             save_to_database=False,
         )
         stats["heatmap_data"] = self.update_heatmap(
-            user_id, self._date.get_current_date().replace("/", "-"), stats, save_to_database=False
+            user_id,
+            self._date.get_current_date().replace("/", "-"),
+            stats,
+            save_to_database=False,
         )
 
         self._context.collection(self._db_name).document(user_id).set(stats)

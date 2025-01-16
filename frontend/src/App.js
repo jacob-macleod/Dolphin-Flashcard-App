@@ -8,6 +8,7 @@ import ViewFlashcards from './screens/ViewFlashcards';
 import PageNotFound from './screens/PageNotFound';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import SearchForFlashcard from './screens/Community';
+import PreviewFlashcard from './screens/PreviewFlashcard';
 import { getCookie } from './api/Authentication';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/edit-flashcard-set" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<EditFlashcard />} />} />
           <Route path="/view" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<ViewFlashcards />} />} />
           <Route path="/community" element={<SearchForFlashcard />} />
+          <Route path="/preview" element={<PreviewFlashcard />} />
           <Route path="*" element={<ErrorChecking jwtToken={jwtToken} setJwtToken={setJwtToken} child={<PageNotFound />} />} />
         </Routes>
       </BrowserRouter>
