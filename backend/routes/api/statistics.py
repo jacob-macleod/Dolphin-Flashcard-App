@@ -1,4 +1,5 @@
 """ Routes relating to statistics """
+
 import threading
 import time
 from flask import Blueprint, request, jsonify
@@ -8,21 +9,21 @@ from classes.card import Card
 from verification.api_error_checking import check_request_json
 from routes.api.validation_wrapper import validate_json
 
-statistics_routes = Blueprint('statistics_routes', __name__)
+statistics_routes = Blueprint("statistics_routes", __name__)
 
 UPDATE_HEATMAP_FORMAT = {
     "jwtToken": "",
 }
 
 GET_HEATMAP_FORMAT = UPDATE_HEATMAP_FORMAT
-CALCULATE_STREAK_FORMAT = {
-    "jwtToken": ""
-}
+CALCULATE_STREAK_FORMAT = {"jwtToken": ""}
 
-def increase_xp(user_id, increment_amount) :
-    """ Increase the user's XP by 10 """
+
+def increase_xp(user_id, increment_amount):
+    """Increase the user's XP by 10"""
     db.increment("/users/" + user_id + "/statistics/totalXP", increment_amount)
     db.increment("/users/" + user_id + "/statistics/weeklyXP", increment_amount)
+
 
 '''
 This is deprecated since version 3.0.0, because I think it'll be too slow calculating this
@@ -178,18 +179,19 @@ def get_total_xp() :
     return jsonify(total_xp)
 '''
 
+
 @statistics_routes.route("/api/update-heatmap", methods=["POST"])
 @validate_json(UPDATE_HEATMAP_FORMAT)
-def update_heatmap() :
-    """ Called when streak is updated
+def update_heatmap():
+    """Called when streak is updated
         Requests should have json in the following format:
     {
         "userID": "my id"
     }
-     """
+    """
     user_id = request.json.get("userID")
     date = Date()
-    today = date.get_current_date().replace('/', '-')
+    today = date.get_current_date().replace("/", "-")
 
     try:
         heatmap = db.statistics.update_heatmap(user_id, today)
@@ -198,10 +200,11 @@ def update_heatmap() :
 
     return jsonify(heatmap)
 
+
 @statistics_routes.route("/api/get-heatmap", methods=["POST"])
 @validate_json(GET_HEATMAP_FORMAT)
-def get_heatmap() :
-    """ Get the user's heatmap data
+def get_heatmap():
+    """Get the user's heatmap data
         Requests should have json in the following format:
     {
         "userID": "my id"
@@ -213,21 +216,24 @@ def get_heatmap() :
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 @statistics_routes.route("/api/calculate-streak", methods=["POST"])
 @validate_json(CALCULATE_STREAK_FORMAT)
 def calculate_streak():
-    """ Calculate the user's streak, and increase it if needed
-        json should be included with the request as the following:
-        {
-            "userID": "my id",
-        }
-        ?increase=true can be added to the streak to increase it if needed
-     """
+    """Calculate the user's streak, and increase it if needed
+    json should be included with the request as the following:
+    {
+        "userID": "my id",
+    }
+    ?increase=true can be added to the streak to increase it if needed
+    """
     user_id = request.json.get("userID")
     date = Date()
 
     try:
-        new_streak = db.statistics.calculate_streak(user_id, date, request.args.get("increase"))
+        new_streak = db.statistics.calculate_streak(
+            user_id, date, request.args.get("increase")
+        )
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

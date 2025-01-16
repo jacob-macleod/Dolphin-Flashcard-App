@@ -155,6 +155,7 @@ function Flashcards() {
                       cardID={item.cardID}
                       front={item.front}
                       back={item.back}
+                      flashcardID={flashcardData.flashcard_id}
                       view={view}
                       showEditPopup={setEditFlashcardPopupVisible}
                       setInitialTerm={setInitialTerm}

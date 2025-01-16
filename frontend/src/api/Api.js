@@ -245,6 +245,17 @@ class ApiManager {
         });
     }
 
+    getPublicFlashcard(flashcardID, setFlashcardData) {
+        const url = 'get-public-flashcard';
+        const data = {
+            "flashcardID": flashcardID,
+        }
+
+        this.fetchData(data, url, flashcardData => {
+            setFlashcardData(flashcardData[0]);
+        });
+    }
+
     getFlashcardItem(cardID, setFlashcardItem) {
         const url = 'get-flashcard-item';
         const data = {
@@ -322,10 +333,11 @@ class ApiManager {
         });
     }
 
-    deleteCard(jwtToken, cardID, setLoadingIconVisible, setReload) {
+    deleteCard(jwtToken, flashcardID, cardID, setLoadingIconVisible, setReload) {
         const url = 'delete-card';
         const data = {
             "jwtToken": jwtToken,
+            "flashcardID": flashcardID,
             "cardID": cardID
         }
 
@@ -339,6 +351,54 @@ class ApiManager {
         const url = 'search?name=' + searchTerm
         this.fetchData({}, url, results => {
             setResults(results);
+        });
+    }
+
+    addFlashcardToFolder(jwtToken, flashcardID, folder, setLoadFlashcard) {
+        const url = "add-flashcard-to-folder"
+        const data = {
+            "jwtToken": jwtToken,
+            "flashcardID": flashcardID,
+            "folder": folder
+        }
+
+        this.fetchData(data, url, status => {
+            // Load the flashcard when finished
+            setLoadFlashcard(folder);
+        });
+    }
+
+    getUser(userID, setUserData) {
+        const url = 'get-user';
+        const data = {
+            "userID": userID
+        }
+
+        this.fetchData(data, url, userData => {
+            setUserData(userData[0]);
+        });
+    }
+
+    getUserFromJwt(jwtToken, setUserData) {
+        const url = 'get-user-from-jwt';
+        const data = {
+            "jwtToken": jwtToken
+        }
+
+        this.fetchData(data, url, userData => {
+            setUserData(userData[0]);
+        });
+    }
+
+    flashcardExists(jwtToken, flashcardID, setFlashcardExists) {
+        const url = 'flashcard-exists';
+        const data = {
+            "jwtToken": jwtToken,
+            "flashcardID": flashcardID
+        }
+
+        this.fetchData(data, url, flashcardExists => {
+            setFlashcardExists(flashcardExists);
         });
     }
 }

@@ -7,6 +7,7 @@ class FlashcardSearcher:
     """
     Allow flashcards to be searched for to find a seach term
     """
+
     def __init__(self, flashcard_data):
         """
         Init function

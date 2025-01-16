@@ -1,5 +1,6 @@
 """Provides utility classes for interacting with the users database
 """
+
 from database.handlers.database_handler import DatabaseHandler
 
 

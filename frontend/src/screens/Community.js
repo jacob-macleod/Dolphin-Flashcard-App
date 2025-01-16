@@ -11,6 +11,7 @@ import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import Heading4 from '../componments/Text/Heading4';
+import Heading5 from '../componments/Text/Heading5';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import Button from '../componments/Button';
 import FlashcardSearchResult from '../containers/FlashcardSearchResult';
@@ -34,16 +35,28 @@ function SearchForFlashcard() {
   );
   const [searchTerm, setSearchTerm] = useState("");
 
-  const [flashcardSearchData, setFlashcardSearchData] = useState([]);
+  const [flashcardSearchData, setFlashcardSearchData] = useState(null);
+  const [flashcardsExist, setFlashcardsExist] = useState(true);
 
   function searchForFlashcard() {
-    apiManager.searchForFlashcard(searchTerm, setFlashcardSearchData);
+    if (searchTerm !== "") {
+      apiManager.searchForFlashcard(searchTerm, setFlashcardSearchData);
+    }
   }
 
 
   useEffect(() => {
-    console.log(flashcardSearchData);
+    if (flashcardSearchData != null && flashcardSearchData.length == 0) {
+      setFlashcardsExist(false);
+    } else {
+      setFlashcardsExist(true);
+    }
   }, [flashcardSearchData]);
+
+  // Reset the search term data when the user searches for something else
+  useEffect(() => {
+    setFlashcardsExist(true);
+  }, [searchTerm]);
 
   useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
@@ -95,9 +108,14 @@ function SearchForFlashcard() {
                   />
                 </div>
                 {
-                  flashcardSearchData.map((flashcard, index) => {
-                    return <FlashcardSearchResult key={index} data={flashcard} />
-                  })
+                  flashcardSearchData != null ?
+                    flashcardsExist ?
+                      flashcardSearchData.map((flashcard, index) => {
+                        return <FlashcardSearchResult key={index} data={flashcard} />
+                      })
+                    :
+                      <Heading5 text={"No flashcards found for '" + searchTerm + "'"} />
+                  : <></>
                 }
               </div>
             </div>

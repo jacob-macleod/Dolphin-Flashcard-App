@@ -3,9 +3,10 @@
 
 from abc import ABC
 
+
 class DatabaseHandler(ABC):
-    """Abstract class for database handler
-    """
+    """Abstract class for database handler"""
+
     def __init__(self, context, db_name):
         """Initialise the class
 
