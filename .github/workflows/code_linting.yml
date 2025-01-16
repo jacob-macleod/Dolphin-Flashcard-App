@@ -23,7 +23,7 @@ jobs:
           cat backend/database/database_config.py
           pip install -r requirements.txt
           python3 backend/main.py &
-          sudo apt-get install sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+          sudo apt-get install docker-ce docker-ce-cli containerd.io
       - name: Run pytest
         run: |
           bash testing/run_tests.sh || exit $?
