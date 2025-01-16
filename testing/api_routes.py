@@ -9,8 +9,8 @@ class Routes:
         "methods": ["POST"]
     }
 
-    ROUTE_GET_USER = {
-        "url": "/api/get-user",
+    ROUTE_GET_USER_FROM_JWT = {
+        "url": "/api/get-user-from-jwt",
         "methods": ["GET"]
     }
 

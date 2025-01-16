@@ -7,6 +7,11 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, "../..", "backend")
 sys.path.append(src_path)
 
+# Import api_routes.py if running file directly
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.join(current_dir, "../")
+sys.path.append(src_path)
+
 from classes.date import Date
 from database.jwt_handler import JwtHandler
 
@@ -36,9 +41,11 @@ class TestUser(BaseApiActionsMixin):
 
     def test_get_user(self, user) -> None:
         """Get the newly created user"""
+        print ("USER IS")
+        print (user)
         token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
 
-        response = self.get_api(Routes.ROUTE_GET_USER["url"], {"jwtToken": token})
+        response = self.get_api(Routes.ROUTE_GET_USER_FROM_JWT["url"], {"jwtToken": token})
         response_json = response[0]
         assert response_json == {"name": user["name"]}
 
@@ -47,7 +54,7 @@ class TestUser(BaseApiActionsMixin):
 
         invalid_dummy = {"jwtToken": self.jwt_handler.encode("-1", "test", "any")}
         response = self.get_api(
-            Routes.ROUTE_GET_USER["url"],
+            Routes.ROUTE_GET_USER_FROM_JWT["url"],
             invalid_dummy,
         )
         response_json = response
