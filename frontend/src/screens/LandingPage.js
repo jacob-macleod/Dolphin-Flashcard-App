@@ -25,16 +25,9 @@ import Button from '../componments/Button';
 import ErrorText from '../componments/Text/ErrorText';
 import { signInWithGoogle, getCookie } from '../api/Authentication';
 import firebase from 'firebase/compat/app';
-import DeveloperSection from '../componments/DeveloperSection';
-
-let mailChimpApiKey = '';
-
-try {
-  const { default: apiKey } = require('../../api/secretKeys');
-  mailChimpApiKey = apiKey;
-} catch (error) {
-  console.error('Error loading mailChimpApiKey:', error);
-}
+import DevSection from '../componments/DevSection';
+import LandingPageFooter from '../componments/LandingPageFooter';
+import MailChimpInput from '../containers/MailChimpWidget/MailChimpInput';
 
 function FeaturesBento({
   subheaderText,
@@ -250,26 +243,7 @@ function LandingPage({ active = true }) {
                 lineHeight: '30px',
               }}
             />
-            <Mailchimp
-              action={mailChimpApiKey}
-              fields={[
-                {
-                  name: 'EMAIL',
-                  placeholder: 'Enter Email',
-                  type: 'email',
-                  required: true,
-                },
-              ]}
-              messages={{
-                sending: 'Sending...',
-                success: 'Thank you for subscribing!',
-                error: 'An unexpected internal error has occurred',
-                empty: 'You must write an e-mail',
-                duplicate: 'Too many subscribe attempts for this email address',
-                button: 'Submit',
-              }}
-              className="mailchimp-form"
-            />
+            <MailChimpInput />
           </div>
         </GridItem>
         {/* Bento Panels */}
@@ -278,6 +252,11 @@ function LandingPage({ active = true }) {
             margin: '0 auto',
             height: 'max-content',
             width: view === 'mobile' ? 0.8 * width : 0.6 * width,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '32px',
           }}
         >
           <FeaturesBento
@@ -368,40 +347,130 @@ function LandingPage({ active = true }) {
             signInButton={signInButton}
             view={view}
           />
-        </GridItem>
-
-        <GridItem>
+          <DevSection view={view} />
           <div>
-            <Subheader
-              text="Our goal? To design the best
-              flashcard app ever by prioritizing
-              users and their goals."
-            />
+            <Header text="Sign up today!" />
+            <div
+              style={{
+                width: view === 'mobile' ? '100%' : 0.3 * width,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'stretch',
+              }}
+            >
+              <Paragraph
+                text="Sign up to our newsletter today to get updates about dolphin flashcards - and to be notified when we launch!"
+                style={{
+                  color: '#616583',
+                  lineHeight: '30px',
+                }}
+              />
 
-            <p class="text">
-              We aim to launch in mid-2024. Want to learn more? Check out our{' '}
-              <a
-                href="https://github.com/jacob-macleod/Flashcard-App"
-                class="link"
-              >
-                Github Page!
-              </a>
-            </p>
-
-            <p class="text">
-              <span class="bold">Designer: </span>
-              <a href="https://github.com/nathan-a-macleod" class="link">
-                Nathan MacLeod
-              </a>
-            </p>
-
-            <p class="text">
-              <span class="bold">Developer: </span>
-              <a href="https://github.com/jacob-macleod" class="link">
-                Jacob MacLeod
-              </a>
-            </p>
+              <MailChimpInput />
+            </div>
           </div>
+          <div
+            style={{
+              textAlign: 'start',
+              width: '100%',
+            }}
+          >
+            <Header text={'Frequently Asked Questions'} />
+            <div
+              style={{
+                width: '100%',
+                display: 'grid',
+                gridTemplateColumns: view === 'mobile' ? '1fr' : '1fr 1fr',
+                columnGap: '50px',
+              }}
+            >
+              <div>
+                <Subheader
+                  text={'How can I get involved?'}
+                  style={{ fontSize: '24px' }}
+                />
+                <Paragraph
+                  text={'Lorem ispum dolor'}
+                  style={{
+                    color: '#616583',
+                    textAlign: 'start',
+                    lineHeight: '24px',
+                    marginTop: '-10px',
+                  }}
+                />
+              </div>
+              <div>
+                <Subheader
+                  text={'How much will it cost?'}
+                  style={{ fontSize: '24px' }}
+                />
+                <Paragraph
+                  text={'Lorem ispum dolor'}
+                  style={{
+                    color: '#616583',
+                    textAlign: 'start',
+                    lineHeight: '24px',
+                    marginTop: '-10px',
+                  }}
+                />
+              </div>
+              <div>
+                <Subheader
+                  text={'What makes Dolphin different to competitors?'}
+                  style={{ fontSize: '24px' }}
+                />
+                <Paragraph
+                  text={'Lorem ispum dolor'}
+                  style={{
+                    color: '#616583',
+                    textAlign: 'start',
+                    lineHeight: '24px',
+                    marginTop: '-10px',
+                  }}
+                />
+              </div>
+              <div>
+                <Subheader
+                  text={'Why should it be fun to learn flashcards?'}
+                  style={{ fontSize: '24px' }}
+                />
+                <Paragraph
+                  text={'Lorem ispum dolor'}
+                  style={{
+                    color: '#616583',
+                    textAlign: 'start',
+                    lineHeight: '24px',
+                    marginTop: '-10px',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <Header text="So, what are you waiting for?" />
+            <div
+              style={{
+                width: view === 'mobile' ? '100%' : 0.3 * width,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'stretch',
+                margin: '0 auto',
+              }}
+            >
+              <Paragraph
+                text="Sign up to our newsletter today to get updates about dolphin flashcards - and to be notified when we launch!"
+                style={{
+                  color: '#616583',
+                  lineHeight: '30px',
+                }}
+              />
+
+              <MailChimpInput />
+            </div>
+          </div>
+          <LandingPageFooter width={width} view={view} />
         </GridItem>
       </GridContainer>
       <BlobBackground />

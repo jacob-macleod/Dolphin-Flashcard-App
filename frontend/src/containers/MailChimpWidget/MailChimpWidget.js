@@ -4,6 +4,7 @@ import BentoPanel from '../BentoPanel/BentoPanel';
 import Mailchimp from '../../componments/Mailchimp/Mailchimp';
 
 import './MailChimpWidget.css';
+import MailChimpInput from './MailChimpInput';
 
 let mailChimpApiKey = '';
 
@@ -34,26 +35,7 @@ function MailChimpWidget({ view }) {
       item1={
         <>
           <Subheader text="Want to stay updated? Subscribe to our newsletter!" />
-          <Mailchimp
-            action={mailChimpApiKey}
-            fields={[
-              {
-                name: 'EMAIL',
-                placeholder: 'Email',
-                type: 'email',
-                required: true,
-              },
-            ]}
-            messages={{
-              sending: 'Sending...',
-              success: 'Thank you for subscribing!',
-              error: 'An unexpected internal error has occurred',
-              empty: 'You must write an e-mail',
-              duplicate: 'Too many subscribe attempts for this email address',
-              button: 'Submit',
-            }}
-            className="mailchimp-form"
-          />
+          <MailChimpInput />
         </>
       }
     />
