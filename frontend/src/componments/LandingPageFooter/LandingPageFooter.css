@@ -1,0 +1,7 @@
+.landing-page-footer {
+  background: var(--Darkest-Primary-Colour, #24272e);
+}
+
+.landing-page-footer a {
+  cursor: pointer;
+}
