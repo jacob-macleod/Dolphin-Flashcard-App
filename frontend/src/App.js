@@ -104,15 +104,16 @@ function App() {
           />
           <Route path="/community" element={<SearchForFlashcard />} />
           <Route path="/preview" element={<PreviewFlashcard />} />
-          {/* Bug: pagenotfound not rendered when user is not signed in when they access an error route */}
+          {/* Do not check if the user is signed in or not, because 404 pages can be accessed without jwt tokens */}
           <Route
             path="*"
             element={
-              <ErrorChecking
-                jwtToken={jwtToken}
-                setJwtToken={setJwtToken}
-                child={<PageNotFound />}
-              />
+              <PageNotFound />
+              // <ErrorChecking
+              //   jwtToken={jwtToken}
+              //   setJwtToken={setJwtToken}
+              //   child={<PageNotFound />}
+              // />
             }
           />
         </Routes>
