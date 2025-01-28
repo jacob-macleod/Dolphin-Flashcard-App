@@ -5,7 +5,7 @@ function DevSection({ view }) {
   return (
     <div
       className="dev-section-container"
-      style={{ padding: view === 'mobile' ? '16px 60px' : '32px 120px' }}
+      style={{ padding: view === 'mobile' ? '16px 30px' : '32px 120px' }}
     >
       <h3
         className="dev-section-header"
@@ -17,7 +17,7 @@ function DevSection({ view }) {
         Dolphin flashcards is officially open source under the MIT license, so
         you can contribute to it.{' '}
         <a
-          href="https://www.google.com"
+          href="https://github.com/jacob-macleod/Dolphin-Flashcard-App"
           rel="noopener noreferrer"
           target="_blank"
         >

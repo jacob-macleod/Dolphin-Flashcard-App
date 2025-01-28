@@ -28,6 +28,7 @@ import firebase from 'firebase/compat/app';
 import DevSection from '../componments/DevSection';
 import LandingPageFooter from '../componments/LandingPageFooter';
 import MailChimpInput from '../containers/MailChimpWidget/MailChimpInput';
+import ProjectProgress from '../componments/ProjectProgress';
 
 function FeaturesBento({
   subheaderText,
@@ -190,6 +191,7 @@ function LandingPage({ active = true }) {
             // justifyContent: 'center',
             gap: view === 'mobile' ? '40px' : '80px',
             margin: '0 auto',
+            position: 'relative',
           }}
         >
           <div
@@ -198,6 +200,7 @@ function LandingPage({ active = true }) {
               flexDirection: 'row',
               flexWrap: 'nowrap',
               justifyContent: 'flex-end',
+              alignItems: 'flex-end',
               width: view === 'mobile' ? undefined : 0.29 * width,
             }}
           >
@@ -212,7 +215,7 @@ function LandingPage({ active = true }) {
                   : coffeeTableDesktopSize.height
               }
               url={coffeeTable}
-              objectFit="contain"
+              objectFit=""
             />
           </div>
           <div
@@ -370,6 +373,7 @@ function LandingPage({ active = true }) {
               <MailChimpInput />
             </div>
           </div>
+          <ProjectProgress view={view} />
           <div
             style={{
               textAlign: 'start',
@@ -397,6 +401,7 @@ function LandingPage({ active = true }) {
                     textAlign: 'start',
                     lineHeight: '24px',
                     marginTop: '-10px',
+                    width: '90%',
                   }}
                 />
               </div>
@@ -412,6 +417,7 @@ function LandingPage({ active = true }) {
                     textAlign: 'start',
                     lineHeight: '24px',
                     marginTop: '-10px',
+                    width: '90%',
                   }}
                 />
               </div>
@@ -427,6 +433,7 @@ function LandingPage({ active = true }) {
                     textAlign: 'start',
                     lineHeight: '24px',
                     marginTop: '-10px',
+                    width: '90%',
                   }}
                 />
               </div>
@@ -442,6 +449,7 @@ function LandingPage({ active = true }) {
                     textAlign: 'start',
                     lineHeight: '24px',
                     marginTop: '-10px',
+                    width: '90%',
                   }}
                 />
               </div>

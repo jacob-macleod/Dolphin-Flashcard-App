@@ -5,6 +5,9 @@ import DolphinLogo from '../Logos/DolphinLogo/DolphinLogo';
 import Paragraph from '../Text/Paragraph';
 import Mailchimp from '../Mailchimp/Mailchimp';
 import MailChimpInput from '../../containers/MailChimpWidget/MailChimpInput';
+import twitterLogo from '../../static/twitter.png';
+import githubLogo from '../../static/github-logo.png';
+import Image from '../Image';
 
 function FooterHeader({ text }) {
   return (
@@ -29,7 +32,8 @@ function LandingPageFooter({ width, view }) {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: view === 'mobile' ? '1fr ' : '1fr 1fr',
+          gridTemplateRows: view === 'mobile' ? '1fr 1fr' : '1fr',
           width: view === 'mobile' ? 0.8 * width : 0.6 * width,
 
           margin: '48px auto',
@@ -81,14 +85,50 @@ function LandingPageFooter({ width, view }) {
           </div>
           <div>
             <FooterHeader text="Socials" />
-            <Paragraph
-              text={'Email: dolphinflashcards@outlook.com'}
+            <div
               style={{
-                color: '#BABABA',
-                lineHeight: '30px',
-                textAlign: 'start',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
               }}
-            />
+            >
+              <a
+                href="https://github.com/jacob-macleod/Dolphin-Flashcard-App"
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                <Image
+                  width={'100%'}
+                  height={32}
+                  url={githubLogo}
+                  objectFit="contain"
+                  style={{ backgroundColor: 'transparent', cursor: 'pointer' }}
+                />
+              </a>
+              <a
+                href="https://x.com/dolphinflshcrds"
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                }}
+              >
+                <Image
+                  width={'100%'}
+                  height={32}
+                  url={twitterLogo}
+                  objectFit="contain"
+                  style={{ backgroundColor: 'transparent', cursor: 'pointer' }}
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>
