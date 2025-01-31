@@ -24,6 +24,11 @@ function FooterHeader({ text }) {
 }
 
 function LandingPageFooter({ width, view }) {
+  // Construct the email programatically to stop evil web crawlers from spamming the email
+  const emailName = 'dolphinflashcards';
+  const emailDomain = 'outlook.com';
+  const dolphinEmail = `${emailName}@${emailDomain}`;
+
   return (
     <div
       className="landing-page-footer"
@@ -74,13 +79,21 @@ function LandingPageFooter({ width, view }) {
             <FooterHeader text="Contact us" />
             <p
               style={{
-                color: 'white',
+                color: '#bababa',
                 lineHeight: '30px',
                 textAlign: 'start',
                 fontSize: '16px',
               }}
             >
-              Email: <u>dolphinflashcards@outlook.com</u>
+              Email:{' '}
+              <a
+                href={`mailto:${dolphinEmail}`}
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{ color: 'white' }}
+              >
+                <u>{dolphinEmail}</u>
+              </a>
             </p>
           </div>
           <div>

@@ -22,6 +22,21 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.1.1 - 2025-01-31
+
+### Fixed
+
+- Fixed sign in errors on new landing page
+- Fixed responsive design in the landing page (by adding the useEffect that listens to screen width changes)
+- Fixed dimensions and object fit issues with the landing page coffee/table image
+
+### Changed
+
+- Extracted sign in button + related functionality to separate SignInButton component
+- The email address in the landing page footer section is now constructed programatically to stop web crawlers from spamming the email (good practice)
+- When the email displayed in the landing page footer is clicked, your emails open
+- Sign in button component now uses flex-box and the contents are justified as "flex-start"
+
 ## 6.1.0 - 2025-01-28
 
 ### Added
