@@ -26,7 +26,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ### Fixed
 
-- Fixed sign in errors on new landing page
+- Fixed sign in errors on new landing page.
 - Fixed responsive design in the landing page (by adding the useEffect that listens to screen width changes)
 - Fixed dimensions and object fit issues with the landing page coffee/table image
 
