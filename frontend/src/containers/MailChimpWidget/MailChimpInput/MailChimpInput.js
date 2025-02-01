@@ -6,7 +6,7 @@ import './MailChimpInput.css';
 let mailChimpApiKey = '';
 
 try {
-  const { default: apiKey } = require('../../api/secretKeys');
+  const { default: apiKey } = require('../../../api/secretKeys');
   mailChimpApiKey = apiKey;
 } catch (error) {
   console.error('Error loading mailChimpApiKey:', error);
