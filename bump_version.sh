@@ -11,7 +11,11 @@ fi
 entered_version=$(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "$init_file" | awk -F '"' '{print $2}')
 echo "Entered version"
 echo $entered_version
-current_version=$(git describe --tags --abbrev=0)
+git checkout development
+git fetch --tags
+# current_version=$(git describe --tags --abbrev=0)
+current_version=$(git tag --sort=-creatordate | grep -m 1 '.*')
+git switch ${{ github.head_ref || github.ref_name }}
 
 echo "Checking version $current_version has been updated correctly according to pull request name '$1'"
 
