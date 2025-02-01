@@ -15,7 +15,7 @@ git checkout development
 git fetch --tags
 # current_version=$(git describe --tags --abbrev=0)
 current_version=$(git tag --sort=-creatordate | grep -m 1 '.*')
-git switch ${{ github.head_ref || github.ref_name }}
+git switch ${{ github.ref_name }}
 
 echo "Checking version $current_version has been updated correctly according to pull request name '$1'"
 
