@@ -17,7 +17,7 @@ function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   return (
     <>
       {/* {jwtToken ? child : <SignInPage setJwtToken={setJwtToken} />} */}
-      {jwtToken ? child : <LandingPage />}
+      {jwtToken ? child : <LandingPage setJwtToken={setJwtToken} />}
     </>
   );
 }

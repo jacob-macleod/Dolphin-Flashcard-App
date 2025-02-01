@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -23,12 +23,11 @@ import Image from '../componments/Image';
 import BentoPanel from '../containers/BentoPanel/BentoPanel';
 import Button from '../componments/Button';
 import ErrorText from '../componments/Text/ErrorText';
-import { signInWithGoogle, getCookie } from '../api/Authentication';
-import firebase from 'firebase/compat/app';
 import DevSection from '../componments/DevSection';
 import LandingPageFooter from '../componments/LandingPageFooter';
 import MailChimpInput from '../containers/MailChimpWidget/MailChimpInput';
 import ProjectProgress from '../componments/ProjectProgress';
+import SignInButton from '../componments/SignInButton';
 
 function FeaturesBento({
   subheaderText,
@@ -37,8 +36,8 @@ function FeaturesBento({
   imageWidth,
   imageHeight,
   reverse,
-  signInButton,
   view,
+  setJwtToken,
 }) {
   const image = (
     <Image
@@ -73,7 +72,7 @@ function FeaturesBento({
           justifyContent: 'flex-start',
         }}
       >
-        {signInButton}
+        <SignInButton setJwtToken={setJwtToken} />
       </div>
     </div>
   );
@@ -86,14 +85,29 @@ function FeaturesBento({
   );
 }
 
-function LandingPage({ active = true }) {
+function LandingPage({ setJwtToken }) {
   const title = 'Dolphin Flashcards';
   const [width, setWidth] = useState(window.innerWidth);
   const mobileBreakpoint = 878;
   const tabletBreakpoint = 1200;
-  const [view, setView] = useState(
-    width < mobileBreakpoint ? 'mobile' : 'desktop'
-  );
+  const view = width < mobileBreakpoint ? 'mobile' : 'desktop';
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    // Set the initial window size
+    setWidth(window.innerWidth);
+
+    // Set up the event listener for resize
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const coffeeTableDesktopSize = { width: '80%', height: '532px' };
   const coffeeTableTabletSize = { width: '100%', height: '310px' };
@@ -105,65 +119,6 @@ function LandingPage({ active = true }) {
   const cardTabletSize = { width: '80%', height: '249px' };
   const cardSearchDesktopSize = { width: '100%', height: '100%' };
   const cardSearchTabletSize = { width: '80%', height: '310px' };
-
-  const [signInErrorMessage, setSignInErrorMessage] = useState('');
-
-  const queryParams = new URLSearchParams(location.search);
-
-  // Set the accessTokens from the URL or cookies
-  const [accessToken, setAccessToken] = useState(
-    queryParams.get('idToken') == null
-      ? getCookie('accessToken')
-      : queryParams.get('idToken')
-  );
-  const [rawAccessToken, setRawAccessToken] = useState(
-    queryParams.get('rawIdToken') == null
-      ? getCookie('rawAccessToken')
-      : queryParams.get('rawIdToken')
-  );
-
-  function signIn() {
-    // Initialise the firebase project and sign in with google
-    // This should be fine to expose - if its not I need to resolve it ASAP
-    firebase.initializeApp({
-      apiKey: 'AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M',
-      authDomain: 'dolphin-flashcards.firebaseapp.com',
-      databaseURL:
-        'https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app',
-      projectId: 'dolphin-flashcards',
-      storageBucket: 'dolphin-flashcards.appspot.com',
-      messagingSenderId: '481940183221',
-      appId: '1:481940183221:web:67bdc346eef4a5306286fc',
-      measurementId: 'G-76Y8VTC390',
-    });
-    signInWithGoogle(
-      setJwtToken,
-      rawAccessToken,
-      accessToken,
-      setSignInErrorMessage,
-      forceRecreate
-    );
-  }
-
-  const signInButton = active ? (
-    <div className="sign-in-button-wrapper">
-      <Button
-        text="Continue with Google"
-        onClick={() => {
-          if (accessToken == null || rawAccessToken == null) {
-            setSignInErrorMessage(
-              'You need to sign in with a valid access link!'
-            );
-          } else {
-            signIn();
-          }
-        }}
-      />
-      <ErrorText text={signInErrorMessage} />
-    </div>
-  ) : (
-    <Button text="Coming soon..." disabled={true} />
-  );
 
   return (
     <>
@@ -200,22 +155,18 @@ function LandingPage({ active = true }) {
               flexDirection: 'row',
               flexWrap: 'nowrap',
               justifyContent: 'flex-end',
-              alignItems: 'flex-end',
+              alignItems: 'flex-start',
               width: view === 'mobile' ? undefined : 0.29 * width,
             }}
           >
             <Image
               width={'100%'}
               minWidth="200px"
-              height={
-                view === 'mobile'
-                  ? '100%'
-                  : width < tabletBreakpoint
-                  ? coffeeTableTabletSize.height
-                  : coffeeTableDesktopSize.height
-              }
+              height={'auto'}
               url={coffeeTable}
-              objectFit=""
+              objectFit="cover"
+              paddingRight="0px"
+              style={{ aspectRatio: '1/1', borderRadius: '16px' }}
             />
           </div>
           <div
@@ -276,8 +227,8 @@ function LandingPage({ active = true }) {
                 : goalsDesktopSize.height
             }
             reverse={false}
-            signInButton={signInButton}
             view={view}
+            setJwtToken={setJwtToken}
           />
           <FeaturesBento
             subheaderText="Track & analyse your progress over time"
@@ -296,8 +247,8 @@ function LandingPage({ active = true }) {
                 : heatmapDesktopSize.height
             }
             reverse={true}
-            signInButton={signInButton}
             view={view}
+            setJwtToken={setJwtToken}
           />
           <FeaturesBento
             subheaderText="Memorise effectively with our spaced-repetition algorithm"
@@ -317,8 +268,8 @@ function LandingPage({ active = true }) {
                 : cardDesktopSize.height
             }
             reverse={false}
-            signInButton={signInButton}
             view={view}
+            setJwtToken={setJwtToken}
           />
           <FeaturesBento
             subheaderText="Add images, colors and more to your flashcards with our integrated editor"
@@ -333,8 +284,8 @@ function LandingPage({ active = true }) {
             }
             imageHeight={'auto'}
             reverse={true}
-            signInButton={signInButton}
             view={view}
+            setJwtToken={setJwtToken}
           />
           <FeaturesBento
             subheaderText="Search through our array of community-generated flashcard sets"
@@ -347,8 +298,8 @@ function LandingPage({ active = true }) {
             }
             imageHeight={'auto'}
             reverse={false}
-            signInButton={signInButton}
             view={view}
+            setJwtToken={setJwtToken}
           />
           <DevSection view={view} />
           <div>

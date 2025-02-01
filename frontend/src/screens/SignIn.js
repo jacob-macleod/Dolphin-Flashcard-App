@@ -24,6 +24,7 @@ import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './SignIn.css';
 import DolphinLogo from '../componments/Logos/DolphinLogo/DolphinLogo';
+import SignInButton from '../componments/SignInButton';
 
 function SignInPage({ jwtToken, setJwtToken, active = true }) {
   const title = 'Login';
@@ -48,90 +49,6 @@ function SignInPage({ jwtToken, setJwtToken, active = true }) {
   const heatmapTabletSize = { width: '80%', height: '237px' };
   const cardDesktopSize = { width: '80%', height: '373px' };
   const cardTabletSize = { width: '80%', height: '249px' };
-
-  const queryParams = new URLSearchParams(location.search);
-
-  // Set the accessTokens from the URL or cookies
-  const [accessToken, setAccessToken] = useState(
-    queryParams.get('idToken') == null
-      ? getCookie('accessToken')
-      : queryParams.get('idToken')
-  );
-  const [rawAccessToken, setRawAccessToken] = useState(
-    queryParams.get('rawIdToken') == null
-      ? getCookie('rawAccessToken')
-      : queryParams.get('rawIdToken')
-  );
-
-  const [forceRecreate, setForceRecreate] = useState(
-    queryParams.get('forceRecreate') == null
-      ? false
-      : queryParams.get('forceRecreate')
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-
-    // Set the initial window size
-    setWidth(window.innerWidth);
-
-    // Set up the event listener for resize
-    window.addEventListener('resize', handleResize);
-
-    // Clean up the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    setView(width < mobileBreakpoint ? 'mobile' : 'desktop');
-  }, [width]);
-
-  function signIn() {
-    // Initialise the firebase project and sign in with google
-    // This should be fine to expose - if its not I need to resolve it ASAP
-    firebase.initializeApp({
-      apiKey: 'AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M',
-      authDomain: 'dolphin-flashcards.firebaseapp.com',
-      databaseURL:
-        'https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app',
-      projectId: 'dolphin-flashcards',
-      storageBucket: 'dolphin-flashcards.appspot.com',
-      messagingSenderId: '481940183221',
-      appId: '1:481940183221:web:67bdc346eef4a5306286fc',
-      measurementId: 'G-76Y8VTC390',
-    });
-    signInWithGoogle(
-      setJwtToken,
-      rawAccessToken,
-      accessToken,
-      setSignInErrorMessage,
-      forceRecreate
-    );
-  }
-
-  const signInButton = active ? (
-    <div className="sign-in-button-wrapper">
-      <Button
-        text="Continue with Google"
-        onClick={() => {
-          if (accessToken == null || rawAccessToken == null) {
-            setSignInErrorMessage(
-              'You need to sign in with a valid access link!'
-            );
-          } else {
-            signIn();
-          }
-        }}
-      />
-      <ErrorText text={signInErrorMessage} />
-    </div>
-  ) : (
-    <Button text="Coming soon..." disabled={true} />
-  );
 
   return (
     <div style={{ height: 'fit-content' }}>
@@ -164,7 +81,7 @@ function SignInPage({ jwtToken, setJwtToken, active = true }) {
               <DolphinLogo />
               <Header text="Ready to start your learning journey?" />
               <Paragraph text="Dolphin flashcards is a totally brand-new flashcard app - with one goal: to be better than anyone else on the market. Sign in for free to become part of it." />
-              {signInButton}
+              <SignInButton setJwtToken={setJwtToken} />
             </div>
 
             <MailChimpWidget view={view} />
@@ -179,7 +96,7 @@ function SignInPage({ jwtToken, setJwtToken, active = true }) {
                   you can easily view and track your goals so you never have to explain
                   why you missed your deadline."
                   />
-                  {signInButton}
+                  <SignInButton setJwtToken={setJwtToken} />
                 </div>
               }
               item2={
@@ -221,7 +138,7 @@ function SignInPage({ jwtToken, setJwtToken, active = true }) {
                 providing information on your streak and XP,
                 Dolphin Flashcards makes it easy to be consistent with studying."
                   />
-                  {signInButton}
+                  <SignInButton setJwtToken={setJwtToken} />
                 </div>
               }
               view={view}
@@ -237,7 +154,7 @@ function SignInPage({ jwtToken, setJwtToken, active = true }) {
                 That’s why we’ve built an effective spaced-repetition system to
                 help you remember what you study long into the future."
                   />
-                  {signInButton}
+                  <SignInButton setJwtToken={setJwtToken} />
                 </div>
               }
               item2={
@@ -283,7 +200,7 @@ function SignInPage({ jwtToken, setJwtToken, active = true }) {
                 and more to your flashcards, so you can improve your recall by introducing visuals
                 to your flashcards."
                   />
-                  {signInButton}
+                  <SignInButton setJwtToken={setJwtToken} />
                 </div>
               }
               view={view}
