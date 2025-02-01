@@ -21,6 +21,7 @@ jobs:
           git config --global user.name "jacob-macleod"
           git config pull.rebase false
           git fetch origin
+          cat CHANGELOG.md
           git pull origin ${{ github.head_ref || github.ref_name }} --allow-unrelated-histories
 
       - name: Bump the version if development branch
