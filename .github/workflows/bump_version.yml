@@ -31,10 +31,10 @@ jobs:
             echo "Current branch is ${{ github.head_ref || github.ref_name }}";
             bash bump_version.sh "${{ github.event.pull_request.title }}" "${{ github.head_ref || github.ref_name }}";
           fi
-
-      - name: Push the new tags
-        run: |
-          if [[ ${{ github.head_ref || github.ref_name }} != development  ]] && [[ $GITHUB_REPOSITORY=="jacob-macleod/Dolphin-Flashcard-App" ]]; then
-          git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}');
-          git push --tags --force;
-          fi
+      # Commented because the development branch does this anyway and it becomes difficult with forked repos
+      # - name: Push the new tags
+      #   run: |
+      #     if [[ ${{ github.head_ref || github.ref_name }} != development  ]]; then
+      #     git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}');
+      #     git push --tags --force;
+      #     fi
