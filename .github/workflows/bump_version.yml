@@ -21,8 +21,7 @@ jobs:
           git config --global user.name "jacob-macleod"
           git config pull.rebase false
           git fetch origin
-          echo ${{ github.head_ref }}
-          echo ${{ github.ref_name }}
+          echo ${{ github.head_ref | github.ref_name }}
           # This line was removed in V6.1.1- I don't think it was needed - @jacob-macleod
           # git pull origin ${{ github.head_ref || github.ref_name }} --allow-unrelated-histories
 
