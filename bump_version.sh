@@ -9,6 +9,8 @@ fi
 
 # Read current version from version.txt
 entered_version=$(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "$init_file" | awk -F '"' '{print $2}')
+echo "Entered version"
+echo $entered_version
 current_version=$(git describe --tags --abbrev=0)
 
 echo "Checking version $current_version has been updated correctly according to pull request name '$1'"
