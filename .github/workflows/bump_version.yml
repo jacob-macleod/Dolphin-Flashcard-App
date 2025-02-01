@@ -27,8 +27,8 @@ jobs:
       - name: Bump the version if development branch
         run: |
           if [[ ${{ github.head_ref || github.ref_name }} != development ]]; then
-            echo "Current branch is ${{ github.ref_name }}";
-            bash bump_version.sh "${{ github.event.pull_request.title }}" "${{ github.ref_name }}";
+            echo "Current branch is ${{ github.head_ref || github.ref_name }}";
+            bash bump_version.sh "${{ github.event.pull_request.title }}" "${{ github.head_ref || github.ref_name }}";
           fi
 
       - name: Push the new tags
