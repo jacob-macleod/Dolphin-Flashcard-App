@@ -1,12 +1,12 @@
 import React from 'react';
-import './Subheader.css'
+import './Subheader.css';
 
-function Subheader({ text }) {
-    return (
-        <p className="subheader">
-            {text}
-        </p>
-    );
+function Subheader({ text, style = {} }) {
+  return (
+    <p className="subheader" style={style}>
+      {text}
+    </p>
+  );
 }
 
 export default Subheader;

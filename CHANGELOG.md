@@ -22,6 +22,47 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.1.1 - 2025-01-31
+
+### Fixed
+
+- Fixed sign in errors on new landing page.
+- Fixed responsive design in the landing page (by adding the useEffect that listens to screen width changes)
+- Fixed dimensions and object fit issues with the landing page coffee/table image
+
+### Changed
+
+- Extracted sign in button + related functionality to separate SignInButton component
+- The email address in the landing page footer section is now constructed programatically to stop web crawlers from spamming the email (good practice)
+- When the email displayed in the landing page footer is clicked, your emails open
+- Sign in button component now uses flex-box and the contents are justified as "flex-start"
+
+## 6.1.0 - 2025-01-28
+
+### Added
+
+- Added a DevSection component as a new version for the Open Source component on the landing page (previous DeveloperSection still exists as it is used by SignIn page)
+- Added a LandingPageFooter component used at the bottom of the landing page
+- Added a Logos folder (componments/Logos) that contains a DolphinLogo and a DolphinTitleLogo to reduce repeated code
+- Added ProjectProgress component (hidden on mobile)
+
+### Fixed
+
+- Display the 404 PageNotFound page for error URL routes, EVEN IF the user is not signed in (PageNotFound design might need rework?)
+
+### Changed
+
+- Updated landing page to match new figma design
+- If the user has no JWT, display the LandingPage instead of the old landing page located in the SignIn component
+- Modified GridContainer component so it accepts optional styles
+- Modified Image component so it accepts optional styles
+- Extracted the Mailchimp Input component into a separate file/component so mailchimp input can be reused without using the widget
+- Redirect user to LandingPage instead of SignIn page, if they are not signed in, on the MainPage component
+
+### Removed
+
+- Removed all 4 margins from .input class
+
 ## 6.0.0 - 2025-01-03
 
 ### Added
@@ -85,7 +126,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 ### Added
 
 - Solve bug in server and added sign-in method
-
 
 ## 5.1.0 - 2024-09-01
 
@@ -171,6 +211,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Implemented edit flashcard page and created components for rendering flashcards
 
 ### Fixed
+
 - Fixed unit tests
 
 ## 3.2.0 - 2024-06-11
@@ -186,7 +227,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 ### Added
 
 - New `CreateFlashcardSetDialogue` modal to handle creating a flashcard set
-- Added a basic edit-flashcard page  with most features and API calls unimplemented which the `CreateFlashcardSetDialogue` modal takes the user to when a flashcard is created. The page can be passed `newSet`, which if true, won't request flashcard data from the server. When implementing the edit-flashcard page fully, the page should use the API to read flashcard details when `newSet` is not true
+- Added a basic edit-flashcard page with most features and API calls unimplemented which the `CreateFlashcardSetDialogue` modal takes the user to when a flashcard is created. The page can be passed `newSet`, which if true, won't request flashcard data from the server. When implementing the edit-flashcard page fully, the page should use the API to read flashcard details when `newSet` is not true
 - Added basic `CreateFolderDialogue` modal, which does not work yet
 
 ### Changed
@@ -227,7 +268,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Refactored NewGoalPopup in frontend
 
-
 ## 2.3.0 - 2024-04-12
 
 ### Changed
@@ -266,7 +306,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Added animations throughout site
 
-
 ### Changed
 
 - Made the flashcards page render better on mobile
@@ -282,7 +321,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 ### Changed
 
 - The create-flashcard endpoint now must also be passed `folder`, which allows flashcards to be placed in folders. (Set to `""` if the fashcard has no parent folders). This is a breaking change
-
 
 ## 1.4.0 - 2024-03-29
 

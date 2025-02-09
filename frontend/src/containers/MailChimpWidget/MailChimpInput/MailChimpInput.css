@@ -1,0 +1,24 @@
+.mailchimp-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.mailchimp-form-dark {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.mailchimp-form-dark input {
+  background-color: #45474e;
+  border: #63666c;
+  border-width: 1px;
+  border-style: solid;
+}

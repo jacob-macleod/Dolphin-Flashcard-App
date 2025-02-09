@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Subheader from '../../componments/Text/Subheader/Subheader';
 import BentoPanel from '../BentoPanel/BentoPanel';
-import Mailchimp from "../../componments/Mailchimp/Mailchimp";
+import Mailchimp from '../../componments/Mailchimp/Mailchimp';
 
-let mailChimpApiKey = "";
+import './MailChimpWidget.css';
+import MailChimpInput from './MailChimpInput';
+
+let mailChimpApiKey = '';
 
 try {
   const { default: apiKey } = require('../../api/secretKeys');
@@ -12,7 +15,7 @@ try {
   console.error('Error loading mailChimpApiKey:', error);
 }
 
-function MailChimpWidget({view}) {
+function MailChimpWidget({ view }) {
   const [email, setEmail] = useState('');
 
   const handleEmailChange = (event) => {
@@ -29,29 +32,12 @@ function MailChimpWidget({view}) {
 
   return (
     <BentoPanel
-        item1={<>
-            <Subheader text="Want to stay updated? Subscribe to our newsletter!"/>
-            <Mailchimp
-                action={mailChimpApiKey}
-                fields={[
-                    {
-                        name: 'EMAIL',
-                        placeholder: 'Email',
-                        type: 'email',
-                        required: true
-                    }
-                ]}
-                messages={{
-                    sending: "Sending...",
-                    success: "Thank you for subscribing!",
-                    error: "An unexpected internal error has occurred",
-                    empty: "You must write an e-mail",
-                    duplicate: "Too many subscribe attempts for this email address",
-                    button: "Subscribe"
-                }}
-                className="mailchimp-form"
-            />
-        </>}
+      item1={
+        <>
+          <Subheader text="Want to stay updated? Subscribe to our newsletter!" />
+          <MailChimpInput />
+        </>
+      }
     />
   );
 }
