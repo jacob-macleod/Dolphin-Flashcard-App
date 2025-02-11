@@ -53,7 +53,7 @@ function FeaturesBento({
     <div
       style={{
         textAlign: 'start',
-        margin: view === 'mobile' ? '0 20px' : '0 60px 30px 60px',
+        margin: view === 'mobile' ? '0 20px' : '0 24px 32px 24px',
       }}
     >
       <Subheader text={subheaderText} />
