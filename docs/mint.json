@@ -52,9 +52,7 @@
   "navigation": [
     {
       "group": "Welcome",
-      "pages": [
-        "conceptual-docs/introduction"
-      ]
+      "pages": ["conceptual-docs/introduction"]
     },
     {
       "group": "Getting Started",
@@ -67,21 +65,24 @@
       ]
     },
     {
-      "group": "Extras",
+      "group": "Tutorials",
       "pages": [
-        "extras/terminology",
-        "extras/changelog"
+        "conceptual-docs/tutorialintro",
+        "conceptual-docs/frontend",
+        "conceptual-docs/backend",
+        "conceptual-docs/unittests"
       ]
+    },
+    {
+      "group": "Extras",
+      "pages": ["extras/terminology", "extras/changelog"]
     },
     {
       "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction",
-        "api-reference/authentication"
-      ]
+      "pages": ["api-reference/introduction", "api-reference/authentication"]
     },
     {
-      "group": "Account",        
+      "group": "Account",
       "pages": [
         {
           "group": "Create account",
@@ -179,7 +180,7 @@
         {
           "group": "Update heatmap",
           "pages": ["api-reference/endpoint/statistics/update-heat-map"]
-        }     
+        }
       ]
     }
   ],

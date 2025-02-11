@@ -22,6 +22,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.1.2 - 2025-02-11  
+
+### Added  
+
+- Created a Tutorials section in the documentation.  
+- Added Frontend page.  
+- Added Backend** page.  
+- Added Unit Tests page.  
+- Added Introduction page to help contributors navigate the tutorials.  
+
 ## 6.1.1 - 2025-01-31
 
 ### Fixed
