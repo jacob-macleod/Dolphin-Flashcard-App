@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.1.3 - 2025-02-12 
+
+### Changed
+
+- Made user's name right aligned in left menu
+
 ## 6.1.2 - 2025-02-11  
 
 ### Added  
