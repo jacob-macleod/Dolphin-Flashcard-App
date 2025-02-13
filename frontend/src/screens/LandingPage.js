@@ -346,7 +346,20 @@ function LandingPage({ setJwtToken }) {
                   style={{ fontSize: '24px' }}
                 />
                 <Paragraph
-                  text={'Lorem ispum dolor'}
+                  text={
+                    <>
+                      We're open source on Github, so you can check out our{' '}
+                      <a
+                        href="https://github.com/jacob-macleod/Dolphin-Flashcard-App/issues"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#616583', textDecoration: 'underline' }}
+                      >
+                        open issues
+                      </a>
+                      !
+                    </>
+                  }
                   style={{
                     color: '#616583',
                     textAlign: 'start',
@@ -362,7 +375,7 @@ function LandingPage({ setJwtToken }) {
                   style={{ fontSize: '24px' }}
                 />
                 <Paragraph
-                  text={'Lorem ispum dolor'}
+                  text={`Dolphin Flashards is free to use! While a payment tier may be added in the future for our most dedicated learners, there are no current plans for adding payment. We want to make Dolphin as good as possible first!`}
                   style={{
                     color: '#616583',
                     textAlign: 'start',
@@ -378,7 +391,8 @@ function LandingPage({ setJwtToken }) {
                   style={{ fontSize: '24px' }}
                 />
                 <Paragraph
-                  text={'Lorem ispum dolor'}
+                  text={`Popular sites such as Quizlet don't use spaced repetition, meaning it's hard to remember what you learn. But apps such as Anki, which do have spaced repetition, are hard to use, and not as fun. Dolphin Flashcards combines the best of both worlds, allowing you to remember what you study while motivating you to learn at the same time!
+`}
                   style={{
                     color: '#616583',
                     textAlign: 'start',
@@ -394,7 +408,7 @@ function LandingPage({ setJwtToken }) {
                   style={{ fontSize: '24px' }}
                 />
                 <Paragraph
-                  text={'Lorem ispum dolor'}
+                  text={`Learning can be hard. But it doesn't have to be! Making things fun helps you to be motivated, allowing you to crush your learning goals`}
                   style={{
                     color: '#616583',
                     textAlign: 'start',
