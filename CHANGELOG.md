@@ -22,10 +22,17 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 6.1.3 - 2025-02-13
+
+## 6.1.4 - 2025-02-13
 
 ### Fixed
-- Completed the FAQ section of the landing page.
+- Completed the FAQ section of the landing page
+
+## 6.1.3 - 2025-02-12 
+
+### Changed
+
+- Made user's name right aligned in left menu
 
 ## 6.1.2 - 2025-02-11  
 
