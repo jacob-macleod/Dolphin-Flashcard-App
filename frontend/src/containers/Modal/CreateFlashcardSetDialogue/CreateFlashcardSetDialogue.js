@@ -96,7 +96,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
               variants={dropIn}
               style={view !== "mobile" ? {height: "fit-content"} : null}
             >
-                <Heading3 text="Choose a folder:" />
+                <Heading3 text="Choose a location:" />
 
                 <div className="card-overview" style={{cursor: "pointer"}}>
                   <FolderTreeView visible={visible} selectedPath={selectedPath} setSelectedPath={setSelectedPath}/>
@@ -104,14 +104,14 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
 
                 <Heading3 text="Choose other details:" />
 
-                <div className="input-container">
-                    <Paragraph text="Name: " style={{ display: "flex", alignItems: "center" }} />
-                    <input type="text" className="input" value={flashcardName} onChange={onFlashcardNameChange}/>
+                <div className="input-container" style={{ display: "flex", marginBottom: "4%" }}>
+                    <Paragraph text="Name: " style={{ marginRight: "20%" }} />
+                    <input type="text" className="input" placeholder='Folder name...' value={flashcardName} onChange={onFlashcardNameChange}/>
                 </div>
 
-                <div className="input-container">
-                    <Paragraph text="Description: " style={{ display: "flex", alignItems: "center" }} />
-                    <input type="text" className="input" value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
+                <div className="input-container" style={{ display: "flex" }}>
+                    <Paragraph text="Description: " style={{ marginRight: "10%" }} />
+                    <input type="text" className="input" placeholder='Folder description' value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
                 </div>
 
                 <ErrorText text={errorMessage} style={{ display: errorMessageVisibility}} />
