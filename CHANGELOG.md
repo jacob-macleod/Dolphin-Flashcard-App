@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.1.6 - 2025-02-15
+
+### Changed
+
+- Updated documentation and added latest videos
+
 ## 6.1.5 - 2025-02-14
 
 ### Added

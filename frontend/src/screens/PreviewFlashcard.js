@@ -42,6 +42,15 @@ function PreviewFlashcard() {
   const [flashcardExists, setFlashcardExists] = useState(null);
 
   useEffect(() => {
+    console.log("Current user: ", currentUser);
+  }, [currentUser]);
+
+
+  useEffect(() => {
+    console.log("Flashcard owner: ", flashcardOwner);
+  }, [flashcardOwner]);
+
+  useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
   }, [view]);
 
@@ -110,17 +119,17 @@ function PreviewFlashcard() {
                 style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
               />
               <Paragraph
-                text={flashcardOwner == "" ? "" : currentUser.name === flashcardOwner.name ? "You own this set" : "by " + flashcardOwner.name}
+                // text={flashcardOwner == "" ? "" : currentUser.name === flashcardOwner.name ? "You own this set" : "by " + flashcardOwner.name}
                 style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}
               />
               <Button
                 text="Save Flashcard"
                 onClick={() => {setSaveFlashcardSetDialogueVisible(true)}}
-                disabled={
-                  currentUser.name === flashcardOwner.name ? true
-                  : flashcardExists === true ? true
-                  : false
-              }
+              //   disabled={
+              //     // currentUser.name === flashcardOwner.name ? true
+              //     // : flashcardExists === true ? true
+              //     // : false
+              // }
               />
             </div>
 

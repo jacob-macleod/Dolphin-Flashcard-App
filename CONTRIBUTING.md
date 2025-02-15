@@ -2,6 +2,8 @@
 
 Welcome to this guide! Read more to learn how to contribute. For quick reference, the app uses `Python`, `Flask`, `React` and `Google Firebase`
 
+> :warning: **This is no longer up to date**! See the latest guide [here](https://docs.dolphinflashcards.com/conceptual-docs/quickstart)
+
 <!-- vscode-markdown-toc -->
 * 1. [Contributing to the Frontend Web App](#ContributingtotheFrontendWebApp)
 	* 1.1. [Quick Explanation](#QuickExplanation)
