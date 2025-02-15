@@ -20,7 +20,7 @@
 ##  1. <a name='BroadOverview'></a>Broad Overview
 This app is designed to improve simiar apps like Quizlet and Anki by implementing a spaced repetition system in an easy to use and visually pleasing UI. The website, which is in development, can be seen [here](http://dolphinflashcards.com)
 
-**Contributors are welcome!** See more information [here](https://docs.dolphinflashcards.com/conceptual-docs/quickstart), and checkout the avaliable [tasks to work on](https://github.com/jacob-macleod/Dolphin-Flashcard-App)
+**Contributors are welcome!** See more information [here](https://docs.dolphinflashcards.com/conceptual-docs/quickstart), and checkout the avaliable [tasks to work on](https://github.com/jacob-macleod/Dolphin-Flashcard-App/issues)
 
 ![the dolphin landing page](https://raw.githubusercontent.com/jacob-macleod/Dolphin-Flashcard-App/main/dolphin-hero-image.png)
 
@@ -80,7 +80,7 @@ Contributors are welcome!
 
 The project uses feature branches, which are made from the development branch. It is important to keep to this rule!
 
-See the avaliable [tasks to work on](https://github.com/jacob-macleod/Dolphin-Flashcard-App)
+See the avaliable [tasks to work on](https://github.com/jacob-macleod/Dolphin-Flashcard-App/issues)
 
 For more information, please see below:
 
