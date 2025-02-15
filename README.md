@@ -8,8 +8,8 @@
 	* 4.1. [Flashcard System](#FlashcardSystem)
 	* 4.2. [Gamified Features](#GamifiedFeatures)
 	* 4.3. [Access Control System](#AccessControlSystem)
-* 5. [Contributors](#Contributors)
-* 6. [Server setup](#Serversetup)
+* 5. [Contributing](#Contributing)
+* 6. [Deploying Dolphin Flashcards yourself](#DeployingDolphinFlashcardsyourself)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -20,9 +20,9 @@
 ##  1. <a name='BroadOverview'></a>Broad Overview
 This app is designed to improve simiar apps like Quizlet and Anki by implementing a spaced repetition system in an easy to use and visually pleasing UI. The website, which is in development, can be seen [here](http://dolphinflashcards.com)
 
-**Contributors are welcome!** More information is in `CONTRIBUTING.md`
+**Contributors are welcome!** See more information [here](https://docs.dolphinflashcards.com/conceptual-docs/quickstart), and checkout the avaliable [tasks to work on](https://github.com/jacob-macleod/Dolphin-Flashcard-App/issues)
 
-![the dolphin landing page](https://raw.githubusercontent.com/jacob-macleod/Dolphin-Flashcard-App/main/image_2024-03-11_205932151.png)
+![the dolphin landing page](https://raw.githubusercontent.com/jacob-macleod/Dolphin-Flashcard-App/main/dolphin-hero-image.png)
 
 ##  2. <a name='WherecanIlearnmore'></a>Where can I learn more?
 
@@ -75,14 +75,22 @@ A broad overview of the planned features to be made
 
 </details>
 
-##  5. <a name='Contributors'></a>Contributors
+##  5. <a name='Contributing'></a>Contributing
 Contributors are welcome!
 
 The project uses feature branches, which are made from the development branch. It is important to keep to this rule!
 
-For more information, please go to `CONTRIBUTNG.MD`. API documentation is avaliable at `docs/`
+See the avaliable [tasks to work on](https://github.com/jacob-macleod/Dolphin-Flashcard-App/issues)
 
-##  6. <a name='Serversetup'></a>Server setup
+For more information, please see below:
+
+* [Quick start guide on how to run Dolphin locally](https://docs.dolphinflashcards.com/conceptual-docs/quickstart)
+* [In-depth videos about how to code for Dolphin](https://docs.dolphinflashcards.com/conceptual-docs/tutorialintro)
+* [API documentation](https://docs.dolphinflashcards.com/api-reference/introduction)
+
+##  6. <a name='DeployingDolphinFlashcardsyourself'></a>Deploying Dolphin Flashcards yourself
+
+This section is only for building and deploying Dolphin Flashcards yourself! If you just want to run Dolphin locally, see section 2 or 3
 
 At the moment, a pipeline exists to:
 - Build the docker container

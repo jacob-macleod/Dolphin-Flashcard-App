@@ -22,6 +22,41 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.1.6 - 2025-02-15
+
+### Changed
+
+- Updated documentation and added latest videos
+
+## 6.1.5 - 2025-02-14
+
+### Added
+
+- Added spacing between the label (`Paragraph`) and input fields using `marginRight`.
+- Introduced `marginBottom` to create spacing between the two input containers.
+- Added Placeholder text in both input containers.
+
+### Fixed
+
+- Ensured both input fields have equal width and alignment.
+- Adjusted label spacing to maintain a consistent layout.
+
+### Changed
+
+- Updated the input container layout for better readability and structure.
+- Changed the new flashcard title from 'Choose a folder' to 'Choose a location'.
+
+## 6.1.4 - 2025-02-13
+
+### Fixed
+- Completed the FAQ section of the landing page
+
+## 6.1.3 - 2025-02-12 
+
+### Changed
+
+- Made user's name right aligned in left menu
+
 ## 6.1.2 - 2025-02-11  
 
 ### Added  
