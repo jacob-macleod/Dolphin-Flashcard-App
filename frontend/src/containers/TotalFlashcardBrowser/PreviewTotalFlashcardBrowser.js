@@ -9,6 +9,7 @@ function PreviewTotalFlashcardBrowser({ flashcardID, setFlashcardOwner, flashcar
 
     // Set the owner of the flashcard
     if (flashcardOwner === "" && flashcardItems !== undefined && flashcardItems[0] !== undefined) {
+        alert ("Getting user");
         apiManager.getUser(
             flashcardItems[0].owner,
             setFlashcardOwner
