@@ -22,6 +22,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.2.6 - 2025-02-20
+
+### Fixed
+
+- Fixed issue where updating flashcards would reset all review progress
+- Fixed handling of review status preservation for existing cards
+
 ## 6.1.6 - 2025-02-15
 
 ### Changed
