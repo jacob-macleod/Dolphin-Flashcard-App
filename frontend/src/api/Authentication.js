@@ -56,7 +56,6 @@ export function createAccount(userID, displayName, idToken, setJwtToken, rawAcce
         throw new Error('Network response was not ok.');
     })
     .then(data => {
-        console.log('Account creation successful:', data);
         createCookie("jwtToken", data[0]["token"]);
         setJwtToken(data[0]["token"])
         // Set the accessTokens as cookies
@@ -94,7 +93,6 @@ export function signIn(userID, idToken, setJwtToken, rawAccessToken, accessToken
         throw new Error('Network response was not ok.');
     })
     .then(data => {
-        console.log('Account creation successful:', data);
         createCookie("jwtToken", data[0]["token"]);
         setJwtToken(data[0]["token"])
         // Set the accessTokens as cookies

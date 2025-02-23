@@ -42,15 +42,6 @@ function PreviewFlashcard() {
   const [flashcardExists, setFlashcardExists] = useState(null);
 
   useEffect(() => {
-    console.log("Current user: ", currentUser);
-  }, [currentUser]);
-
-
-  useEffect(() => {
-    console.log("Flashcard owner: ", flashcardOwner);
-  }, [flashcardOwner]);
-
-  useEffect(() => {
     setFlashcardBoxHorizontalPadding(view === "mobile" ? "8px" : "16px");
   }, [view]);
 

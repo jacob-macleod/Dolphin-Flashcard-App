@@ -30,7 +30,6 @@ const getFlashcardDataForMultipleCards = (folders, flashcardIDs, flashcardNames)
       for (let data of flashcardDataArray) {
         if (data.cards && Object.keys(data.cards).length > 0) {
           const cardPromises = Object.keys(data.cards).map((cardID) => {
-            console.log(cardID);
             return new Promise((resolve) => {
               apiManager.getFlashcardItem(cardID, (item) => {
                 resolve(item);
