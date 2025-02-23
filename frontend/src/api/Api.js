@@ -211,7 +211,6 @@ class ApiManager {
                 "cards": cards
             }
         }
-        console.log(data);
 
         this.fetchData(data, url, status => {
             data.flashcardID = status[0].flashcardID;

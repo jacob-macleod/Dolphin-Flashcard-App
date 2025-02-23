@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import DelayedElement from '../DelayedElement/DelayedElement.js';
 import useFlashcardDataForMultipleCards from '../../hooks/getFlashcardDataForMultipleCards';
 import '../../App.css';
-import CardOverview from '../CardOverview/CardOverview';
-import Paragraph from '../../componments/Text/Paragraph';
-import Image from '../../componments/Image/Image';
-import GreyRightArrow from '../../static/grey-right-arrow.svg';
-import GreyLeftArrow from '../../static/grey-left-arrow.svg';
 import RenderTotalFlashcardBrowser from './RenderTotalFlashcardBrowser';
 import "./TotalFlashcardBrowser.css";
-import { motion, AnimatePresence } from 'framer-motion';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -29,15 +24,28 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
     individualCards,
     setFlashcardItems,
   } = useFlashcardDataForMultipleCards(folder, flashcardID, "", flashcardName);
+  const [loadingIcon, setLoadingIcon] = useState(null);
+
+  useEffect(() => {
+      if (flashcardItems.length !== 0) {
+          // Show the loading icon
+          setLoadingIcon(true);
+      } else {
+          // Hide the loading icon
+          setLoadingIcon(null);
+      }
+  }), [flashcardItems];
 
   return (
-    <RenderTotalFlashcardBrowser
-        flashcardData={flashcardData}
-        flashcardsExist={flashcardsExist}
-        flashcardItems={flashcardItems}
-        individualCards={individualCards}
-        setFlashcardItems={setFlashcardItems}
-    />
+    <DelayedElement childValue={loadingIcon} child={
+      <RenderTotalFlashcardBrowser
+          flashcardData={flashcardData}
+          flashcardsExist={flashcardsExist}
+          flashcardItems={flashcardItems}
+          individualCards={individualCards}
+          setFlashcardItems={setFlashcardItems}
+      />
+    }/>
   );
 }
 

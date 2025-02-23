@@ -67,7 +67,6 @@ function Flashcards() {
   const handleOptionChange = (event) => setSortType(event.target.value);
 
   useEffect(() => {
-    console.log(flashcardData);
     if (flashcardData === null) {
       setCardsLoaded(false);
     } else {

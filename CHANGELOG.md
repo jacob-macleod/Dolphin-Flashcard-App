@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.2.3 - 2025-02-23
+
+### Fixed
+
+-Loading animations for preview flashcard and all cards mode
+
 ## 6.2.6 - 2025-02-20
 
 ### Fixed

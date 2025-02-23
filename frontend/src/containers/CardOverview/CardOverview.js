@@ -30,7 +30,7 @@ function CardOverview({
     showTurnOverButton = false,
     height="fit-content",
     setResponse=()=>{},
-    turnOverCardOnSpaceKey=true
+    turnOverCardOnSpaceKey=true,
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
