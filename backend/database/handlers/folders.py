@@ -51,33 +51,45 @@ class Folders(DatabaseHandler):
         for key in folder_path[:-1]:
             current = current.setdefault(key, {})
 
+        # Find existing flashcard data if it exists
+        existing_data = None
+        if is_root_folder:
+            if flashcard_name in current:
+                existing_data = current[flashcard_name].get('cards', {})
+        else:
+            if (folder_path[-1] in current and 
+                flashcard_name in current[folder_path[-1]]):
+                existing_data = current[folder_path[-1]][flashcard_name].get('cards', {})
+
         # Calculate the initial card review statuses
         card_review_statuses = {}
         current_date = self._date.get_current_date()
 
         for card_id in card_ids:
-            card_review_statuses[card_id] = {
-                "review_status": "0.0",
-                "last_review": current_date,
-            }
+            if existing_data and card_id in existing_data:
+                # Preserve existing review status and date for cards that already exist
+                card_review_statuses[card_id] = existing_data[card_id]
+            else:
+                # Set initial review status only for new cards
+                card_review_statuses[card_id] = {
+                    "review_status": "0.0",
+                    "last_review": current_date,
+                }
 
         # Set the correct data to current, which will also change folder_data
         if folder_path[-1] not in current.keys() and not is_root_folder:
             current[folder_path[-1]] = {}
 
         # Save the flashcard data
+        flashcard_data = {
+            "flashcard_id": flashcard_id,
+            "cards": card_review_statuses,
+        }
+
         if is_root_folder:
-            # If the data is being saved to the root folder
-            current[flashcard_name] = {
-                "flashcard_id": flashcard_id,
-                "cards": card_review_statuses,
-            }
+            current[flashcard_name] = flashcard_data
         else:
-            # If the data is being saved to a subfolder
-            current[folder_path[-1]][flashcard_name] = {
-                "flashcard_id": flashcard_id,
-                "cards": card_review_statuses,
-            }
+            current[folder_path[-1]][flashcard_name] = flashcard_data
 
         folder.set({"data": folder_data})
 

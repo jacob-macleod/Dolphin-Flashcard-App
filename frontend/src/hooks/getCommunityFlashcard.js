@@ -27,7 +27,6 @@ const getCommunityFlashcard = (flashcardID) => {
 
 
     useEffect(() => {
-        console.log(flashcardData);
         const fetchIndividualFlashcards = async () => {
             const allCardData = [];
             if (flashcardData.cards !== undefined) {
@@ -43,7 +42,6 @@ const getCommunityFlashcard = (flashcardID) => {
                 const cardData = await Promise.all(cardPromises);
                 allCardData.push({ ...flashcardData, cards: cardData });
             }
-            console.log(allCardData);
             setFlashcardItems(allCardData);
             setFlashcardsExist(allCardData.length > 0);
         };

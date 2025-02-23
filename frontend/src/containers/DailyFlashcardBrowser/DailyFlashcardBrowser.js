@@ -188,7 +188,6 @@ function DailyFlashcardBrowser({ view }) {
     setStudying(studyingCards);
     setReviewing(recappingCards);
     setNotStarted(notStartedCards);
-    console.log(updatedCardData);
   }, [updatedCardData]);
 
   return (

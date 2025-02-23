@@ -25,7 +25,6 @@ function MailChimpWidget({ view }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add your form submission logic here
-    console.log('Submitted:', email);
     // Clear the input after submission
     setEmail('');
   };

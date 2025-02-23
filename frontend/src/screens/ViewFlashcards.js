@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation } from 'react-router-dom';
 import { getTodayCardsFromStorage } from '../hooks/useTodayCards';
-import useCardData from '../hooks/useCardData';
 import queryString from 'query-string';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
@@ -17,8 +16,6 @@ import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
 import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
-import apiManager from '../api/Api';
-import { getCookie } from '../api/Authentication';
 import "../componments/Text/Link/Link.css";
 import './ViewFlashcards.css';
 
@@ -65,13 +62,6 @@ function ViewFlashcards() {
   };
 
   const cardIDs = collectCardIDs(todayCards, flashcardID);
-  //const { cardData, cardsExist } = useCardData(cardIDs);
-  /*const {
-    flashcardData,
-    flashcardsExist,
-    flashcardItems,
-    setFlashcardItems,
-  } = useFlashcardData(false, folder[0], flashcardID[0], "", flashcardName[0]);*/
 
   return (
     <div style={{ top: "0px" }}>
