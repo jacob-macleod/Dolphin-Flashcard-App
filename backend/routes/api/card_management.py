@@ -6,6 +6,7 @@ from database.database import database as db
 from routes.api.validation_wrapper import validate_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 from classes.card_collection import FlashcardCollection
+import csv
 
 card_management_routes = Blueprint("card_management_routes", __name__)
 
@@ -563,5 +564,81 @@ def flashcard_exists():
         result = db.folders.flashcard_exists(user_id, flashcard_id)
 
         return jsonify(result), 200
+    except Exception as e:
+        return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/import-flashcards", methods=["POST"])
+def import_flashcards():
+    """Import flashcards from a CSV file.
+    
+    Expected request format:
+    - multipart/form-data with:
+        - file: CSV file with columns 'term' and 'definition'
+        - userID: my-id
+        - folder: Folder path to store flashcards
+        - delimiter: CSV delimiter (default: ',')
+        - flashcardName: Name for the flashcard set
+        - flashcardDescription: Description for the flashcard set (optional)
+    """
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file provided'}), 400
+        
+        file = request.files["file"]
+        
+        user_id = request.form.get("userID")
+        folder = request.form.get("folder")
+        delimiter = request.form.get('delimiter')
+        flashcard_name = request.form.get("flashcardName")
+        flashcard_description = request.form.get("flashcardDescription")
+
+        cards = []
+        content = file.stream.read().decode('utf-8')
+        reader = csv.reader(content.splitlines(), delimiter=',')
+            
+        # Skipping the first row having the column headings
+        next(reader)
+        
+        for row in reader:
+            term, definition = row
+            cards.append({
+                "front": term,
+                "back": definition
+            })
+
+        # A hashed version of the userID and flashcard name
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+
+        # Generate the card_ids
+        card_ids = [
+            hash_to_numeric(user_id + folder + flashcard_name + card["front"])
+            for card in cards
+        ]
+
+        # Create the flashcard set
+        db.flashcard_set.create_flashcard_set(
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            flashcard_description=flashcard_description,
+            card_ids=card_ids,
+            user_id=user_id,
+        )
+
+        # Create each individual flashcard
+        db.flashcards.create_flashcards(card_ids, cards)
+
+        # Assign the set to the user in the folder structure
+        db.folders.add_flashcard_to_folder(
+            user_id=user_id,
+            folder=folder,
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            card_ids=card_ids,
+        )
+
+        # Give the user read and write access
+        db.read_write_access.give_user_access(user_id, flashcard_id)
+
+        return jsonify({"flashcardID": flashcard_id}, 200)
     except Exception as e:
         return jsonify(str(e)), 500

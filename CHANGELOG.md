@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.2.3 - 2025-02-24
+
+### Added
+
+- Implement a feature to import flashcards directly from CSV files.
+
 ## 6.2.3 - 2025-02-23
 
 ### Fixed
