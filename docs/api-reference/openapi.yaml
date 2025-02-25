@@ -1890,6 +1890,101 @@ paths:
           in: query
           name: name
           description: 'The name of the flashcard to search for'
+  /import-flashcards:
+    post:
+      summary: Import Flashcard
+      responses:
+        '200':
+          description: OK. Returned when the request is successfully executed.
+          content:
+            application/json:
+              schema:
+                type: array
+                x-examples:
+                  Example 1:
+                    - success: true
+                items:
+                  type:
+                    - object
+                    - integer
+                  properties:
+                    '200':
+                      type: integer
+                      x-stoplight:
+                        id: hvhaj9owg6b59
+                      description: HTTP status code indicating a successful operation.
+                    success:
+                      type: boolean
+                      description: Indicates that a new flashcard was created successfully.
+        '400':
+          description: A bad request error. Returned when a flashcard set with the same name already exists.
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    error: 'Flashcard set name already exists'
+                properties:
+                  error:
+                    type: string
+                    example: 'Flashcard set name already exists'
+      operationId: import-flashcard
+      description: 'Import flashcards from a CSV file. The API accepts CSV files and creates flashcards under the specified folder.'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  file: Sample.csv
+                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                  flashcardName: Expense Tracker
+                  flashcardDescription: A set of flashcards for tracking expenses
+                  folder: folder-name/folder-2
+                  delimiter: ','
+                  firstRowOfData: 2
+              required:
+                - file
+                - jwtToken
+                - flashcardName
+                - flashcardDescription
+                - folder
+                - delimiter
+                - firstRowOfData
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: CSV file having headings term and definition.
+                jwtToken:
+                  type: string
+                  description: The unique ID of the user editing or creating flashcards.
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                flashcardName:
+                  type: string
+                  description: 'The name of the flashcard set. '
+                  example: firstCard
+                flashcardDescription:
+                  type: string
+                  description: The description of the flashcard set
+                  example: my first flashcard
+                folder:
+                  type: string
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by numeric figures.'
+                  example: top-level-parent-name/parent-name-2/parent-name-3
+                delimiter:
+                  type: string
+                  description: 'The delimiter used in the CSV file (e.g., comma, semicolon).'
+                  example: ','
+                firstRowOfData:
+                  type: string
+                  description: 'Defines the first row where actual data is stored in the CSV. Defaults to row 2 if not provided.'
+                  example: '2'
+      parameters: []
+      tags:
+        - Card management
 
 components:
   schemas: {}
