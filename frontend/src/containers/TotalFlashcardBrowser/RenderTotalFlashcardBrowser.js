@@ -6,6 +6,8 @@ import Paragraph from '../../componments/Text/Paragraph';
 import Image from '../../componments/Image/Image';
 import GreyRightArrow from '../../static/grey-right-arrow.svg';
 import GreyLeftArrow from '../../static/grey-left-arrow.svg';
+import ExpandIcon from '../../static/expand-icon.svg';
+import CollapseIcon from '../../static/expand-icon.svg';
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -20,12 +22,13 @@ const slideVariants = {
 function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcardItems, individualCards, setFlashcardItems }) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [leftButtonAnimation, setLeftButtonAnimation] = useState(false); // State for left button animation
-  const [rightButtonAnimation, setRightButtonAnimation] = useState(false); // State for right button animation
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const toggleFullscreen = () => {
+    setIsFullscreen(!isFullscreen);
+  };
 
   const leftButtonClick = useCallback(() => {
-    setLeftButtonAnimation(true); // Trigger left button animation
-    setTimeout(() => setLeftButtonAnimation(false), 300); // Reset left button animation after 300ms
     setDirection(-1);
     setCurrentCardIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : individualCards.length - 1
@@ -33,8 +36,6 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
   }, [individualCards.length]);
 
   const rightButtonClick = useCallback(() => {
-    setRightButtonAnimation(true); // Trigger right button animation
-    setTimeout(() => setRightButtonAnimation(false), 300); // Reset right button animation after 300ms
     setDirection(1);
     setCurrentCardIndex((prevIndex) =>
       prevIndex < individualCards.length - 1 ? prevIndex + 1 : 0
@@ -57,10 +58,13 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
   }, [handleKeyDown]);
 
   return (
-    <>
+    <div className={isFullscreen ? 'fullscreen' : ''}>
       {flashcardItems && flashcardItems.length !== 0 ? (
         <>
-          <div className="card-container" style={{ position: 'relative', height: '264px' }}>
+          <div className={`card-container ${isFullscreen ? 'fullscreen-card-container' : ''}`}>
+            <button className="expand-button" onClick={toggleFullscreen}>
+              <img src={isFullscreen ? CollapseIcon : ExpandIcon} alt="Toggle Fullscreen" />
+            </button>
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentCardIndex}
@@ -70,39 +74,29 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
                 animate="visible"
                 exit={direction === 1 ? "exitRight" : "exitLeft"}
                 transition={{ duration: 0.15 }}
+                style={{ width: '100%', height: '100%' }}
               >
                 {individualCards[currentCardIndex] ? (
                   <CardOverview
                     text={individualCards[currentCardIndex].front}
                     description={individualCards[currentCardIndex].back}
                     showTurnOverButton={true}
-                    height="264px"
+                    height={isFullscreen ? '100%' : '264px'}
                   />
                 ) : null}
               </motion.div>
             </AnimatePresence>
           </div>
-          <div className="controls-panel">
-            <Image
-              url={GreyLeftArrow}
-              onClick={leftButtonClick}
-              className={leftButtonAnimation ? 'left-button-animation' : ''}
-            />
-            <Paragraph
-              text={`${currentCardIndex + 1} / ${individualCards.length}`}
-              type="grey"
-            />
-            <div style={{ position: 'relative' }}>
-              <Image
-                url={GreyRightArrow}
-                onClick={rightButtonClick}
-                className={rightButtonAnimation ? 'right-button-animation' : ''}
-              />
+          {!isFullscreen && (
+            <div className="controls-panel">
+              <Image url={GreyLeftArrow} onClick={leftButtonClick} />
+              <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
+              <Image url={GreyRightArrow} onClick={rightButtonClick} />
             </div>
-          </div>
+          )}
         </>
       ) : null}
-    </>
+    </div>
   );
 }
 
