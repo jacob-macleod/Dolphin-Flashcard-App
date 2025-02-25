@@ -579,6 +579,7 @@ def import_flashcards():
         - delimiter: CSV delimiter (default: ',')
         - flashcardName: Name for the flashcard set
         - flashcardDescription: Description for the flashcard set (optional)
+        - firstRowOfData: Defines the first row that the data is stored on.
     """
     try:
         if 'file' not in request.files:
@@ -591,13 +592,15 @@ def import_flashcards():
         delimiter = request.form.get('delimiter')
         flashcard_name = request.form.get("flashcardName")
         flashcard_description = request.form.get("flashcardDescription")
+        first_row_of_data = request.form.get("firstRowOfData", 2)
 
         cards = []
         content = file.stream.read().decode('utf-8')
         reader = csv.reader(content.splitlines(), delimiter=',')
             
-        # Skipping the first row having the column headings
-        next(reader)
+        # Skipping to the row having the data
+        for _ in range(int(first_row_of_data) - 1):
+            next(reader)
         
         for row in reader:
             term, definition = row
@@ -608,6 +611,10 @@ def import_flashcards():
 
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+
+        flashcard_exists = db.folders.flashcard_exists(user_id, flashcard_id)
+        if flashcard_exists:
+            return jsonify({"error": "Flashcard set name already exists"}), 400
 
         # Generate the card_ids
         card_ids = [
