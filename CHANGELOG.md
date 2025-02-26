@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.3.1 - 2025-02-27
+
+### Fixed
+
+- Fixed goal deletion functionality to properly handle non-existent goals by checking if the document exists before attempting to delete it
+
 ## 6.3.0 - 2025-02-24
 
 ### Added
