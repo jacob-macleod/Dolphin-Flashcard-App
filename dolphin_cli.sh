@@ -2,7 +2,23 @@
 
 # Dolphin Flashcards Management Script (WSL/Windows Hybrid)
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
-IS_WSL=$(uname -a | grep -i microsoft | wc -l)
+IS_WSL_PARAM=""
+
+# Check if IS_WSL was provided as a parameter
+for arg in "$@"; do
+    if [[ "$arg" == "--wsl="* ]]; then
+        IS_WSL_PARAM="${arg#*=}"
+        break
+    fi
+done
+
+# Set IS_WSL based on parameter or auto-detect
+if [ -n "$IS_WSL_PARAM" ]; then
+    IS_WSL="$IS_WSL_PARAM"
+    echo "Using provided IS_WSL value: $IS_WSL"
+else
+    IS_WSL=$(uname -a | grep -i microsoft | wc -l)
+fi
 
 # Status files
 MAIN_PID_FILE="$SCRIPT_DIR/.backend_pid"
@@ -48,15 +64,23 @@ show_help() {
     echo -e "  ${GREEN}test${NC} run"
     echo -e "  ${GREEN}config${NC} check"
     echo -e "  ${GREEN}help${NC}"
+    echo -e "  Use ${GREEN}--wsl=1${NC} or ${GREEN}--wsl=0${NC} to manually set WSL mode"
 }
 
 # Database functions
 start_database() {
+    EMULATOR_SCRIPT="$SCRIPT_DIR/firebase_emulator.sh"
     [ "$(cat "$DATABASE_STATUS_FILE")" == "running" ] && \
         { echo -e "${YELLOW}Database already running${NC}"; return; }
     
     echo -e "${BLUE}Starting database...${NC}"
-    bash "$SCRIPT_DIR/firebase_emulator.sh" &
+
+    # Ensure the script is in Unix format (convert if needed)
+    if file "$EMULATOR_SCRIPT" | grep -q "CRLF"; then
+        echo -e "${YELLOW}Converting firebase_emulator.sh to Unix format...${NC}"
+        dos2unix "$EMULATOR_SCRIPT" >/dev/null 2>&1 || sed -i 's/\r$//' "$EMULATOR_SCRIPT"
+    fi
+    bash "$EMULATOR_SCRIPT" &
     sleep 10
     
     if docker ps | grep -q "mtlynch/firestore-emulator-docker"; then
@@ -337,61 +361,82 @@ run_tests() {
 
 check_config() {
     echo -e "${BLUE}Checking config...${NC}"
+    local db_config_ok=true
+    local fe_config_ok=true
 
     CONFIG_FILE="$SCRIPT_DIR/backend/database/database_config.py"
     CONFIG_JS="$SCRIPT_DIR/frontend/src/api/config.js"
 
     if [ ! -f "$CONFIG_FILE" ]; then
         echo -e "${RED}Database config missing${NC}"
-        return 1
+        db_config_ok=false
+    else
+
+        echo -e "${GREEN}Database config found${NC}"
+
+        if ! grep -q '^[^#]*type\s*=\s*' "$CONFIG_FILE"; then
+            echo -e "${RED}ERROR: 'type' is not set in the database config.${NC}"
+            echo -e "${YELLOW}Please add 'type=\"production\"' before committing.${NC}"
+            db_config_ok=false
+        
+
+        elif grep -q '^[^#]*type\s*=\s*"local"' "$CONFIG_FILE"; then
+            echo -e "${YELLOW}WARNING: Database config is set to 'local'.${NC}"
+            echo -e "${RED}Please change it to 'production' before committing.${NC}"
+            db_config_ok=false
+        else
+
+            echo -e "${GREEN}Database config is set correctly.${NC}"
+        fi
     fi
-
-    echo -e "${GREEN}Database config found${NC}"
-
-    if ! grep -q '^[^#]*type\s*=\s*' "$CONFIG_FILE"; then
-        echo -e "${RED}ERROR: 'type' is not set in the database config.${NC}"
-        echo -e "${YELLOW}Please add 'type=\"production\"' before committing.${NC}"
-        return 1
-    fi
-
-    if grep -q '^[^#]*type\s*=\s*"local"' "$CONFIG_FILE"; then
-        echo -e "${YELLOW}WARNING: Database config is set to 'local'.${NC}"
-        echo -e "${RED}Please change it to 'production' before committing.${NC}"
-        return 1
-    fi
-
-    echo -e "${GREEN}Database config is set correctly.${NC}"
 
     if [ ! -f "$CONFIG_JS" ]; then
         echo -e "${RED}Frontend API config missing: $CONFIG_JS${NC}"
-        return 1
+        fe_config_ok=false
+    else
+
+        echo -e "${GREEN}Frontend API config found${NC}"
+
+        if ! grep -q '^[[:space:]]*const serverURL\s*=' "$CONFIG_JS"; then
+            echo -e "${RED}ERROR: serverURL is not set in config.js.${NC}"
+            echo -e "${YELLOW}Please set the correct API URL before committing.${NC}"
+            fe_config_ok=false
+        
+
+        elif grep -q '^[[:space:]]*//[[:space:]]*const serverURL\s*=\s*"http://dolphinflashcards.com/api/";' "$CONFIG_JS" && \
+        grep -q '^[[:space:]]*const serverURL\s*=\s*"http://127.0.0.1:5000/api/";' "$CONFIG_JS"; then
+            echo -e "${YELLOW}WARNING: Localhost API is active.${NC}"
+            echo -e "${RED}Please switch to the production API before committing.${NC}"
+            fe_config_ok=false
+        else
+
+            echo -e "${GREEN}Frontend API config is set correctly.${NC}"
+        fi
     fi
 
-    echo -e "${GREEN}Frontend API config found${NC}"
-
-    if ! grep -q '^[[:space:]]*const serverURL\s*=' "$CONFIG_JS"; then
-        echo -e "${RED}ERROR: serverURL is not set in config.js.${NC}"
-        echo -e "${YELLOW}Please set the correct API URL before committing.${NC}"
+    if [ "$db_config_ok" = true ] && [ "$fe_config_ok" = true ]; then
+        return 0
+    else
         return 1
     fi
-
-    if grep -q '^[[:space:]]*//[[:space:]]*const serverURL\s*=\s*"http://dolphinflashcards.com/api/";' "$CONFIG_JS" && \
-       grep -q '^[[:space:]]*const serverURL\s*=\s*"http://127.0.0.1:5000/api/";' "$CONFIG_JS"; then
-        echo -e "${YELLOW}WARNING: Localhost API is active.${NC}"
-        echo -e "${RED}Please switch to the production API before committing.${NC}"
-        return 1
-    fi
-
-    echo -e "${GREEN}Frontend API config is set correctly.${NC}"
 }
 
 
 initialize_status_files
-[ $# -eq 0 ] && { show_help; exit 0; }
 
-case $1 in
+# Filter out --wsl parameter before handling other commands
+ARGS=()
+for arg in "$@"; do
+    if [[ "$arg" != "--wsl="* ]]; then
+        ARGS+=("$arg")
+    fi
+done
+
+[ ${#ARGS[@]} -eq 0 ] && { show_help; exit 0; }
+
+case ${ARGS[0]} in
     database)
-        case $2 in
+        case ${ARGS[1]} in
             start) start_database ;;
             stop) stop_database ;;
             status) database_status ;;
@@ -399,14 +444,14 @@ case $1 in
             *) show_help ;;
         esac ;;
     backend)
-        case $2 in
+        case ${ARGS[1]} in
             start) start_backend ;;
             stop) stop_backend ;;
             status) backend_status ;;
             *) show_help ;;
         esac ;;
     frontend)
-        case $2 in
+        case ${ARGS[1]} in
             start) start_frontend ;;
             stop) stop_frontend ;;
             status) frontend_status ;;
@@ -414,7 +459,7 @@ case $1 in
             *) show_help ;;
         esac ;;
     docs)
-        case $2 in
+        case ${ARGS[1]} in
             start) start_docs ;;
             stop) stop_docs ;;
             status) docs_status ;;
