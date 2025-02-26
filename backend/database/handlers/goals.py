@@ -294,6 +294,9 @@ class Goals(DatabaseHandler):
         Args:
             user_id (str): The user id of the goal to delete
             goal_id (str): The goal id to delete
+            
+        Returns:
+            bool: True if the goal was successfully deleted, False otherwise
         """
         data = (
             self._context.collection("goals")
@@ -301,7 +304,9 @@ class Goals(DatabaseHandler):
             .collection("goal_data")
             .document(goal_id)
         )
-        if data is not None:
+        goal_data = data.get()
+        # Check if the document exists before attempting to delete
+        if goal_data.exists:
             data.delete()
             return True
         else:
