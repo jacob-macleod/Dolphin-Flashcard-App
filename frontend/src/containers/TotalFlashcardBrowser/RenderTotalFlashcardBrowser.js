@@ -18,7 +18,6 @@ const slideVariants = {
   exitLeft: { x: '-20%', width: "0px", opacity: 0, position: 'fixed' },
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
-
 function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcardItems, individualCards, setFlashcardItems }) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -62,9 +61,15 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
       {flashcardItems && flashcardItems.length !== 0 ? (
         <>
           <div className={`card-container ${isFullscreen ? 'fullscreen-card-container' : ''}`}>
-            <button className="expand-button" onClick={toggleFullscreen}>
-              <img src={isFullscreen ? CollapseIcon : ExpandIcon} alt="Toggle Fullscreen" />
-            </button>
+            {isFullscreen && (
+              <div className="fullscreen-controls">
+                     <Image url={GreyLeftArrow} onClick={leftButtonClick} className="arrow-left" />
+
+                <div className="arrow-right" onClick={rightButtonClick}>
+                  <img src={GreyRightArrow} alt="Next Card" />
+                </div>
+              </div>
+            )}
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentCardIndex}
@@ -92,7 +97,9 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
               <Image url={GreyLeftArrow} onClick={leftButtonClick} />
               <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
               <Image url={GreyRightArrow} onClick={rightButtonClick} />
-            </div>
+              <button className="expand-button" onClick={toggleFullscreen}>
+              <img src={isFullscreen ? CollapseIcon : ExpandIcon} alt="Toggle Fullscreen" />
+            </button>            </div>
           )}
         </>
       ) : null}
