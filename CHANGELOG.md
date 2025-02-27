@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.3.2 - 2025-02-27
+
+### Fixed
+
+- Fixed error in unit tests due to changes in functionality in 6.3.1
+
 ## 6.3.1 - 2025-02-27
 
 ### Fixed

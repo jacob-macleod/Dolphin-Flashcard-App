@@ -245,7 +245,7 @@ class TestGoals(BaseApiActionsMixin):
             "goalID": "Invalid goal id",
         }
         response = self.delete_api(Routes.ROUTE_DELETE_GOAL["url"], request_data)
-        assert response == {"success": "Goal deleted successfully"}
+        assert response == {'error': 'Goal not found or could not be deleted'}
 
     def test_delete_goal_is_proper(self, user):
         card_goal = create_card_goal(user["user_id"], endDate="01/01/2022", cardsToRevise=6)
