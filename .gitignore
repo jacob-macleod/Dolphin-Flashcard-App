@@ -14,6 +14,9 @@ frontend/node_modules
 node_modules
 data.json
 jwt_key.json
+.backend_pid
+.database_status
+.database_delete_log
 
 # Frontend files
 # dependencies
@@ -22,7 +25,8 @@ frontend/.pnp
 frontend/.pnp.js
 frontend/.env
 frontend/src/api/secretKeys.js
-
+.frontend_pid
+.docs_pid
 # testing
 frontend//coverage
 

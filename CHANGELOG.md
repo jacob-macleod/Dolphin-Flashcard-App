@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.4.0 - 2025-02-26
+
+### Added
+
+- Developed CLI Tools for Managing Backend, Frontend, Database, Tests and Configurations.
+
 ## 6.3.2 - 2025-02-27
 
 ### Fixed
