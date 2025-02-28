@@ -7,9 +7,9 @@ import Image from '../../componments/Image/Image';
 import GreyRightArrow from '../../static/grey-right-arrow.svg';
 import GreyLeftArrow from '../../static/grey-left-arrow.svg';
 import ExpandIcon from '../../static/expand-icon.svg';
-import CollapseIcon from '../../static/expand-icon.svg';
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
+import Button from '../../componments/Button';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -64,10 +64,7 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
             {isFullscreen && (
               <div className="fullscreen-controls">
                      <Image url={GreyLeftArrow} onClick={leftButtonClick} className="arrow-left" />
-
-                <div className="arrow-right" onClick={rightButtonClick}>
-                  <img src={GreyRightArrow} alt="Next Card" />
-                </div>
+                     <Image url={GreyRightArrow} onClick={rightButtonClick} className="arrow-right" />
               </div>
             )}
             <AnimatePresence initial={false} custom={direction}>
@@ -97,9 +94,11 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
               <Image url={GreyLeftArrow} onClick={leftButtonClick} />
               <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
               <Image url={GreyRightArrow} onClick={rightButtonClick} />
-              <button className="expand-button" onClick={toggleFullscreen}>
-              <img src={isFullscreen ? CollapseIcon : ExpandIcon} alt="Toggle Fullscreen" />
-            </button>            </div>
+              <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"25px",width:"25px",marginLeft:"auto"}} />                        
+            </div>
+          )}
+          {isFullscreen &&(
+            <Button style={{position:'absolute',top:'10px',right:'10px' }} text="Exit-fullscreen" onClick={toggleFullscreen}/>
           )}
         </>
       ) : null}
