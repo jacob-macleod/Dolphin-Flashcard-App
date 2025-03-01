@@ -63,7 +63,7 @@ function Dashboard() {
   // Define the third collum, which is rendered at the bottom of the screen if not
   // in desktop mode
   const third_collum = <>
-      <WhiteOverlay style={{width: "100%", marginTop: view === "desktop" ? "72px": "16px"}}>
+      <WhiteOverlay style={{width: "100%", marginTop: view === "desktop" ? "56px": "16px"}}>
         <Heatmap />
       </WhiteOverlay>
 
