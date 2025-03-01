@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.4.2 - 2025-03-1
+
+### Fixed
+
+- Choose a folder dialogue: add placeholder text and increase height of description
+
 ## 6.4.1 - 2025-02-28
 
 ### Fixed
