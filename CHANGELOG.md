@@ -21,6 +21,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 6.5.0 - 2025-03-01
+
+### Added
+
+-Fullscreen Mode for flashcards
+
 
 ## 6.2.3 - 2025-02-23
 
