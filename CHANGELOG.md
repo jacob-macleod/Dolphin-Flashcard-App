@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.4.1 - 2025-02-28
+
+### Fixed
+
+- Fix padding above boxes on dashboard page
+
 ## 6.4.0 - 2025-02-26
 
 ### Added
