@@ -22,7 +22,8 @@ function StreakWidget () {
       const overlayStyle = {
         marginLeft: "16px",
         marginRight: "0px",
-        width: "90%"
+        width: "90%",
+        marginTop: "0px"
       }
 
       useEffect(() => {
