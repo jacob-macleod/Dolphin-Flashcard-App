@@ -134,6 +134,10 @@
         {
           "group": "Search",
           "pages": ["api-reference/endpoint/card-management/search"]
+        },
+        {
+          "group": "Import Flashcard",
+          "pages": ["api-reference/endpoint/card-management/import-flashcard"]
         }
       ]
     },

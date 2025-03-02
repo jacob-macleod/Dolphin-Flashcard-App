@@ -111,7 +111,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
 
                 <div className="input-container" style={{ display: "flex" }}>
                     <Paragraph text="Description: " style={{ marginRight: "10%" }} />
-                    <input type="text" className="input" placeholder='Folder description' value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
+                    <textarea cols="40" rows="5" style={{ resize: "none" }} className="input" placeholder='Folder description' value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
                 </div>
 
                 <ErrorText text={errorMessage} style={{ display: errorMessageVisibility}} />
