@@ -4,6 +4,7 @@ import '../../containers/Modal/NewGoalPopup/NewGoalPopup.css';
 function SearchBar({
     searchTerm,
     setSearchTerm,
+    onKeyDown=()=>{},
     view,
     marginRight,
     marginTop,
@@ -18,6 +19,7 @@ function SearchBar({
             className={view == "mobile" ? "input-mobile" : "input"}
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
+            onKeyDown={onKeyDown}
             defaultValue="Search"
             style={{
                 marginBottom: "0px",

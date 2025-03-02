@@ -4,3 +4,47 @@
     width: 100%;
     padding-top: 16px;
 }
+
+.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-container {
+    position: relative;
+    width: 100%;
+    height: 264px;
+    overflow: hidden;
+  }
+  
+  .expand-button {
+    position: absolute;
+    right: 10px;
+  }
+  
+  .review-bar-chart-wrapper {
+    margin-top: 20px;
+  }
+
+  /* Mobile-specific styles */
+@media (max-width: 768px) {
+  .card-container {
+    width: 80%; 
+  }
+
+  .grid-item {
+    padding-left: 0; /* Remove left padding */
+    padding-right: 0; /* Remove right padding */
+  }
+}
+
+  

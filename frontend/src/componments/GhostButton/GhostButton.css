@@ -7,10 +7,9 @@
     display: flex;
     min-height: 32px;
     padding: 8px 12px;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 
     color: #6A84C5;
     text-align: center;

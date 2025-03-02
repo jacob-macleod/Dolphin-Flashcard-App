@@ -21,6 +21,47 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 6.6.0 - 2025-03-2
+
+### Added
+
+- Search within flashcard set
+
+## 6.5.0 - 2025-03-01
+
+### Added
+
+-Fullscreen Mode for flashcards
+
+## 6.4.2 - 2025-03-1
+
+### Fixed
+
+- Choose a folder dialogue: add placeholder text and increase height of description
+
+## 6.4.1 - 2025-02-28
+
+### Fixed
+
+- Fix padding above boxes on dashboard page
+
+## 6.4.0 - 2025-02-26
+
+### Added
+
+- Developed CLI Tools for Managing Backend, Frontend, Database, Tests and Configurations.
+
+## 6.3.2 - 2025-02-27
+
+### Fixed
+
+- Fixed error in unit tests due to changes in functionality in 6.3.1
+
+## 6.3.1 - 2025-02-27
+
+### Fixed
+
+- Fixed goal deletion functionality to properly handle non-existent goals by checking if the document exists before attempting to delete it
 
 ## 6.3.0 - 2025-02-24
 
