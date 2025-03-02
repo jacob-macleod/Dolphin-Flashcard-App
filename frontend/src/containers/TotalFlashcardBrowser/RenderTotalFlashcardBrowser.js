@@ -5,9 +5,11 @@ import CardOverview from '../CardOverview/CardOverview';
 import Paragraph from '../../componments/Text/Paragraph';
 import Image from '../../componments/Image/Image';
 import GreyRightArrow from '../../static/grey-right-arrow.svg';
+import ShuffleIcon from "../../static/shuffle-icon.svg"
 import GreyLeftArrow from '../../static/grey-left-arrow.svg';
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
+import GhostButton from '../../componments/GhostButton';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -22,31 +24,42 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
   const [direction, setDirection] = useState(1);
   const [leftButtonAnimation, setLeftButtonAnimation] = useState(false); // State for left button animation
   const [rightButtonAnimation, setRightButtonAnimation] = useState(false); // State for right button animation
+  const [finalizedCards, setFinalizedCards] = useState(individualCards);
+  const [shuffledText, setShuffledText] = useState(false)
+
+  const handleShuffle = useCallback(() => {
+    const newShuffled = [...individualCards].sort(() => Math.random() - 0.5);
+    setFinalizedCards(newShuffled)
+    setCurrentCardIndex(0);
+    setDirection(1)
+    setShuffledText(true);
+    setTimeout(() => setShuffledText(false), 600);
+  }, []);
 
   const leftButtonClick = useCallback(() => {
     setLeftButtonAnimation(true); // Trigger left button animation
     setTimeout(() => setLeftButtonAnimation(false), 300); // Reset left button animation after 300ms
     setDirection(-1);
     setCurrentCardIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : individualCards.length - 1
+      prevIndex > 0 ? prevIndex - 1 : finalizedCards.length - 1
     );
-  }, [individualCards.length]);
+  }, [finalizedCards.length]);
 
   const rightButtonClick = useCallback(() => {
     setRightButtonAnimation(true); // Trigger right button animation
     setTimeout(() => setRightButtonAnimation(false), 300); // Reset right button animation after 300ms
     setDirection(1);
     setCurrentCardIndex((prevIndex) =>
-      prevIndex < individualCards.length - 1 ? prevIndex + 1 : 0
+      prevIndex < finalizedCards.length - 1 ? prevIndex + 1 : 0
     );
-  }, [individualCards.length]);
+  }, [finalizedCards.length]);
 
   const handleKeyDown = useCallback((event) => {
     if (event.key === 'ArrowLeft') {
-      leftButtonClick();
+        leftButtonClick();
     } else if (event.key === 'ArrowRight') {
-      rightButtonClick();
-    }
+        rightButtonClick();
+      }
   }, [leftButtonClick, rightButtonClick]);
 
   useEffect(() => {
@@ -71,10 +84,10 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
                 exit={direction === 1 ? "exitRight" : "exitLeft"}
                 transition={{ duration: 0.15 }}
               >
-                {individualCards[currentCardIndex] ? (
+                {finalizedCards[currentCardIndex] ? (
                   <CardOverview
-                    text={individualCards[currentCardIndex].front}
-                    description={individualCards[currentCardIndex].back}
+                    text={finalizedCards[currentCardIndex].front}
+                    description={finalizedCards[currentCardIndex].back}
                     showTurnOverButton={true}
                     height="264px"
                   />
@@ -83,13 +96,29 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
             </AnimatePresence>
           </div>
           <div className="controls-panel">
+            <GhostButton
+              text={
+                <div style={{ display: "flex" }}>
+                  <img src={ShuffleIcon} style={{marginRight:"8px"}}/>
+                  <span>{shuffledText ? "Shuffled" : "Shuffle"}</span>
+                </div>
+              }
+              style={{
+                position: "absolute",
+                left:"8px",
+                top:"8px",
+                margin: "0px",
+              }}
+              onClick={handleShuffle}
+            />
+
             <Image
               url={GreyLeftArrow}
               onClick={leftButtonClick}
               className={leftButtonAnimation ? 'left-button-animation' : ''}
             />
             <Paragraph
-              text={`${currentCardIndex + 1} / ${individualCards.length}`}
+              text={`${currentCardIndex + 1} / ${finalizedCards.length}`}
               type="grey"
             />
             <div style={{ position: 'relative' }}>

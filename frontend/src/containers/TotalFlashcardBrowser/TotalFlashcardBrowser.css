@@ -1,6 +1,7 @@
 .controls-panel{
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .card-container {
