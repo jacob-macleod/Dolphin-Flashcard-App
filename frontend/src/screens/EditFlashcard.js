@@ -29,6 +29,7 @@ function Flashcards() {
   const mobileBreakpoint = 650;
   const tabletBreakpoint = 1090;
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [sortType, setSortType] = useState("most-recent");
   const [NewFlashcardPopupVisible, setNewFlashcardPopupVisible] = useState(false);
   const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] = useState(false);
@@ -74,6 +75,9 @@ function Flashcards() {
     }
   }, [flashcardData]);
 
+  const flashcardItemsFiltered = searchValue 
+    ? flashcardItems.filter(card => [card.front, card.back].some(text => text.toLowerCase().includes(searchValue.toLowerCase()))) 
+    : flashcardItems
 
   return (
     <div style={{ top: "0px" }}>
@@ -92,6 +96,7 @@ function Flashcards() {
         folder={folder}
         flashcardName={flashcardName}
         flashcardDescription={description}
+        unsetSearchValue={setSearchValue}
       />
       <NewFlashcardPopup
         visible={editFlashcardPopupVisible}
@@ -132,7 +137,7 @@ function Flashcards() {
           >
             <div style={{ maxWidth: "1200px", margin: "auto" }}>
               <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} flashcardID={flashcardID}/>
-              <FlashcardSearch view={view} />
+              <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
               <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} />
 
               <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} />
@@ -147,8 +152,8 @@ function Flashcards() {
                 ? <div className={"loading-icon-wrapper"}>
                   <DelayedElement child={<></>} childValue={null} />
                 </div>
-                : flashcardData.cards?.length !== 0
-                  ? flashcardItems.map((item) => (
+                : flashcardData.cards?.length !== 0 && flashcardItemsFiltered?.length !== 0
+                  ? flashcardItemsFiltered.map((item) => (
                     <FlashcardRow
                       key={item.id}
                       cardID={item.cardID}

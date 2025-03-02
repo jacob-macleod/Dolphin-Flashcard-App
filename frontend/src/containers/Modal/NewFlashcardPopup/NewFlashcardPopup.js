@@ -22,7 +22,8 @@ function NewFlashcardPopup({
     initialTerm="",
     initialDefinition="",
     flashcardName,
-    flashcardDescription
+    flashcardDescription,
+    unsetSearchValue
     }) {
     const [term, setTerm] = useState(initialTerm);
     const [definition, setDefinition] = useState(initialDefinition);
@@ -47,6 +48,7 @@ function NewFlashcardPopup({
         // If the flashcard is being added, append the new data
         if (!editExistingFlashcard) {
             newFlashcardItems.push({front: term, back: definition});
+            unsetSearchValue("")
         } else {
             // If the flashcard is being edited, replace the data
             for (var i = 0; i < newFlashcardItems.length; i++) {
