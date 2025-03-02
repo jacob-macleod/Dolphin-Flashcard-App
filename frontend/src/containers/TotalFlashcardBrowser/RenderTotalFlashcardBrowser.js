@@ -7,9 +7,10 @@ import Image from '../../componments/Image/Image';
 import GreyRightArrow from '../../static/grey-right-arrow.svg';
 import GreyLeftArrow from '../../static/grey-left-arrow.svg';
 import ExpandIcon from '../../static/expand-icon.svg';
+import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
-import Button from '../../componments/Button';
+import GhostButton from '../../componments/GhostButton';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -94,11 +95,11 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
               <Image url={GreyLeftArrow} onClick={leftButtonClick} />
               <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
               <Image url={GreyRightArrow} onClick={rightButtonClick} />
-              <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"25px",width:"25px",marginLeft:"auto"}} />                        
+              <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-icon'/>                        
             </div>
           )}
           {isFullscreen &&(
-            <Button style={{position:'absolute',top:'10px',right:'10px' }} text="Exit-fullscreen" onClick={toggleFullscreen}/>
+            <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
           )}
         </>
       ) : null}

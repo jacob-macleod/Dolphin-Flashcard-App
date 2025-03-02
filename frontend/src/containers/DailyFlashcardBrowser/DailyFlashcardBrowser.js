@@ -13,8 +13,12 @@ import DelayedElement from '../DelayedElement';
 import ReviewBarChart from '../../containers/ReviewBarChart';
 import ReviewBarChartKey from '../ReviewBarChartKey/ReviewBarChartKey';
 import Heading4 from '../../componments/Text/Heading4';
-
+import ExpandIcon from '../../static/expand-icon.svg';
 import flashcardReviewer from '../../classes/FlashcardReviewer';
+import Image from '../../componments/Image/Image';
+import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
+import GhostButton from '../../componments/GhostButton';
+
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -190,46 +194,73 @@ function DailyFlashcardBrowser({ view }) {
     setNotStarted(notStartedCards);
   }, [updatedCardData]);
 
+   const [isFullscreen, setIsFullscreen] = useState(false);
+  
+    const toggleFullscreen = () => {
+      setIsFullscreen(!isFullscreen);
+    };
+
   return (
     <>
       {
-        cardReviewer != null && cardReviewer.allCardsRevised() !== true ?
-        <>
-            <CardOverview
-              text={currentCard.front}
-              description={currentCard.back}
-              showResponseOptions={true}
-              setResponse={setResponse}
-              height="264px"
-            />
-            <ReviewBarChartKey style={{paddingTop: "8px"}}/>
-            <div className={"review-bar-chart-wrapper"} >
-              <ReviewBarChart
-                studying={cardReviewer.countCards().studying}
-                recapping={cardReviewer.countCards().recapping}
-                notStarted={cardReviewer.countCards().notStarted}
-                view={view}
-              />
-              <Heading4 text={
-                Math.floor((
-                  cardReviewer.learnedCards / (
-                    cardReviewer.countCards().studying + cardReviewer.countCards().notStarted + cardReviewer.countCards().recapping
-                  )
-                ) *100)
-                + "%"
-              } style={{padding: "0px"}}/>
-            </div>
-          </>
-          : cardsSaved === false ? <>
-          <div style={{display: "inline-block"}}>
-            <DelayedElement child={null} childValue={null} />
-            <Heading5 text="Saving cards..." />
-          </div>
-          </>
-          : <>
-          <Heading5 text="No cards left to study today!" />
-          </>
-      }
+  cardReviewer != null && cardReviewer.allCardsRevised() !== true ? (
+    <>
+      <div className={isFullscreen ? 'fullscreen' : ''}>
+        <div className="card-container">
+          <CardOverview
+            text={currentCard.front}
+            description={currentCard.back}
+            showResponseOptions={true}
+            setResponse={setResponse}
+            height={isFullscreen ? '100%' : '264px'}
+          />
+        </div>
+        {!isFullscreen &&(
+          <div style={{position:"relative",width:"100%"}}>
+        <ReviewBarChartKey style={{ paddingTop: '8px' }} />
+        <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>                        
+        </div>
+        )}
+        {!isFullscreen &&(
+        <div className="review-bar-chart-wrapper">
+          <ReviewBarChart
+            studying={cardReviewer.countCards().studying}
+            recapping={cardReviewer.countCards().recapping}
+            notStarted={cardReviewer.countCards().notStarted}
+            view={view}
+          />
+          <Heading4
+            text={
+              Math.floor(
+                (cardReviewer.learnedCards /
+                  (cardReviewer.countCards().studying +
+                    cardReviewer.countCards().notStarted +
+                    cardReviewer.countCards().recapping)) *
+                  100
+              ) + '%'
+            }
+            style={{ padding: '0px' }}
+          />
+        </div>
+      )}
+        {isFullscreen &&(
+            <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
+          )}
+      </div>
+    </>
+  ) : cardsSaved === false ? (
+    <>
+      <div style={{ display: 'inline-block' }}>
+        <DelayedElement child={null} childValue={null} />
+        <Heading5 text="Saving cards..." />
+      </div>
+    </>
+  ) : (
+    <>
+      <Heading5 text="No cards left to study today!" />
+    </>
+  )
+}
     </>
   );
 }
