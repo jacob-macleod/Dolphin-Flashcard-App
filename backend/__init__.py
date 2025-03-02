@@ -1,4 +1,4 @@
 """Package level information
 """
 
-__version__ = "6.4.2"
+__version__ = "6.5.0"

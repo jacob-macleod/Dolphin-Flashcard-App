@@ -36,7 +36,9 @@ function ErrorChecking({ jwtToken, setJwtToken, child }) {
 }
 
 function App() {
+  // const [jwtToken, setJwtToken] = useState('4be0643f-1d98-573b-97cd-ca98a65347dd');
   const [jwtToken, setJwtToken] = useState(getCookie('jwtToken'));
+
   return (
     <>
       <BrowserRouter>
