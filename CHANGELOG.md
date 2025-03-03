@@ -21,6 +21,10 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+# 6.7.0 - 2025-03-3
+### Added
+- Backend Route to import flash cards from Quizlet + tests.
+- Windows testing script and firestore initialization.
 ## 6.6.0 - 2025-03-2
 
 ### Added
