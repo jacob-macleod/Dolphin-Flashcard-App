@@ -1,5 +1,4 @@
 
-#OpenSource Contributions made to this repo: 1
 # Dolphin-Flashcards
 
 <!-- vscode-markdown-toc -->
