@@ -27,6 +27,7 @@ if (-not $inEnvironment) {
     Write-Host "Activating virtual environment..."
     & .\env\Scripts\Activate.ps1
     
+    
     # Ensure activation worked
     if (-not $env:VIRTUAL_ENV) {
         Write-Host "Failed to activate virtual environment. Exiting." -ForegroundColor Red

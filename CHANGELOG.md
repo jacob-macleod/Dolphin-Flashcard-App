@@ -21,6 +21,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+
+## 6.7.0 - 2025-03-03
+
+### Added
+
+- Added new API route `/api/import-from-quizlet` to import flashcard sets directly from Quizlet URLs. Added tests for this route as well `test_quizlet_import.py`.
+- Added testing script for windows as a powershell script run_tests.ps1 and firebase_emulator.ps1.
+
 ## 6.6.0 - 2025-03-2
 
 ### Added
