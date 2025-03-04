@@ -679,3 +679,67 @@ A bad request error. Returned when the request body parameters are not in the ex
 | Parameter            | Description                                                                       | Type    | 
 |----------------------|-----------------------------------------------------------------------------------|---------|
 | error                | Describes the nature of the error and provides a possible solution.               | string  | 
+
+## Import from Quizlet
+### **Endpoint:** /import-from-quizlet
+### **Method:** POST
+Import flashcards from a Quizlet URL.
+
+### Parameters
+
+#### **Request Body Parameters**
+| Parameter            | Description                                                                       | Type    | Required/Optional |
+|----------------------|-----------------------------------------------------------------------------------|---------|-------------------|
+| userID               | The unique identity of the user importing flashcards.                             | String  | Required          |
+| folder               | The name of the folder where the flashcards will be stored.                       | String  | Required          |
+| quizlet_url          | The URL of the Quizlet set to import flashcards from.                            | String  | Required          |
+
+### Request Example
+```
+curl -X POST -H "Content-Type: application/json" -d '{
+    "userID": "my-id",
+    "folder": "folder-name",
+    "quizlet_url": "https://quizlet.com/686459638/test-set-flash-cards/?funnelUUID=a88312bb-e490-4f6c-a7da-1d844b694e24"
+}' http://dolphinflashcards.com/api/import-from-quizlet
+```
+
+### Response Example
+
+**Success Response**<br>
+HTTP Status: 200
+
+```
+{
+    "success": "Flashcards imported from Quizlet"
+}
+```
+
+**Error Response**<br>
+HTTP Status: 400
+A bad request error. Returned when the request body parameters are not in the expected JSON format or if the Quizlet URL is invalid.
+
+```
+{
+    "error": "Invalid or inaccessible Quizlet URL"
+}
+```
+
+**Error Response**<br>
+HTTP Status: 404
+Returned when the specified folder does not exist.
+
+```
+{
+    "error": "Folder does not exist"
+}
+```
+
+**Error Response**<br>
+HTTP Status: 400
+Returned when the flashcard set name already exists.
+
+```
+{
+    "error": "Flashcard set name already exists"
+}
+```
