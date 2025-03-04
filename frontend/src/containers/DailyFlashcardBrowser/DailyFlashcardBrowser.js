@@ -93,41 +93,53 @@ function DailyFlashcardBrowser({ view }) {
     return givenDate < today;
   }
 
-  const collectCardIDs = (cards, flashcardIDs) => {
-    const cardIDs = [];
-    const reviewStatuses = {};
+const collectCardIDs = (cards, flashcardIDs) => {
+  const cardIDs = [];
+  const reviewStatuses = {};
 
-    const traverse = (obj) => {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          const value = obj[key];
+  const idsArray = Array.isArray(flashcardIDs)
+    ? flashcardIDs
+    : flashcardIDs
+    ? [flashcardIDs]
+    : [];
 
-          if (value && typeof value === 'object') {
-            if (flashcardIDs.includes(value.flashcardID)) {
-              if (value.cards) {
-                for (const cardID in value.cards) {
-                  if (value.cards.hasOwnProperty(cardID)) {
-                    const card = value.cards[cardID];
-                    cardIDs.push(cardID);
-                    reviewStatuses[cardID] = {
-                      reviewStatus: card.review_status,
-                      lastReview: card.last_review
-                    };
-                  }
+  const traverse = (obj) => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+
+        if (value && typeof value === "object") {
+          if (
+            value.flashcardID &&
+            idsArray.length > 0 &&
+            idsArray.includes(value.flashcardID)
+          ) {
+            if (value.cards) {
+              for (const cardID in value.cards) {
+                if (value.cards.hasOwnProperty(cardID)) {
+                  const card = value.cards[cardID];
+                  cardIDs.push(cardID);
+                  reviewStatuses[cardID] = {
+                    reviewStatus: card.review_status,
+                    lastReview: card.last_review,
+                  };
                 }
               }
             }
-            traverse(value);
           }
+          traverse(value);
         }
       }
-    };
-
-    traverse(cards);
-    return { cardIDs, reviewStatuses };
+    }
   };
 
-  const { cardIDs, reviewStatuses } = collectCardIDs(todayCards, flashcardID);
+  traverse(cards || {}); 
+  return { cardIDs, reviewStatuses };
+};
+const { cardIDs, reviewStatuses } = collectCardIDs(
+  todayCards || {},
+  flashcardID
+);
   const { cardData, cardsExist } = useCardData(cardIDs);
 
 

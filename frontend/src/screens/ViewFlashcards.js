@@ -37,31 +37,41 @@ function ViewFlashcards() {
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
 
-  const collectCardIDs = (cards, flashcardIDs) => {
-    const cardIDs = [];
+const collectCardIDs = (cards, flashcardIDs) => {
+  const cardIDs = [];
 
-    const traverse = (obj) => {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          const value = obj[key];
+  const idsArray = Array.isArray(flashcardIDs)
+    ? flashcardIDs
+    : flashcardIDs
+    ? [flashcardIDs]
+    : [];
 
-          if (value && typeof value === 'object') {
-            if (flashcardIDs.includes(value.flashcardID)) {
-              if (value.cards) {
-                cardIDs.push(...Object.keys(value.cards));
-              }
+  const traverse = (obj) => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+
+        if (value && typeof value === "object") {
+          if (
+            idsArray.length > 0 &&
+            value.flashcardID &&
+            idsArray.includes(value.flashcardID)
+          ) {
+            if (value.cards) {
+              cardIDs.push(...Object.keys(value.cards));
             }
-            traverse(value);
           }
+          traverse(value);
         }
       }
-    };
-
-    traverse(cards);
-    return cardIDs;
+    }
   };
 
-  const cardIDs = collectCardIDs(todayCards, flashcardID);
+  traverse(cards);
+  return cardIDs;
+};
+
+const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
 
   return (
     <div style={{ top: "0px" }}>
@@ -99,16 +109,32 @@ function ViewFlashcards() {
           >
             <FlashcardHeader
               newSet={false}
-              flashcardName={flashcardName[0]}
+              flashcardName={
+                flashcardName && flashcardName[0] ? flashcardName[0] : ""
+              }
               folder={folder !== undefined ? folder[0] : undefined}
               type={"studyFlashcard"}
               flashcardID={flashcardID}
-              numberStudying={flashcardName.length}
+              numberStudying={flashcardName ? flashcardName.length : 0}
             />
             <div style={{ maxWidth: "548px", margin: "auto" }}>
-              <div className='mode-selector-container'>
-                <p className={mode === "daily" ? 'link' : "inactive-link"} onClick={() => { setMode("daily") }}>Your Daily Dose</p>
-                <p className={mode === "total" ? 'link' : 'inactive-link'} onClick={() => { setMode("total") }}>All Cards</p>
+              <div className="mode-selector-container">
+                <p
+                  className={mode === "daily" ? "link" : "inactive-link"}
+                  onClick={() => {
+                    setMode("daily");
+                  }}
+                >
+                  Your Daily Dose
+                </p>
+                <p
+                  className={mode === "total" ? "link" : "inactive-link"}
+                  onClick={() => {
+                    setMode("total");
+                  }}
+                >
+                  All Cards
+                </p>
               </div>
 
               <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
