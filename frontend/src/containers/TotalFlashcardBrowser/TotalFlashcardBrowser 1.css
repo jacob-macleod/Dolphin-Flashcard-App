@@ -1,0 +1,22 @@
+.controls-panel{
+    display: flex;
+    justify-content: center;
+}
+
+.card-container {
+    position: relative;
+    width: 100%;
+    height: 322px;
+    overflow: hidden;
+}
+
+.left-button-animation {
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.2);
+}
+  
+  .right-button-animation {
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.2);
+}
+  
