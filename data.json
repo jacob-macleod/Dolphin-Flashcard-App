@@ -1,0 +1,113 @@
+{
+    "users": {
+        "uNQGiHzw1vODhLrm5CEkZCVhMOw1": {
+            "userID": "uNQGiHzw1vODhLrm5CEkZCVhMOw1",
+            "name": "Jacob MacLeod",
+            "statistics": {
+                "streak": "0",
+                "totalXP": "0",
+                "weeklyXP": "0",
+                "lastStreak": "17/04/2024"
+            },
+            "heatmapData": {},
+            "goals": {
+                "69615026189449736510854901556173696193356573341155276887143420702534593553599": {
+                    "type": "XP",
+                    "title": "Gain 333 XP by 20/04/2024",
+                    "end_date": "20/04/2024",
+                    "status": "in progress",
+                    "fail_date": "",
+                    "data": {
+                        "start_date": "17/04/2024",
+                        "starting_xp": "0",
+                        "goal_xp": "333"
+                    }
+                }
+            },
+            "flashcards": {
+                "78706522606884094347267331340740459328628093524759979664863269402823009149302": {
+                    "flashcardID": "78706522606884094347267331340740459328628093524759979664863269402823009149302",
+                    "flashcardName": "My new set",
+                    "flashcardDescription": "This is\nmy description",
+                    "cards": [
+                        {
+                            "front": "Front 1",
+                            "back": "Back 1",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        },
+                        {
+                            "front": "Front 2",
+                            "back": "Back 2",
+                            "reviewStatus": "0.0",
+                            "lastReview": "30/03/2024"
+                        }
+                    ]
+                },
+                "languages": {
+                    "spanish": {
+                        "common-words": {
+                            "52272457808457097202150182802279568600981162709146454156018710017387336764017": {
+                                "flashcardID": "52272457808457097202150182802279568600981162709146454156018710017387336764017",
+                                "flashcardName": "Set two",
+                                "flashcardDescription": "This is the second set I've made",
+                                "cards": [
+                                    {
+                                        "front": "Front 1",
+                                        "back": "Back 1",
+                                        "reviewStatus": "0.0",
+                                        "lastReview": "30/03/2024"
+                                    },
+                                    {
+                                        "front": "Front 2",
+                                        "back": "Back 2",
+                                        "reviewStatus": "0.0",
+                                        "lastReview": "30/03/2024"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "35327435524706219408006451834813169054434248079692846228662623660367296560356": {
+                        "flashcardID": "35327435524706219408006451834813169054434248079692846228662623660367296560356",
+                        "flashcardName": "My new set",
+                        "flashcardDescription": "This is\nmy description",
+                        "cards": [
+                            {
+                                "front": "Front 1",
+                                "back": "Back 1",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            },
+                            {
+                                "front": "Front 2",
+                                "back": "Back 2",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            }
+                        ]
+                    },
+                    "47962680440219262426614851383681058904567080607728983184879622214761420733776": {
+                        "flashcardID": "47962680440219262426614851383681058904567080607728983184879622214761420733776",
+                        "flashcardName": "My new set",
+                        "flashcardDescription": "This is\nmy description",
+                        "cards": [
+                            {
+                                "front": "Front 1",
+                                "back": "Back 1",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            },
+                            {
+                                "front": "Front 2",
+                                "back": "Back 2",
+                                "reviewStatus": "0.0",
+                                "lastReview": "28/03/2024"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
