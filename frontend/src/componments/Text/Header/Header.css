@@ -1,0 +1,29 @@
+.header-blue {
+    color: var(--Black-Colour, #222829);
+    font-family: Roboto;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    background: var(--Primary-Gradient, linear-gradient(180deg, #5D54C3 0%, #6A84C5 50.01%, #78B9DE 99.74%));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-black {
+    color: var(--Black-Colour, #222829);
+    font-family: Roboto;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    background: var(--Black-Colour, #222829);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

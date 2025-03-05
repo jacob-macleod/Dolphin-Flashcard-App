@@ -1,0 +1,8 @@
+.search-bar{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.search-bar-mobile{
+    margin-left: 16px;
+}

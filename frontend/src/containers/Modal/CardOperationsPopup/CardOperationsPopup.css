@@ -1,0 +1,24 @@
+.card-operations-popup-wrapper{
+    position: absolute;
+    width: 141px;
+    height: 144px;
+    filter: drop-shadow(0px 2px 14.8px rgba(13, 41, 68, 0.12));
+    background-color: white;
+    border-radius: 8px;
+}
+
+.card-operations-popup-wrapper-mobile{
+    position: absolute;
+    width: calc(100% - 16px);
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 144px;
+    filter: drop-shadow(0px 2px 14.8px rgba(13, 41, 68, 0.12));
+    background-color: white;
+    border-radius: 8px;
+    left: 0px;
+}
+
+.card-operations-container {
+    padding: 12px;
+}

@@ -1,0 +1,35 @@
+.grid-container {
+  display: grid;
+  z-index: 2;
+  position: absolute;
+  padding-right: 7vw;
+  width: calc(100vw - 85px);
+  height: 100vh;
+}
+
+.centered-grid-container {
+  display: grid;
+  z-index: 2;
+  position: absolute;
+  width: 100vw;
+}
+
+.two-column-grid {
+  display: grid;
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+
+.flashcard-overview {
+  display: grid;
+  height: 32px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.review-bar-wrapper {
+  display: grid;
+  height: 32px;
+}

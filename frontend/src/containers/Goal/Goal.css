@@ -1,0 +1,11 @@
+.goalContainer {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: inline-flex;
+}
+
+.textContainer {
+    padding: 16px;
+}

@@ -1,0 +1,88 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Firebase credentials
+        run: |
+          echo "$FIREBASE_KEY" > credentials.json
+          echo "$FIREBASE_URL" > firebase_url
+          echo "$FIREBASE_CONFIG" > firebase_config.json
+          echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
+          echo "$JWT_PRIVATE_KEY" > jwt_key.json
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+          FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+      - name: Install node
+        run: |
+          sudo apt-get update
+          sudo apt install nodejs npm
+          cd frontend
+          npm install -g create-react-app
+          npm install
+      - name: Build the React App for Deployment
+        run: |
+          cd frontend
+          npm run build
+          rm -rf frontend/node_modules
+      - name: Build the Docker image
+        run: docker build -t jacobmacleod/flashcard-app:latest .
+      - name: Log in to Docker Hub and push image
+        run: |
+          docker login -u jacobmacleod -p $DOCKER_PASSWORD
+          docker push jacobmacleod/flashcard-app:latest
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+  test-docker:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Test Docker Image
+        run: |
+          docker login -u jacobmacleod -p $DOCKER_PASSWORD
+          docker run -d -p 5000:5000 jacobmacleod/flashcard-app:latest
+          sleep 10
+          curl GET http://localhost:5000          
+        env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+  ssh-server:
+    runs-on: ubuntu-latest
+    needs: test-docker
+    steps:
+      - uses: 'actions/checkout@v4'
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+  
+      - id: 'compute-ssh'
+        run: gcloud compute ssh prayer-prompts --zone us-central1-a --project dev-vms-jacob  --ssh-key-file /tmp/8484796c40c0e55ca3777d55/google_compute_engine --quiet --tunnel-through-iap --command="cd /home/jacob_e_macleod && sudo docker compose pull && sudo docker-compose up --force-recreate --build -d && sudo docker image prune -f"
+  
+      # Example of using the output
+      - id: 'test'
+        run: |-
+          echo '${{ steps.build.outputs.stdout }}'
+          echo '${{ steps.build.outputs.stderr }}'
+
+  verify-server:
+    runs-on: ubuntu-latest
+    needs: ssh-server
+    steps:
+      - name: Test GCP Server is Running
+        run: |
+          curl GET http://35.188.117.183:80

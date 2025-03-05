@@ -1,0 +1,15 @@
+.subheader {
+  font-family: Roboto;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 142.857% */
+
+  background: var(
+    --Primary-Gradient,
+    linear-gradient(180deg, #5d54c3 0%, #6a84c5 50.01%, #78b9de 99.74%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

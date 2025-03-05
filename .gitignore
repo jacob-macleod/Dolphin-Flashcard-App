@@ -1,0 +1,45 @@
+# Backend files
+credentials.json
+firebase_url
+firebase_config.json
+*pyc
+*_pycache_
+env
+frontend/build
+frontend/src/api/config.js
+backend/database/database_config.py
+frontend/node_modules/*
+.idea/*
+frontend/node_modules
+node_modules
+data.json
+jwt_key.json
+.backend_pid
+.database_status
+.database_delete_log
+
+# Frontend files
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+frontend/.env
+frontend/src/api/secretKeys.js
+.frontend_pid
+.docs_pid
+# testing
+frontend//coverage
+
+# production
+frontend//build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*

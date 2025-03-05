@@ -1,0 +1,31 @@
+.flashcard-set-header {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    width: fit-content;
+}
+
+.flashcard-set-header .link {
+    margin-right: 10px; /* Add some space between the elements */
+}
+
+.search-bar {
+    display: flex;
+    align-items: flex-start; /* Align items vertically centered */
+    width: 100%;
+}
+
+.page-container{
+    width: 80%;
+}
+
+.sort-dialogue{
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+    width: fit-content;
+    margin-left: 16px;
+}
+.two-column-text{
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-items: center;
+}

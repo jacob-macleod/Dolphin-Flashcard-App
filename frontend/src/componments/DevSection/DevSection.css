@@ -1,0 +1,21 @@
+.dev-section-container {
+  box-sizing: border-box;
+  height: max-content;
+  background: var(--Darkest-Primary-Colour, #24272e);
+  border-radius: 16px;
+  width: 100%;
+}
+.dev-section-header {
+  color: var(--Primary-Colour, #6a84c5);
+  font-weight: 600;
+}
+.dev-section-text {
+  color: white;
+  font-size: 16px;
+  font-weight: 100;
+  line-height: 30px;
+}
+
+.dev-section-text a {
+  color: white;
+}

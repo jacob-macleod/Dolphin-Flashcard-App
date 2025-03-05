@@ -1,0 +1,41 @@
+.project-progress-container {
+  text-align: start;
+  width: 100%;
+}
+
+.project-progress-progress-bar {
+  height: 40px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.project-progress-milestone-container {
+  right: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  position: relative;
+  height: max-content;
+}
+
+.project-progress-milestone {
+  width: max-content;
+  position: relative;
+  width: max-content;
+  padding: 10px 50px;
+}
+
+.project-progress-milestone .milestone-arrow {
+  position: absolute;
+  width: min-content;
+  right: 0;
+  top: 0;
+}
+
+.project-progress-milestone .milestone-date {
+  color: #747474;
+  font-size: 12px;
+  margin-top: -16px;
+  font-weight: 600;
+}

@@ -1,0 +1,53 @@
+name: Pytest Check
+
+on: 
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+      branches:
+        - development
+
+jobs:
+  pytest-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x' # Use the appropriate Python version
+
+      - name: Setup database config
+        run: |
+          echo "type='local'" > backend/database/database_config.py
+          cat backend/database/database_config.py
+          pip install -r requirements.txt
+          python3 backend/main.py &
+          sudo apt-get install docker-ce docker-ce-cli containerd.io
+      - name: Run pytest
+        run: |
+          bash testing/run_tests.sh || exit $?
+
+  attempt-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install node.js
+      run: |
+        echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
+        cd frontend
+        sudo apt-get update
+        sudo apt install nodejs npm
+        npm install -g create-react-app
+        npm install react-scripts
+        npm install
+
+    - name: Lint the frontend code
+      run: |
+        cd frontend
+        npm run build

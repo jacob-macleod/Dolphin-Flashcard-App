@@ -1,0 +1,15 @@
+.overlay {
+    border-radius: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 32px;
+    padding-bottom: 0px;
+    box-sizing: border-box;
+    border: 1px solid var(--White-Colour, #FFF);
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+    
+    /* Panel Drop Shadow */
+    box-shadow: 0px 2px 16px -3px rgba(13, 41, 68, 0.25);
+    width: 100%;
+    flex-shrink: 0;
+}

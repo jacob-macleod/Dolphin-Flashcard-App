@@ -1,0 +1,61 @@
+.low-streak {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin: 2px;
+    background: var(--Lighter-Primary-Colour, #93ABE5);
+}
+
+.medium-streak{
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin: 2px;
+    background: var(--Primary-Colour, #6A84C5);
+}
+
+.high-streak {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin: 2px;
+    background: var(--Darker-Primary-Colour, #32519E);
+}
+
+.highest-streak {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin: 2px;
+    background: var(--Darker-Primary-Colour, #121e3a);
+}
+
+.table-item {
+    height: 14px;
+    line-height: 12px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 112px;
+    table-layout: fixed;
+}
+
+.table-row{
+    height: 14px;
+    width: 14px;
+    line-height: 12px;
+}
+
+.image-wrapper{
+    position: relative;
+    bottom: 2px;
+}
+
+.heatmap-item-container {
+    width: 112px;
+    margin-left: 12px;
+    margin-right: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

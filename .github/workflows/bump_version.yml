@@ -1,0 +1,40 @@
+name: Get MR Title
+
+on:  
+  pull_request
+
+jobs:  
+  bump_version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: 'write'
+      actions: 'write'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup github
+        run: |
+          git config --global user.email "$EMAIL_GITHUB"
+          git config --global user.name "jacob-macleod"
+          git config pull.rebase false
+          git fetch origin
+          echo $GITHUB_REPOSITORY
+          # This line was removed in V6.1.1- I don't think it was needed - @jacob-macleod
+          # git pull origin ${{ github.head_ref || github.ref_name }} --allow-unrelated-histories
+
+      - name: Bump the version if development branch
+        run: |
+          if [[ ${{ github.head_ref || github.ref_name }} != development ]]; then
+            echo "Current branch is ${{ github.head_ref || github.ref_name }}";
+            bash bump_version.sh "${{ github.event.pull_request.title }}" "${{ github.head_ref || github.ref_name }}";
+          fi
+      # Commented because the development branch does this anyway and it becomes difficult with forked repos
+      # - name: Push the new tags
+      #   run: |
+      #     if [[ ${{ github.head_ref || github.ref_name }} != development  ]]; then
+      #     git tag $(grep -Eo "__version__ = \"[0-9]+\.[0-9]+\.[0-9]+\"" "backend/__init__.py" | awk -F '"' '{print $2}');
+      #     git push --tags --force;
+      #     fi

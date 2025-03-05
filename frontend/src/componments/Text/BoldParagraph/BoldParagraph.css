@@ -1,0 +1,11 @@
+.bold-paragraph {
+    color: #222829;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 700;
+    line-height: 20px;
+    word-wrap: break-word;
+    text-align: left;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
