@@ -21,6 +21,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 6.7.0 - 2025-03-06
+
+### Added
+
+- Implement an API to import Anki Flashcards directly from .apkg files
+
 ## 6.6.0 - 2025-03-2
 
 ### Added

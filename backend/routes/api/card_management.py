@@ -7,6 +7,11 @@ from routes.api.validation_wrapper import validate_json
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
 from classes.card_collection import FlashcardCollection
 import csv
+import tempfile
+import zipfile
+import sqlite3
+import re
+import os
 
 card_management_routes = Blueprint("card_management_routes", __name__)
 
@@ -649,3 +654,109 @@ def import_flashcards():
         return jsonify({"flashcardID": flashcard_id}, 200)
     except Exception as e:
         return jsonify(str(e)), 500
+
+
+@card_management_routes.route("/api/import-anki-flashcards", methods=["POST"])
+def import_anki_flashcards():
+    """Import flashcards from an Anki .apkg file.
+    
+    Expected request format:
+    - multipart/form-data with:
+        - file: Anki .apkg file
+        - userID: User ID
+        - folder: Folder path to store flashcards
+        - flashcardName: Name for the flashcard set
+        - flashcardDescription: Description (optional)
+        - termField: Index of the term field (default 0)
+        - definitionField: Index of the definition field (default 1)
+        - stripHtml: Whether to remove HTML tags (default True)
+    """
+    try:
+        if 'file' not in request.files:
+            return jsonify({'error': 'No file provided'}), 400
+        
+        file = request.files["file"]
+        
+        user_id = request.form.get("userID")
+        folder = request.form.get("folder")
+        flashcard_name = request.form.get("flashcardName")
+        flashcard_description = request.form.get("flashcardDescription", "")
+        term_field = int(request.form.get("termField", 0))
+        definition_field = int(request.form.get("definitionField", 1))
+        strip_html = request.form.get("stripHtml", "true").lower() == "true"
+
+        # Process the Anki file
+        with tempfile.TemporaryDirectory() as tmpdir:
+            apkg_path = os.path.join(tmpdir, 'deck.apkg')
+            file.save(apkg_path)
+            
+            # Extract the .apkg file (which is a zip)
+            with zipfile.ZipFile(apkg_path, 'r') as zip_ref:
+                zip_ref.extractall(tmpdir)
+            
+            # Find the SQLite database
+            db_path = os.path.join(tmpdir, 'collection.anki2')
+            if not os.path.exists(db_path):
+                return jsonify({'error': 'Invalid Anki file format'}), 400
+            
+            # Connect to SQLite database
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            
+            # Fetch notes and their fields
+            cursor.execute("SELECT flds FROM notes")
+            notes = cursor.fetchall()
+            conn.close()
+        
+        cards = []
+        html_regex = re.compile(r'<.*?>')  # To remove HTML tags
+        
+        for note in notes:
+            fields = note[0].split('\x1f')  # Split Anki fields
+            if len(fields) <= max(term_field, definition_field):
+                continue  # Skip notes with insufficient fields
+            term = fields[term_field]
+            definition = fields[definition_field]
+            
+            if strip_html:
+                term = html_regex.sub('', term)
+                definition = html_regex.sub('', definition)
+            
+            cards.append({
+                "front": term.strip(),
+                "back": definition.strip()
+            })
+        
+        # Generate flashcard ID and check existence
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+        if db.folders.flashcard_exists(user_id, flashcard_id):
+            return jsonify({"error": "Flashcard set name already exists"}), 400
+        
+        # Create card IDs
+        card_ids = [
+            hash_to_numeric(user_id + folder + flashcard_name + card["front"])
+            for card in cards
+        ]
+        
+        # Create flashcard set and cards
+        db.flashcard_set.create_flashcard_set(
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            flashcard_description=flashcard_description,
+            card_ids=card_ids,
+            user_id=user_id,
+        )
+        db.flashcards.create_flashcards(card_ids, cards)
+        db.folders.add_flashcard_to_folder(
+            user_id=user_id,
+            folder=folder,
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            card_ids=card_ids,
+        )
+        db.read_write_access.give_user_access(user_id, flashcard_id)
+        
+        return jsonify({"flashcardID": flashcard_id}), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

@@ -138,6 +138,10 @@
         {
           "group": "Import Flashcard",
           "pages": ["api-reference/endpoint/card-management/import-flashcard"]
+        },
+        {
+          "group": "Import Anki Flashcards",
+          "pages": ["api-reference/endpoint/card-management/import-anki-flashcards"]
         }
       ]
     },
