@@ -10,12 +10,7 @@ class TestQuizletImport(BaseApiActionsMixin):
         """Test successful import from Quizlet"""
         # Create a test user first
         token = self.create_user("test_user")
-        # Create a folder for the user before importing Quizlet
-        folder_creation_data = {
-            "jwtToken": token,
-            "folder": "test_folder"
-        }
-        self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], folder_creation_data)
+    
         # Test data
         with open("testing/test_api/flashcard_format/test_quizlet_import_double_newline_seperator.txt", "r") as file:
             content = file.read()
@@ -35,12 +30,7 @@ class TestQuizletImport(BaseApiActionsMixin):
         """Test successful import from Quizlet"""
         # Create a test user first
         token = self.create_user("test_user")
-        # Create a folder for the user before importing Quizlet
-        folder_creation_data = {
-            "jwtToken": token,
-            "folder": "test_folder"
-        }
-        self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], folder_creation_data)
+       
         # Test data
         with open("testing/test_api/flashcard_format/test_quizlet_import_semicolon_seperator.txt", "r") as file:
             content = file.read()
@@ -60,12 +50,7 @@ class TestQuizletImport(BaseApiActionsMixin):
         """Test successful import from Quizlet"""
         # Create a test user first
         token = self.create_user("test_user")
-        # Create a folder for the user before importing Quizlet
-        folder_creation_data = {
-            "jwtToken": token,
-            "folder": "test_folder1"
-        }
-        self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], folder_creation_data)
+     
         # Test data
         with open("testing/test_api/flashcard_format/test_quizlet_import_comma_semicolon_seperator.txt", "r") as file:
             content = file.read()
@@ -78,18 +63,13 @@ class TestQuizletImport(BaseApiActionsMixin):
             "flashcard_name": "Test Flashcard2"
         }
         res = self.post_api(Routes.ROUTE_QUIZLET_IMPORT["url"], quizlet_data)
-        print(res)
+  
         assert res["success"] ==  "Flashcards imported successfully"
     def test_quizlet_import_newline(self):
         """Test successful import from Quizlet"""
         # Create a test user first
         token = self.create_user("test_user")
-        # Create a folder for the user before importing Quizlet
-        folder_creation_data = {
-            "jwtToken": token,
-            "folder": "test_folder1"
-        }
-        self.post_api(Routes.ROUTE_CREATE_FOLDER["url"], folder_creation_data)
+        
         # Test data
         with open("testing/test_api/flashcard_format/test_quizlet_import_newline.txt", "r") as file:
             content = file.read()

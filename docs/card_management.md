@@ -747,16 +747,6 @@ Returned when the request body parameters are not in the expected format or if t
 ```
 
 **Error Response**<br>
-HTTP Status: 404
-Returned when the specified folder does not exist.
-
-```json
-{
-    "error": "Folder 'My Flashcards' does not exist"
-}
-```
-
-**Error Response**<br>
 HTTP Status: 400
 Returned when the flashcard set name already exists.
 

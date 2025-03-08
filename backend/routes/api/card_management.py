@@ -683,6 +683,19 @@ def flashcard_exists():
 @validate_json(IMPORT_FROM_QUIZLET_FORMAT)
 def import_from_quizlet():
     
+    """ 
+    Add a copied quizlet flashcard set to a folder.
+    Example request:
+    {
+        "userID": "my-id",
+        "folder": "folder-name",
+        "flashcards_string": "copied flashcard data from quizlet",
+        "term_def_separator": "sperator between term and definition", 
+        "term_separator": "seperator between terms definition pairs",
+        "flashcard_name": "Name of flashcard set"	
+    }
+    
+    """
     try:
         user_id = request.json.get("userID")
         folder = request.json.get("folder")
@@ -690,21 +703,17 @@ def import_from_quizlet():
         term_def_separator = request.json.get("term_def_separator")
         term_separator = request.json.get("term_separator")
         flashcard_name = request.json.get("flashcard_name")
-        folders =  db.folders.get_user_data(user_id)
         
-        # Assuming this method exists
-        if not folders:
-            return jsonify({"error": "Folder does not exist" + folder}), 404
-        found = None
-
-        #checking if folder exist
-        if folder not in folders:
-            return jsonify({"error": f"Folder '{folder}' does not exist"}), 404
        # Split flashcards string into individual cards
         cards = []
+
+        # Check if the flashcards string contains valid flashcards
         if term_separator not in flashcards_string:
             return jsonify({"error": "No valid flashcards found"}), 400
+        
+        #parse flashcards into term-definition pairs
         flashcard_pairs = flashcards_string.split(term_separator)
+
 
         for pair in flashcard_pairs:
             if term_def_separator in pair:
