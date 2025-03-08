@@ -40,7 +40,6 @@ class BaseApiActionsMixin:
             headers=HEADERS,
             timeout=5,
         )
-
         assert response.status_code != 500, f"""An unhandled exception caused an Internal Server Error ({response.status_code}) in {route}"""
 
         return json.loads(response.text)

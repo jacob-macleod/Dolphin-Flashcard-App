@@ -11,3 +11,5 @@ NUMBER = r"^\d+$"
 
 # See if a card status has the right information
 CARD_STATUS = r"^(right|wrong|easy)$"
+
+QUIZLET = r'<span class="s1q0b356"><span class="TermText notranslate lang-en">(.*?)</span>.*?<span class="hcszxtp"><span class="TermText notranslate lang-en">(.*?)</span>'

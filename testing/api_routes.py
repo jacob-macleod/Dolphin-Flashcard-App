@@ -110,3 +110,8 @@ class Routes:
         "url": "/api/add-flashcard-to-folder",
         "methods": ["POST"]
     }
+
+    ROUTE_QUIZLET_IMPORT = {
+        "url": "/api/import-from-quizlet",
+        "methods": ["POST"]
+    }

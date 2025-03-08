@@ -679,3 +679,86 @@ A bad request error. Returned when the request body parameters are not in the ex
 | Parameter            | Description                                                                       | Type    | 
 |----------------------|-----------------------------------------------------------------------------------|---------|
 | error                | Describes the nature of the error and provides a possible solution.               | string  | 
+
+<br></br>
+******************************
+
+Certainly! I'll add documentation for the import from Quizlet route to the file. Here's the updated content to be added to the `/root/Dolphin-Flashcard-App/docs/card_management.md` file:
+
+**File: /root/Dolphin-Flashcard-App/docs/card_management.md**
+
+```markdown
+<br></br>
+******************************
+
+## Import from Quizlet
+### **Endpoint:** /import-from-quizlet
+### **Method:** POST
+Import flashcards from Quizlet-formatted text.
+
+### Parameters
+
+#### **Request Body Parameters**
+| Parameter            | Description                                                                       | Type    | Required/Optional |
+|----------------------|-----------------------------------------------------------------------------------|---------|-------------------|
+| jwtToken              | The unique identity of the user importing flashcards.                             | String  | Required          |
+| folder               | The name of the folder where the flashcards will be stored.                       | String  | Required          |
+| flashcards           | The Quizlet-formatted text containing the flashcards.                             | String  | Required          |
+| term_def_separator   | The separator used between terms and definitions.                                 | String  | Required          |
+| term_separator       | The separator used between different flashcards.                                  | String  | Required          |
+| flashcard_name       | The name for the imported flashcard set.                                          | String  | Required          |
+
+### Request Body Example
+```
+ '{
+    "jwtToken": token",
+    "folder": "My Flashcards",
+    "flashcards": "Term 1:Definition 1;Term 2:Definition 2;Term 3:Definition 3",
+    "term_def_separator": ":",
+    "term_separator": ";",
+    "flashcard_name": "Imported from Quizlet"
+}' /api/import-from-quizlet
+```
+
+### Response Examples
+
+**Success Response**<br>
+HTTP Status: 200
+
+```json
+{
+    "success": "Flashcards imported successfully"
+}
+```
+
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| success              | Indicates that the flashcards were successfully imported.                         | 
+
+**Error Response**<br>
+HTTP Status: 400
+Returned when the request body parameters are not in the expected format or if the flashcard data is invalid.
+
+```json
+{
+    "error": "Invalid flashcard format"
+}
+```
+
+**Error Response**<br>
+HTTP Status: 400
+Returned when the flashcard set name already exists.
+
+```json
+{
+    "error": "Flashcard set name already exists"
+}
+```
+
+**Response Body**
+| Parameter            | Description                                                                       | Type    | 
+|----------------------|-----------------------------------------------------------------------------------|---------|
+| error                | Describes the nature of the error.                                                | String  |
+```
+
