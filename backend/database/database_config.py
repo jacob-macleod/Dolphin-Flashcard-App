@@ -1,2 +1,2 @@
-type="production"
-# type="local"
+#type="production"
+type="local"

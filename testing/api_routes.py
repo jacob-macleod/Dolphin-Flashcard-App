@@ -111,7 +111,7 @@ class Routes:
         "methods": ["POST"]
     }
 
-    ROUTE_IMPORT_FROM_QUIZLET = {
+    ROUTE_QUIZLET_IMPORT = {
         "url": "/api/import-from-quizlet",
         "methods": ["POST"]
     }

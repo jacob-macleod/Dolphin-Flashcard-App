@@ -21,22 +21,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-<<<<<<< HEAD
 ## 6.7.0 - 2025-03-3
 ### Added
 - Backend Route to import flash cards from Quizlet + tests.
 - Windows testing script and firestore initialization.
 
-=======
->>>>>>> 314f8570affc43c4d42537e873beb2615147ecbb
 ## 6.6.1 - 2025-03-4 
 ### Fixed
 - Clicking flash card set on mobile when flash card amount was zero would throw a null pointer, this introduces safe array accessing to avoid the runtime error and successfully navigate to the edit page.
 
-<<<<<<< HEAD
 - 
-=======
->>>>>>> 314f8570affc43c4d42537e873beb2615147ecbb
 ## 6.6.0 - 2025-03-2
 
 ### Added
