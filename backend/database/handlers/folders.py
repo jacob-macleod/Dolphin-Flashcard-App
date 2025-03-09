@@ -55,11 +55,15 @@ class Folders(DatabaseHandler):
         existing_data = None
         if is_root_folder:
             if flashcard_name in current:
-                existing_data = current[flashcard_name].get('cards', {})
+                existing_data = current[flashcard_name].get("cards", {})
         else:
-            if (folder_path[-1] in current and 
-                flashcard_name in current[folder_path[-1]]):
-                existing_data = current[folder_path[-1]][flashcard_name].get('cards', {})
+            if (
+                folder_path[-1] in current
+                and flashcard_name in current[folder_path[-1]]
+            ):
+                existing_data = current[folder_path[-1]][flashcard_name].get(
+                    "cards", {}
+                )
 
         # Calculate the initial card review statuses
         card_review_statuses = {}
@@ -535,7 +539,7 @@ class Folders(DatabaseHandler):
 
         return current
 
-    def flashcard_exists(self, user_id:str, flashcard_id:str):#
+    def flashcard_exists(self, user_id: str, flashcard_id: str):  #
         """
         See if a flashcard exists in the folder structure for a particular user
 
