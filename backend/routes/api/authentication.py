@@ -120,6 +120,7 @@ def get_user():
     except Exception as e:
         return jsonify({"error": str(e)}, 400)
 
+
 @authentication_routes.route("/api/get-user-from-jwt", methods=["GET", "POST"])
 @validate_json(GET_USER_FORMAT)
 def get_user_from_jwt():
@@ -130,6 +131,7 @@ def get_user_from_jwt():
         return jsonify(user, 200)
     except Exception as e:
         return jsonify({"error": str(e)}, 400)
+
 
 @authentication_routes.route("/api/get-user-stats", methods=["GET", "POST"])
 @validate_json(GET_USER_STATS_FORMAT)

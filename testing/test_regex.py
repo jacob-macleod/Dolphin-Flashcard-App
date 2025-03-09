@@ -1,13 +1,20 @@
 import re
 import sys
 import os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_path = os.path.join(current_dir, '..', 'backend')
-sys.path.append(src_path)
-from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, NUMBER, CARD_STATUS
 
-def test_review_status() :
-    """ Test the review status regex pattern """
+current_dir = os.path.dirname(os.path.abspath(__file__))
+src_path = os.path.join(current_dir, "..", "backend")
+sys.path.append(src_path)
+from routes.api.regex_patterns import (
+    REVIEW_STATUS_REGEX,
+    DATE_REGEX,
+    NUMBER,
+    CARD_STATUS,
+)
+
+
+def test_review_status():
+    """Test the review status regex pattern"""
 
     # Valid review status
     assert re.match(REVIEW_STATUS_REGEX, "3.14") is not None
@@ -30,8 +37,9 @@ def test_review_status() :
     # Invalid review status
     assert re.match(REVIEW_STATUS_REGEX, "abc") is None
 
-def test_date() :
-    """ Test the date regex pattern """
+
+def test_date():
+    """Test the date regex pattern"""
 
     # Valid date
     assert re.match(DATE_REGEX, "31/01/2023") is not None
@@ -51,8 +59,9 @@ def test_date() :
     # Invalid format
     assert re.match(DATE_REGEX, "1/1/2022") is None
 
+
 def test_positive_integer_pattern():
-    """ Test the positive integer regex pattern """
+    """Test the positive integer regex pattern"""
 
     # Valid positive integer
     assert re.match(NUMBER, "123") is not None
@@ -78,8 +87,9 @@ def test_positive_integer_pattern():
     # Invalid: String with special characters
     assert re.match(NUMBER, "!@#$%^") is None
 
+
 def test_card_status_pattern():
-    """ Test the card status regex pattern """
+    """Test the card status regex pattern"""
 
     # Valid card status: "right"
     assert re.match(CARD_STATUS, "right") is not None

@@ -1972,7 +1972,7 @@ paths:
                   example: my first flashcard
                 folder:
                   type: string
-                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by numeric figures.'
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by /'
                   example: top-level-parent-name/parent-name-2/parent-name-3
                 delimiter:
                   type: string
@@ -1983,6 +1983,84 @@ paths:
                   description: 'Defines the first row where actual data is stored in the CSV. Defaults to row 2 if not provided.'
                   example: '2'
       parameters: []
+      tags:
+        - Card management
+  /import-from-quizlet:
+    post:
+      summary: Import flashcards from Quizlet
+      description: Add a Quizlet set exported as text to the user's flashcards.
+      operationId: importFromQuizlet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - folder
+                - flashcards
+                - term_def_separator
+                - term_separator
+                - flashcard_name
+              properties:
+                jwtToken:
+                  type: string
+                  description: Authentication token.
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                folder:
+                  type: string
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by /'
+                  example: top-level-parent-name/parent-name-2/parent-name-3
+                flashcards:
+                  type: string
+                  description: Copied flashcard data from Quizlet
+                  example: 'term1:definition1\nterm2:definition2'
+                term_def_separator:
+                  type: string
+                  description: Separator between term and definition
+                  example: ","
+                term_separator:
+                  type: string
+                  description: Separator between term-definition pairs
+                  example: "\\n"
+                flashcard_name:
+                  type: string
+                  description: Name of the flashcard set
+      responses:
+        "200":
+          description: Flashcards imported successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                  flashcard_id:
+                    type: string
+                  flashcard_name:
+                    type: string
+                  card_count:
+                    type: integer
+        "400":
+          description: Invalid request format or flashcard parsing error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
       tags:
         - Card management
 
