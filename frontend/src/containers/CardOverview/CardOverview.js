@@ -27,7 +27,7 @@ function CardOverview({
     text,
     description: back = "",
     showResponseOptions = false,
-    showTurnOverButton = false,
+    showTurnOverButton = true,
     height="fit-content",
     setResponse=()=>{},
     turnOverCardOnSpaceKey=true,
