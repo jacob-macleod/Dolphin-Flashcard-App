@@ -38,7 +38,7 @@
 .button-disabled {
   border-radius: 8px;
   border: none;
-  background: var(--Light-Prototype, #c2c2c2);
+  background: var(--grey-button-light);
 
   /* Other Panel Drop Shadow */
   box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
@@ -61,4 +61,8 @@
   margin: auto;
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+body.dark-theme .button-disabled {
+  background: var(--grey-button-dark);
 }

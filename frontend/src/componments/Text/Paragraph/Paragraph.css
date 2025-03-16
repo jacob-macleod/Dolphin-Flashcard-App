@@ -1,5 +1,5 @@
 .paragraph {
-    color: var(--Black-Colour, #222829);
+    color: var(--text-light);
     text-align: center;
 
     /* p */
@@ -11,6 +11,11 @@
 
     flex: 1 0 0;
     align-self: stretch;
+    transition: all 0.5 ease;
+}
+
+body.dark-theme .paragraph{
+    color: var(--text-dark);
 }
 
 .grey-italics{

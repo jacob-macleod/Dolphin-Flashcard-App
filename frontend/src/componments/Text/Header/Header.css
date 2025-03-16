@@ -1,5 +1,5 @@
 .header-blue {
-    color: var(--Black-Colour, #222829);
+    color: var(--text-dark);
     font-family: Roboto;
     font-size: 50px;
     font-style: normal;
@@ -14,7 +14,7 @@
 }
 
 .header-black {
-    color: var(--Black-Colour, #222829);
+    color: var(--text-light);
     font-family: Roboto;
     font-size: 50px;
     font-style: normal;
@@ -22,7 +22,22 @@
     line-height: normal;
     margin-bottom: 16px;
     margin-top: 16px;
-    background: var(--Black-Colour, #222829);
+    background: var(--text-light);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.dark-theme .header-black{
+    color: var(--text-dark);
+    font-family: Roboto;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    background: var(--text-dark);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
