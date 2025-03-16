@@ -1,5 +1,5 @@
 .text {
-    color: var(--Black-Colour, #222829);
+    color: var(--text-light);
     font-family: Roboto;
     font-size: 16px;
     font-style: normal;
@@ -7,11 +7,19 @@
     line-height: 20px;
 }
 
+body.dark-theme .text {
+    color: var(--text-dark);
+}
+
 .flashcard-text {
-    color: var(--Black-Colour, #222829);
+    color: var(--text-light);
     font-family: Roboto;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
+}
+
+body.dark-theme .flashcard-text {
+    color: var(--text-dark);
 }

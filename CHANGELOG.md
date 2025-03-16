@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.8.0 - 2025-03-16
+
+### Added
+
+- Added a darkmode and a button to toggle theme
+
 ## 6.7.2 - 2025-03-10
 
 ### Added

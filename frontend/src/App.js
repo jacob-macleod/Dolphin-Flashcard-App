@@ -11,6 +11,7 @@ import SearchForFlashcard from './screens/Community';
 import PreviewFlashcard from './screens/PreviewFlashcard';
 import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
+import { ThemeProvider } from './context/ThemeContext';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -40,7 +41,7 @@ function App() {
   const [jwtToken, setJwtToken] = useState(getCookie('jwtToken'));
 
   return (
-    <>
+    <ThemeProvider>
       <BrowserRouter>
         <Routes>
           <Route
@@ -120,7 +121,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 
