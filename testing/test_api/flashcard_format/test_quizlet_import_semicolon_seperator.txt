@@ -1,0 +1,21 @@
+Abstraction	A way of hiding the working details of another system;API	Application Programming Interface
+User interface designed for software instead of humans
+Allows applications to talk to one another;APIs make it easy...	For other software to exchange data and functionality. Any software that needs to send or receive data must adhere to those specifications to make a request;Benefits of APIs	Outsourcing - key data and functionality through a predictable standard interface (i.e. Lyft riles on Google Maps)
+
+Increased Mobility - consuming devices can be easily adapted as the standards are well-defined and documented
+
+Increased Developer Productivity - minimize app development time from months/years to weeks;CORBA	Common Object Request Broker Architecture;DELETE	Remove the requested data from the server;EDI	Electronic Data Interchange;Example of GET Request to the Fitbit API	{
+"activities":[
+{
+"activityId":51007,
+"activityParentId":90019,
+"calories":800,
+"description":"7mph",
+"distance":3.04,
+"name":"Treadmill, 0% Incline",
+"startTime":"00:25",
+"steps":6783
+}
+]
+};GET	Retrieve requested data from a server;GraphQL	Makes it possible to request information from across an entire graph of data at once;gRPC	Relies on HTTP/2 to stream data bidirectionally
+Can turn an API into a streaming API that feeds data to the consuming application as soon as it's available;How do Most API Providers Make Connections?	Over hypertext transfer protocol;Mashups	Composite applications - when an application makes calls to multiple APIs and API providers;Network DDE	Dynamic data exchange;POST	Submit requested data to a server for processing;PUT	Update and replace existing data with new data being sent in the request;RPC	Remote procedure call;SOAP	Simple Object Access Protocol;

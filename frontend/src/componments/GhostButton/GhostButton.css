@@ -1,6 +1,8 @@
 .ghost-button {
     border: solid #6A84C5;
     border-radius: 8px;
+    background: transparent;
+    
     /* Other Panel Drop Shadow */
     box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
 
@@ -27,38 +29,10 @@
 .ghost-button:hover {
     border-radius: 8px;
     border: solid var(--Darker-Primary-Colour, #32519E);
-    background: var(--Darker-Primary-Colour, #32519E);
+    background: var(--Darker-Primary-Colour, #32519E); /* Background changes on hover */
     color: #FFF;
-    /* Other Panel Drop Shadow */
-    box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
-    cursor: pointer;
-}
-
-.ghost-button-disabled {
-    border-radius: 8px;
-    border: none;
-    background: var(--Light-Prototype, #C2C2C2);
     
     /* Other Panel Drop Shadow */
     box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
-
-    display: flex;
-    min-height: 32px;
-    padding: 15px 32px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-
-    color: var(--Grey-Text-Colour, #747474);
-    text-align: center;
-    font-family: Roboto;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 18px; /* 112.5% */
-    margin: auto;
-    margin-top: 16px;
-    margin-bottom: 16px;
     cursor: pointer;
 }

@@ -2,8 +2,8 @@
     position: absolute;
     width: 141px;
     height: 144px;
-    filter: drop-shadow(0px 2px 14.8px rgba(13, 41, 68, 0.12));
-    background-color: white;
+    filter: drop-shadow(0px 2px 14.8px var(--popup-shadow-light));
+    background-color: var(--popup-bg-light);
     border-radius: 8px;
 }
 
@@ -13,12 +13,18 @@
     padding-left: 8px;
     padding-right: 8px;
     height: 144px;
-    filter: drop-shadow(0px 2px 14.8px rgba(13, 41, 68, 0.12));
-    background-color: white;
+    filter: drop-shadow(0px 2px 14.8px var(--popup-shadow-light));
+    background-color: var(--popup-bg-light);
     border-radius: 8px;
     left: 0px;
 }
 
 .card-operations-container {
     padding: 12px;
+}
+
+body.dark-theme .card-operations-popup-wrapper,
+body.dark-theme .card-operations-popup-wrapper-mobile {
+    filter: drop-shadow(0px 2px 14.8px var(--popup-shadow-dark));
+    background-color: var(--popup-bg-dark);
 }

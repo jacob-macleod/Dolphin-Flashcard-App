@@ -11,17 +11,21 @@ from routes.api.card_management import hash_to_numeric
 
 
 def create_flashcard_no_db(
-        user_id,
-        **kwargs,
+    user_id,
+    **kwargs,
 ):
     flashcard_dict = {
         "userID": user_id,
-        "flashcardName": kwargs.get("flashcardName", f"flashcardName {random.randint(-100000, 10000000)}"),
+        "flashcardName": kwargs.get(
+            "flashcardName", f"flashcardName {random.randint(-100000, 10000000)}"
+        ),
         "flashcardDescription": kwargs.get(
             "flashcardDescription",
-            f"flashcardDescription {random.randint(-100000, 10000000)}"
+            f"flashcardDescription {random.randint(-100000, 10000000)}",
         ),
-        "folder": kwargs.get("folder", f"flashcardDescription {random.randint(-100000, 10000000)}"),
+        "folder": kwargs.get(
+            "folder", f"flashcardDescription {random.randint(-100000, 10000000)}"
+        ),
         "cards": [
             {
                 "front": f"front {random.randint(-100000, 10000000)}",
@@ -35,16 +39,23 @@ def create_flashcard_no_db(
                 "reviewStatus": "0.0",
                 "lastReview": "27/04/2024",
             },
-        ]
+        ],
     }
 
-    flashcard_id = hash_to_numeric(user_id + flashcard_dict["folder"] + flashcard_dict["flashcardName"])
+    flashcard_id = hash_to_numeric(
+        user_id + flashcard_dict["folder"] + flashcard_dict["flashcardName"]
+    )
     flashcard_dict["flashcard_id"] = flashcard_id
 
     card_ids = []
 
     for card in flashcard_dict["cards"]:
-        id_ = hash_to_numeric(user_id + flashcard_dict["folder"] + flashcard_dict["flashcardName"] + card["front"])
+        id_ = hash_to_numeric(
+            user_id
+            + flashcard_dict["folder"]
+            + flashcard_dict["flashcardName"]
+            + card["front"]
+        )
         card_ids.append(id_)
         card["card_id"] = id_
 
@@ -58,17 +69,19 @@ def create_flashcard(user_id, **kwargs):
         flashcard_id=flashcard_dict["flashcard_id"],
         flashcard_name=flashcard_dict["flashcardName"],
         flashcard_description=flashcard_dict["flashcardDescription"],
-        card_ids=[card["card_id"] for card in flashcard_dict["cards"]]
+        card_ids=[card["card_id"] for card in flashcard_dict["cards"]],
     )
 
-    db.flashcards.create_flashcards([card["card_id"] for card in flashcard_dict["cards"]], flashcard_dict["cards"])
+    db.flashcards.create_flashcards(
+        [card["card_id"] for card in flashcard_dict["cards"]], flashcard_dict["cards"]
+    )
 
     db.folders.add_flashcard_to_folder(
         user_id=user_id,
         folder=flashcard_dict["folder"],
         flashcard_id=flashcard_dict["flashcard_id"],
         flashcard_name=flashcard_dict["flashcardName"],
-        card_ids=[card["card_id"] for card in flashcard_dict["cards"]]
+        card_ids=[card["card_id"] for card in flashcard_dict["cards"]],
     )
 
     # Give the user read and write access
