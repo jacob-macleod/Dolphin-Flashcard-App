@@ -28,6 +28,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Added a darkmode and a button to toggle theme
 
+## 6.7.2 - 2025-03-10
+
+### Added
+
+- Allow Users to Unflip flashcards "Your Daily Dose" mode to view the question
+
+
 ## 6.7.1 - 2025-03-09
 
 ### Changed
