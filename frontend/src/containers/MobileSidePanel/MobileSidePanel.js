@@ -18,6 +18,7 @@ import community_icon_white from '../../static/community-icon-white.svg';
 import './MobileSidePanel.css';
 import '../../componments/GridItem/GridItem.css';
 import '../HamburgerBar/HamburgerBar.css';
+import { useTheme } from '../../context/ThemeContext';
 
 function MobileSidePanel ({visible, setVisible, selectedItem}) {
     const iconSize = "32px";
@@ -25,6 +26,8 @@ function MobileSidePanel ({visible, setVisible, selectedItem}) {
     function clickEvent() {
         setVisible(false);
     };
+
+    const { darkMode, toggleTheme } = useTheme();
 
     return  visible==true ? <div className="side-panel-mobile">
             <div className='profileBanner'>
@@ -60,6 +63,11 @@ function MobileSidePanel ({visible, setVisible, selectedItem}) {
             <MenuItem text="Settings" src="/settings" imgUrl={settings_icon}/>
             <MenuItem text="Sign Out" src="/signout" imgUrl={signOutIcon}/>
             <MenuItem text="Settings" src="/settings" imgUrl={settingsIcon}/>
+            <MenuItem 
+                text="Toggle Theme" 
+                onClick={toggleTheme}
+                imgUrl={selectedItem == "settings" ? settings_icon : settings_icon}
+            />
         </div> : <></>;
 }
 
