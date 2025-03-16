@@ -294,7 +294,7 @@ class Goals(DatabaseHandler):
         Args:
             user_id (str): The user id of the goal to delete
             goal_id (str): The goal id to delete
-            
+
         Returns:
             bool: True if the goal was successfully deleted, False otherwise
         """

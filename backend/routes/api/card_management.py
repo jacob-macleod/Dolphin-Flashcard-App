@@ -3,8 +3,12 @@
 import uuid
 from flask import Blueprint, request, jsonify
 from database.database import database as db
+from curl_cffi import requests
+import re
+import datetime
+from bs4 import BeautifulSoup
 from routes.api.validation_wrapper import validate_json
-from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX
+from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, QUIZLET
 from classes.card_collection import FlashcardCollection
 import csv
 
@@ -67,6 +71,16 @@ DELETE_CARD_FORMAT = {"jwtToken": "", "flashcardID": "", "cardID": ""}
 ADD_PUBLIC_FLASHCARD_TO_FOLDER = {"jwtToken": "", "flashcardID": "", "folder": ""}
 
 FLASHCARD_EXISTS_FORMAT = {"jwtToken": "", "flashcardID": ""}
+
+IMPORT_FROM_QUIZLET_FORMAT = {
+    "jwtToken": "",
+    "folder": "",
+    "flashcards": "",
+    "term_def_separator": "",
+    "term_separator": "",
+    "flashcard_name": "",
+}
+
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
@@ -186,6 +200,7 @@ def get_flashcard():
         # Return the error as a json object
         return jsonify(str(e)), 500
 
+
 @card_management_routes.route("/api/get-public-flashcard", methods=["GET", "POST"])
 @validate_json(GET_PUBLIC_FLASHCARD_FORMAT)
 def get_public_flashcard():
@@ -204,6 +219,7 @@ def get_public_flashcard():
     except Exception as e:
         # Return the error as a json object
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/get-flashcard-item", methods=["GET", "POST"])
 @validate_json(GET_FLASHCARD_ITEM)
@@ -241,7 +257,6 @@ def get_today_cards():
     """
     try:
         user_id = request.json.get("userID")
-
         # Get all flashcards
         flashcards = db.folders.get_user_data(user_id)
 
@@ -267,10 +282,8 @@ def get_all_cards():
     """
     try:
         user_id = request.json.get("userID")
-
         # Get all flashcards
         flashcards = db.folders.get_user_data(user_id)
-
         if flashcards is None:
             return jsonify(["User has no flashcards"])
 
@@ -540,11 +553,17 @@ def add_public_flashcard_to_folder():
             flashcard_data["cards"],
         )
 
-        return jsonify(
-            {"success": f"Flashcard '{flashcard_data['name']}' added to folder {folder}"}
-        ), 200
+        return (
+            jsonify(
+                {
+                    "success": f"Flashcard '{flashcard_data['name']}' added to folder {folder}"
+                }
+            ),
+            200,
+        )
     except Exception as e:
         return jsonify(str(e)), 500
+
 
 @card_management_routes.route("/api/flashcard-exists", methods=["POST"])
 @validate_json(FLASHCARD_EXISTS_FORMAT)
@@ -567,10 +586,223 @@ def flashcard_exists():
     except Exception as e:
         return jsonify(str(e)), 500
 
+
+# @card_management_routes.route("/api/import-from-quizlet", methods=["POST"])
+# @validate_json(QUIZLET_IMPORT_FORMAT)
+# def import_from_quizlet():
+#     """Import flashcards from a Quizlet URL.
+
+#     Expected request format:
+#     {
+#         "userID": "my-id",
+#         "folder": "folder-name",
+#         "quizlet_url": "https://quizlet.com/..."
+#     }
+#     """
+#     try:
+#         user_id = request.json.get("userID")
+#         folder = request.json.get("folder")
+#         quizlet_url = request.json.get("quizlet_url")
+#         folders =  db.folders.get_user_data(user_id)
+#          # Assuming this method exists
+#         if not folders:
+#             return jsonify({"error": "Folder does not exist" + folder}), 404
+#         found = None
+#         for folder_name in folders.keys():
+#             if folder == folder_name:
+#                 found = folder
+#                 break
+#         if not found:
+#             return jsonify({"error": "Folder does not exist" + folder}), 404
+
+#        # Check if URL is valid and accessible
+#         try:
+#             html_content = requests.get(url=quizlet_url, impersonate="chrome")
+#             html_content.raise_for_status()
+
+#             if not html_content.content:
+#                 return jsonify({"error": "Invalid or inaccessible Quizlet URL"}), 400
+
+#             soup = BeautifulSoup(html_content.content, features='html.parser')
+
+#             if not soup or not soup.title:
+#                 return jsonify({"error": "Invalid or inaccessible Quizlet URL"}), 400
+
+#             flashcard_name = soup.title.text
+
+#             if not flashcard_name:
+#                 return jsonify({"error": "Invalid or inaccessible Quizlet URL"}), 400
+
+#             flashcard_description = ""
+#             desc_div = soup.find('div', class_='dcgy0px')
+#             if desc_div:
+#                 flashcard_description = desc_div.get_text()
+
+#         except (requests.exceptions.RequestException, AttributeError) as e:
+#             return jsonify({"error": "Invalid or inaccessible Quizlet URL"}), 400
+
+#         #find all term-definition matches from parsed data
+
+#         matches = re.findall(QUIZLET, str(soup), re.DOTALL)
+#         flashcards = {}
+
+#         cards = []
+#         #create cards based on term-definition data
+#         for term, definition in matches:
+#             definition = definition.replace('<br/>', '').replace('<br>', '').replace('<br />', '')
+#             cards.append({
+#                 "front": term,
+#                 "back": definition
+#             })
+#             flashcards[term] = definition
+
+#         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+
+#         flashcard_exists = db.folders.flashcard_exists(user_id, flashcard_id)
+
+#         if flashcard_exists:
+#             return jsonify({"error": "Flashcard set name already exists"}), 400
+
+#         # Generate the card_ids
+#         card_ids = [
+#             hash_to_numeric(user_id + folder + flashcard_name + card["front"])
+#             for card in cards
+#         ]
+
+#         # Create the flashcard set
+#         db.flashcard_set.create_flashcard_set(
+#             flashcard_id=flashcard_id,
+#             flashcard_name=flashcard_name,
+#             flashcard_description=flashcard_description,
+#             card_ids=card_ids,
+#             user_id=user_id,
+#         )
+
+#         # Create each individual flashcard
+#         db.flashcards.create_flashcards(card_ids, cards)
+
+#         # Assign the set to the user in the folder structure
+#         db.folders.add_flashcard_to_folder(
+#             user_id=user_id,
+#             folder=folder,
+#             flashcard_id=flashcard_id,
+#             flashcard_name=flashcard_name,
+#             card_ids=card_ids,
+#         )
+
+#         # Give the user read and write access
+#         db.read_write_access.give_user_access(user_id, flashcard_id)
+
+#         return jsonify({"success": "Flashcards imported from Quizlet"}), 200
+#     except Exception as e:
+#         return jsonify(str(e)), 500
+
+
+@card_management_routes.route("/api/import-from-quizlet", methods=["POST"])
+@validate_json(IMPORT_FROM_QUIZLET_FORMAT)
+def import_from_quizlet():
+    """
+    Add a copied quizlet flashcard set to a folder.
+    Example request:
+    {
+        "userID": "my-id",
+        "folder": "folder-name",
+        "flashcards_string": "copied flashcard data from quizlet",
+        "term_def_separator": "sperator between term and definition",
+        "term_separator": "seperator between terms definition pairs",
+        "flashcard_name": "Name of flashcard set"
+    }
+
+    """
+    try:
+        user_id = request.json.get("userID")
+        folder = request.json.get("folder")
+        flashcards_string = request.json.get("flashcards")
+        term_def_separator = request.json.get("term_def_separator")
+        term_separator = request.json.get("term_separator")
+        flashcard_name = request.json.get("flashcard_name")
+
+        # Split flashcards string into individual cards
+        cards = []
+
+        # Check if the flashcards string contains valid flashcards
+        if term_separator not in flashcards_string:
+            return jsonify({"error": "No valid flashcards found"}), 400
+
+        # parse flashcards into term-definition pairs
+        flashcard_pairs = flashcards_string.split(term_separator)
+
+        for pair in flashcard_pairs:
+            if term_def_separator in pair:
+                term, definition = pair.split(term_def_separator, 1)
+                if term and definition:
+                    cards.append({"front": term.strip(), "back": definition.strip()})
+
+            elif cards:
+                if pair and pair == flashcard_pairs[-1]:
+                    return jsonify({"error": "Invalid flashcard format"}), 400
+                cards[-1]["back"] += term_separator + pair.strip()
+
+        if not cards:
+            return jsonify({"error": "No valid flashcards found"}), 400
+        # Generate a unique flashcard set name
+        flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+
+        # Check if the flashcard set already exists
+        flashcard_exists = db.folders.flashcard_exists(user_id, flashcard_id)
+        if flashcard_exists:
+            return jsonify({"error": "Flashcard set name already exists"}), 400
+
+        # Generate the card_ids
+        card_ids = [
+            hash_to_numeric(user_id + folder + flashcard_name + card["front"])
+            for card in cards
+        ]
+
+        # Create the flashcard set
+        db.flashcard_set.create_flashcard_set(
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            flashcard_description="Imported from Quizlet",
+            card_ids=card_ids,
+            user_id=user_id,
+        )
+
+        # Create each individual flashcard
+        db.flashcards.create_flashcards(card_ids, cards)
+
+        # Assign the set to the user in the folder structure
+        db.folders.add_flashcard_to_folder(
+            user_id=user_id,
+            folder=folder,
+            flashcard_id=flashcard_id,
+            flashcard_name=flashcard_name,
+            card_ids=card_ids,
+        )
+
+        # Give the user read and write access
+        db.read_write_access.give_user_access(user_id, flashcard_id)
+
+        return (
+            jsonify(
+                {
+                    "success": "Flashcards imported successfully",
+                    "flashcard_id": flashcard_id,
+                    "flashcard_name": flashcard_name,
+                    "card_count": len(cards),
+                }
+            ),
+            200,
+        )
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 @card_management_routes.route("/api/import-flashcards", methods=["POST"])
 def import_flashcards():
     """Import flashcards from a CSV file.
-    
+
     Expected request format:
     - multipart/form-data with:
         - file: CSV file with columns 'term' and 'definition'
@@ -582,32 +814,29 @@ def import_flashcards():
         - firstRowOfData: Defines the first row that the data is stored on.
     """
     try:
-        if 'file' not in request.files:
-            return jsonify({'error': 'No file provided'}), 400
-        
+        if "file" not in request.files:
+            return jsonify({"error": "No file provided"}), 400
+
         file = request.files["file"]
-        
+
         user_id = request.form.get("userID")
         folder = request.form.get("folder")
-        delimiter = request.form.get('delimiter')
+        delimiter = request.form.get("delimiter")
         flashcard_name = request.form.get("flashcardName")
         flashcard_description = request.form.get("flashcardDescription")
         first_row_of_data = request.form.get("firstRowOfData", 2)
 
         cards = []
-        content = file.stream.read().decode('utf-8')
-        reader = csv.reader(content.splitlines(), delimiter=',')
-            
+        content = file.stream.read().decode("utf-8")
+        reader = csv.reader(content.splitlines(), delimiter=",")
+
         # Skipping to the row having the data
         for _ in range(int(first_row_of_data) - 1):
             next(reader)
-        
+
         for row in reader:
             term, definition = row
-            cards.append({
-                "front": term,
-                "back": definition
-            })
+            cards.append({"front": term, "back": definition})
 
         # A hashed version of the userID and flashcard name
         flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)

@@ -12,7 +12,7 @@
 }
 
 .small-text-black {
-    color: #222829;
+    color: var(--text-light);
     font-family: Roboto;
     font-size: 12px;
     font-style: normal;
@@ -25,4 +25,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
+}
+body.dark-theme .small-text-black {
+    color: var(--text-dark);
 }

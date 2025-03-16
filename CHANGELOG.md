@@ -21,7 +21,27 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-## 6.6.0 - 2025-03-2
+
+## 6.7.1 - 2025-03-09
+
+### Changed
+
+- Updated documentation and ran black
+
+## 6.7.0 - 2025-03-03
+
+### Added
+
+- Backend Route to import flash cards from Quizlet + tests.
+- Windows testing script and firestore initialization.
+
+## 6.6.1 - 2025-03-04
+
+### Fixed
+
+- Clicking flash card set on mobile when flash card amount was zero would throw a null pointer, this introduces safe array accessing to avoid the runtime error and successfully navigate to the edit page.
+
+## 6.6.0 - 2025-03-02
 
 ### Added
 
@@ -31,7 +51,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ### Added
 
--Fullscreen Mode for flashcards
+- Fullscreen Mode for flashcards
 
 ## 6.4.2 - 2025-03-1
 
@@ -73,7 +93,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ### Fixed
 
--Loading animations for preview flashcard and all cards mode
+- Loading animations for preview flashcard and all cards mode
 
 ## 6.2.6 - 2025-02-20
 

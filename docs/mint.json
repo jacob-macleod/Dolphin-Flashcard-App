@@ -136,8 +136,12 @@
           "pages": ["api-reference/endpoint/card-management/search"]
         },
         {
-          "group": "Import Flashcard",
+          "group": "Import flashcard",
           "pages": ["api-reference/endpoint/card-management/import-flashcard"]
+        },
+        {
+          "group": "Import from quizlet",
+          "pages": ["api-reference/endpoint/card-management/import-from-quizlet"]
         }
       ]
     },

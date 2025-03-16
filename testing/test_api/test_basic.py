@@ -5,6 +5,7 @@ import pytest
 
 from api_routes import Routes
 from builders.user import create_user
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 src_path = os.path.join(current_dir, "..", "backend")
 sys.path.append(src_path)
@@ -15,6 +16,7 @@ from database.database_config import type
 from .base import BaseApiActionsMixin
 
 date = Date()
+
 
 class TestBasicApi(BaseApiActionsMixin):
     """Test the API"""
@@ -47,7 +49,7 @@ class TestBasicApi(BaseApiActionsMixin):
         # Test with invalid keys
         result = check_request_json({"key3": "", "key4": ""}, {"key1": "", "key2": ""})
 
-        assert result =="Your supplied json keys do not match the expected format"
+        assert result == "Your supplied json keys do not match the expected format"
 
         # Test with valid regex pattern
         expected_format = {
@@ -85,7 +87,9 @@ class TestBasicApi(BaseApiActionsMixin):
         """
         Test the update-heatmap method
         """
-        user_jwt_token = self.jwt_handler.encode(user["user_id"], user['rawToken'], user["accessToken"])
+        user_jwt_token = self.jwt_handler.encode(
+            user["user_id"], user["rawToken"], user["accessToken"]
+        )
 
         # Test case 1: User exists
         request_data = {"jwtToken": user_jwt_token}

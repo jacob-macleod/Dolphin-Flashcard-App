@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '../../../context/ThemeContext';
 import Image from '../../../componments/Image';
 import Paragraph from '../../../componments/Text/Paragraph';
 
@@ -13,6 +14,9 @@ import './FolderElement.css';
 function FolderElement({ element, name, child, folderKey, path, selectedPath, setSelectedPath }) {
     const [selected, setSelected] = React.useState(false);
     const [showChildren, setShowChildren] = useState(false);
+    const isYourAccount = name === "Your Account";
+    const {darkMode} = useTheme();
+
     function toggleChildren() {
         setShowChildren(!showChildren);
     }
@@ -21,7 +25,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
         if (selected) {
             setSelectedPath(null);
             setSelected(false);
-        } else{
+        } else {
             setSelectedPath(path);
             setSelected(true);
         }
@@ -32,6 +36,12 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
             setSelected(false);
         }
     }, [selectedPath]);
+
+    const getTextColor = () => {
+        
+        if (darkMode) return "var(--text-dark)";
+        return selected ? "var(--text-dark)" : "var(--text-light)";
+    };
 
     return (
         <div key={folderKey} className='folder-wrapper'>
@@ -44,10 +54,10 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
                     onClick={toggleChildren}
                 />
                 <Paragraph text={name} style={{
-                        margin: "0px",
-                        lineHeight: "1",
-                        textAlign: "left",
-                        color: selected ? "#FFFFFF" : "#222829"
+                    margin: "0px",
+                    lineHeight: "1",
+                    textAlign: "left",
+                    color: getTextColor()
                 }} onClick={toggleClick}/>
             </div>
             <div className='child-wrapper' style={{
