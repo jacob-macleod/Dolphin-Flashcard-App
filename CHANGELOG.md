@@ -24,7 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - N/A
 -->
-# 6.8.1 - 2025-03-22
+## 6.8.1 - 2025-03-22
 
 ### Added 
 
