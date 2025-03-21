@@ -32,7 +32,7 @@ jobs:
             bash bump_version.sh "${{ github.event.pull_request.title }}" "${{ github.head_ref || github.ref_name }}";
           fi
       - name: Install kacl-cli
-        run: pip install kacl-cli
+        run: pip3 install python-kacl
       - name: Run changelog verification
         run: kacl-cli verify --json
       # Commented because the development branch does this anyway and it becomes difficult with forked repos
