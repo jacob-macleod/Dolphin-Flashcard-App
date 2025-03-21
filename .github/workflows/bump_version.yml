@@ -31,6 +31,10 @@ jobs:
             echo "Current branch is ${{ github.head_ref || github.ref_name }}";
             bash bump_version.sh "${{ github.event.pull_request.title }}" "${{ github.head_ref || github.ref_name }}";
           fi
+      - name: Install kacl-cli
+        run: pip install kacl-cli
+      - name: Run changelog verification
+        run: kacl-cli verify --json
       # Commented because the development branch does this anyway and it becomes difficult with forked repos
       # - name: Push the new tags
       #   run: |
