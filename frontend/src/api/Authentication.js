@@ -15,8 +15,14 @@ export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setEr
             const idToken = await user.getIdToken();
             const isNewUser = result.additionalUserInfo.isNewUser;
 
+            rawAccessToken = "test";
+            accessToken = "4be0643f-1d98-573b-97cd-ca98a65347dd"
+            console.log(rawAccessToken);
+            console.log(accessToken);
+            console.log("SENDING REQUEST")
+    
             if (isNewUser || forceRecreate == "true") {
-                createAccount(user.uid, user.displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+                createAccount(user.uid, user.displayName, idToken, setJwtToken, "test", "4be0643f-1d98-573b-97cd-ca98a65347dd", setErrorMessage);
             } else {
                 signIn(user.uid, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
             }
@@ -29,15 +35,51 @@ export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setEr
             console.error('Google sign-in error: ', error);
     }); 
   };
+
+// export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setErrorMessage, forceRecreate) {
+//     const provider = new firebase.auth.GoogleAuthProvider();
   
+//     // Sign in with redirect
+//     firebase.auth().signInWithRedirect(provider)
+//     console.log("SIGNING in")
+//     // Handle the redirected result after sign-in
+//     firebase.auth().getRedirectResult()
+//         .then(async (result) => {
+//             console.log(result);
+//             alert (result);
+//             if (result.user) {
+//                 const user = result.user;
+//                 const idToken = await user.getIdToken();
+//                 const isNewUser = result.additionalUserInfo.isNewUser;
+//                 rawAccessToken = "test";
+//                 accessToken = "4be0643f-1d98-573b-97cd-ca98a65347dd"
+
+//                 if (isNewUser || forceRecreate == "true") {
+//                     console.log(rawAccessToken);
+//                     console.log(accessToken);
+//                     createAccount(user.uid, user.displayName, idToken, setJwtToken, "test", "4be0643f-1d98-573b-97cd-ca98a65347dd", setErrorMessage);
+//                 } else {
+//                     signIn(user.uid, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+//                 }
+
+//                 createCookie('userName', user.displayName);
+//                 createCookie("profileImage", user.photoURL);
+//             }
+//         })
+//         .catch((error) => {
+//             console.error('Google sign-in error: ', error);
+//             setErrorMessage("Error signing in with Google");
+//         });
+// }
+
 
 export function createAccount(userID, displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage) {
     const endpoint = serverURL + 'create-account';
     const data = {
         userID: userID,
         displayName: displayName,
-        rawAccessToken: rawAccessToken,
-        accessToken: accessToken,
+        rawAccessToken: "test",
+        accessToken: "4be0643f-1d98-573b-97cd-ca98a65347dd",
         idToken: idToken
     }; // JSON payload
 
@@ -59,8 +101,8 @@ export function createAccount(userID, displayName, idToken, setJwtToken, rawAcce
         createCookie("jwtToken", data[0]["token"]);
         setJwtToken(data[0]["token"])
         // Set the accessTokens as cookies
-        createCookie("accessToken", accessToken);
-        createCookie("rawAccessToken", rawAccessToken);
+        createCookie("accessToken", "4be0643f-1d98-573b-97cd-ca98a65347dd");
+        createCookie("rawAccessToken", "test");
     })
     .catch(error => {
         console.error('There was an error creating the account:', error);

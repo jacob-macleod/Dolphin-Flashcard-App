@@ -56,9 +56,10 @@ function signInButton({ setJwtToken, active = true }) {
         text="Continue with Google"
         onClick={() => {
           if (accessToken == null || rawAccessToken == null) {
-            setSignInErrorMessage(
-              'You need to sign in with a valid access link!'
-            );
+            // setSignInErrorMessage(
+            //   'You need to sign in with a valid access link!'
+            // );
+            signIn();
           } else {
             signIn();
           }

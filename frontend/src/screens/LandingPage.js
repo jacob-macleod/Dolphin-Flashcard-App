@@ -177,7 +177,7 @@ function LandingPage({ setJwtToken }) {
           >
             <DolphinTitleLogo />
             <Header
-              text="Struggling to remember what you study?"
+              text="Struggling to remember what you study? (Android 2)"
               style={{ fontWeight: 'bold', fontSize: '50px' }}
             />
             <Paragraph
