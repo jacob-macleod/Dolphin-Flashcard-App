@@ -8,7 +8,13 @@
 }
 
 .button-panel-container{
-    position: absolute;
-    bottom: 16px;
-    width: calc(100% - 32px);
+    width: 100%;
+}
+
+.flashcards-page-content {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 48px 48px 32px minmax(200px, auto) 180px;
+    height: 100vh;
+    padding: 0px 16px;
 }
