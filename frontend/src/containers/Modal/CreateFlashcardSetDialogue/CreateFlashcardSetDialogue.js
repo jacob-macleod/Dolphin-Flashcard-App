@@ -23,7 +23,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     const [loadEditFlashcardPage, setLoadEditFlashcardPage] = useState(false);
     const buttonStyle = {
         display: "inline-grid",
-        margin: "0px 16px"
+        margin: view !== "mobile" ? "0px 16px" : "8px 0px"
     }
     const flashcardID = visible.flashcardID;
     const currentPath = visible.path;
@@ -90,10 +90,10 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
             <motion.div
               className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={dropIn}
+              initial={view !== "mobile" ? "hidden" : ""}
+              animate={view !== "mobile" ? "visible" : ""}
+              exit={view !== "mobile" ? "exit" : ""}
+              variants={view !== "mobile"? dropIn: null}
               style={view !== "mobile" ? {height: "fit-content"} : null}
             >
                 <Heading3 text="Choose a location:" />
@@ -104,21 +104,27 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
 
                 <Heading3 text="Choose other details:" />
 
-                <div className="input-container" style={{ display: "flex", marginBottom: "4%" }}>
-                    <Paragraph text="Name: " style={{ marginRight: "20%" }} />
-                    <input type="text" className="input" placeholder='Folder name...' value={flashcardName} onChange={onFlashcardNameChange}/>
+                <div
+                  className={view !== "mobile" ? "input-container" : "input-container-mobile"}
+                  style={{ display: view == "mobile" ? "block" : "flex", marginBottom: "4%" }}
+                >
+                    <Paragraph
+                      text="Name: "
+                      style={{ marginRight: view === "mobile" ? "0px" : "20%", textAlign: view === "mobile" ? "left" : "center" }}
+                    />
+                    <input type="text" className="input" placeholder='Folder name...' value={flashcardName} onChange={onFlashcardNameChange} style={{width: "calc(100% - 32px)"}} />
                 </div>
 
-                <div className="input-container" style={{ display: "flex" }}>
-                    <Paragraph text="Description: " style={{ marginRight: "10%" }} />
-                    <textarea cols="40" rows="5" style={{ resize: "none" }} className="input" placeholder='Folder description' value={flashcardDescription} onChange={onFlashcardDescriptionChange}/>
+                <div className={view !== "mobile" ? "input-container" : "input-container-mobile"}>
+                    <Paragraph text="Description: " style={{ marginRight: view === "mobile" ? "0px" : "10%", textAlign: view === "mobile" ? "left" : "center" }} />
+                    <textarea cols="40" rows="5" style={{ resize: "none", width: "calc(100% - 32px)" }} className="input" placeholder='Folder description' value={flashcardDescription} onChange={onFlashcardDescriptionChange} />
                 </div>
 
                 <ErrorText text={errorMessage} style={{ display: errorMessageVisibility}} />
 
-                <div className='button-container'>
-                    <GhostButton text="Cancel" onClick={() => {setErrorMessageVisibility("none"); setVisible(false)}} style={buttonStyle} />
-                    <Button text="Create" onClick={createSet} style={buttonStyle} />
+                <div className={view !== "mobile" ? 'button-container' : 'button-container-mobile'}>
+                  <GhostButton text="Cancel" onClick={() => {setErrorMessageVisibility("none"); setVisible(false)}} style={buttonStyle} view={view}/>
+                  <Button text="Create" onClick={createSet} style={buttonStyle} view={view}/>
                 </div>
 
                 <div className={"loading-icon-wrapper"}>

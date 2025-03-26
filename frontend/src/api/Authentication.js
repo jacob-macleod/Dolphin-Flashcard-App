@@ -4,7 +4,7 @@ import serverURL from './config';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setErrorMessage, forceRecreate) {
+export function signInWithGoogle(setJwtToken, setErrorMessage, forceRecreate) {
     const provider = new firebase.auth.GoogleAuthProvider();
   
     // Sign in
@@ -16,9 +16,9 @@ export function signInWithGoogle(setJwtToken, rawAccessToken, accessToken, setEr
             const isNewUser = result.additionalUserInfo.isNewUser;
 
             if (isNewUser || forceRecreate == "true") {
-                createAccount(user.uid, user.displayName, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+                createAccount(user.uid, user.displayName, idToken, setJwtToken, "test", "4be0643f-1d98-573b-97cd-ca98a65347dd", setErrorMessage);
             } else {
-                signIn(user.uid, idToken, setJwtToken, rawAccessToken, accessToken, setErrorMessage);
+                signIn(user.uid, idToken, setJwtToken, "test", "4be0643f-1d98-573b-97cd-ca98a65347dd", setErrorMessage);
             }
             //createCookie('userID', user.uid);
             createCookie('userName', user.displayName)

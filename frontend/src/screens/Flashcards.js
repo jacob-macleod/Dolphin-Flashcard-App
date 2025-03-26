@@ -12,7 +12,7 @@ import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview';
 import DelayedElement from '../containers/DelayedElement';
 import Button from '../componments/Button';
-import GhostButton from '../componments/GhostButton';
+import PillGhostButton from '../componments/PillGhostButton';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
@@ -26,7 +26,12 @@ import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
+import './Flashcards.css';
 import { getCookie } from '../api/Authentication';
+import GhostButton from '../componments/GhostButton';
+import flashcardIcon from '../static/flashcard-set-icon.svg';
+import folderIcon from '../static/folder-icon.svg';
+
 
 function Flashcards() {
   // Set general variables
@@ -116,8 +121,8 @@ function Flashcards() {
 
         <GridItem
           style={{
-            paddingLeft: flashcardBoxHorizontalPadding,
-            paddingRight: flashcardBoxHorizontalPadding,
+            paddingLeft: view === "mobile" ? "0px" : flashcardBoxHorizontalPadding,
+            paddingRight: view === "mobile" ? "0px" : flashcardBoxHorizontalPadding,
             paddingTop: "0px",
             width: view === "mobile" ? "100vw" : "",
             display: view === "mobile" ? "block" : "flex",
@@ -132,10 +137,12 @@ function Flashcards() {
               height: "max-content",
               paddingBottom: view === "mobile" ? "80px" : "",
               width: view === "desktop" ? "100%" : "calc(100% - 16px)",
+              padding: "0px"
             }}
+            visible={view == "mobile" ? false : true}
           >
-            <div style={{ maxWidth: "1200px", margin: "auto" }}>
-              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} />
+            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "16px" : "16px" }}>
+              <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"}/>
               <br></br>
               <br></br>
               <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
@@ -143,34 +150,65 @@ function Flashcards() {
                 <ReviewBarChartKey view={view} />
                 {view === "desktop" ? <GridItem /> : <></>}
               </GridContainer>
-              <DelayedElement
-                child={
-                  <FlashcardOverview
-                    flashcardData={todayCards}
-                    setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
-                    showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
-                    setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
-                    setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
-                    setRenameFolderPopupVisible={setRenameFolderPopupVisible}
-                    view={view}
-                    selected={selected}
-                    setSelected={setSelected}
-                  />
-                }
-                childValue={todayCards}
-              />
               <div style={{
-                display: view !== "desktop" ? "block": "flex", 
-                justifyContent: "space-between",
-                paddingTop: "16px"
+                height: view === "mobile" ? "calc(100% - 48px - 178px - 72px)": "auto",
+                overflowY: view === "mobile" ? "scroll": "",
               }}>
-                <div style={{float: view !== "mobile" ? "left" : "", display: view !== "desktop" ? "flex": "", }}>
-                  <GhostButton
+                <DelayedElement
+                  child={
+                    <FlashcardOverview
+                      flashcardData={todayCards}
+                      setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                      showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                      setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                      setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
+                      setRenameFolderPopupVisible={setRenameFolderPopupVisible}
+                      view={view}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  }
+                  childValue={todayCards}
+                />
+              </div>
+              <div className={view === "mobile" ? "button-panel-container" : ""}
+                  style={{
+                  display: view !== "desktop" ? "block": "flex", 
+                  justifyContent: "space-between",
+                  paddingTop: "16px"
+                }}
+                >
+                <div className={view === "mobile" ? "new-item-button-container" : ""} style={{float: view !== "mobile" ? "left" : "", display: view === "tablet" ? "flex": ""}}>
+                  {view === "mobile" ?
+                    <>
+                      <PillGhostButton
+                      text="New Folder"
+                      style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                      onClick={() => {
+                        setCreateFolderDialogueVisible(todayCards);
+                      }}
+                      view={view}
+                      icon={folderIcon}
+                    />
+                    <PillGhostButton
+                      text="New Set"
+                      style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                      onClick={() => {
+                        setCreateCardDialogueVisible(todayCards);
+                      }}
+                      view={view}
+                      icon={flashcardIcon}
+                    />
+                  </>
+                  : 
+                  <>
+                    <GhostButton
                     text="+ New Folder"
                     style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
                     onClick={() => {
                       setCreateFolderDialogueVisible(todayCards);
                     }}
+                    view={view}
                   />
                   <Button
                     text="+ New Set"
@@ -178,9 +216,11 @@ function Flashcards() {
                     onClick={() => {
                       setCreateCardDialogueVisible(todayCards);
                     }}
+                    view={view}
                   />
+                </>
+                }
                 </div>
-              
               <div style={{float: view !== "desktop" ? "": "right"}}>
                 <Button
                   text="Study Multiple"
@@ -192,6 +232,7 @@ function Flashcards() {
                     paddingRight: "15px",
                     marginLeft: view === "mobile" ? "0px" : ""
                   }}
+                  view={view}
                   onClick={studyMultipleCards}
                 />
               </div>

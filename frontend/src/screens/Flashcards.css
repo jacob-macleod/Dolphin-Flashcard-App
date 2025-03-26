@@ -1,0 +1,14 @@
+.new-item-button-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 8px; 
+    justify-content: space-around;
+    padding-top: 16px;
+    width: 100%;
+}
+
+.button-panel-container{
+    position: absolute;
+    bottom: 16px;
+    width: calc(100% - 32px);
+}

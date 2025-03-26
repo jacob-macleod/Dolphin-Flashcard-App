@@ -1,6 +1,6 @@
-.ghost-button {
+.pill-ghost-button {
     border: solid #6A84C5;
-    border-radius: 8px;
+    border-radius: 20px;
     background: transparent;
     
     /* Other Panel Drop Shadow */
@@ -24,10 +24,11 @@
     margin-top: 16px;
     margin-bottom: 16px;
     cursor: pointer;
+    width: 100%;
 }
 
 @media (hover: hover) {
-    .ghost-button:hover {
+    .pill-ghost-button:hover {
         border-radius: 8px;
         border: solid var(--Darker-Primary-Colour, #32519E);
         background: var(--Darker-Primary-Colour, #32519E); /* Background changes on hover */
