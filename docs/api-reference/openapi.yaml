@@ -2063,6 +2063,94 @@ paths:
                     type: string
       tags:
         - Card management
+  /import-anki-flashcards:
+    post:
+      summary: Import flashcards from an Anki .apkg file
+      description: Imports flashcards from an Anki deck package (.apkg) and stores them in the specified folder
+      operationId: import-anki-flashcards
+      tags:
+        - Card management
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - jwtToken
+                - folder
+                - flashcardName
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Anki .apkg file containing the flashcards
+                jwtToken:
+                  type: string
+                  description: JWT authentication token
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIxMjM0NSJ9.abc123..."
+                folder:
+                  type: string
+                  description: Folder path to store the flashcards
+                  example: "Languages/Spanish"
+                flashcardName:
+                  type: string
+                  description: Name for the new flashcard set
+                  example: "Spanish Vocabulary"
+                flashcardDescription:
+                  type: string
+                  description: Optional description for the flashcard set
+                  example: "Imported from Anki deck"
+                termField:
+                  type: integer
+                  description: Index of the term field (0-based)
+                  default: 0
+                  example: 0
+                definitionField:
+                  type: integer
+                  description: Index of the definition field (0-based)
+                  default: 1
+                  example: 1
+                stripHtml:
+                  type: boolean
+                  description: Whether to remove HTML tags from fields
+                  default: true
+                  example: true
+      responses:
+        '200':
+          description: Successfully imported flashcards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flashcardID:
+                    type: string
+                    description: ID of the created flashcard set
+                    example: "987654321"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    examples:
+                      noFile: "No file provided"
+                      invalidFormat: "Invalid Anki file format"
+                      exists: "Flashcard set name already exists"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error occurred"
 
 components:
   schemas: {}

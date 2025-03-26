@@ -21,6 +21,11 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 6.9.0 - 2025-03-26
+
+### Added
+
+- Implemented the API to import anki flashcards
 
 ## 6.8.0 - 2025-03-16
 
