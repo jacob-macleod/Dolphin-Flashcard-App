@@ -227,6 +227,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
             height={isFullscreen ? '100%' : '264px'}
             toggleFullscreen={toggleFullscreen}
             fullscreen={isFullscreen}
+            view={view}
           />
         </div>
         {!isFullscreen &&(

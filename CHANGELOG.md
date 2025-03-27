@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.9.0 - 2025-03-27
+
+### Changed
+
+- Changed dashboard, flashcards and view pages, to work much better on mobile
+
 ## 6.8.0 - 2025-03-16
 
 ### Added

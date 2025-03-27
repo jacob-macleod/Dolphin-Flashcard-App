@@ -34,7 +34,8 @@ function CardOverview({
     setResponse=()=>{},
     turnOverCardOnSpaceKey=true,
     toggleFullscreen=null,
-    fullscreen=false
+    fullscreen=false,
+    view="desktop",
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -107,7 +108,7 @@ function CardOverview({
                         />
                     }
                     {
-                        toggleFullscreen !== null && fullscreen === false
+                        toggleFullscreen !== null && fullscreen === false && view === "mobile"
                         ? <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/> 
                         : <></>
                     }
