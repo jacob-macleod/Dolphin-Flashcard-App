@@ -65,7 +65,7 @@ function nextFibonacci(num) {
 
 class FlashcardReviewer {
     /* Stores the spaced repetition algorithm for reviewing flashcards in Daily Mode */
-    constructor(cardData, saveFlashcardData) {
+    constructor(cardData, saveFlashcardData, setCardsPercentage) {
         this._cardData = cardData;
         this._cardIndex = 0;
         // When revising unlearned cards, you go 5 cards ahead, go back to the second one,
@@ -79,6 +79,7 @@ class FlashcardReviewer {
         this._unlearnedCards = [];
         this._currentCollection = null;
         this._saveFlashcardData = saveFlashcardData;
+        this._setCardsPercentage = setCardsPercentage
         this._cardsSaved = false;
         this.#categoriseCards();
     }
@@ -202,6 +203,17 @@ class FlashcardReviewer {
                 this._unlearnedCards[cardIndex[1]] = this._cardData[cardDataIndex];
             }
         }
+
+        let cardsPercentage = Math.floor(
+            (this.learnedCards /
+            (this.countCards().studying +
+            this.countCards().notStarted +
+            this.countCards().recapping)) *
+            100
+        ) + '%'
+        this._setCardsPercentage(
+            cardsPercentage
+        );
     }
 
     countCards() {
