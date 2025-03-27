@@ -172,6 +172,7 @@ function FlashcardFolder({
                                 margin: "0px",
                                 lineHeight: "2",
                                 textDecoration: view != "desktop" ? "underline" : "none",
+                                alignSelf: "center",
                         }}
                         onClick={view != "desktop" ? studyCard : () => {}}
                         />
@@ -217,7 +218,7 @@ function FlashcardFolder({
                     </div>
                 </GridItem>
             </GridContainer>
-            {view != "desktop" ?
+            {view == "tablet" ?
             <ReviewBarChart studying={studyingCount} recapping={recappingCount} notStarted={notStartedCount} view={view}/>
             : <></>}
             <motion.div

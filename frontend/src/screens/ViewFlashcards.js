@@ -23,6 +23,7 @@ function ViewFlashcards() {
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   const [mode, setMode] = useState("daily");
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
+  const [cardsPercentage, setCardsPercentage] = useState("0%");
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -85,77 +86,82 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
 
         <GridItem
           style={{
-            paddingLeft: flashcardBoxHorizontalPadding,
-            paddingRight: flashcardBoxHorizontalPadding,
+            paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
             paddingTop: "0px",
-            width: view === "mobile" ? "100vw" : "",
+            width: view === "mobile" ? "100%" : "",
             display: view === "mobile" ? "block" : "flex",
             flexDirection: "row",
             justifyContent: "center",
           }}
         >
-          {view === "mobile" ? (
-            <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />
-          ) : (
-            <></>
-          )}
+          <div className={view === "mobile" ? "mobile-page-container" : "desktop-page-container"}>
+            {view === "mobile" ? (
+              <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />
+            ) : (
+              <></>
+            )}
 
-          <WhiteOverlay
-            style={{
-              height: "max-content",
-              paddingBottom: view === "mobile" ? "80px" : "",
-              width: view === "desktop" ? "100%" : "calc(100% - 16px)"
-            }}
-          >
-            <FlashcardHeader
-              newSet={false}
-              flashcardName={
-                flashcardName && flashcardName[0] ? flashcardName[0] : ""
-              }
-              folder={folder !== undefined ? folder[0] : undefined}
-              type={"studyFlashcard"}
-              flashcardID={flashcardID}
-              numberStudying={flashcardName ? flashcardName.length : 0}
-            />
-            <div style={{ maxWidth: "548px", margin: "auto" }}>
-              <div className="mode-selector-container">
-                <p
-                  className={mode === "daily" ? "link" : "inactive-link"}
-                  onClick={() => {
-                    setMode("daily");
-                  }}
-                >
-                  Your Daily Dose
-                </p>
-                <p
-                  className={mode === "total" ? "link" : "inactive-link"}
-                  onClick={() => {
-                    setMode("total");
-                  }}
-                >
-                  All Cards
-                </p>
+            <WhiteOverlay
+              style={{
+                height: "max-content",
+                paddingBottom: view === "mobile" ? "80px" : "",
+                width: view === "desktop" ? "100%" : "calc(100% - 16px)"
+              }}
+              visible={view == "mobile" ? false : true}
+            >
+              <FlashcardHeader
+                newSet={false}
+                flashcardName={
+                  flashcardName && flashcardName[0] ? flashcardName[0] : ""
+                }
+                folder={folder !== undefined ? folder[0] : undefined}
+                type={"studyFlashcard"}
+                flashcardID={flashcardID}
+                numberStudying={flashcardName ? flashcardName.length : 0}
+              />
+              <div style={{ maxWidth: "548px", margin: "auto" }}>
+                <div className="mode-selector-container">
+                  <p
+                    className={mode === "daily" ? "link" : "inactive-link"}
+                    onClick={() => {
+                      setMode("daily");
+                    }}
+                  >
+                    Your Daily Dose
+                  </p>
+                  <p
+                    className={mode === "total" ? "link" : "inactive-link"}
+                    onClick={() => {
+                      setMode("total");
+                    }}
+                  >
+                    All Cards
+                  </p>
+                </div>
+
+                <div className={view === "mobile" ? "study-mode-container" : ""}>
+                  <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
+                  {view === "mobile" ? <Heading4 text={cardsPercentage} /> : <></>}
+                </div>
+
+                {mode === "daily"
+                  ? <DailyFlashcardBrowser view={view} setCardsPercentage={setCardsPercentage} cardsPercentage={cardsPercentage}/>
+                  : <TotalFlashcardBrowser
+                      folder={folder}
+                      flashcardName={flashcardName}
+                      flashcardID={flashcardID}
+                    />
+                }
+
+                <Heading4 text="Other modes" />
+                <div className={view === "mobile" ? "button-container-mobile" : 'button-container'}>
+                  <Button text="Generate Quiz" disabled={true} view={view}/>
+                  <Button text="Match Mode" disabled={true} view={view}/>
+                </div>
               </div>
-
-              <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
-
-              {mode === "daily"
-                ? <DailyFlashcardBrowser view={view}/>
-                : <TotalFlashcardBrowser
-                    folder={folder}
-                    flashcardName={flashcardName}
-                    flashcardID={flashcardID}
-                  />
-              }
-
-              <Heading4 text="Other modes" />
-              <div className='button-container'>
-                <Button text="Generate Quiz" disabled={true} />
-                <Button text="Match Mode" disabled={true} />
-              </div>
-            </div>
-          </WhiteOverlay>
-
+            </WhiteOverlay>
+          </div>
         </GridItem>
       </GridContainer>
       <BlobBackground />

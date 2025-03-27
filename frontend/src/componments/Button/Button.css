@@ -26,13 +26,14 @@
   margin-bottom: 16px;
   cursor: pointer;
 }
+@media (hover: hover) {
+  .button:hover {
+    border-radius: 8px;
+    background: var(--Darker-Primary-Colour, #32519e);
 
-.button:hover {
-  border-radius: 8px;
-  background: var(--Darker-Primary-Colour, #32519e);
-
-  /* Other Panel Drop Shadow */
-  box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
+    /* Other Panel Drop Shadow */
+    box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
+  }
 }
 
 .button-disabled {
