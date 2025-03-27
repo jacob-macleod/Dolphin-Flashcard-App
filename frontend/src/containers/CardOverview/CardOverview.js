@@ -3,6 +3,8 @@ import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import GhostButton from '../../componments/GhostButton';
 import "../../componments/Text/Text/Text.css";
 import DOMPurify from 'dompurify';
+import ExpandIcon from '../../static/expand-icon.svg';
+import Image from '../../componments/Image/Image';
 
 function sanitizeHtml(html) {
     return DOMPurify.sanitize(html, {
@@ -31,6 +33,8 @@ function CardOverview({
     height="fit-content",
     setResponse=()=>{},
     turnOverCardOnSpaceKey=true,
+    toggleFullscreen=null,
+    fullscreen=false
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -101,6 +105,11 @@ function CardOverview({
                             }}
                             onClick={turnOverCard}
                         />
+                    }
+                    {
+                        toggleFullscreen !== null && fullscreen === false
+                        ? <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/> 
+                        : <></>
                     }
                     <div style={{ transformStyle: "preserve-3d" }}>
                         <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: cardText }} />

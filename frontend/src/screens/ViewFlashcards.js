@@ -23,6 +23,7 @@ function ViewFlashcards() {
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   const [mode, setMode] = useState("daily");
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
+  const [cardsPercentage, setCardsPercentage] = useState("0%");
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -106,6 +107,7 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
               paddingBottom: view === "mobile" ? "80px" : "",
               width: view === "desktop" ? "100%" : "calc(100% - 16px)"
             }}
+            visible={view == "mobile" ? false : true}
           >
             <FlashcardHeader
               newSet={false}
@@ -137,10 +139,13 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
                 </p>
               </div>
 
-              <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
+              <div className={view === "mobile" ? "study-mode-container" : ""}>
+                <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
+                {view === "mobile" ? <Heading4 text={cardsPercentage} /> : <></>}
+              </div>
 
               {mode === "daily"
-                ? <DailyFlashcardBrowser view={view}/>
+                ? <DailyFlashcardBrowser view={view} setCardsPercentage={setCardsPercentage} cardsPercentage={cardsPercentage}/>
                 : <TotalFlashcardBrowser
                     folder={folder}
                     flashcardName={flashcardName}
