@@ -22,6 +22,7 @@ import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
 import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
 import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
 import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -144,109 +145,111 @@ function Flashcards() {
             visible={view == "mobile" ? false : true}
           >
             <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
-                <div className={view === "mobile" ? "flashcards-page-content": ""}>
+                <MobilePageWrapper view={view}>
+                  <div className={view === "mobile" ? "flashcards-page-content": ""}>
 
-                  {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" /> : <></>}
+                    {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" /> : <></>}
 
 
-                  <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"}/>
-                  {view !== "mobile" ? <br></br> : <></>}
-                  {view !== "mobile" ? <br></br> : <></>}
-                  <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
-                    {view === "desktop" ? <GridItem /> : <></>}
-                    <ReviewBarChartKey view={view} />
-                    {view === "desktop" ? <GridItem /> : <></>}
-                  </GridContainer>
-                  <div>
-                    <div style={{
-                      height: view === "mobile" ? "100%": "auto",
-                      overflowY: view === "mobile" ? "scroll": "",
-                    }}>
-                      <DelayedElement
-                        child={
-                          <FlashcardOverview
-                            flashcardData={todayCards}
-                            setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
-                            showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
-                            setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
-                            setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
-                            setRenameFolderPopupVisible={setRenameFolderPopupVisible}
-                            view={view}
-                            selected={selected}
-                            setSelected={setSelected}
-                          />
-                        }
-                        childValue={todayCards}
-                      />
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"}/>
+                    {view !== "mobile" ? <br></br> : <></>}
+                    {view !== "mobile" ? <br></br> : <></>}
+                    <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
+                      {view === "desktop" ? <GridItem /> : <></>}
+                      <ReviewBarChartKey view={view} />
+                      {view === "desktop" ? <GridItem /> : <></>}
+                    </GridContainer>
+                    <div>
+                      <div style={{
+                        height: view === "mobile" ? "100%": "auto",
+                        overflowY: view === "mobile" ? "scroll": "",
+                      }}>
+                        <DelayedElement
+                          child={
+                            <FlashcardOverview
+                              flashcardData={todayCards}
+                              setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                              showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                              setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                              setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
+                              setRenameFolderPopupVisible={setRenameFolderPopupVisible}
+                              view={view}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+                          }
+                          childValue={todayCards}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className={view === "mobile" ? "button-panel-container" : ""}
-                      style={{
-                      display: view !== "desktop" ? "block": "flex", 
-                      justifyContent: "space-between",
-                      paddingTop: view === "mobile" ? "" : "16px"
-                    }}
-                    >
-                    <div className={view === "mobile" ? "new-item-button-container" : ""} style={{float: view !== "mobile" ? "left" : "", display: view === "tablet" ? "flex": ""}}>
-                      {view === "mobile" ?
-                        <>
+                    <div className={view === "mobile" ? "button-panel-container" : ""}
+                        style={{
+                        display: view !== "desktop" ? "block": "flex", 
+                        justifyContent: "space-between",
+                        paddingTop: view === "mobile" ? "" : "16px"
+                      }}
+                      >
+                      <div className={view === "mobile" ? "new-item-button-container" : ""} style={{float: view !== "mobile" ? "left" : "", display: view === "tablet" ? "flex": ""}}>
+                        {view === "mobile" ?
+                          <>
+                            <PillGhostButton
+                            text="New Folder"
+                            style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                            onClick={() => {
+                              setCreateFolderDialogueVisible(todayCards);
+                            }}
+                            view={view}
+                            icon={folderIcon}
+                          />
                           <PillGhostButton
-                          text="New Folder"
+                            text="New Set"
+                            style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                            onClick={() => {
+                              setCreateCardDialogueVisible(todayCards);
+                            }}
+                            view={view}
+                            icon={flashcardIcon}
+                          />
+                        </>
+                        : 
+                        <>
+                          <GhostButton
+                          text="+ New Folder"
                           style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
                           onClick={() => {
                             setCreateFolderDialogueVisible(todayCards);
                           }}
                           view={view}
-                          icon={folderIcon}
                         />
-                        <PillGhostButton
-                          text="New Set"
+                        <Button
+                          text="+ New Set"
                           style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
                           onClick={() => {
                             setCreateCardDialogueVisible(todayCards);
                           }}
                           view={view}
-                          icon={flashcardIcon}
                         />
                       </>
-                      : 
-                      <>
-                        <GhostButton
-                        text="+ New Folder"
-                        style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
-                        onClick={() => {
-                          setCreateFolderDialogueVisible(todayCards);
-                        }}
-                        view={view}
-                      />
+                      }
+                      </div>
+                    <div style={{float: view !== "desktop" ? "": "right"}}>
                       <Button
-                        text="+ New Set"
-                        style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
-                        onClick={() => {
-                          setCreateCardDialogueVisible(todayCards);
+                        text="Study Multiple"
+                        disabled={selected.length <= 1}
+                        style={{
+                          paddingTop: "11px",
+                          paddingBottom: "11px",
+                          paddingLeft: "15px",
+                          paddingRight: "15px",
+                          marginLeft: view === "mobile" ? "0px" : ""
                         }}
                         view={view}
+                        onClick={studyMultipleCards}
                       />
-                    </>
-                    }
                     </div>
-                  <div style={{float: view !== "desktop" ? "": "right"}}>
-                    <Button
-                      text="Study Multiple"
-                      disabled={selected.length <= 1}
-                      style={{
-                        paddingTop: "11px",
-                        paddingBottom: "11px",
-                        paddingLeft: "15px",
-                        paddingRight: "15px",
-                        marginLeft: view === "mobile" ? "0px" : ""
-                      }}
-                      view={view}
-                      onClick={studyMultipleCards}
-                    />
                   </div>
                 </div>
-              </div>
+              </MobilePageWrapper>
             </div>
           </WhiteOverlay>
         </GridItem>
