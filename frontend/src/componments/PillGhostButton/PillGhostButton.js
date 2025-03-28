@@ -1,19 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import './GhostButton.css';
+import './PillGhostButton.css';
 
-function GhostButton({ text, disabled = false, onClick = () => {}, style = {}, border = null, icon = null, view }) {
+function PillGhostButton({ text, disabled = false, onClick = () => {}, style = {}, border = null, icon = null, view }) {
     const buttonStyle = {
         border: border,
         ...style,
-        width: view === "mobile" ? "100%" : "auto",
     };
 
     return (
         <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className={disabled ? "ghost-button-disabled" : "ghost-button"}
+            className={disabled ? "pill-ghost-button-disabled" : "pill-ghost-button"}
             onClick={onClick}
             style={buttonStyle}
         >
@@ -23,4 +22,4 @@ function GhostButton({ text, disabled = false, onClick = () => {}, style = {}, b
     );
 }
 
-export default GhostButton;
+export default PillGhostButton;

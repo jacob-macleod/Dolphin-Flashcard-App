@@ -42,12 +42,16 @@ body.dark-theme .fullscreen{
 
   /* Mobile-specific styles */
 @media (max-width: 768px) {
-  .card-container {
+  /*.card-container {
     width: 80%; 
-  }
+  } */
 
   .grid-item {
     padding-left: 0; /* Remove left padding */
     padding-right: 0; /* Remove right padding */
+  }
+
+  .review-bar-chart-wrapper{
+    grid-template-columns: auto;
   }
 }

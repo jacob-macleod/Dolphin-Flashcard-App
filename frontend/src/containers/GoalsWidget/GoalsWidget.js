@@ -7,7 +7,7 @@ import apiManager from '../../api/Api';
 import { getCookie } from '../../api/Authentication';
 import DelayedElement from '../DelayedElement';
 
-function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopupVisible, setEditGoalPopupVisible}) {
+function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopupVisible, setEditGoalPopupVisible, view}) {
     const [goals, setGoals] = useState(null);
 
     function showNewGoalPopup() {
@@ -16,6 +16,11 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
 
     function showEditGoalPopup(goal, id) {
         setEditGoalPopupVisible({id: id, contents: {goal}});
+    }
+    const newGoalsButtonStyle = {
+        marginLeft: view === "mobile" ? "16px" : "0px",
+        marginRight: view === "mobile" ? "16px" : "0px",
+        width: view === "mobile" ? "90%" : "auto"
     }
 
     const panelTitleStyle = {
@@ -34,7 +39,11 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
     return <>
     <WhiteOverlay style={overlayStyle}>
         <Heading5 text="Goals" style={panelTitleStyle} />
-        <Button text="+ New Goal" style={{}} onClick={showNewGoalPopup} />
+
+        <div style={newGoalsButtonStyle}>
+            <Button text="+ New Goal" onClick={showNewGoalPopup} view={view}/>
+        </div>
+
         {goals && Object.keys(goals).length > 0 ? (
           Object.keys(goals).map(goalId => {
               const goal = goals[goalId];

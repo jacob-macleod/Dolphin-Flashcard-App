@@ -2,7 +2,11 @@ import React from 'react';
 import {motion} from 'framer-motion';
 import './Button.css'
 
-function Button({ text, disabled=false, onClick=() => {}, style={}}) {
+function Button({ text, disabled=false, onClick=() => {}, style={}, view="desktop"}) {
+    style = {
+        ...style,
+        width: view === "mobile" ? "100%" : "auto",
+    }
     return (
         <motion.button
             whileHover={{ scale: 1.1 }}

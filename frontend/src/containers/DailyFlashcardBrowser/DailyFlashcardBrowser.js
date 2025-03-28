@@ -28,7 +28,7 @@ const slideVariants = {
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
 
-function DailyFlashcardBrowser({ view }) {
+function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
@@ -55,7 +55,7 @@ function DailyFlashcardBrowser({ view }) {
   }
 
   useEffect(() => {
-    let reviewer = new flashcardReviewer(updatedCardData, saveFlashcards);
+    let reviewer = new flashcardReviewer(updatedCardData, saveFlashcards, setCardsPercentage);
     setCardReviewer(reviewer);
     setCurrentCard(reviewer.next());
   }, [updatedCardData]);
@@ -225,12 +225,18 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
             showResponseOptions={true}
             setResponse={setResponse}
             height={isFullscreen ? '100%' : '264px'}
+            toggleFullscreen={toggleFullscreen}
+            fullscreen={isFullscreen}
+            view={view}
           />
         </div>
         {!isFullscreen &&(
           <div style={{position:"relative",width:"100%"}}>
         <ReviewBarChartKey style={{ paddingTop: '8px' }} />
-        <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>                        
+        {view !== "mobile"  ?
+          <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
+          : <></>
+        }                 
         </div>
         )}
         {!isFullscreen &&(
@@ -241,18 +247,12 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
             notStarted={cardReviewer.countCards().notStarted}
             view={view}
           />
-          <Heading4
+          {view !== "mobile" ? <Heading4
             text={
-              Math.floor(
-                (cardReviewer.learnedCards /
-                  (cardReviewer.countCards().studying +
-                    cardReviewer.countCards().notStarted +
-                    cardReviewer.countCards().recapping)) *
-                  100
-              ) + '%'
+              cardsPercentage
             }
             style={{ padding: '0px' }}
-          />
+          /> : <></>}
         </div>
       )}
         {isFullscreen &&(

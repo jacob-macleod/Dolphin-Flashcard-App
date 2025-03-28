@@ -2,6 +2,13 @@
     padding-top: 16px;
 }
 
+.button-container-mobile{
+    padding-top: 16px;
+    width: calc(100% - 32px);
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
 .card-overview{
     max-height: 250px;
     overflow-y: scroll;

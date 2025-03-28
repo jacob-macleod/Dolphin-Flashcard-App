@@ -99,6 +99,7 @@ function Dashboard() {
             newGoalPopupVisible={newGoalPopupVisible}
             setEditGoalPopupVisible={setEditGoalPopupVisible}
             editGoalPopupVisible={editGoalPopupVisible}
+            view={view}
           />
 
           {view != "desktop" ?
