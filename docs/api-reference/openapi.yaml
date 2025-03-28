@@ -2078,7 +2078,6 @@ paths:
               required:
                 - file
                 - jwtToken
-                - folder
                 - flashcardName
               properties:
                 file:
@@ -2091,7 +2090,8 @@ paths:
                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIxMjM0NSJ9.abc123..."
                 folder:
                   type: string
-                  description: Folder path to store the flashcards
+                  description: Folder path to store the flashcards (empty string for root)
+                  default: ""
                   example: "Languages/Spanish"
                 flashcardName:
                   type: string
@@ -2102,20 +2102,20 @@ paths:
                   description: Optional description for the flashcard set
                   example: "Imported from Anki deck"
                 termField:
-                  type: integer
-                  description: Index of the term field (0-based)
-                  default: 0
-                  example: 0
+                  type: string
+                  description: Term field name (e.g., "Front") or index (0-based integer)
+                  default: "Front"
+                  example: "Front"
                 definitionField:
-                  type: integer
-                  description: Index of the definition field (0-based)
-                  default: 1
-                  example: 1
+                  type: string
+                  description: Definition field name (e.g., "Back") or index (0-based integer)
+                  default: "Back"
+                  example: "Back"
                 stripHtml:
-                  type: boolean
-                  description: Whether to remove HTML tags from fields
-                  default: true
-                  example: true
+                  type: string
+                  description: Whether to remove HTML tags from fields ("true" or "false" as string)
+                  default: "true"
+                  example: "true"
       responses:
         '200':
           description: Successfully imported flashcards
@@ -2141,6 +2141,7 @@ paths:
                       noFile: "No file provided"
                       invalidFormat: "Invalid Anki file format"
                       exists: "Flashcard set name already exists"
+                      noValidCards: "No valid flashcards found. Possible reasons:\n1. Incorrect field selection\n2. All content was removed during HTML stripping\n3. Unsupported Anki note type"
         '500':
           description: Internal server error
           content:

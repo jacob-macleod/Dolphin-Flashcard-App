@@ -908,7 +908,7 @@ def import_anki_flashcards(user_id):
             return jsonify({'error': 'No file uploaded'}, 400)
 
         # Extract form parameters with default values
-        folder = request.form.get("folder")
+        folder = request.form.get("folder", "")
         flashcard_name = request.form.get("flashcardName")
         flashcard_description = request.form.get("flashcardDescription", "")
         term_field = request.form.get("termField", "Front")
@@ -916,8 +916,8 @@ def import_anki_flashcards(user_id):
         strip_html = request.form.get("stripHtml", "true").lower() == "true"
 
         # Validate required parameters
-        if not folder or not flashcard_name:
-            return jsonify({'error': 'Missing folder or flashcard name'}, 400)
+        if not flashcard_name:
+            return jsonify({'error': 'Missing flashcard name'}, 400)
 
         # Regex for cleaning media and HTML content
         media_regex = re.compile(

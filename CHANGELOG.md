@@ -21,7 +21,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-## 6.9.0 - 2025-03-26
+## 6.10.0 - 2025-03-28
 
 ### Added
 
