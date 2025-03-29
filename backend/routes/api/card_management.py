@@ -8,9 +8,16 @@ import re
 import datetime
 from bs4 import BeautifulSoup
 from routes.api.validation_wrapper import validate_json
+from routes.api.validation_wrapper import validate_form
 from routes.api.regex_patterns import REVIEW_STATUS_REGEX, DATE_REGEX, QUIZLET
 from classes.card_collection import FlashcardCollection
 import csv
+import os
+import tempfile
+import zipfile
+import sqlite3
+import json
+import html
 
 card_management_routes = Blueprint("card_management_routes", __name__)
 
@@ -79,6 +86,17 @@ IMPORT_FROM_QUIZLET_FORMAT = {
     "term_def_separator": "",
     "term_separator": "",
     "flashcard_name": "",
+}
+
+IMPORT_ANKI_FLASHCARDS_FORMAT = {
+    "jwtToken": "",
+    "file": "",
+    "folder": "",
+    "flashcardName": "",
+    "flashcardDescription": "",
+    "termField": "",
+    "definitionField": "",
+    "stripHtml": ""
 }
 
 
@@ -878,3 +896,199 @@ def import_flashcards():
         return jsonify({"flashcardID": flashcard_id}, 200)
     except Exception as e:
         return jsonify(str(e)), 500
+
+@card_management_routes.route("/api/import-anki-flashcards", methods=["POST"])
+@validate_form(IMPORT_ANKI_FLASHCARDS_FORMAT)
+def import_anki_flashcards(user_id):
+    """Import flashcards from an Anki .apkg file with enhanced parsing"""
+    try:
+        # Validate file upload
+        file = request.files.get("file")
+        if not file:
+            return jsonify({'error': 'No file uploaded'}, 400)
+
+        # Extract form parameters with default values
+        folder = request.form.get("folder", "")
+        flashcard_name = request.form.get("flashcardName")
+        flashcard_description = request.form.get("flashcardDescription", "")
+        term_field = request.form.get("termField", "Front")
+        definition_field = request.form.get("definitionField", "Back")
+        strip_html = request.form.get("stripHtml", "true").lower() == "true"
+
+        # Validate required parameters
+        if not flashcard_name:
+            return jsonify({'error': 'Missing flashcard name'}, 400)
+
+        # Regex for cleaning media and HTML content
+        media_regex = re.compile(
+            r'<.*?>|'          # HTML tags
+            r'\[sound:.*?\]|'  # Anki sound references
+            r'\[image:.*?\]|'  # Anki image references
+            r'\{\{c\d+::.*?\}\}'  # Cloze deletions
+        )
+
+        # Create temporary directory for file processing
+        with tempfile.TemporaryDirectory() as tmpdir:
+            # Save and extract Anki package
+            apkg_path = os.path.join(tmpdir, 'deck.apkg')
+            file.save(apkg_path)
+            
+            try:
+                with zipfile.ZipFile(apkg_path, 'r') as zip_ref:
+                    zip_ref.extractall(tmpdir)
+            except zipfile.BadZipFile:
+                return jsonify({'error': 'Invalid Anki package file'}, 400)
+
+            # Find newest collection file
+            collection_files = sorted(
+                [f for f in os.listdir(tmpdir) if f.startswith('collection')],
+                reverse=True
+            )
+            if not collection_files:
+                return jsonify({'error': 'Invalid Anki file format'}, 400)
+            
+            # Connect to SQLite database
+            try:
+                conn = sqlite3.connect(os.path.join(tmpdir, collection_files[0]))
+                cursor = conn.cursor()
+
+                # Get model configuration
+                cursor.execute("SELECT models FROM col")
+                models_data = cursor.fetchone()
+                models = json.loads(models_data[0]) if models_data else {}
+                conn.close()
+            except (sqlite3.Error, json.JSONDecodeError) as db_error:
+                print(f"Database connection error: {db_error}")
+                return jsonify({'error': 'Failed to read Anki database'}, 500)
+
+            # Process cards
+            cards = []
+            try:
+                conn = sqlite3.connect(os.path.join(tmpdir, collection_files[0]))
+                cursor = conn.cursor()
+                cursor.execute('SELECT notes.id, notes.mid, notes.flds, notes.sfld FROM notes')
+                
+                for note_id, model_id, flds_str, sfld in cursor.fetchall():
+                    try:
+                        model = models.get(str(model_id), {})
+                        field_names = [f['name'] for f in model.get('flds', [])]
+                        separator = model.get('separator', '\x1f')
+                        fields = flds_str.split(separator) if flds_str else []
+
+                        # Map fields by name or index
+                        field_values = {}
+                        for i, name in enumerate(field_names):
+                            field_values[name] = fields[i] if i < len(fields) else ""
+                        
+                        # Get term/definition using field names or indices
+                        term = field_values.get(term_field) if term_field in field_values else (
+                            fields[int(term_field)] if term_field.isdigit() and int(term_field) < len(fields) else sfld or ""
+                        )
+                        definition = field_values.get(definition_field) if definition_field in field_values else (
+                            fields[int(definition_field)] if definition_field.isdigit() and int(definition_field) < len(fields) else ""
+                        )
+
+                        # Clean content
+                        if strip_html:
+                            term = media_regex.sub('', html.unescape(term)).strip()
+                            definition = media_regex.sub('', html.unescape(definition)).strip()
+
+                        # Validate required fields
+                        if not term and not definition:
+                            continue
+                        if not term:
+                            term = "[Empty Front]"
+                        if not definition:
+                            definition = "[Empty Back]"
+
+                        cards.append({
+                            "front": term,
+                            "back": definition
+                        })
+                    except Exception as card_error:
+                        print(f"Error processing individual card: {card_error}")
+                        continue
+
+                conn.close()
+            except Exception as processing_error:
+                print(f"Error during card processing: {processing_error}")
+                return jsonify({'error': 'Failed to process Anki cards'}, 500)
+
+            # Validate cards
+            if not cards:
+                return jsonify({
+                    'error': 'No valid flashcards found. Possible reasons:\n'
+                             '1. Incorrect field selection\n'
+                             '2. All content was removed during HTML stripping\n'
+                             '3. Unsupported Anki note type'
+                }), 400
+
+            # Prepare database operations
+            try:
+                # Generate unique flashcard ID
+                flashcard_id = hash_to_numeric(user_id + folder + flashcard_name)
+                
+                # Check if flashcard set already exists
+                if db.folders.flashcard_exists(user_id, flashcard_id):
+                    return jsonify({"error": "Flashcard set name already exists"}, 400)
+
+                # Generate card IDs
+                card_ids = [
+                    hash_to_numeric(user_id + folder + flashcard_name + card["front"])
+                    for card in cards
+                ]
+
+                # Detailed logging of database operations
+                print(f"Creating flashcard set: {flashcard_id}")
+                db.flashcard_set.create_flashcard_set(
+                    flashcard_id=flashcard_id,
+                    flashcard_name=flashcard_name,
+                    flashcard_description=flashcard_description,
+                    card_ids=card_ids,
+                    user_id=user_id,
+                )
+
+                print(f"Creating {len(cards)} flashcards")
+                db.flashcards.create_flashcards(card_ids, cards)
+
+                print(f"Adding flashcards to folder: {folder}")
+                db.folders.add_flashcard_to_folder(
+                    user_id=user_id,
+                    folder=folder,
+                    flashcard_id=flashcard_id,
+                    flashcard_name=flashcard_name,
+                    card_ids=card_ids,
+                )
+
+                print("Giving user access")
+                db.read_write_access.give_user_access(user_id, flashcard_id)
+
+                # Success response
+                print(f"Successfully imported flashcard set: {flashcard_id}")
+                return jsonify({"flashcardID": flashcard_id}, 200)
+
+            except Exception as db_operation_error:
+                # Comprehensive error logging
+                import traceback
+                print("Database operation error:")
+                print(f"Error type: {type(db_operation_error)}")
+                print(f"Error details: {str(db_operation_error)}")
+                traceback.print_exc()
+
+                return jsonify({
+                    "error": "Anki import processing failed", 
+                    "details": str(db_operation_error)
+                }, 500)
+
+    except Exception as unexpected_error:
+        # Catch any unexpected errors
+        import traceback
+        print("Unexpected error during Anki import:")
+        print(f"Error type: {type(unexpected_error)}")
+        print(f"Error details: {str(unexpected_error)}")
+        traceback.print_exc()
+
+        return jsonify({
+            "error": "Unexpected error during Anki import", 
+            "details": str(unexpected_error)
+        }, 500)
