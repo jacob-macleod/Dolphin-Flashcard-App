@@ -7,6 +7,16 @@
   height: 100vh;
 }
 
+.grid-container-mobile {
+  display: grid;
+  z-index: 2;
+  position: relative;
+  width: calc(100vw - 85px);
+  height: 100%;
+  overflow-y: scroll;
+  width: 100%;
+}
+
 .centered-grid-container {
   display: grid;
   z-index: 2;

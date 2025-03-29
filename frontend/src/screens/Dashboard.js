@@ -85,12 +85,13 @@ function Dashboard() {
       <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} view={view}/>
 
       <MobilePageWrapper view={view} itemClicked="dashboard">
-        <p>Hello</p>
       <GridContainer layout={
         view == "desktop" ? "240px 400px auto"
         : view == "tablet" ? "240px auto"
         : "auto"
-      }>
+      }
+      classType={view === "mobile" ? "grid-container-mobile" : "grid-container"}
+      >
         {view != "mobile" ? <SidePanel selectedItem="dashboard"/> : <></>}
         <GridItem style={{padding: "0px", width: view == "mobile" ? "100vw" : "100%"}}>
           {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="dashboard"/> : <></>}
