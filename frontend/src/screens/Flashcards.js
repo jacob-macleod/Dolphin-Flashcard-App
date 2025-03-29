@@ -145,7 +145,7 @@ function Flashcards() {
             visible={view == "mobile" ? false : true}
           >
             <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
-                <MobilePageWrapper view={view}>
+                <MobilePageWrapper view={view} itemClicked="flashcards">
                   <div className={view === "mobile" ? "flashcards-page-content": ""}>
 
                     {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" /> : <></>}

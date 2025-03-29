@@ -9,10 +9,34 @@
 
 }
 
-.nav-bar-item-text {
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.nav-bar-item-text {
+    display: inline-flex;
+    font-size: 12px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    font-family: Roboto;
+    color: var(--Grey-Text-Colour, #747474)
 }
 
 .nav-bar-item-active {
 
+}
+
+.nav-bar-item, .nav-bar-item-active{
+    width: 100%;
+}
+
+.nav-bar {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    z-index: 5;
 }

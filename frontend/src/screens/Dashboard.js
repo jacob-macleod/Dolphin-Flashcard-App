@@ -14,6 +14,7 @@ import GoalsWidget from '../containers/GoalsWidget/GoalsWidget';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import Heatmap from '../containers/Heatmap/Heatmap';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
 import { getCookie } from '../api/Authentication';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -83,6 +84,8 @@ function Dashboard() {
       <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} view={view}/>
       <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} view={view}/>
 
+      <MobilePageWrapper view={view} itemClicked="dashboard">
+        <p>Hello</p>
       <GridContainer layout={
         view == "desktop" ? "240px 400px auto"
         : view == "tablet" ? "240px auto"
@@ -114,8 +117,9 @@ function Dashboard() {
           {third_collum}
         </GridItem>
         : <></>}
-=      </GridContainer>
-    <BlobBackground />
+      </GridContainer>
+      </MobilePageWrapper>
+    {view !== "mobile" ? <BlobBackground /> : <></>}
     </div>
   );
 }
