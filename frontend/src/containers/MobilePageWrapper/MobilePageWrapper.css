@@ -37,4 +37,5 @@
     grid-template-columns: auto auto auto auto auto;
     z-index: 5;
     padding-top: 8px;
+    background-color: white;
 }

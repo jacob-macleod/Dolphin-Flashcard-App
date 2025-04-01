@@ -26,6 +26,8 @@
     padding-left: 8px;
     padding-right: 8px;
     box-sizing: border-box;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .desktop-page-container{

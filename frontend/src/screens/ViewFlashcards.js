@@ -16,6 +16,7 @@ import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
 import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
 import "../componments/Text/Link/Link.css";
 import './ViewFlashcards.css';
 
@@ -89,79 +90,82 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
             paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
             paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
             paddingTop: "0px",
+            paddingBottom: view === "mobile" ? "0px" : "32px",
             width: view === "mobile" ? "100%" : "",
             display: view === "mobile" ? "block" : "flex",
             flexDirection: "row",
             justifyContent: "center",
           }}
         >
-          <div className={view === "mobile" ? "mobile-page-container" : "desktop-page-container"}>
-            {view === "mobile" ? (
-              <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />
-            ) : (
-              <></>
-            )}
+          <MobilePageWrapper view={view} itemClicked="flashcards">
+            <div className={view === "mobile" ? "mobile-page-container" : "desktop-page-container"}>
+              {view === "mobile" ? (
+                <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />
+              ) : (
+                <></>
+              )}
 
-            <WhiteOverlay
-              style={{
-                height: "max-content",
-                paddingBottom: view === "mobile" ? "80px" : "",
-                width: view === "desktop" ? "100%" : "calc(100% - 16px)"
-              }}
-              visible={view == "mobile" ? false : true}
-            >
-              <FlashcardHeader
-                newSet={false}
-                flashcardName={
-                  flashcardName && flashcardName[0] ? flashcardName[0] : ""
-                }
-                folder={folder !== undefined ? folder[0] : undefined}
-                type={"studyFlashcard"}
-                flashcardID={flashcardID}
-                numberStudying={flashcardName ? flashcardName.length : 0}
-              />
-              <div style={{ maxWidth: "548px", margin: "auto" }}>
-                <div className="mode-selector-container">
-                  <p
-                    className={mode === "daily" ? "link" : "inactive-link"}
-                    onClick={() => {
-                      setMode("daily");
-                    }}
-                  >
-                    Your Daily Dose
-                  </p>
-                  <p
-                    className={mode === "total" ? "link" : "inactive-link"}
-                    onClick={() => {
-                      setMode("total");
-                    }}
-                  >
-                    All Cards
-                  </p>
+              <WhiteOverlay
+                style={{
+                  height: "max-content",
+                  paddingBottom: view === "mobile" ? "80px" : "",
+                  width: view === "desktop" ? "100%" : "calc(100% - 16px)"
+                }}
+                visible={view == "mobile" ? false : true}
+              >
+                <FlashcardHeader
+                  newSet={false}
+                  flashcardName={
+                    flashcardName && flashcardName[0] ? flashcardName[0] : ""
+                  }
+                  folder={folder !== undefined ? folder[0] : undefined}
+                  type={"studyFlashcard"}
+                  flashcardID={flashcardID}
+                  numberStudying={flashcardName ? flashcardName.length : 0}
+                />
+                <div style={{ maxWidth: "548px", margin: "auto" }}>
+                  <div className="mode-selector-container">
+                    <p
+                      className={mode === "daily" ? "link" : "inactive-link"}
+                      onClick={() => {
+                        setMode("daily");
+                      }}
+                    >
+                      Your Daily Dose
+                    </p>
+                    <p
+                      className={mode === "total" ? "link" : "inactive-link"}
+                      onClick={() => {
+                        setMode("total");
+                      }}
+                    >
+                      All Cards
+                    </p>
+                  </div>
+
+                  <div className={view === "mobile" ? "study-mode-container" : ""}>
+                    <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
+                    {view === "mobile" ? <Heading4 text={cardsPercentage} /> : <></>}
+                  </div>
+
+                  {mode === "daily"
+                    ? <DailyFlashcardBrowser view={view} setCardsPercentage={setCardsPercentage} cardsPercentage={cardsPercentage}/>
+                    : <TotalFlashcardBrowser
+                        folder={folder}
+                        flashcardName={flashcardName}
+                        flashcardID={flashcardID}
+                      />
+                  }
+
+                  <Heading4 text="Other modes" />
+                  <div className={view === "mobile" ? "button-container-mobile" : 'button-container'}>
+                    <Button text="Generate Quiz" disabled={true} view={view}/>
+                    <Button text="Match Mode" disabled={true} view={view}/>
+                  </div>
                 </div>
-
-                <div className={view === "mobile" ? "study-mode-container" : ""}>
-                  <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
-                  {view === "mobile" ? <Heading4 text={cardsPercentage} /> : <></>}
-                </div>
-
-                {mode === "daily"
-                  ? <DailyFlashcardBrowser view={view} setCardsPercentage={setCardsPercentage} cardsPercentage={cardsPercentage}/>
-                  : <TotalFlashcardBrowser
-                      folder={folder}
-                      flashcardName={flashcardName}
-                      flashcardID={flashcardID}
-                    />
-                }
-
-                <Heading4 text="Other modes" />
-                <div className={view === "mobile" ? "button-container-mobile" : 'button-container'}>
-                  <Button text="Generate Quiz" disabled={true} view={view}/>
-                  <Button text="Match Mode" disabled={true} view={view}/>
-                </div>
-              </div>
-            </WhiteOverlay>
-          </div>
+              </WhiteOverlay>
+            </div>
+          </MobilePageWrapper>
         </GridItem>
       </GridContainer>
       <BlobBackground />
