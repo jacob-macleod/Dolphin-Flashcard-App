@@ -1,11 +1,12 @@
 .mobile-page-grid-container{
     display: grid;
-    grid-template-rows: calc(100vh - 71px) 71px;
+    grid-template-rows: calc(100vh - 84px) 84px;
     height: 100%;
     overflow-y: hidden;
 }
 
-.nav-bar-item {
+.nav-bar-item, .nav-bar-item-active  {
+    text-align: center;
 
 }
 
@@ -26,10 +27,6 @@
     color: var(--Grey-Text-Colour, #747474)
 }
 
-.nav-bar-item-active {
-
-}
-
 .nav-bar-item, .nav-bar-item-active{
     width: 100%;
 }
@@ -39,4 +36,5 @@
     display: grid;
     grid-template-columns: auto auto auto auto auto;
     z-index: 5;
+    padding-top: 8px;
 }
