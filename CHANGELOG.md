@@ -22,6 +22,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.10.0 - 2025-04-06
+
+### Changed
+
+- Replaced HamburgerBar with MobileNavBar
+- Changed app icon for when app is installed as a PWA
+
 ## 6.9.0 - 2025-03-27
 
 ### Changed
