@@ -5,8 +5,6 @@ import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
-import SidePanel from '../containers/SidePanel/SidePanel';
-import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
@@ -15,6 +13,8 @@ import Heading5 from '../componments/Text/Heading5';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import Button from '../componments/Button';
 import FlashcardSearchResult from '../containers/FlashcardSearchResult';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
+import SidePanel from '../containers/SidePanel/SidePanel';
 
 import apiManager from '../api/Api';
 
@@ -70,12 +70,13 @@ function SearchForFlashcard() {
       </Helmet>
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" ? <SidePanel selectedItem="community"/> : <></>}
+        {view !== "mobile" ? <SidePanel /> : <></>}
 
         <GridItem
           style={{
-            paddingLeft: flashcardBoxHorizontalPadding,
-            paddingRight: flashcardBoxHorizontalPadding,
+            paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingBottom: view === "mobile" ? "0px" : "32px",
             paddingTop: "0px",
             width: view === "mobile" ? "100vw" : "",
             display: view === "mobile" ? "block" : "flex",
@@ -83,10 +84,10 @@ function SearchForFlashcard() {
             justifyContent: "center",
           }}
         >
-          {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="community" /> : <></>}
 
+          <MobilePageWrapper view={view} itemClicked="community">
 
-            <div style={{margin: "auto", maxWidth: "487px" }}>
+            <div className={view === "mobile" ? "community-page-wrapper-mobile" : "community-page-wrapper"}>
               <div>
                 <Heading4 text="Find flashcards created by fellow learners" />
                 <div className={view === "desktop" ? "search-bar" : "search-bar-mobile"}>
@@ -119,6 +120,7 @@ function SearchForFlashcard() {
                 }
               </div>
             </div>
+          </MobilePageWrapper>
         </GridItem>
       </GridContainer>
       <BlobBackground />

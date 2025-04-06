@@ -7,12 +7,12 @@ import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import Heading3 from '../componments/Text/Heading3';
 import Paragraph from '../componments/Text/Paragraph';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
 
 function PageNotFound() {
   // Set general variables
@@ -44,8 +44,9 @@ function PageNotFound() {
 
         <GridItem
           style={{
-            paddingLeft: flashcardBoxHorizontalPadding,
-            paddingRight: flashcardBoxHorizontalPadding,
+            paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingBottom: view === "mobile" ? "0px" : "32px",
             paddingTop: "0px",
             width: view === "mobile" ? "100vw" : "",
             display: view === "mobile" ? "block" : "flex",
@@ -53,7 +54,6 @@ function PageNotFound() {
             justifyContent: "center",
           }}
         >
-          {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} /> : <></>}
 
           <WhiteOverlay
             style={{
@@ -61,11 +61,14 @@ function PageNotFound() {
               paddingBottom: view === "mobile" ? "80px" : "",
               width: view === "desktop" ? "100%" : "calc(100% - 16px)",
             }}
+            visible={view === "mobile" ? false : true}
           >
-            <div style={{ maxWidth: "1200px", margin: "auto" }}>
-              <Heading3 text="We're sorry..." />
-              <Paragraph text="The page you are looking for does not exist yet!" />
-            </div>
+            <MobilePageWrapper view={view} itemClicked="">
+              <div style={{ maxWidth: "1200px", margin: "auto" }}>
+                <Heading3 text="We're sorry..." />
+                <Paragraph text="The page you are looking for does not exist yet!" />
+              </div>
+            </MobilePageWrapper>
           </WhiteOverlay>
         </GridItem>
       </GridContainer>

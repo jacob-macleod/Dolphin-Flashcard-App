@@ -12,8 +12,8 @@ import Heading4 from '../componments/Text/Heading4/Heading4';
 import StreakWidget from '../containers/StreakWidget/StreakWidget';
 import GoalsWidget from '../containers/GoalsWidget/GoalsWidget';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import Heatmap from '../containers/Heatmap/Heatmap';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
 import { getCookie } from '../api/Authentication';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -83,14 +83,16 @@ function Dashboard() {
       <NewGoalPopup visible={newGoalPopupVisible} setVisible={setNewGoalPopupVisible} view={view}/>
       <EditGoalPopup visible={editGoalPopupVisible} setVisible={setEditGoalPopupVisible} view={view}/>
 
+      <MobilePageWrapper view={view} itemClicked="dashboard">
       <GridContainer layout={
         view == "desktop" ? "240px 400px auto"
         : view == "tablet" ? "240px auto"
         : "auto"
-      }>
+      }
+      classType={view === "mobile" ? "grid-container-mobile" : "grid-container"}
+      >
         {view != "mobile" ? <SidePanel selectedItem="dashboard"/> : <></>}
         <GridItem style={{padding: "0px", width: view == "mobile" ? "100vw" : "100%"}}>
-          {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="dashboard"/> : <></>}
           <Heading4 text={userWelcomeText} />
           <StreakWidget />
 
@@ -114,8 +116,9 @@ function Dashboard() {
           {third_collum}
         </GridItem>
         : <></>}
-=      </GridContainer>
-    <BlobBackground />
+      </GridContainer>
+      </MobilePageWrapper>
+    {view !== "mobile" ? <BlobBackground /> : <></>}
     </div>
   );
 }
