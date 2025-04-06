@@ -20,6 +20,7 @@ import FlashcardSort from '../containers/FlashcardSort';
 import useWindowSize from '../hooks/useWindowSize';
 import useFlashcardData from '../hooks/useFlashcardData';
 import DelayedElement from '../containers/DelayedElement';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
 import { getCookie } from '../api/Authentication';
 import './EditFlashcard.css';
 import '../containers/Modal/NewGoalPopup/NewGoalPopup.css';
@@ -114,63 +115,68 @@ function Flashcards() {
       />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" && <SidePanel selectedItem="flashcards" />}
+        {/* {view !== "mobile" && <SidePanel selectedItem="flashcards" />} */}
 
         <GridItem style={{
-          paddingLeft: flashcardBoxHorizontalPadding,
-          paddingRight: flashcardBoxHorizontalPadding,
+          paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+          paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
           paddingTop: "0px",
-          width: view === "mobile" ? "100vw" : "",
+          width: view === "mobile" ? "100%" : "",
           display: view === "mobile" ? "block" : "flex",
           flexDirection: "row",
           justifyContent: "center",
+          paddingBottom: view === "mobile" ? "0px" : "32px",
         }}>
-          {view === "mobile" && <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />}
+          <MobilePageWrapper view={view} itemClicked="flashcards">
+            <div className={view === "mobile" ? "mobile-edit-flashcard-page-container" : ""}>
+              {view === "mobile" && <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />}
 
-          <WhiteOverlay
-            style={{
-              height: "max-content",
-              padding: "16px",
-              paddingBottom: view === "mobile" ? "80px" : "",
-              width: view === "desktop" ? "100%" : "calc(100% - 16px)"
-            }}
-          >
-            <div style={{ maxWidth: "1200px", margin: "auto" }}>
-              <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} flashcardID={flashcardID}/>
-              <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
-              <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} />
+              <WhiteOverlay
+                style={{
+                  height: "max-content",
+                  padding: "16px",
+                  paddingBottom: view === "mobile" ? "80px" : "",
+                  width: view === "desktop" ? "100%" : "calc(100% - 16px)"
+                }}
+              >
+                <div style={{ maxWidth: "1200px", margin: "auto" }}>
+                  <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} flashcardID={flashcardID}/>
+                  <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
+                  <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} />
 
-              <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} />
+                  <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} />
 
-              <div className='two-column-text'>
-                <BoldParagraph text="Term:" />
-                <BoldParagraph text="Definition:" />
-              </div>
+                  <div className='two-column-text'>
+                    <BoldParagraph text="Term:" />
+                    <BoldParagraph text="Definition:" />
+                  </div>
 
-              {
-              flashcardData === null
-                ? <div className={"loading-icon-wrapper"}>
-                  <DelayedElement child={<></>} childValue={null} />
+                  {
+                  flashcardData === null
+                    ? <div className={"loading-icon-wrapper"}>
+                      <DelayedElement child={<></>} childValue={null} />
+                    </div>
+                    : flashcardData.cards?.length !== 0 && flashcardItemsFiltered?.length !== 0
+                      ? flashcardItemsFiltered.map((item) => (
+                        <FlashcardRow
+                          key={item.id}
+                          cardID={item.cardID}
+                          front={item.front}
+                          back={item.back}
+                          flashcardID={flashcardData.flashcard_id}
+                          view={view}
+                          showEditPopup={setEditFlashcardPopupVisible}
+                          setInitialTerm={setInitialTerm}
+                          setInitialDefinition={setInitialDefinition}
+                          setReload={setReload}
+                        />
+                      ))
+                      : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />
+                  }
                 </div>
-                : flashcardData.cards?.length !== 0 && flashcardItemsFiltered?.length !== 0
-                  ? flashcardItemsFiltered.map((item) => (
-                    <FlashcardRow
-                      key={item.id}
-                      cardID={item.cardID}
-                      front={item.front}
-                      back={item.back}
-                      flashcardID={flashcardData.flashcard_id}
-                      view={view}
-                      showEditPopup={setEditFlashcardPopupVisible}
-                      setInitialTerm={setInitialTerm}
-                      setInitialDefinition={setInitialDefinition}
-                      setReload={setReload}
-                    />
-                  ))
-                  : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />
-              }
+              </WhiteOverlay>
             </div>
-          </WhiteOverlay>
+          </MobilePageWrapper>
         </GridItem>
       </GridContainer>
       <BlobBackground />
