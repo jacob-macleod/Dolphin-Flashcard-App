@@ -99,11 +99,6 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
         >
           <MobilePageWrapper view={view} itemClicked="flashcards">
             <div className={view === "mobile" ? "mobile-page-container" : "desktop-page-container"}>
-              {view === "mobile" ? (
-                <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />
-              ) : (
-                <></>
-              )}
 
               <WhiteOverlay
                 style={{

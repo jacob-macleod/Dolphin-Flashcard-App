@@ -8,7 +8,6 @@ import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview';
 import DelayedElement from '../containers/DelayedElement';
 import Button from '../componments/Button';
@@ -147,9 +146,6 @@ function Flashcards() {
             <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
                 <MobilePageWrapper view={view} itemClicked="flashcards">
                   <div className={view === "mobile" ? "flashcards-page-content": ""}>
-
-                    {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" /> : <></>}
-
 
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"}/>
                     {view !== "mobile" ? <br></br> : <></>}

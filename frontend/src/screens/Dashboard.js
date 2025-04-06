@@ -12,7 +12,6 @@ import Heading4 from '../componments/Text/Heading4/Heading4';
 import StreakWidget from '../containers/StreakWidget/StreakWidget';
 import GoalsWidget from '../containers/GoalsWidget/GoalsWidget';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import Heatmap from '../containers/Heatmap/Heatmap';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
 import { getCookie } from '../api/Authentication';
@@ -94,7 +93,6 @@ function Dashboard() {
       >
         {view != "mobile" ? <SidePanel selectedItem="dashboard"/> : <></>}
         <GridItem style={{padding: "0px", width: view == "mobile" ? "100vw" : "100%"}}>
-          {view == "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="dashboard"/> : <></>}
           <Heading4 text={userWelcomeText} />
           <StreakWidget />
 

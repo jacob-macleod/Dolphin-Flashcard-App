@@ -115,13 +115,13 @@ function Flashcards() {
       />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" && <SidePanel selectedItem="flashcards" />}
+        {/* {view !== "mobile" && <SidePanel selectedItem="flashcards" />} */}
 
         <GridItem style={{
-          paddingLeft: flashcardBoxHorizontalPadding,
-          paddingRight: flashcardBoxHorizontalPadding,
+          paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+          paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
           paddingTop: "0px",
-          width: view === "mobile" ? "100vw" : "",
+          width: view === "mobile" ? "100%" : "",
           display: view === "mobile" ? "block" : "flex",
           flexDirection: "row",
           justifyContent: "center",
