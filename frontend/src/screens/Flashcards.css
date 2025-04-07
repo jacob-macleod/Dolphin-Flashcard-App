@@ -17,4 +17,5 @@
     grid-template-rows: 48px 32px minmax(200px, auto) 180px;
     height: 100%;
     padding: 0px 16px;
+    overflow-y: scroll;
 }

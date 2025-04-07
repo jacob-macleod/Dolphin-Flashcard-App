@@ -1,7 +1,7 @@
 .mobile-page-grid-container{
     display: grid;
-    grid-template-rows: calc(100vh - 84px) 84px;
-    height: 100%;
+    grid-template-rows: calc(100dvh - 84px) 84px;
+    height: 100dvh;
     overflow-y: hidden;
 }
 
@@ -38,4 +38,11 @@
     z-index: 5;
     padding-top: 8px;
     background-color: white;
+}
+
+.nav-bar-wrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    z-index: 2;
 }
