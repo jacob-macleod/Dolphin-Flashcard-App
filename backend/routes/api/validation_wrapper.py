@@ -56,3 +56,52 @@ def validate_json(expected_format):
         return wrapper
 
     return decorator
+
+def validate_form(expected_format):
+    """Wrapper function to validate the form data of a request
+
+    Args:
+        expected_format (dict): The expected form format
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            try:
+                if not request.form:
+                    return jsonify({"error": "No form data provided"}), 400
+                
+                for key in expected_format:
+                    if key != "file" and key not in request.form and expected_format[key] != "":
+                        return jsonify({
+                            "error": f"Missing field: {key}. The request should be in the format: {str(expected_format)}"
+                        }), 400
+                
+                if "file" in expected_format and "file" not in request.files:
+                    return jsonify({
+                        "error": f"Missing file. The request should include a file."
+                    }), 400
+                
+                if "jwtToken" in expected_format:
+                    jwt = JwtHandler()
+                    jwt_token = request.form.get("jwtToken")
+                    decoded_token = jwt.decode(jwt_token)
+
+                    if decoded_token is None:
+                        return (
+                            jsonify({"error": f"Invalid JWT token '{jwt_token}'"}),
+                            403,
+                        )
+
+                    user_id = decoded_token["userID"]
+
+                    
+                    kwargs["user_id"] = user_id
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
+
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
