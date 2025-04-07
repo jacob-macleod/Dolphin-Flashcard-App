@@ -21,6 +21,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 6.12.0 - 2025-04-07
+
+### Added
+
+- Added the mechanism for resetting the weeklyXP at the start of a new week
+
 ## 6.10.0 - 2025-03-28
 
 ### Added

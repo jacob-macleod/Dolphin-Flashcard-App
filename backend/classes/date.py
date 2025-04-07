@@ -1,6 +1,6 @@
 """ Contains functions to manage dates"""
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class Date:
@@ -26,3 +26,11 @@ class Date:
 
         # Return the difference in days
         return difference.days
+
+    def get_week_start_date(self):
+        """
+        Returns the start of the current week (Monday) in DD/MM/YYYY format.
+        """
+        today = datetime.now()
+        start_of_week = today - timedelta(days=today.weekday())
+        return start_of_week.strftime("%d/%m/%Y")

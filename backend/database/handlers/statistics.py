@@ -36,12 +36,30 @@ class Statistics(DatabaseHandler):
         )
 
     def get_stats(self, user_id: str):
-        """Get the statistics for a user
+        """Get the statistics for a user and reset weekly XP if needed.
 
         Args:
             user_id (str): The user ID to get the statistics for
         """
-        return self._context.collection(self._db_name).document(user_id).get().to_dict()
+        stats = self._context.collection(self._db_name).document(user_id).get().to_dict()
+
+        if not stats:
+            raise ValueError("User does not exist!")
+
+        # Get the current server-side week start date (Monday)
+        current_week_start = self._date.get_week_start_date() 
+
+        # Check if we need to reset weekly XP
+        last_xp_reset = stats.get("lastXPReset", None)
+
+        if last_xp_reset != current_week_start:
+            stats["weeklyXP"] = 0
+            stats["lastXPReset"] = current_week_start
+
+            # Only update if the reset is actually needed
+            self._context.collection(self._db_name).document(user_id).set(stats)
+
+        return stats
 
     def update_heatmap(
         self, user_id: str, today: str, user_data: dict = None, save_to_database=True
