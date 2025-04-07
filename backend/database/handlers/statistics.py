@@ -32,6 +32,7 @@ class Statistics(DatabaseHandler):
                 "weeklyXP": 0,
                 "totalXP": 0,
                 "heatmap_data": {today: "1"},
+                "lastXPReset": self._date.get_week_start_date(),
             }
         )
 
