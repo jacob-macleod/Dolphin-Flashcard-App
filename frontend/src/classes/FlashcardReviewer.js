@@ -281,6 +281,9 @@ class FlashcardReviewer {
         }
 
         this._currentCollection = "recapping";
+        console.log(this._unlearnedCards);
+        console.log(this._recappingCards);
+        console.log(this._cardData);
     }
 
     #getCardType(cardDefinition) {
