@@ -24,7 +24,6 @@ function SearchBar({
             style={{
                 marginBottom: "0px",
                 float: "left",
-                marginLeft: view === "mobile" ? "0px" : "16px",
                 marginRight: marginRight,
                 marginTop: marginTop,
                 borderRadius: borderRadius,
