@@ -24,7 +24,7 @@
     gap: 10px;
     flex-shrink: 0;
     font-family: Roboto;
-    color: var(--Grey-Text-Colour, #747474)
+    color: var(--input-text-light)
 }
 
 .nav-bar-item, .nav-bar-item-active{
@@ -37,7 +37,11 @@
     grid-template-columns: auto auto auto auto auto;
     z-index: 5;
     padding-top: 8px;
-    background-color: white;
+    background-color: var(--panel-bg-light);
+}
+
+body.dark-theme .nav-bar {
+    background-color: var(--panel-bg-dark);
 }
 
 .nav-bar-wrapper {
