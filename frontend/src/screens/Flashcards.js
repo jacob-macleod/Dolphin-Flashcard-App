@@ -228,10 +228,10 @@ function Flashcards() {
                       </>
                       }
                       </div>
-                    <div style={{float: view !== "desktop" ? "": "right"}}>
+                    <div style={{float: view === "mobile" ? "": "right"}}>
                       <Button
-                        text="Study Multiple"
-                        disabled={selected.length <= 1}
+                        text={"Study " + selected.length + " cards"}
+                        disabled={selected.length < 1}
                         style={{
                           paddingTop: "11px",
                           paddingBottom: "11px",
