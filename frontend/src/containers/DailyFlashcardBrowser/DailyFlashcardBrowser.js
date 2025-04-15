@@ -251,11 +251,11 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   notStarted={cardReviewer.countCards().notStarted}
                   view={view}
                 />
-                {view !== "mobile" ? <Heading4
+                {view !== "mobile" ? <Heading5
                   text={
-                    cardsPercentage
+                    cardsPercentage + " completed"
                   }
-                  style={{ padding: '0px' }}
+                  style={{ padding: '0px', width: "maxContent" }}
                 /> : <></>}
               </div>
             )}

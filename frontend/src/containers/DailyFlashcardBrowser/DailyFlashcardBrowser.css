@@ -1,8 +1,9 @@
 .review-bar-chart-wrapper{
     display: grid;
-    grid-template-columns: auto 60px;
+    grid-template-columns: auto max-content;
     width: 100%;
     padding-top: 16px;
+    align-items: center;
 }
 
 .fullscreen {

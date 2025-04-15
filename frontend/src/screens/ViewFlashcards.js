@@ -140,7 +140,7 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
 
                   <div className={view === "mobile" ? "study-mode-container" : ""}>
                     <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
-                    {view === "mobile" ? <Heading4 text={cardsPercentage} /> : <></>}
+                    {view === "mobile" && mode === "daily" ? <Heading4 text={cardsPercentage + " completed"} /> : <></>}
                   </div>
 
                   {mode === "daily"
