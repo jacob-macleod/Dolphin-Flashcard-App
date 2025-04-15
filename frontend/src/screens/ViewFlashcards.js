@@ -17,6 +17,7 @@ import useWindowSize from '../hooks/useWindowSize';
 import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
+import Heading5 from '../componments/Text/Heading5';
 import "../componments/Text/Link/Link.css";
 import './ViewFlashcards.css';
 
@@ -138,9 +139,9 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
                     </p>
                   </div>
 
-                  <div className={view === "mobile" ? "study-mode-container" : ""}>
+                  <div>
                     <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
-                    {view === "mobile" && mode === "daily" ? <Heading4 text={cardsPercentage + " completed"} /> : <></>}
+                    {view === "mobile" && mode === "daily" ? <Heading5 text={cardsPercentage + " completed"} style={{paddingLeft: "16px"}}/> : <></>}
                   </div>
 
                   {mode === "daily"
