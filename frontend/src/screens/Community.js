@@ -71,7 +71,7 @@ function SearchForFlashcard() {
       </Helmet>
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" ? <SidePanel /> : <></>}
+        {view !== "mobile" ? <SidePanel selectedItem="community" /> : <></>}
 
         <GridItem
           style={{

@@ -48,6 +48,7 @@ function Settings() {
     );
     const { darkMode, toggleTheme } = useTheme();
 
+
   return (
     <div style={{ top: "0px" }}>
       <Helmet>
@@ -84,10 +85,10 @@ function Settings() {
           >
             <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "", overflowY: "scroll" }}>
                 <MobilePageWrapper view={view} itemClicked="settings">
-                  <div className={view === "mobile" ? "flashcards-page-content": ""}>
-                    <p>Hello world!</p>
+                  <div>
+                    <p>Settings</p>
                     <GhostButton 
-                        text="Toggle Theme" 
+                        text={darkMode ? "Toggle Light Mode" : "Toggle Dark Mode"} 
                         onClick={toggleTheme}
                     />
                 </div>

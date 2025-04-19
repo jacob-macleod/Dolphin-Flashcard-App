@@ -147,7 +147,7 @@ function Flashcards() {
                 <MobilePageWrapper view={view} itemClicked="flashcards">
                   <div className={view === "mobile" ? "flashcards-page-content": ""}>
 
-                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"}/>
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"} marginLeft="0px"/>
                     {view !== "mobile" ? <br></br> : <></>}
                     {view !== "mobile" ? <br></br> : <></>}
                     <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
