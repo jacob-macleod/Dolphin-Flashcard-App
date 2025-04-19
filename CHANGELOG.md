@@ -22,7 +22,8 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 6.11.0 - 2025-04-19
+
+## 6.13.0 - 2025-04-19
 
 ### Changed
 
@@ -37,11 +38,11 @@ This changelog follows the semantic versioning standard(https://semver.org)
 * Optimise the full screen pages on mobile so that all the buttons are close to the user’s fingers
 * Allow anywhere on the flashcard to be tapped to turn over
 
-## 6.10.0 - 2025-03-28
+## 6.12.0 - 2025-04-07
 
 ### Added
 
-- Implemented the API to import anki flashcards
+- Added the mechanism for resetting the weeklyXP at the start of a new week
 
 ## 6.11.0 - 2025-04-06
 
@@ -49,6 +50,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Replaced HamburgerBar with MobileNavBar
 - Changed app icon for when app is installed as a PWA
+
+## 6.10.0 - 2025-03-28
+
+### Added
+
+- Implemented the API to import anki flashcards
 
 ## 6.9.0 - 2025-03-27
 
