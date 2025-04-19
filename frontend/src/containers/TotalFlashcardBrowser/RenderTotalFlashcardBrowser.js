@@ -62,12 +62,6 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
       {flashcardItems && flashcardItems.length !== 0 ? (
         <>
           <div className={`card-container ${isFullscreen ? 'fullscreen-card-container' : ''}`}>
-            {isFullscreen && (
-              <div className="fullscreen-controls">
-                     <Image url={GreyLeftArrow} onClick={leftButtonClick} className="arrow-left" />
-                     <Image url={GreyRightArrow} onClick={rightButtonClick} className="arrow-right" />
-              </div>
-            )}
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentCardIndex}
@@ -89,6 +83,12 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
                 ) : null}
               </motion.div>
             </AnimatePresence>
+            {isFullscreen && (
+              <div className="">
+                     <Image url={GreyLeftArrow} onClick={leftButtonClick} className="arrow-left" />
+                     <Image url={GreyRightArrow} onClick={rightButtonClick} className="arrow-right" />
+              </div>
+            )}
           </div>
           {!isFullscreen && (
             <div className="controls-panel">

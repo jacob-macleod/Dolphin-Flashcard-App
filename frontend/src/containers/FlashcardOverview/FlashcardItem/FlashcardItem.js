@@ -112,10 +112,8 @@ function FlashcardItem({
                     <Paragraph text={title} style={{
                         margin: "0px",
                         lineHeight: "2",
-                        textDecoration: view == "desktop" ? "none" : "underline",
                         alignSelf: "center",
                     }}
-                    onClick={view != "desktop" ? studyCard : () => {}}
                     />
                 </div>
             </GridItem>

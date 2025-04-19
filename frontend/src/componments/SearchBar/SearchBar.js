@@ -8,6 +8,7 @@ function SearchBar({
     view,
     marginRight,
     marginTop,
+    marginLeft,
     borderRadius,
     paddingBottom,
     placeholder,
@@ -24,9 +25,9 @@ function SearchBar({
             style={{
                 marginBottom: "0px",
                 float: "left",
-                marginLeft: view === "mobile" ? "0px" : "16px",
                 marginRight: marginRight,
                 marginTop: marginTop,
+                marginLeft: marginLeft,
                 borderRadius: borderRadius,
                 paddingBottom: paddingBottom,
                 width: width,

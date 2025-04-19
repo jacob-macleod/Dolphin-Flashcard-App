@@ -25,6 +25,26 @@ const ghostButtonStyle = {
     marginRight: "0px",
 };
 
+function ResponseOptions({ ghostButtonStyle, setResponse }) {
+    return (
+        <div style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            marginTop: "20px",
+        }}>
+            <GhostButton text="I'm not sure" style={ghostButtonStyle} onClick={() => {
+                setResponse("I'm not sure");
+            }}/>
+            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
+                setResponse("I know");
+            }}/>
+            <GhostButton text="This is easy" style={ghostButtonStyle} onClick={() => {
+                setResponse("This is easy");
+            }}/>
+        </div>
+    )
+}
+
 function CardOverview({
     text,
     description: back = "",
@@ -82,9 +102,11 @@ function CardOverview({
     }, []);
 
     return (
+        <>
         <WhiteOverlay
             isFlipped={isFlipped}
             flipOnClick={true}
+            onClick={turnOverCard}
             children={
                 <div style={{
                     paddingTop: "22px",
@@ -115,22 +137,8 @@ function CardOverview({
                     <div style={{ transformStyle: "preserve-3d" }}>
                         <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: cardText }} />
                     </div>
-                    {(showResponseOptions && isFlipped) ?
-                        <div style={{
-                            display: "flex",
-                            justifyContent: "space-evenly",
-                            marginTop: "20px",
-                        }}>
-                            <GhostButton text="I'm not sure" style={ghostButtonStyle} onClick={() => {
-                                setResponse("I'm not sure");
-                            }}/>
-                            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
-                                setResponse("I know");
-                            }}/>
-                            <GhostButton text="This is easy" style={ghostButtonStyle} onClick={() => {
-                                setResponse("This is easy");
-                            }}/>
-                        </div>
+                    {showResponseOptions && isFlipped && (view !== "mobile" || fullscreen == false) ?
+                        <ResponseOptions ghostButtonStyle={ghostButtonStyle} setResponse={setResponse} />
                     : <></>}
                 </div>
             }
@@ -138,9 +146,13 @@ function CardOverview({
                 width: "100%",
                 margin: "7px",
                 padding: "0px",
-                height: "90%",
+                height: fullscreen ? "70%" : "90%",
             }}
         />
+        {(showResponseOptions && isFlipped && fullscreen && view === "mobile") ?
+            <ResponseOptions ghostButtonStyle={ghostButtonStyle} setResponse={setResponse} />
+        : <></>}
+        </>
     );
 }
 

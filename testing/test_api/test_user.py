@@ -86,6 +86,7 @@ class TestUser(BaseApiActionsMixin):
             "weeklyXP": 0,
             "totalXP": 0,
             "heatmap_data": {date.get_current_date().replace("/", "-"): "1"},
+            "lastXPReset": date.get_week_start_date(),
         }
 
         # Test case 2: Update the heatmap

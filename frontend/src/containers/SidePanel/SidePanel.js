@@ -8,6 +8,7 @@ import community_icon from '../../static/community-icon.svg';
 import quests_icon from '../../static/quests-icon.svg';
 import leaderboard_icon from '../../static/leaderboard-icon.svg';
 import settings_icon from '../../static/settings-icon.svg';
+import settings_icon_clicked from '../../static/settings-icon-white.svg'
 import dashboard_icon from '../../static/dashboard-icon.svg';
 import flashcard_icon_white from '../../static/flashcard-icon-white.svg';
 import community_icon_white from '../../static/community-icon-white.svg';
@@ -48,7 +49,12 @@ function SidePanel ({ selectedItem }) {
             />
             <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>    
             <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>
-            <MenuItem text="Settings" src="/settings" imgUrl={settings_icon}/>
+            <MenuItem
+                text="Settings"
+                src="/settings"
+                clicked={selectedItem == "settings" ? true : false}
+                imgUrl={selectedItem == "settings" ? settings_icon_clicked : settings_icon}
+            />
             <MenuItem 
                 text="Toggle Theme" 
                 onClick={toggleTheme}
