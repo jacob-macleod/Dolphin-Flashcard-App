@@ -106,6 +106,7 @@ function CardOverview({
         <WhiteOverlay
             isFlipped={isFlipped}
             flipOnClick={true}
+            onClick={turnOverCard}
             children={
                 <div style={{
                     paddingTop: "22px",

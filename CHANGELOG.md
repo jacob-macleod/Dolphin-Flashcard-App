@@ -21,6 +21,22 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+
+## 6.11.0 - 2025-04-19
+
+### Changed
+
+* Also make the site a PWA and add an icon for when it is installed
+*  Fix the edit flashcard page on desktop 
+* Make the nav bar follow dark mode
+* Make search bar on community page fill screen for mobile
+* Add loading animation for cards on daily dose mode
+* Change the percentage of cards completed on Flashcard page to say "x% completed"
+* Change mobile (and desktop) flashcards pages so that you don't click the flashcard name itself, instead you click the study button next to the flashcard then click "Study multiple". "Study multiple" should be changed to say "Study x cards"*
+* Allow dark mode to be switched on using the settings page on mobile
+* Optimise the full screen pages on mobile so that all the buttons are close to the user’s fingers
+* Allow anywhere on the flashcard to be tapped to turn over
+
 ## 6.10.0 - 2025-03-28
 
 ### Added
