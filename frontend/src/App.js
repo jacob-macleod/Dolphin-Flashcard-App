@@ -12,6 +12,7 @@ import PreviewFlashcard from './screens/PreviewFlashcard';
 import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
+import Settings from './screens/Settings';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -102,6 +103,16 @@ function App() {
                 jwtToken={jwtToken}
                 setJwtToken={setJwtToken}
                 child={<ViewFlashcards />}
+              />
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<Settings />}
               />
             }
           />

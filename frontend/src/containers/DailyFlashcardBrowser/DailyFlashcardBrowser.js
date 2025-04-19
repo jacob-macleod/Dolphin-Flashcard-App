@@ -32,6 +32,7 @@ function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
+  const [flashcardsLoaded, setFlashcardsLoaded] = useState(null);
   const [addedReviewDataToCards, setAddedReviewDataToCards] = useState(false);
   const [newDataSaved, setNewDataSaved] = useState(false);
   const location = useLocation();
@@ -140,8 +141,14 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
   todayCards || {},
   flashcardID
 );
-  const { cardData, cardsExist } = useCardData(cardIDs);
+  const { cardData, cardsExist, cardsLoaded } = useCardData(cardIDs);
 
+
+  useEffect(() => {
+    if (cardsLoaded === true) {
+      setFlashcardsLoaded(true);
+    }
+  }, [cardsLoaded])
 
   useEffect(() => {
     /*
@@ -180,11 +187,8 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
 
   const setResponse = (response) => {
     cardReviewer.reviseCard(currentCard, response);
-    setCurrentCard(cardReviewer.next()); 
+    setCurrentCard(cardReviewer.next());
   };
-
-  useEffect(() => {
-  }, [updatedCardData]);
 
   // Count the types of cards
   useEffect(() => {
@@ -214,66 +218,67 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
 
   return (
     <>
-      {
-  cardReviewer != null && cardReviewer.allCardsRevised() !== true ? (
-    <>
-      <div className={isFullscreen ? 'fullscreen' : ''}>
-        <div className="card-container">
-          <CardOverview
-            text={currentCard.front}
-            description={currentCard.back}
-            showResponseOptions={true}
-            setResponse={setResponse}
-            height={isFullscreen ? '100%' : '264px'}
-            toggleFullscreen={toggleFullscreen}
-            fullscreen={isFullscreen}
-            view={view}
-          />
-        </div>
-        {!isFullscreen &&(
-          <div style={{position:"relative",width:"100%"}}>
-        <ReviewBarChartKey style={{ paddingTop: '8px' }} />
-        {view !== "mobile"  ?
-          <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
-          : <></>
-        }                 
-        </div>
-        )}
-        {!isFullscreen &&(
-        <div className="review-bar-chart-wrapper">
-          <ReviewBarChart
-            studying={cardReviewer.countCards().studying}
-            recapping={cardReviewer.countCards().recapping}
-            notStarted={cardReviewer.countCards().notStarted}
-            view={view}
-          />
-          {view !== "mobile" ? <Heading4
-            text={
-              cardsPercentage
-            }
-            style={{ padding: '0px' }}
-          /> : <></>}
-        </div>
-      )}
-        {isFullscreen &&(
-            <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
-          )}
-      </div>
+    <DelayedElement child={
+      cardReviewer != null && cardReviewer.allCardsRevised() !== true ? (
+        <>
+            <div className={isFullscreen ? 'fullscreen' : ''}>
+              <div className="card-container">
+                <CardOverview
+                  text={currentCard.front}
+                  description={currentCard.back}
+                  showResponseOptions={true}
+                  setResponse={setResponse}
+                  height={isFullscreen ? '100%' : '264px'}
+                  toggleFullscreen={toggleFullscreen}
+                  fullscreen={isFullscreen}
+                  view={view}
+                />
+              </div>
+              {!isFullscreen &&(
+                <div style={{position:"relative",width:"100%"}}>
+              <ReviewBarChartKey style={{ paddingTop: '8px' }} />
+              {view !== "mobile"  ?
+                <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
+                : <></>
+              }                 
+              </div>
+              )}
+              {!isFullscreen &&(
+              <div className="review-bar-chart-wrapper">
+                <ReviewBarChart
+                  studying={cardReviewer.countCards().studying}
+                  recapping={cardReviewer.countCards().recapping}
+                  notStarted={cardReviewer.countCards().notStarted}
+                  view={view}
+                />
+                {view !== "mobile" ? <Heading5
+                  text={
+                    cardsPercentage + " completed"
+                  }
+                  style={{ padding: '0px', width: "maxContent" }}
+                /> : <></>}
+              </div>
+            )}
+              {isFullscreen &&(
+                  <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
+                )}
+            </div>
+        </>
+      ) : cardsSaved === false ? (
+        <>
+          <div style={{ display: 'inline-block' }}>
+            <DelayedElement child={null} childValue={null} />
+            <Heading5 text="Saving cards..." />
+          </div>
+        </>
+      ) : (
+        <>
+          <Heading5 text="No cards left to study today!" />
+        </>
+      )
+      } childValue={flashcardsLoaded}/>
     </>
-  ) : cardsSaved === false ? (
-    <>
-      <div style={{ display: 'inline-block' }}>
-        <DelayedElement child={null} childValue={null} />
-        <Heading5 text="Saving cards..." />
-      </div>
-    </>
-  ) : (
-    <>
-      <Heading5 text="No cards left to study today!" />
-    </>
-  )
-}
-    </>
+    
   );
 }
 

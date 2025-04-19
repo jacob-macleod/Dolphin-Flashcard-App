@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { slideRight, flipVariants } from '../../animations/animations';
 import './WhiteOverlay.css';
 
-function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible=true }) {
+function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible=true, onClick=null }) {
   return (
-    <>
+    <div onClick={() => {onClick !== null ? onClick() : null}}>
       {visible ? <>
         {flipOnClick ? (
           <motion.div
@@ -36,7 +36,7 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
           </motion.div>
         )}
       </>: children}
-    </>
+    </div>
   );
 }
 
