@@ -107,6 +107,7 @@ function CardOverview({
             isFlipped={isFlipped}
             flipOnClick={true}
             onClick={turnOverCard}
+            className={fullscreen ? "fullscreen-card-container-wrapper" : ""}
             children={
                 <div style={{
                     paddingTop: "22px",
