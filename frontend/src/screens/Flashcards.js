@@ -143,11 +143,11 @@ function Flashcards() {
             }}
             visible={view == "mobile" ? false : true}
           >
-            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
+            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "", overflowY: "scroll" }}>
                 <MobilePageWrapper view={view} itemClicked="flashcards">
                   <div className={view === "mobile" ? "flashcards-page-content": ""}>
 
-                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"}/>
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"} marginLeft="0px"/>
                     {view !== "mobile" ? <br></br> : <></>}
                     {view !== "mobile" ? <br></br> : <></>}
                     <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
@@ -228,10 +228,10 @@ function Flashcards() {
                       </>
                       }
                       </div>
-                    <div style={{float: view !== "desktop" ? "": "right"}}>
+                    <div style={{float: view === "mobile" ? "": "right"}}>
                       <Button
-                        text="Study Multiple"
-                        disabled={selected.length <= 1}
+                        text={"Study " + selected.length + " cards"}
+                        disabled={selected.length < 1}
                         style={{
                           paddingTop: "11px",
                           paddingBottom: "11px",

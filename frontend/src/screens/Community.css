@@ -4,6 +4,10 @@
 }
 
 .search-bar-mobile{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: calc(100% - 32px);
+    margin: 0px;
     margin-left: 16px;
 }
 
