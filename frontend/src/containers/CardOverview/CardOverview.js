@@ -131,7 +131,6 @@ function CardOverview({
                                 boxShadow: "none",
                                 color: "#6A84C5",
                             }}
-                            onClick={turnOverCard}
                         />
                     }
                     {
