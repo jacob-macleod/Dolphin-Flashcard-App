@@ -69,6 +69,10 @@ function CardOverview({
     const [isFlipped, setIsFlipped] = useState(false);
     const isFlippedRef = useRef(isFlipped);
 
+    useEffect(() => {
+        console.log(fullscreen);
+    }, [fullscreen]);
+
     function turnOverCard() {
         setIsFlipped((prev) => !prev);
         setTimeout(() => {
@@ -107,6 +111,7 @@ function CardOverview({
             isFlipped={isFlipped}
             flipOnClick={true}
             onClick={turnOverCard}
+            className={fullscreen ? "fullscreen-card-container-wrapper" : ""}
             children={
                 <div style={{
                     paddingTop: "22px",
@@ -126,7 +131,6 @@ function CardOverview({
                                 boxShadow: "none",
                                 color: "#6A84C5",
                             }}
-                            onClick={turnOverCard}
                         />
                     }
                     {

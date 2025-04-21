@@ -15,6 +15,13 @@
     transition: all 0.5s ease;
 }
 
+.fullscreen-card-container-wrapper{
+    width: 100%;
+    height: calc(100% - 140px);
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
 body.dark-theme .overlay {
     border: 1px solid var(--overlay-bg-dark);
     background: var(--overlay-bg-dark);
