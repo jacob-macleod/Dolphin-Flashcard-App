@@ -21,6 +21,13 @@
     transition: background 0.5s ease;
   }
 
+.fullscreen-card-container-wrapper{
+  width: 100%;
+  height: calc(100% - 140px);
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
 body.dark-theme .fullscreen{
     background: var(--daily-flashcard-browser-bg-dark);
 }

@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.13.1 - 2025-04-21
+
+### Added
+
+- Improved formatting of all cards and daily flashcard mode on fullscreen mode
+- Fixed bug where "Turn over" button on flashcard did not work
 
 ## 6.13.0 - 2025-04-19
 

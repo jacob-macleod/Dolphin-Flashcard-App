@@ -79,6 +79,7 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
                     description={individualCards[currentCardIndex].back}
                     showTurnOverButton={true}
                     height={isFullscreen ? '100%' : '264px'}
+                    fullscreen={isFullscreen}
                   />
                 ) : null}
               </motion.div>
