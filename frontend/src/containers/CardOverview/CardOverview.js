@@ -69,6 +69,10 @@ function CardOverview({
     const [isFlipped, setIsFlipped] = useState(false);
     const isFlippedRef = useRef(isFlipped);
 
+    useEffect(() => {
+        console.log(fullscreen);
+    }, [fullscreen]);
+
     function turnOverCard() {
         setIsFlipped((prev) => !prev);
         setTimeout(() => {
