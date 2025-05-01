@@ -26,7 +26,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ### Fixed
 
-- Fixed bug when importing flashcards. JWT token is required to import flashcard, and this is checked using validate_form
+- Fixed bug for `import-flashcards`. JWT token is required to import flashcard, and this is checked using validate_form
 
 ## 6.13.1 - 2025-04-21
 
