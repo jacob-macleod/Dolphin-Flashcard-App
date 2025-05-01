@@ -79,6 +79,16 @@ ADD_PUBLIC_FLASHCARD_TO_FOLDER = {"jwtToken": "", "flashcardID": "", "folder": "
 
 FLASHCARD_EXISTS_FORMAT = {"jwtToken": "", "flashcardID": ""}
 
+IMPORT_FROM_CSV_FORMAT = {
+    "file": "",
+    "jwtToken": "",
+    "flashcardName": "",
+    "flashcardDescription": "",
+    "folder": "",
+    "delimiter": "",
+    "firstRowOfData": ""
+}
+
 IMPORT_FROM_QUIZLET_FORMAT = {
     "jwtToken": "",
     "folder": "",
@@ -818,7 +828,8 @@ def import_from_quizlet():
 
 
 @card_management_routes.route("/api/import-flashcards", methods=["POST"])
-def import_flashcards():
+@validate_form(IMPORT_FROM_CSV_FORMAT)
+def import_flashcards(user_id):
     """Import flashcards from a CSV file.
 
     Expected request format:
@@ -837,7 +848,6 @@ def import_flashcards():
 
         file = request.files["file"]
 
-        user_id = request.form.get("userID")
         folder = request.form.get("folder")
         delimiter = request.form.get("delimiter")
         flashcard_name = request.form.get("flashcardName")
