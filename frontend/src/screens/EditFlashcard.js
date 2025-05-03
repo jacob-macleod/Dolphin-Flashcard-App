@@ -169,6 +169,7 @@ function Flashcards() {
                           setInitialTerm={setInitialTerm}
                           setInitialDefinition={setInitialDefinition}
                           setReload={setReload}
+                          isInEditPage={true}
                         />
                       ))
                       : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />

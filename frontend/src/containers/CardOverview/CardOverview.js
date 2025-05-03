@@ -56,6 +56,7 @@ function CardOverview({
     toggleFullscreen=null,
     fullscreen=false,
     view="desktop",
+    isInEditPage=false
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -111,7 +112,7 @@ function CardOverview({
             isFlipped={isFlipped}
             flipOnClick={true}
             onClick={turnOverCard}
-            className={fullscreen ? "fullscreen-card-container-wrapper" : ""}
+            className={isInEditPage ? "edit-page-flashcard-wrapper" : fullscreen ? "fullscreen-card-container-wrapper" : ""}
             children={
                 <div style={{
                     paddingTop: "22px",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FlashcardFolder from './FlashcardFolder/FlashcardFolder';
 import FlashcardItem from './FlashcardItem/FlashcardItem';
 import Heading5 from '../../componments/Text/Heading5/Heading5';
@@ -18,8 +18,32 @@ function FlashcardOverview({
     /*
     Remove everything from flashcard data except the flashcard with the title
     */
-    return cardData[title];
+ 
+    // Helper function for deep search
+    function search(obj) {
+      if (typeof obj !== 'object' || obj === null) return null;
+  
+      // Check if the current object has the target title
+      if (obj.flashcardName === title) {
+        return obj;
+      }
+  
+      // Recurse into each property
+      for (const key in obj) {
+        const result = search(obj[key]);
+        if (result) return result;
+      }
+  
+      return null;
+    }
+  
+    return search(cardData);
   }
+
+  useEffect(() => {
+    console.log("flashcardData")
+    console.log(flashcardData)
+  }, [flashcardData])
 
   const renderElement = (element, folderName, path="") => {
     if (element.cards) {

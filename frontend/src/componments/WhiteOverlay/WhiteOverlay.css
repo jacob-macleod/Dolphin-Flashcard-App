@@ -22,6 +22,11 @@
     margin-bottom: 70px;
 }
 
+.edit-page-flashcard-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
 body.dark-theme .overlay {
     border: 1px solid var(--overlay-bg-dark);
     background: var(--overlay-bg-dark);
