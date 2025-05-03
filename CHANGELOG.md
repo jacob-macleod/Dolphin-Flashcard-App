@@ -22,6 +22,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.13.3 - 2025-05-02
+
+### Fixed
+
+- Fixed bug when deleting flashcards
+- Fixed formatting of FlashcardRow in Edit flashcards page
+- Fixed formatting for settings page on Desktop
+
 ## 6.13.2 - 2025-05-01
 
 ### Fixed

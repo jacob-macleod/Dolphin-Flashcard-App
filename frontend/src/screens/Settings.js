@@ -8,29 +8,14 @@ import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview';
-import DelayedElement from '../containers/DelayedElement';
-import Button from '../componments/Button';
-import PillGhostButton from '../componments/PillGhostButton';
-import SearchBar from '../componments/SearchBar/SearchBar';
-import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
-import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
-import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
-import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
-import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
-import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
-import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
-import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
-import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './Flashcards.css';
-import { getCookie } from '../api/Authentication';
+import './Settings.css';
 import GhostButton from '../componments/GhostButton';
-import flashcardIcon from '../static/flashcard-set-icon.svg';
-import folderIcon from '../static/folder-icon.svg';
+
 import { useTheme } from '../context/ThemeContext';
 
 
@@ -82,6 +67,7 @@ function Settings() {
               padding: "0px",
             }}
             visible={view == "mobile" ? false : true}
+            className="settings-page-wrapper"
           >
             <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "", overflowY: "scroll" }}>
                 <MobilePageWrapper view={view} itemClicked="settings">

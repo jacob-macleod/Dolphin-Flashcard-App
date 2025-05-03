@@ -22,6 +22,7 @@ function DeleteFlashcardConfirmation({ visible, setVisible, view, setReload }) {
       // visible stores flashcardData which contains the data for the flashcard
       // in the format flashcard_name: {flashcard data including ID}. This will only ever
       // store the data for one flashcard. Below gets the flashcard ID
+      console.log(visible["flashcardData"]);
       const flashcardID = Object.values(visible["flashcardData"])[0].flashcardID;
       setLoadingIconVisible(null);
       // Delete the flashcard
