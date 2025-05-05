@@ -957,9 +957,14 @@ def import_anki_flashcards(user_id):
             if not collection_files:
                 return jsonify({'error': 'Invalid Anki file format'}, 400)
             
+            anki2_file = ""
+            for file_name in collection_files:
+                if file_name.endswith(".anki2"):
+                    anki2_file = file_name
+
             # Connect to SQLite database
             try:
-                conn = sqlite3.connect(os.path.join(tmpdir, collection_files[0]))
+                conn = sqlite3.connect(os.path.join(tmpdir, file_name))
                 cursor = conn.cursor()
 
                 # Get model configuration
@@ -974,7 +979,7 @@ def import_anki_flashcards(user_id):
             # Process cards
             cards = []
             try:
-                conn = sqlite3.connect(os.path.join(tmpdir, collection_files[0]))
+                conn = sqlite3.connect(os.path.join(tmpdir, file_name))
                 cursor = conn.cursor()
                 cursor.execute('SELECT notes.id, notes.mid, notes.flds, notes.sfld FROM notes')
                 
