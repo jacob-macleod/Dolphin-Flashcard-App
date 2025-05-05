@@ -12,12 +12,26 @@
 }
 
 .community-page-wrapper {
-    margin: auto;
-    max-width: 487px;
+    max-width: 1200px;
+    width: 100%;
 }
 
 .community-page-wrapper-mobile {
     margin: auto;
     height: 100%;
     overflow-y: scroll;
+}
+
+.search-section{
+    padding: 32px;
+}
+
+.search-section-header-section {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+
+.search-section-text {
+    text-align: left;
 }

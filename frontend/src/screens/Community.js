@@ -8,13 +8,15 @@ import GridItem from '../componments/GridItem/GridItem';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
-import Heading4 from '../componments/Text/Heading4';
 import Heading5 from '../componments/Text/Heading5';
+import Heading2 from '../componments/Text/Heading2';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import Button from '../componments/Button';
 import FlashcardSearchResult from '../containers/FlashcardSearchResult';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
 import SidePanel from '../containers/SidePanel/SidePanel';
+import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
+import DolphinLogo from '../componments/Logos/DolphinLogo/DolphinLogo';
 
 import apiManager from '../api/Api';
 
@@ -89,8 +91,25 @@ function SearchForFlashcard() {
           <MobilePageWrapper view={view} itemClicked="community">
 
             <div className={view === "mobile" ? "community-page-wrapper-mobile" : "community-page-wrapper"}>
-              <div>
-                <Heading4 text="Find flashcards created by fellow learners" />
+              <WhiteOverlay
+                className="search-section"
+              >
+                <div className='search-section-header-section'>
+                  <DolphinLogo
+                    width="160px"
+                    minWidth="160px"
+                    height="160px"
+                    paddingBottom="30px"
+                    paddingLeft="30px"
+                    paddingRight="30px"
+                    paddingTop="30px"
+                  />
+                  <div className="search-section-text">
+                    <Heading2 text="Browse for flashcards for your subjects" />
+                    <Heading2 text="More sets coming soon!" color="grey"/>
+                  </div>
+                </div>
+
                 <div className={view !== "mobile" ? "search-bar" : "search-bar-mobile"}>
                   <SearchBar
                     view={view}
@@ -108,7 +127,7 @@ function SearchForFlashcard() {
                     onClick={() => {searchForFlashcard()}}
                     style={{
                       margin: "0px",
-                      width: "min-content",
+                      width: "114px",
                       borderRadius: "0px 8px 8px 0px",
                       height: "42px",
                       marginTop: view === "mobile" ? "8px" : "0px",
@@ -125,7 +144,7 @@ function SearchForFlashcard() {
                       <Heading5 text={"No flashcards found for '" + searchTerm + "'"} />
                   : <></>
                 }
-              </div>
+            </WhiteOverlay>
             </div>
           </MobilePageWrapper>
         </GridItem>
