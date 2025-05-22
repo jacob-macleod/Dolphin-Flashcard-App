@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.13.4 - 2025-05-22
+
+### Fixed
+
+- Improved efficiency of database when creating/uploading flashcards
+
 ## 6.13.3 - 2025-05-02
 
 ### Fixed
