@@ -27,6 +27,7 @@ import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import { getCookie } from '../api/Authentication';
+import ImportCsvPopup from '../containers/Modal/ImportCsvPopup/ImportCsvPopup';
 
 function Flashcards() {
   // Set general variables
@@ -37,6 +38,7 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
+  const [importCsvDialougeVisible, setImportCsvDialougeVisible] = useState(false);
   const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] = useState(false);
   const [renameFlashcardSetPopupVisible, setRenameFlashcardSetPopupVisible] = useState(false);
   const [deleteFolderConfirmationVisible, setDeleteFolderConfirmationVisible] = useState(false);
@@ -106,6 +108,7 @@ function Flashcards() {
       <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload} />
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
+      <ImportCsvPopup visible={importCsvDialougeVisible} setVisible={setImportCsvDialougeVisible} view={view} reload={reload} setReload={setReload} />
       <DeleteFlashcardConfirmation visible={deleteFlashcardConfirmationVisible} setVisible={showDeleteFlashcardConfirmation} view={view} setReload={setReload} />
       <RenameFlashcardSetPopup visible={renameFlashcardSetPopupVisible} setVisible={setRenameFlashcardSetPopupVisible} view={view} setReload={setReload} />
       <DeleteFolderConfirmation visible={deleteFolderConfirmationVisible} setVisible={setDeleteFolderConfirmationVisible} view={view} setReload={setReload} />
@@ -193,6 +196,21 @@ function Flashcards() {
                     marginLeft: view === "mobile" ? "0px" : ""
                   }}
                   onClick={studyMultipleCards}
+                />
+              </div>
+              
+              <div style={{ display: view === "desktop" ? "flex" : "", gap: '15px'}}>
+                <Button 
+                  text="Import from CSV"
+                  style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                  onClick={() => setImportCsvDialougeVisible(true)}
+                />
+                <GhostButton 
+                  text="Import from quizlet"
+                />
+
+                <GhostButton
+                  text="Import from Anki"
                 />
               </div>
               </div>
