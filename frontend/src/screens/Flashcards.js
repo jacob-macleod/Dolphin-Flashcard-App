@@ -277,7 +277,6 @@ function Flashcards() {
                   text="Import from Anki"
                 />
               </div>
-              </div>
               </MobilePageWrapper>
             </div>
           </WhiteOverlay>
