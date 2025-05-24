@@ -9,3 +9,27 @@
     grid-template-columns: auto auto;
     justify-content: space-evenly;
 }
+
+.button-container-mobile {
+   padding: 0px;
+   margin: 0px;
+   width: 100%;
+}
+
+/* .study-mode-container {
+    display: grid;
+    grid-template-columns: auto auto;
+} */
+
+.mobile-page-container{
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.desktop-page-container{
+    width: 100%;
+}

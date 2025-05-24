@@ -41,7 +41,7 @@
 
 .fullscreen .card-container {
   width: 60%;
-  height: 80%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -116,8 +116,8 @@
 
 /* Mobile-specific styles */
 @media (max-width: 768px) {
-  .card-container.fullscreen-card-container {
-    width: 80%; 
+  .fullscreen .card-container {
+    width: 90%; 
   }
 
   .overlay {

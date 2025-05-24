@@ -4,5 +4,20 @@
 }
 
 .search-bar-mobile{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: calc(100% - 32px);
+    margin: 0px;
     margin-left: 16px;
+}
+
+.community-page-wrapper {
+    margin: auto;
+    max-width: 487px;
+}
+
+.community-page-wrapper-mobile {
+    margin: auto;
+    height: 100%;
+    overflow-y: scroll;
 }

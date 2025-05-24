@@ -112,9 +112,8 @@ function FlashcardItem({
                     <Paragraph text={title} style={{
                         margin: "0px",
                         lineHeight: "2",
-                        textDecoration: view == "desktop" ? "none" : "underline",
+                        alignSelf: "center",
                     }}
-                    onClick={view != "desktop" ? studyCard : () => {}}
                     />
                 </div>
             </GridItem>
@@ -158,7 +157,7 @@ function FlashcardItem({
                 </div>
             </GridItem>
         </GridContainer>
-        {view != "desktop" ?
+        {view == "tablet" ?
             <ReviewBarChart studying={studying} recapping={recapping} notStarted={notStarted} view={view}/>
         : <></>}
         </div>

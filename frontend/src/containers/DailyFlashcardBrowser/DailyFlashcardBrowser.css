@@ -1,8 +1,9 @@
 .review-bar-chart-wrapper{
     display: grid;
-    grid-template-columns: auto 60px;
+    grid-template-columns: auto max-content;
     width: 100%;
     padding-top: 16px;
+    align-items: center;
 }
 
 .fullscreen {
@@ -11,19 +12,32 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+    background: var(--daily-flashcard-browser-bg-light);
     z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: background 0.5s ease;
   }
+
+.fullscreen-card-container-wrapper{
+  width: 100%;
+  height: calc(100% - 140px);
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+body.dark-theme .fullscreen{
+    background: var(--daily-flashcard-browser-bg-dark);
+}
   
   .card-container {
     position: relative;
     width: 100%;
     height: 264px;
     overflow: hidden;
+    flex-direction: column;
   }
   
   .expand-button {
@@ -37,14 +51,16 @@
 
   /* Mobile-specific styles */
 @media (max-width: 768px) {
-  .card-container {
+  /*.card-container {
     width: 80%; 
-  }
+  } */
 
   .grid-item {
     padding-left: 0; /* Remove left padding */
     padding-right: 0; /* Remove right padding */
   }
-}
 
-  
+  .review-bar-chart-wrapper{
+    grid-template-columns: auto;
+  }
+}

@@ -5,11 +5,30 @@
     padding: 32px;
     padding-bottom: 0px;
     box-sizing: border-box;
-    border: 1px solid var(--White-Colour, #FFF);
-    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+    border: 1px solid var(--overlay-bg-light);
+    background: var(--overlay-bg-light);
     
     /* Panel Drop Shadow */
-    box-shadow: 0px 2px 16px -3px rgba(13, 41, 68, 0.25);
+    box-shadow: 0px 2px 16px -3px var(--overlay-shadow-light);
     width: 100%;
     flex-shrink: 0;
+    transition: all 0.5s ease;
+}
+
+.fullscreen-card-container-wrapper{
+    width: 100%;
+    height: calc(100% - 140px);
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+
+.edit-page-flashcard-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+body.dark-theme .overlay {
+    border: 1px solid var(--overlay-bg-dark);
+    background: var(--overlay-bg-dark);
+    box-shadow: 0px 2px 16px -3px var(--overlay-bg-dark);
 }

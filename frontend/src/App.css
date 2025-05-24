@@ -1,15 +1,128 @@
-@font-face {
-    font-family: Roboto;
-    src: url(roboto-latin.woff2);
-  }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-body{
-    margin: 0;
-    padding: 0;
-    background-color: #F8F8F8;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    font-family: 'Roboto', sans-serif;
-    overflow: scroll;
+:root {
+  --white: #FFFFFF;
+  --background-light: #F8F8F8;
+  --background-dark: #1A1A1A;
+  --text-light: #222829;
+  --text-dark: #FFFFFF;
+  --primary-colour: #5D54C3;
+  --panel-bg-light: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+  --panel-bg-dark: radial-gradient(50% 50% at 50% 50%, rgba(45, 45, 45, 0.75) 68.23%, rgba(35, 35, 35, 0.75) 100%), linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+  --panel-border-light: #FFF;
+  --panel-border-dark: #2D2D2D;
+  --blob-bg-light: #F2F4F5BF;
+  --blob-bg-dark: #1A1A1ABF;
+  --blob-filter-light: #f2f4f5a1;
+  --blob-filter-dark: #1a1a1aa1;
+  --daily-flashcard-browser-bg-light: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+  --daily-flashcard-browser-bg-dark: radial-gradient(50% 50% at 50% 50%, rgba(45, 45, 45, 0.75) 68.23%, rgba(35, 35, 35, 0.75) 100%), linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+  --mobile-panel-border-light: #FFFFFF;
+  --mobile-panel-border-dark: #2D2D2D;
+  --mobile-panel-bg-light: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+  --mobile-panel-bg-dark: radial-gradient(50% 50% at 50% 50%, rgba(45, 45, 45, 0.75) 68.23%, rgba(35, 35, 35, 0.75) 100%), linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+  --account-dropdown-bg-light: #FFFFFF;
+  --account-dropdown-bg-dark: #2D2D2D;
+  --account-dropdown-shadow-light: rgba(13, 41, 68, 0.12);
+  --account-dropdown-shadow-dark: rgba(0, 0, 0, 0.25);
+  --overlay-border-light: #FFFFFF;
+  --overlay-border-dark: #2D2D2D;
+  --overlay-bg-light: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
+  --overlay-bg-dark: radial-gradient(50% 50% at 50% 50%, rgba(45, 45, 45, 0.75) 68.23%, rgba(35, 35, 35, 0.75) 100%), linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+  --overlay-shadow-light: rgba(13, 41, 68, 0.25);
+  --overlay-shadow-dark: rgba(0, 0, 0, 0.35);
+  --modal-bg-light: linear-gradient(180deg, #F3F1FB 0%, white 100%), radial-gradient(circle at center, rgba(255, 255, 255, 0.75) 68%, rgba(242.95, 241.35, 250.75, 0.75) 100%);
+  --modal-bg-dark: linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%), radial-gradient(circle at center, rgba(45, 45, 45, 0.75) 68%, rgba(35, 35, 35, 0.75) 100%);
+  --modal-border-light: #FFFFFF;
+  --modal-border-dark: #2D2D2D;
+  --modal-shadow-light: rgba(13, 41, 68, 0.25);
+  --modal-shadow-dark: rgba(0, 0, 0, 0.35);
+  --overlay-light: rgba(0, 0, 0, 0.386);
+  --overlay-dark: rgba(0, 0, 0, 0.5);
+  --input-text-light: #747474;
+  --input-text-dark: #CCCCCC;
+  --input-border-light: #C2C2C2;
+  --input-border-dark: #404040;
+  --input-bg-light: #FFFFFF;
+  --input-bg-dark: #2D2D2D;
+  --popup-bg-light: #FFFFFF;
+  --popup-bg-dark: #2D2D2D;
+  --popup-shadow-light: rgba(13, 41, 68, 0.12);
+  --popup-shadow-dark: rgba(0, 0, 0, 0.25);
+  --scrollbar-bg-light: #F0F0F0;
+  --scrollbar-thumb-light: #C2C2C2;
+  --scrollbar-thumb-hover-light: #A8A8A8;
+  --scrollbar-bg-dark: #2D2D2D;
+  --scrollbar-thumb-dark: #404040;
+  --scrollbar-thumb-hover-dark: #4A4A4A;
+  --prose-mirror-text-light: #222829;
+  --prose-mirror-border-light: #C2C2C2;
+  --prose-mirror-text-dark: #FFFFFF;
+  --prose-mirror-border-dark: #404040;
+  --grey-button-light: #C2C2C2;
+  --grey-button-dark: #404040;
+  --folder-text-light: #222829;
+  --folder-text-dark: #FFFFFF;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-light);
+  color: var(--text-light);
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+}
+
+body.dark-theme {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+* {
+  transition: background-color 0.5s ease, border-color 0.5s ease;
+}
+/* Webkit browsers (Chrome, Safari, newer Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-light);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-light);
+}
+
+/* Dark theme scrollbar */
+body.dark-theme ::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg-dark);
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-dark);
+}
+
+body.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-dark);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-light) var(--scrollbar-bg-light);
+}
+
+body.dark-theme * {
+  scrollbar-color: var(--scrollbar-thumb-dark) var(--scrollbar-bg-dark);
 }

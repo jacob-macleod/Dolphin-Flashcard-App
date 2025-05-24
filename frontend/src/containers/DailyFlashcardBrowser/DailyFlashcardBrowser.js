@@ -28,10 +28,11 @@ const slideVariants = {
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
 
-function DailyFlashcardBrowser({ view }) {
+function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
+  const [flashcardsLoaded, setFlashcardsLoaded] = useState(null);
   const [addedReviewDataToCards, setAddedReviewDataToCards] = useState(false);
   const [newDataSaved, setNewDataSaved] = useState(false);
   const location = useLocation();
@@ -55,7 +56,7 @@ function DailyFlashcardBrowser({ view }) {
   }
 
   useEffect(() => {
-    let reviewer = new flashcardReviewer(updatedCardData, saveFlashcards);
+    let reviewer = new flashcardReviewer(updatedCardData, saveFlashcards, setCardsPercentage);
     setCardReviewer(reviewer);
     setCurrentCard(reviewer.next());
   }, [updatedCardData]);
@@ -93,43 +94,61 @@ function DailyFlashcardBrowser({ view }) {
     return givenDate < today;
   }
 
-  const collectCardIDs = (cards, flashcardIDs) => {
-    const cardIDs = [];
-    const reviewStatuses = {};
+const collectCardIDs = (cards, flashcardIDs) => {
+  const cardIDs = [];
+  const reviewStatuses = {};
 
-    const traverse = (obj) => {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          const value = obj[key];
+  const idsArray = Array.isArray(flashcardIDs)
+    ? flashcardIDs
+    : flashcardIDs
+    ? [flashcardIDs]
+    : [];
 
-          if (value && typeof value === 'object') {
-            if (flashcardIDs.includes(value.flashcardID)) {
-              if (value.cards) {
-                for (const cardID in value.cards) {
-                  if (value.cards.hasOwnProperty(cardID)) {
-                    const card = value.cards[cardID];
-                    cardIDs.push(cardID);
-                    reviewStatuses[cardID] = {
-                      reviewStatus: card.review_status,
-                      lastReview: card.last_review
-                    };
-                  }
+  const traverse = (obj) => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+
+        if (value && typeof value === "object") {
+          if (
+            value.flashcardID &&
+            idsArray.length > 0 &&
+            idsArray.includes(value.flashcardID)
+          ) {
+            if (value.cards) {
+              for (const cardID in value.cards) {
+                if (value.cards.hasOwnProperty(cardID)) {
+                  const card = value.cards[cardID];
+                  cardIDs.push(cardID);
+                  reviewStatuses[cardID] = {
+                    reviewStatus: card.review_status,
+                    lastReview: card.last_review,
+                  };
                 }
               }
             }
-            traverse(value);
           }
+          traverse(value);
         }
       }
-    };
-
-    traverse(cards);
-    return { cardIDs, reviewStatuses };
+    }
   };
 
-  const { cardIDs, reviewStatuses } = collectCardIDs(todayCards, flashcardID);
-  const { cardData, cardsExist } = useCardData(cardIDs);
+  traverse(cards || {}); 
+  return { cardIDs, reviewStatuses };
+};
+const { cardIDs, reviewStatuses } = collectCardIDs(
+  todayCards || {},
+  flashcardID
+);
+  const { cardData, cardsExist, cardsLoaded } = useCardData(cardIDs);
 
+
+  useEffect(() => {
+    if (cardsLoaded === true) {
+      setFlashcardsLoaded(true);
+    }
+  }, [cardsLoaded])
 
   useEffect(() => {
     /*
@@ -168,11 +187,8 @@ function DailyFlashcardBrowser({ view }) {
 
   const setResponse = (response) => {
     cardReviewer.reviseCard(currentCard, response);
-    setCurrentCard(cardReviewer.next()); 
+    setCurrentCard(cardReviewer.next());
   };
-
-  useEffect(() => {
-  }, [updatedCardData]);
 
   // Count the types of cards
   useEffect(() => {
@@ -202,66 +218,67 @@ function DailyFlashcardBrowser({ view }) {
 
   return (
     <>
-      {
-  cardReviewer != null && cardReviewer.allCardsRevised() !== true ? (
-    <>
-      <div className={isFullscreen ? 'fullscreen' : ''}>
-        <div className="card-container">
-          <CardOverview
-            text={currentCard.front}
-            description={currentCard.back}
-            showResponseOptions={true}
-            setResponse={setResponse}
-            height={isFullscreen ? '100%' : '264px'}
-          />
-        </div>
-        {!isFullscreen &&(
-          <div style={{position:"relative",width:"100%"}}>
-        <ReviewBarChartKey style={{ paddingTop: '8px' }} />
-        <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>                        
-        </div>
-        )}
-        {!isFullscreen &&(
-        <div className="review-bar-chart-wrapper">
-          <ReviewBarChart
-            studying={cardReviewer.countCards().studying}
-            recapping={cardReviewer.countCards().recapping}
-            notStarted={cardReviewer.countCards().notStarted}
-            view={view}
-          />
-          <Heading4
-            text={
-              Math.floor(
-                (cardReviewer.learnedCards /
-                  (cardReviewer.countCards().studying +
-                    cardReviewer.countCards().notStarted +
-                    cardReviewer.countCards().recapping)) *
-                  100
-              ) + '%'
-            }
-            style={{ padding: '0px' }}
-          />
-        </div>
-      )}
-        {isFullscreen &&(
-            <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
-          )}
-      </div>
+    <DelayedElement child={
+      cardReviewer != null && cardReviewer.allCardsRevised() !== true ? (
+        <>
+            <div className={isFullscreen ? 'fullscreen' : ''}>
+              <div className="card-container">
+                <CardOverview
+                  text={currentCard.front}
+                  description={currentCard.back}
+                  showResponseOptions={true}
+                  setResponse={setResponse}
+                  height={isFullscreen ? '100%' : '264px'}
+                  toggleFullscreen={toggleFullscreen}
+                  fullscreen={isFullscreen}
+                  view={view}
+                />
+              </div>
+              {!isFullscreen &&(
+                <div style={{position:"relative",width:"100%"}}>
+              <ReviewBarChartKey style={{ paddingTop: '8px' }} />
+              {view !== "mobile"  ?
+                <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
+                : <></>
+              }                 
+              </div>
+              )}
+              {!isFullscreen &&(
+              <div className="review-bar-chart-wrapper">
+                <ReviewBarChart
+                  studying={cardReviewer.countCards().studying}
+                  recapping={cardReviewer.countCards().recapping}
+                  notStarted={cardReviewer.countCards().notStarted}
+                  view={view}
+                />
+                {view !== "mobile" ? <Heading5
+                  text={
+                    cardsPercentage + " completed"
+                  }
+                  style={{ padding: '0px', width: "maxContent" }}
+                /> : <></>}
+              </div>
+            )}
+              {isFullscreen &&(
+                  <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
+                )}
+            </div>
+        </>
+      ) : cardsSaved === false ? (
+        <>
+          <div style={{ display: 'inline-block' }}>
+            <DelayedElement child={null} childValue={null} />
+            <Heading5 text="Saving cards..." />
+          </div>
+        </>
+      ) : (
+        <>
+          <Heading5 text="No cards left to study today!" />
+        </>
+      )
+      } childValue={flashcardsLoaded}/>
     </>
-  ) : cardsSaved === false ? (
-    <>
-      <div style={{ display: 'inline-block' }}>
-        <DelayedElement child={null} childValue={null} />
-        <Heading5 text="Saving cards..." />
-      </div>
-    </>
-  ) : (
-    <>
-      <Heading5 text="No cards left to study today!" />
-    </>
-  )
-}
-    </>
+    
   );
 }
 

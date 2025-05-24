@@ -2,10 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import './GhostButton.css';
 
-function GhostButton({ text, disabled = false, onClick = () => {}, style = {}, border = null, icon = null }) {
+function GhostButton({ text, disabled = false, onClick = () => {}, style = {}, border = null, icon = null, view }) {
     const buttonStyle = {
         border: border,
         ...style,
+        width: view === "mobile" ? "100%" : "auto",
     };
 
     return (

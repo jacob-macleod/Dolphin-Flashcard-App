@@ -18,6 +18,7 @@ import community_icon_white from '../../static/community-icon-white.svg';
 import './MobileSidePanel.css';
 import '../../componments/GridItem/GridItem.css';
 import '../HamburgerBar/HamburgerBar.css';
+import { useTheme } from '../../context/ThemeContext';
 
 function MobileSidePanel ({visible, setVisible, selectedItem}) {
     const iconSize = "32px";
@@ -25,6 +26,19 @@ function MobileSidePanel ({visible, setVisible, selectedItem}) {
     function clickEvent() {
         setVisible(false);
     };
+
+    function signOut() {
+        // Clear all cookies
+        document.cookie.split(';').forEach(cookie => {
+            const eqPos = cookie.indexOf('=');
+            const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+            document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        });
+        // Reload the page
+        window.location.reload();
+    }
+
+    const { darkMode, toggleTheme } = useTheme();
 
     return  visible==true ? <div className="side-panel-mobile">
             <div className='profileBanner'>
@@ -58,8 +72,13 @@ function MobileSidePanel ({visible, setVisible, selectedItem}) {
             <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>
             <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>
             <MenuItem text="Settings" src="/settings" imgUrl={settings_icon}/>
-            <MenuItem text="Sign Out" src="/signout" imgUrl={signOutIcon}/>
+            <MenuItem text="Sign Out" onClick={() => {signOut()}} imgUrl={signOutIcon}/>
             <MenuItem text="Settings" src="/settings" imgUrl={settingsIcon}/>
+            <MenuItem 
+                text="Toggle Theme" 
+                onClick={toggleTheme}
+                imgUrl={selectedItem == "settings" ? settings_icon : settings_icon}
+            />
         </div> : <></>;
 }
 

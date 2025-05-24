@@ -5,8 +5,6 @@ import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
-import SidePanel from '../containers/SidePanel/SidePanel';
-import HamburgerBar from '../containers/HamburgerBar/HamburgerBar';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
@@ -15,10 +13,13 @@ import Heading5 from '../componments/Text/Heading5';
 import SearchBar from '../componments/SearchBar/SearchBar';
 import Button from '../componments/Button';
 import FlashcardSearchResult from '../containers/FlashcardSearchResult';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
+import SidePanel from '../containers/SidePanel/SidePanel';
 
 import apiManager from '../api/Api';
 
 import './Community.css';
+import { transform } from 'framer-motion';
 
 function SearchForFlashcard() {
   // Set general variables
@@ -70,12 +71,13 @@ function SearchForFlashcard() {
       </Helmet>
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" ? <SidePanel selectedItem="community"/> : <></>}
+        {view !== "mobile" ? <SidePanel selectedItem="community" /> : <></>}
 
         <GridItem
           style={{
-            paddingLeft: flashcardBoxHorizontalPadding,
-            paddingRight: flashcardBoxHorizontalPadding,
+            paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingBottom: view === "mobile" ? "0px" : "32px",
             paddingTop: "0px",
             width: view === "mobile" ? "100vw" : "",
             display: view === "mobile" ? "block" : "flex",
@@ -83,28 +85,34 @@ function SearchForFlashcard() {
             justifyContent: "center",
           }}
         >
-          {view === "mobile" ? <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="community" /> : <></>}
 
+          <MobilePageWrapper view={view} itemClicked="community">
 
-            <div style={{margin: "auto", maxWidth: "487px" }}>
+            <div className={view === "mobile" ? "community-page-wrapper-mobile" : "community-page-wrapper"}>
               <div>
                 <Heading4 text="Find flashcards created by fellow learners" />
-                <div className={view === "desktop" ? "search-bar" : "search-bar-mobile"}>
+                <div className={view !== "mobile" ? "search-bar" : "search-bar-mobile"}>
                   <SearchBar
                     view={view}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
-                    marginTop="0px"
-                    marginRight="0px"
-                    width="auto"
-                    float={view === "desktop" ? "" : "left"}
                     placeholder="Search..."
-                    borderRadius="8px 0px 0px 8px"
+                    marginTop={view === "mobile" ? "8px" : "0px"}
+                    marginRight="0px"
+                    borderRadius="8px 0 0 8px"
+                    paddingBottom={view=== "mobile" ? "8px" : "10px"}
+                    width={view === "mobile"? "calc(100% - 26px)" : "auto"}
                     />
                   <Button
                     text="Search"
                     onClick={() => {searchForFlashcard()}}
-                    style={{margin: "0px", width: "min-content", borderRadius: "0px 8px 8px 0px", height: "42px"}}
+                    style={{
+                      margin: "0px",
+                      width: "min-content",
+                      borderRadius: "0px 8px 8px 0px",
+                      height: "42px",
+                      marginTop: view === "mobile" ? "8px" : "0px",
+                    }}
                   />
                 </div>
                 {
@@ -119,6 +127,7 @@ function SearchForFlashcard() {
                 }
               </div>
             </div>
+          </MobilePageWrapper>
         </GridItem>
       </GridContainer>
       <BlobBackground />

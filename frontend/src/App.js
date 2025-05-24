@@ -11,6 +11,8 @@ import SearchForFlashcard from './screens/Community';
 import PreviewFlashcard from './screens/PreviewFlashcard';
 import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
+import { ThemeProvider } from './context/ThemeContext';
+import Settings from './screens/Settings';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -40,7 +42,7 @@ function App() {
   const [jwtToken, setJwtToken] = useState(getCookie('jwtToken'));
 
   return (
-    <>
+    <ThemeProvider>
       <BrowserRouter>
         <Routes>
           <Route
@@ -104,6 +106,16 @@ function App() {
               />
             }
           />
+          <Route
+            path="/settings"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<Settings />}
+              />
+            }
+          />
           <Route path="/community" element={<SearchForFlashcard />} />
           <Route path="/preview" element={<PreviewFlashcard />} />
           {/* Do not check if the user is signed in or not, because 404 pages can be accessed without jwt tokens */}
@@ -120,7 +132,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 

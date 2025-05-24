@@ -1,8 +1,12 @@
 .heading3 {
-    color: #222829;
+    color: var(--text-light);
     font-size: 28px;
     font-family: Roboto;
     font-weight: 700;
     word-wrap: break-word;
     margin: 16px;
+}
+
+body.dark-theme .heading3 {
+    color: var(--text-dark);
 }

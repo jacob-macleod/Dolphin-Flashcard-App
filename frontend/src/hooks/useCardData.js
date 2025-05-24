@@ -3,6 +3,7 @@ import apiManager from '../api/Api';
 
 const useCardData = (cardIDs) => {
   const [cardData, setCardData] = useState([]);
+  const [cardsLoaded, setCardsLoaded] = useState(null);
   const [cardsExist, setCardsExist] = useState(null);
 
   useEffect(() => {
@@ -18,7 +19,13 @@ const useCardData = (cardIDs) => {
       const cardData = await Promise.all(cardPromises);
       setCardData(cardData);
       setCardsExist(true);
+      setCardsLoaded(true);
     };
+
+    if (cardIDs.length === 0) {
+      // Cards are loaded, but there aren't any cards avaliable to learn
+      setCardsLoaded(true);
+    }
 
     if (cardIDs && cardIDs.length > 0) {
       fetchCardData();
@@ -27,7 +34,8 @@ const useCardData = (cardIDs) => {
     }
   }, []);
 
-  return { cardData, cardsExist };
+
+  return { cardData, cardsExist, cardsLoaded };
 };
 
 export default useCardData;
