@@ -16,6 +16,8 @@ import Button from '../componments/Button';
 import useWindowSize from '../hooks/useWindowSize';
 import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
+import MobilePageWrapper from '../containers/MobilePageWrapper';
+import Heading5 from '../componments/Text/Heading5';
 import "../componments/Text/Link/Link.css";
 import './ViewFlashcards.css';
 
@@ -23,6 +25,7 @@ function ViewFlashcards() {
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
   const [mode, setMode] = useState("daily");
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
+  const [cardsPercentage, setCardsPercentage] = useState("0%");
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -37,31 +40,41 @@ function ViewFlashcards() {
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
 
-  const collectCardIDs = (cards, flashcardIDs) => {
-    const cardIDs = [];
+const collectCardIDs = (cards, flashcardIDs) => {
+  const cardIDs = [];
 
-    const traverse = (obj) => {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          const value = obj[key];
+  const idsArray = Array.isArray(flashcardIDs)
+    ? flashcardIDs
+    : flashcardIDs
+    ? [flashcardIDs]
+    : [];
 
-          if (value && typeof value === 'object') {
-            if (flashcardIDs.includes(value.flashcardID)) {
-              if (value.cards) {
-                cardIDs.push(...Object.keys(value.cards));
-              }
+  const traverse = (obj) => {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+
+        if (value && typeof value === "object") {
+          if (
+            idsArray.length > 0 &&
+            value.flashcardID &&
+            idsArray.includes(value.flashcardID)
+          ) {
+            if (value.cards) {
+              cardIDs.push(...Object.keys(value.cards));
             }
-            traverse(value);
           }
+          traverse(value);
         }
       }
-    };
-
-    traverse(cards);
-    return cardIDs;
+    }
   };
 
-  const cardIDs = collectCardIDs(todayCards, flashcardID);
+  traverse(cards);
+  return cardIDs;
+};
+
+const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
 
   return (
     <div style={{ top: "0px" }}>
@@ -75,61 +88,80 @@ function ViewFlashcards() {
 
         <GridItem
           style={{
-            paddingLeft: flashcardBoxHorizontalPadding,
-            paddingRight: flashcardBoxHorizontalPadding,
+            paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
             paddingTop: "0px",
-            width: view === "mobile" ? "100vw" : "",
+            paddingBottom: view === "mobile" ? "0px" : "32px",
+            width: view === "mobile" ? "100%" : "",
             display: view === "mobile" ? "block" : "flex",
             flexDirection: "row",
             justifyContent: "center",
           }}
         >
-          {view === "mobile" ? (
-            <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />
-          ) : (
-            <></>
-          )}
+          <MobilePageWrapper view={view} itemClicked="flashcards">
+            <div className={view === "mobile" ? "mobile-page-container" : "desktop-page-container"}>
 
-          <WhiteOverlay
-            style={{
-              height: "max-content",
-              paddingBottom: view === "mobile" ? "80px" : "",
-              width: view === "desktop" ? "100%" : "calc(100% - 16px)"
-            }}
-          >
-            <FlashcardHeader
-              newSet={false}
-              flashcardName={flashcardName[0]}
-              folder={folder !== undefined ? folder[0] : undefined}
-              type={"studyFlashcard"}
-              flashcardID={flashcardID}
-              numberStudying={flashcardName.length}
-            />
-            <div style={{ maxWidth: "548px", margin: "auto" }}>
-              <div className='mode-selector-container'>
-                <p className={mode === "daily" ? 'link' : "inactive-link"} onClick={() => { setMode("daily") }}>Your Daily Dose</p>
-                <p className={mode === "total" ? 'link' : 'inactive-link'} onClick={() => { setMode("total") }}>All Cards</p>
-              </div>
+              <WhiteOverlay
+                style={{
+                  height: "max-content",
+                  paddingBottom: view === "mobile" ? "80px" : "",
+                  width: view === "desktop" ? "100%" : "calc(100% - 16px)"
+                }}
+                visible={view == "mobile" ? false : true}
+              >
+                <FlashcardHeader
+                  newSet={false}
+                  flashcardName={
+                    flashcardName && flashcardName[0] ? flashcardName[0] : ""
+                  }
+                  folder={folder !== undefined ? folder[0] : undefined}
+                  type={"studyFlashcard"}
+                  flashcardID={flashcardID}
+                  numberStudying={flashcardName ? flashcardName.length : 0}
+                />
+                <div style={{ maxWidth: "548px", margin: "auto" }}>
+                  <div className="mode-selector-container">
+                    <p
+                      className={mode === "daily" ? "link" : "inactive-link"}
+                      onClick={() => {
+                        setMode("daily");
+                      }}
+                    >
+                      Your Daily Dose
+                    </p>
+                    <p
+                      className={mode === "total" ? "link" : "inactive-link"}
+                      onClick={() => {
+                        setMode("total");
+                      }}
+                    >
+                      All Cards
+                    </p>
+                  </div>
 
-              <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
+                  <div>
+                    <Heading4 text={mode === "daily" ? "Regular study mode" : "All cards mode"} />
+                    {view === "mobile" && mode === "daily" ? <Heading5 text={cardsPercentage + " completed"} style={{paddingLeft: "16px"}}/> : <></>}
+                  </div>
 
-              {mode === "daily"
-                ? <DailyFlashcardBrowser view={view}/>
-                : <TotalFlashcardBrowser
-                    folder={folder}
-                    flashcardName={flashcardName}
-                    flashcardID={flashcardID}
-                  />
-              }
+                  {mode === "daily"
+                    ? <DailyFlashcardBrowser view={view} setCardsPercentage={setCardsPercentage} cardsPercentage={cardsPercentage}/>
+                    : <TotalFlashcardBrowser
+                        folder={folder}
+                        flashcardName={flashcardName}
+                        flashcardID={flashcardID}
+                      />
+                  }
 
-              <Heading4 text="Other modes" />
-              <div className='button-container'>
-                <Button text="Generate Quiz" disabled={true} />
-                <Button text="Match Mode" disabled={true} />
-              </div>
+                  <Heading4 text="Other modes" />
+                  <div className={view === "mobile" ? "button-container-mobile" : 'button-container'}>
+                    <Button text="Generate Quiz" disabled={true} view={view}/>
+                    <Button text="Match Mode" disabled={true} view={view}/>
+                  </div>
+                </div>
+              </WhiteOverlay>
             </div>
-          </WhiteOverlay>
-
+          </MobilePageWrapper>
         </GridItem>
       </GridContainer>
       <BlobBackground />

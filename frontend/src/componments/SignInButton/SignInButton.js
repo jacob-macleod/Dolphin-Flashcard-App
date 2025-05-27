@@ -9,18 +9,6 @@ function signInButton({ setJwtToken, active = true }) {
 
   const queryParams = new URLSearchParams(location.search);
 
-  // Set the accessTokens from the URL or cookies
-  const [accessToken, setAccessToken] = useState(
-    queryParams.get('idToken') == null
-      ? getCookie('accessToken')
-      : queryParams.get('idToken')
-  );
-  const [rawAccessToken, setRawAccessToken] = useState(
-    queryParams.get('rawIdToken') == null
-      ? getCookie('rawAccessToken')
-      : queryParams.get('rawIdToken')
-  );
-
   const [forceRecreate, setForceRecreate] = useState(
     queryParams.get('forceRecreate') == null
       ? false
@@ -43,8 +31,6 @@ function signInButton({ setJwtToken, active = true }) {
     });
     signInWithGoogle(
       setJwtToken,
-      rawAccessToken,
-      accessToken,
       setSignInErrorMessage,
       forceRecreate
     );
@@ -55,13 +41,7 @@ function signInButton({ setJwtToken, active = true }) {
       <Button
         text="Continue with Google"
         onClick={() => {
-          if (accessToken == null || rawAccessToken == null) {
-            setSignInErrorMessage(
-              'You need to sign in with a valid access link!'
-            );
-          } else {
-            signIn();
-          }
+          signIn();
         }}
       />
       <ErrorText text={signInErrorMessage} />

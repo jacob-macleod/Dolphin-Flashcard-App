@@ -1972,7 +1972,7 @@ paths:
                   example: my first flashcard
                 folder:
                   type: string
-                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by numeric figures.'
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by /'
                   example: top-level-parent-name/parent-name-2/parent-name-3
                 delimiter:
                   type: string
@@ -1985,6 +1985,173 @@ paths:
       parameters: []
       tags:
         - Card management
+  /import-from-quizlet:
+    post:
+      summary: Import flashcards from Quizlet
+      description: Add a Quizlet set exported as text to the user's flashcards.
+      operationId: importFromQuizlet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - folder
+                - flashcards
+                - term_def_separator
+                - term_separator
+                - flashcard_name
+              properties:
+                jwtToken:
+                  type: string
+                  description: Authentication token.
+                  example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                folder:
+                  type: string
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by /'
+                  example: top-level-parent-name/parent-name-2/parent-name-3
+                flashcards:
+                  type: string
+                  description: Copied flashcard data from Quizlet
+                  example: 'term1:definition1\nterm2:definition2'
+                term_def_separator:
+                  type: string
+                  description: Separator between term and definition
+                  example: ","
+                term_separator:
+                  type: string
+                  description: Separator between term-definition pairs
+                  example: "\\n"
+                flashcard_name:
+                  type: string
+                  description: Name of the flashcard set
+      responses:
+        "200":
+          description: Flashcards imported successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                  flashcard_id:
+                    type: string
+                  flashcard_name:
+                    type: string
+                  card_count:
+                    type: integer
+        "400":
+          description: Invalid request format or flashcard parsing error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "500":
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      tags:
+        - Card management
+  /import-anki-flashcards:
+    post:
+      summary: Import flashcards from an Anki .apkg file
+      description: Imports flashcards from an Anki deck package (.apkg) and stores them in the specified folder
+      operationId: import-anki-flashcards
+      tags:
+        - Card management
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - jwtToken
+                - flashcardName
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Anki .apkg file containing the flashcards
+                jwtToken:
+                  type: string
+                  description: JWT authentication token
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIxMjM0NSJ9.abc123..."
+                folder:
+                  type: string
+                  description: Folder path to store the flashcards (empty string for root)
+                  default: ""
+                  example: "Languages/Spanish"
+                flashcardName:
+                  type: string
+                  description: Name for the new flashcard set
+                  example: "Spanish Vocabulary"
+                flashcardDescription:
+                  type: string
+                  description: Optional description for the flashcard set
+                  example: "Imported from Anki deck"
+                termField:
+                  type: string
+                  description: Term field name (e.g., "Front") or index (0-based integer)
+                  default: "Front"
+                  example: "Front"
+                definitionField:
+                  type: string
+                  description: Definition field name (e.g., "Back") or index (0-based integer)
+                  default: "Back"
+                  example: "Back"
+                stripHtml:
+                  type: string
+                  description: Whether to remove HTML tags from fields ("true" or "false" as string)
+                  default: "true"
+                  example: "true"
+      responses:
+        '200':
+          description: Successfully imported flashcards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flashcardID:
+                    type: string
+                    description: ID of the created flashcard set
+                    example: "987654321"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    examples:
+                      noFile: "No file provided"
+                      invalidFormat: "Invalid Anki file format"
+                      exists: "Flashcard set name already exists"
+                      noValidCards: "No valid flashcards found. Possible reasons:\n1. Incorrect field selection\n2. All content was removed during HTML stripping\n3. Unsupported Anki note type"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error occurred"
 
 components:
   schemas: {}

@@ -22,7 +22,7 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
     const [loadEditFlashcardPage, setLoadEditFlashcardPage] = useState(false);
     const buttonStyle = {
         display: "inline-grid",
-        margin: "0px 16px"
+        margin: view !== "mobile" ? "0px 16px" : "8px 0px"
     }
     const flashcardID = visible.flashcardID;
     const currentPath = visible.path;
@@ -78,10 +78,10 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
         <div className={view != "mobile" ? 'darken-background' : 'whiten-background'}>
             <motion.div
               className={view == "desktop" ? "popup-container" : view == "tablet" ? "popup-container-tablet" : "popup-container-mobile"}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              variants={dropIn}
+              initial={view !== "mobile" ? "hidden" : ""}
+              animate={view !== "mobile" ? "visible" : ""}
+              exit={view !== "mobile" ? "exit" : ""}
+              variants={view !== "mobile"? dropIn: null}
               style={view !== "mobile" ? {height: "fit-content"} : null}
             >
                 <Heading3 text="Choose a location:" />
@@ -92,16 +92,16 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
 
                 <Heading3 text="Choose other details:" />
 
-                <div className="input-container">
+                <div className={view !== "mobile" ? "input-container" : "input-container-mobile"}>
                     <Paragraph text="Name: " style={{ display: "flex", alignItems: "center" }} />
-                    <input type="text" className="input" value={folderName} onChange={onFlashcardNameChange}/>
+                    <input type="text" style={{width: "calc(100% - 32px)"}} className="input" value={folderName} onChange={onFlashcardNameChange} />
                 </div>
 
                 <ErrorText text={errorMessage} style={{ display: errorMessageVisibility}} />
 
-                <div className='button-container'>
-                    <GhostButton text="Cancel" onClick={() => {setErrorMessageVisibility("none"); setVisible(false)}} style={buttonStyle} />
-                    <Button text="Create" onClick={createSet} style={buttonStyle} />
+                <div className={view !== "mobile" ? 'button-container' : 'button-container-mobile'}>
+                    <GhostButton text="Cancel" onClick={() => {setErrorMessageVisibility("none"); setVisible(false)}} style={buttonStyle} view={view}/>
+                    <Button text="Create" onClick={createSet} style={buttonStyle} view={view}/>
                 </div>
 
                 <div className={"loading-icon-wrapper"}>

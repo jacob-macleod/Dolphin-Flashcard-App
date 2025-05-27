@@ -29,3 +29,12 @@
     grid-template-columns: auto auto;
     justify-items: center;
 }
+
+.mobile-edit-flashcard-page-container {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.desktop-edit-flashcard-page-container {
+    width: 100%
+}

@@ -3,6 +3,8 @@ import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 import GhostButton from '../../componments/GhostButton';
 import "../../componments/Text/Text/Text.css";
 import DOMPurify from 'dompurify';
+import ExpandIcon from '../../static/expand-icon.svg';
+import Image from '../../componments/Image/Image';
 
 function sanitizeHtml(html) {
     return DOMPurify.sanitize(html, {
@@ -23,14 +25,38 @@ const ghostButtonStyle = {
     marginRight: "0px",
 };
 
+function ResponseOptions({ ghostButtonStyle, setResponse }) {
+    return (
+        <div style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            marginTop: "20px",
+        }}>
+            <GhostButton text="I'm not sure" style={ghostButtonStyle} onClick={() => {
+                setResponse("I'm not sure");
+            }}/>
+            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
+                setResponse("I know");
+            }}/>
+            <GhostButton text="This is easy" style={ghostButtonStyle} onClick={() => {
+                setResponse("This is easy");
+            }}/>
+        </div>
+    )
+}
+
 function CardOverview({
     text,
     description: back = "",
     showResponseOptions = false,
-    showTurnOverButton = false,
+    showTurnOverButton = true,
     height="fit-content",
     setResponse=()=>{},
     turnOverCardOnSpaceKey=true,
+    toggleFullscreen=null,
+    fullscreen=false,
+    view="desktop",
+    isInEditPage=false
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -43,6 +69,10 @@ function CardOverview({
     const [cardText, setCardText] = useState(sanitizedFront);
     const [isFlipped, setIsFlipped] = useState(false);
     const isFlippedRef = useRef(isFlipped);
+
+    useEffect(() => {
+        console.log(fullscreen);
+    }, [fullscreen]);
 
     function turnOverCard() {
         setIsFlipped((prev) => !prev);
@@ -77,9 +107,12 @@ function CardOverview({
     }, []);
 
     return (
+        <>
         <WhiteOverlay
             isFlipped={isFlipped}
             flipOnClick={true}
+            onClick={turnOverCard}
+            className={isInEditPage ? "edit-page-flashcard-wrapper" : fullscreen ? "fullscreen-card-container-wrapper" : ""}
             children={
                 <div style={{
                     paddingTop: "22px",
@@ -99,28 +132,18 @@ function CardOverview({
                                 boxShadow: "none",
                                 color: "#6A84C5",
                             }}
-                            onClick={turnOverCard}
                         />
+                    }
+                    {
+                        toggleFullscreen !== null && fullscreen === false && view === "mobile"
+                        ? <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/> 
+                        : <></>
                     }
                     <div style={{ transformStyle: "preserve-3d" }}>
                         <p className="flashcard-text" dangerouslySetInnerHTML={{ __html: cardText }} />
                     </div>
-                    {(showResponseOptions && isFlipped) ?
-                        <div style={{
-                            display: "flex",
-                            justifyContent: "space-evenly",
-                            marginTop: "20px",
-                        }}>
-                            <GhostButton text="I'm not sure" style={ghostButtonStyle} onClick={() => {
-                                setResponse("I'm not sure");
-                            }}/>
-                            <GhostButton text="I know" style={ghostButtonStyle} onClick={() => {
-                                setResponse("I know");
-                            }}/>
-                            <GhostButton text="This is easy" style={ghostButtonStyle} onClick={() => {
-                                setResponse("This is easy");
-                            }}/>
-                        </div>
+                    {showResponseOptions && isFlipped && (view !== "mobile" || fullscreen == false) ?
+                        <ResponseOptions ghostButtonStyle={ghostButtonStyle} setResponse={setResponse} />
                     : <></>}
                 </div>
             }
@@ -128,9 +151,13 @@ function CardOverview({
                 width: "100%",
                 margin: "7px",
                 padding: "0px",
-                height: "90%",
+                height: fullscreen ? "70%" : "90%",
             }}
         />
+        {(showResponseOptions && isFlipped && fullscreen && view === "mobile") ?
+            <ResponseOptions ghostButtonStyle={ghostButtonStyle} setResponse={setResponse} />
+        : <></>}
+        </>
     );
 }
 

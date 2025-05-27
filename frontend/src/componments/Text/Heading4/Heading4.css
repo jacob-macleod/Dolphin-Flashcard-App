@@ -1,5 +1,5 @@
 .heading4-black{
-    color: #222829;
+    color: var(--text-light);
     font-size: 21px;
     font-weight: bold;
     font-style: normal;
@@ -8,6 +8,10 @@
     justify-content: left;
     margin: 0px;
     padding: 16px;
+}
+
+body.dark-theme .heading4-black{
+    color: var(--text-dark);
 }
 
 .heading4-blue {
