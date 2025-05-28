@@ -29,7 +29,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Added API integration via importFlashcard method to handle CSV uploads
 - Created import csv modal
 
-## 6.6.0 - 2025-03-2
 ## 6.13.4 - 2025-05-22
 
 ### Fixed
