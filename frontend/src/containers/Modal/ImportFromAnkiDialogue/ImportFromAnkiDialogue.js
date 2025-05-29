@@ -13,14 +13,17 @@ import '../Modal.css';
 import DelayedElement from '../../DelayedElement';
 import { dropIn } from '../../../animations/animations';
 
-function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
+function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
   const [selectedPath, setSelectedPath] = React.useState(null);
+  const [filePath, setFilePath] = useState('');
+  const [ankiFile, setAnkiFile] = useState(null);
   const [flashcardName, setFlashcardName] = useState('');
   const [flashcardDescription, setFlashcardDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [errorMessageVisibility, setErrorMessageVisibility] = useState('none');
   const [loadingIconVisible, setLoadingIconVisible] = useState('visisnle'); // If null, loading icon shows
   const [loadEditFlashcardPage, setLoadEditFlashcardPage] = useState(false);
+
   const buttonStyle = {
     display: 'inline-grid',
     margin: view !== 'mobile' ? '0px 16px' : '8px 0px',
@@ -68,6 +71,24 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     }
   }
 
+  function uploadAnkiPackage() {
+    setErrorMessageVisibility('block');
+    if (errorMessage === null) {
+      if (selectedPath != null) {
+        setLoadingIconVisible(null);
+        apiManager.importFromAnki(
+          ankiFile,
+          getCookie('jwtToken'),
+          flashcardName,
+          flashcardDescription,
+          selectedPath
+        );
+      }
+    }
+    setAnkiFile(null);
+    setFilePath('');
+  }
+
   useEffect(() => {
     if (loadEditFlashcardPage != false) {
       setLoadingIconVisible(false);
@@ -89,6 +110,10 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
     setLoadingIconVisible('visible');
   }, [visible]);
 
+  useEffect(() => {
+    console.log(ankiFile, filePath);
+  }, [ankiFile, filePath]);
+
   return visible !== false ? (
     <div
       className={view != 'mobile' ? 'darken-background' : 'whiten-background'}
@@ -107,6 +132,19 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
         variants={view !== 'mobile' ? dropIn : null}
         style={view !== 'mobile' ? { height: 'fit-content' } : null}
       >
+        <Heading3 text="Upload Anki file (.apkg):" />
+        <div>
+          <input
+            type="file"
+            accept=".apkg"
+            multiple={false}
+            value={filePath}
+            onChange={(e) => {
+              setFilePath(e.target.value);
+              setAnkiFile(e.target.files[0]);
+            }}
+          />
+        </div>
         <Heading3 text="Choose a location:" />
 
         <div className="card-overview" style={{ cursor: 'pointer' }}>
@@ -188,8 +226,8 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
             view={view}
           />
           <Button
-            text="Create"
-            onClick={createSet}
+            text="Upload"
+            onClick={uploadAnkiPackage}
             style={buttonStyle}
             view={view}
           />
@@ -203,4 +241,4 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
   ) : null;
 }
 
-export default CreateFlashcardSetDialogue;
+export default ImportFromAnkiDialogue;
