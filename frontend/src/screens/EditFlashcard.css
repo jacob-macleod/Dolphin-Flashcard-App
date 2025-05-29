@@ -34,3 +34,7 @@
     overflow-y: scroll;
     height: 100%;
 }
+
+.desktop-edit-flashcard-page-container {
+    width: 100%
+}

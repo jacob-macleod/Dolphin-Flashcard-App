@@ -2,7 +2,7 @@
 import LoadingIcons from 'react-loading-icons'
 import {motion} from 'framer-motion';
 import { zoomIn } from '../../animations/animations';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 function DelayedElement({ child, childValue }) {
     return (

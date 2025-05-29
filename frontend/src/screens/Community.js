@@ -19,6 +19,7 @@ import SidePanel from '../containers/SidePanel/SidePanel';
 import apiManager from '../api/Api';
 
 import './Community.css';
+import { transform } from 'framer-motion';
 
 function SearchForFlashcard() {
   // Set general variables
@@ -70,7 +71,7 @@ function SearchForFlashcard() {
       </Helmet>
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" ? <SidePanel /> : <></>}
+        {view !== "mobile" ? <SidePanel selectedItem="community" /> : <></>}
 
         <GridItem
           style={{
@@ -90,22 +91,28 @@ function SearchForFlashcard() {
             <div className={view === "mobile" ? "community-page-wrapper-mobile" : "community-page-wrapper"}>
               <div>
                 <Heading4 text="Find flashcards created by fellow learners" />
-                <div className={view === "desktop" ? "search-bar" : "search-bar-mobile"}>
+                <div className={view !== "mobile" ? "search-bar" : "search-bar-mobile"}>
                   <SearchBar
                     view={view}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
-                    marginTop="0px"
-                    marginRight="0px"
-                    width="auto"
-                    float={view === "desktop" ? "" : "left"}
                     placeholder="Search..."
-                    borderRadius="8px 0px 0px 8px"
+                    marginTop={view === "mobile" ? "8px" : "0px"}
+                    marginRight="0px"
+                    borderRadius="8px 0 0 8px"
+                    paddingBottom={view=== "mobile" ? "8px" : "10px"}
+                    width={view === "mobile"? "calc(100% - 26px)" : "auto"}
                     />
                   <Button
                     text="Search"
                     onClick={() => {searchForFlashcard()}}
-                    style={{margin: "0px", width: "min-content", borderRadius: "0px 8px 8px 0px", height: "42px"}}
+                    style={{
+                      margin: "0px",
+                      width: "min-content",
+                      borderRadius: "0px 8px 8px 0px",
+                      height: "42px",
+                      marginTop: view === "mobile" ? "8px" : "0px",
+                    }}
                   />
                 </div>
                 {

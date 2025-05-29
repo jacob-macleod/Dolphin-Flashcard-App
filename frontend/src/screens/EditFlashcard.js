@@ -115,7 +115,7 @@ function Flashcards() {
       />
 
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {/* {view !== "mobile" && <SidePanel selectedItem="flashcards" />} */}
+        {view !== "mobile" && <SidePanel selectedItem="flashcards" /> }
 
         <GridItem style={{
           paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
@@ -128,7 +128,7 @@ function Flashcards() {
           paddingBottom: view === "mobile" ? "0px" : "32px",
         }}>
           <MobilePageWrapper view={view} itemClicked="flashcards">
-            <div className={view === "mobile" ? "mobile-edit-flashcard-page-container" : ""}>
+            <div className={view === "mobile" ? "mobile-edit-flashcard-page-container" : "desktop-edit-flashcard-page-container"}>
               {view === "mobile" && <HamburgerBar menuVisible={mobileSidePanelVisible} setMenuVisible={setMobileSidePanelVisible} selectedItem="flashcards" />}
 
               <WhiteOverlay
@@ -169,6 +169,7 @@ function Flashcards() {
                           setInitialTerm={setInitialTerm}
                           setInitialDefinition={setInitialDefinition}
                           setReload={setReload}
+                          isInEditPage={true}
                         />
                       ))
                       : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />

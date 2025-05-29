@@ -21,11 +21,54 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-## 6.10.0 - 2025-03-28
+
+## 6.13.4 - 2025-05-22
+
+### Fixed
+
+- Improved efficiency of database when creating/uploading flashcards
+
+## 6.13.3 - 2025-05-02
+
+### Fixed
+
+- Fixed bug when deleting flashcards
+- Fixed formatting of FlashcardRow in Edit flashcards page
+- Fixed formatting for settings page on Desktop
+
+## 6.13.2 - 2025-05-01
+
+### Fixed
+
+- Fixed bug for `import-flashcards`. JWT token is required to import flashcard, and this is checked using validate_form
+
+## 6.13.1 - 2025-04-21
 
 ### Added
 
-- Implemented the API to import anki flashcards
+- Improved formatting of all cards and daily flashcard mode on fullscreen mode
+- Fixed bug where "Turn over" button on flashcard did not work
+
+## 6.13.0 - 2025-04-19
+
+### Changed
+
+* Also make the site a PWA and add an icon for when it is installed
+*  Fix the edit flashcard page on desktop 
+* Make the nav bar follow dark mode
+* Make search bar on community page fill screen for mobile
+* Add loading animation for cards on daily dose mode
+* Change the percentage of cards completed on Flashcard page to say "x% completed"
+* Change mobile (and desktop) flashcards pages so that you don't click the flashcard name itself, instead you click the study button next to the flashcard then click "Study multiple". "Study multiple" should be changed to say "Study x cards"*
+* Allow dark mode to be switched on using the settings page on mobile
+* Optimise the full screen pages on mobile so that all the buttons are close to the user’s fingers
+* Allow anywhere on the flashcard to be tapped to turn over
+
+## 6.12.0 - 2025-04-07
+
+### Added
+
+- Added the mechanism for resetting the weeklyXP at the start of a new week
 
 ## 6.11.0 - 2025-04-06
 
@@ -33,6 +76,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Replaced HamburgerBar with MobileNavBar
 - Changed app icon for when app is installed as a PWA
+
+## 6.10.0 - 2025-03-28
+
+### Added
+
+- Implemented the API to import anki flashcards
 
 ## 6.9.0 - 2025-03-27
 

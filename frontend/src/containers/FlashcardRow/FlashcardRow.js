@@ -6,7 +6,7 @@ import FlashcardOperationsMenu from '../Modal/FlashcardOperationsMenu';
 import DelayedElement from '../DelayedElement';
 import "./FlashcardRow.css"
 
-function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setInitialDefinition, cardID, flashcardID, setReload}) {
+function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setInitialDefinition, cardID, flashcardID, setReload, isInEditPage}) {
     const [flashcardOperationsMenuVisible, setFlashcardOperationsMenuVisible] = useState(false);
     const [loadingIconVisible, setLoadingIconVisible] = useState(false);
 
@@ -16,8 +16,8 @@ function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setIni
 
     return (
         <div className='flashcard-row'>
-            <CardOverview text={front} turnOverCardOnSpaceKey={false} />
-            <CardOverview text={back} turnOverCardOnSpaceKey={false} />
+            <CardOverview text={front} turnOverCardOnSpaceKey={false} isInEditPage={isInEditPage}/>
+            <CardOverview text={back} turnOverCardOnSpaceKey={false} isInEditPage={isInEditPage}/>
             <FlashcardOperationsMenu
                 view={view}
                 showEditPopup={showEditPopup}

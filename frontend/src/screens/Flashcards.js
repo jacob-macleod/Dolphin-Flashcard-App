@@ -214,86 +214,46 @@ function Flashcards() {
             }}
             visible={view == 'mobile' ? false : true}
           >
-            <div
-              style={{
-                maxWidth: '1200px',
-                margin: 'auto',
-                padding: view === 'mobile' ? '0px' : '16px',
-                height: view === 'mobile' ? '100%' : '',
-              }}
-            >
-              <MobilePageWrapper view={view} itemClicked="flashcards">
-                <div
-                  className={view === 'mobile' ? 'flashcards-page-content' : ''}
-                >
-                  <SearchBar
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    view={view}
-                    width={'90%'}
-                  />
-                  {view !== 'mobile' ? <br></br> : <></>}
-                  {view !== 'mobile' ? <br></br> : <></>}
-                  <GridContainer
-                    classType="review-bar-wrapper"
-                    layout={view === 'desktop' ? '260px auto 80px' : 'auto'}
-                  >
-                    {view === 'desktop' ? <GridItem /> : <></>}
-                    <ReviewBarChartKey view={view} />
-                    {view === 'desktop' ? <GridItem /> : <></>}
-                  </GridContainer>
-                  <div>
-                    <div
-                      style={{
-                        height: view === 'mobile' ? '100%' : 'auto',
-                        overflowY: view === 'mobile' ? 'scroll' : '',
-                      }}
-                    >
-                      <DelayedElement
-                        child={
-                          <FlashcardOverview
-                            flashcardData={todayCards}
-                            setMoveFolderDialogueVisible={
-                              setMoveFolderDialogueVisible
-                            }
-                            showDeleteFlashcardConfirmation={
-                              showDeleteFlashcardConfirmation
-                            }
-                            setRenameFlashcardSetPopupVisible={
-                              setRenameFlashcardSetPopupVisible
-                            }
-                            setDeleteFolderConfirmationVisible={
-                              setDeleteFolderConfirmationVisible
-                            }
-                            setRenameFolderPopupVisible={
-                              setRenameFolderPopupVisible
-                            }
-                            view={view}
-                            selected={selected}
-                            setSelected={setSelected}
-                          />
-                        }
-                        childValue={todayCards}
-                      />
+            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "", overflowY: "scroll" }}>
+                <MobilePageWrapper view={view} itemClicked="flashcards">
+                  <div className={view === "mobile" ? "flashcards-page-content": ""}>
+
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"} marginLeft="0px"/>
+                    {view !== "mobile" ? <br></br> : <></>}
+                    {view !== "mobile" ? <br></br> : <></>}
+                    <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
+                      {view === "desktop" ? <GridItem /> : <></>}
+                      <ReviewBarChartKey view={view} />
+                      {view === "desktop" ? <GridItem /> : <></>}
+                    </GridContainer>
+                    <div>
+                      <div style={{
+                        height: view === "mobile" ? "100%": "auto",
+                        overflowY: view === "mobile" ? "scroll": "",
+                      }}>
+                        <DelayedElement
+                          child={
+                            <FlashcardOverview
+                              flashcardData={todayCards}
+                              setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                              showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                              setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                              setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
+                              setRenameFolderPopupVisible={setRenameFolderPopupVisible}
+                              view={view}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+                          }
+                          childValue={todayCards}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    className={
-                      view === 'mobile' ? 'button-panel-container' : ''
-                    }
-                    style={{
-                      display: view !== 'desktop' ? 'block' : 'flex',
-                      justifyContent: 'space-between',
-                      paddingTop: view === 'mobile' ? '' : '16px',
-                    }}
-                  >
-                    <div
-                      className={
-                        view === 'mobile' ? 'new-item-button-container' : ''
-                      }
-                      style={{
-                        float: view !== 'mobile' ? 'left' : '',
-                        display: view === 'tablet' ? 'flex' : '',
+                    <div className={view === "mobile" ? "button-panel-container" : ""}
+                        style={{
+                        display: view !== "desktop" ? "block": "flex", 
+                        justifyContent: "space-between",
+                        paddingTop: view === "mobile" ? "" : "16px"
                       }}
                     >
                       {view === 'mobile' ? (
@@ -327,35 +287,28 @@ function Flashcards() {
                       ) : (
                         <>
                           <GhostButton
-                            text="+ New Folder"
-                            style={{
-                              display: view !== 'mobile' ? 'inline-block' : '',
-                              marginRight: view !== 'mobile' ? '16px' : '',
-                              marginLeft: view === 'mobile' ? '0px' : '',
-                            }}
-                            onClick={() => {
-                              setCreateFolderDialogueVisible(todayCards);
-                            }}
-                            view={view}
-                          />
-                          <Button
-                            text="+ New Set"
-                            style={{
-                              display: view !== 'mobile' ? 'inline-block' : '',
-                              marginLeft: view === 'mobile' ? '0px' : '',
-                            }}
-                            onClick={() => {
-                              setCreateCardDialogueVisible(todayCards);
-                            }}
-                            view={view}
-                          />
-                        </>
-                      )}
-                    </div>
-                    <div style={{ float: view !== 'desktop' ? '' : 'right' }}>
+                          text="+ New Folder"
+                          style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                          onClick={() => {
+                            setCreateFolderDialogueVisible(todayCards);
+                          }}
+                          view={view}
+                        />
+                        <Button
+                          text="+ New Set"
+                          style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                          onClick={() => {
+                            setCreateCardDialogueVisible(todayCards);
+                          }}
+                          view={view}
+                        />
+                      </>
+                      }
+                      </div>
+                    <div style={{float: view === "mobile" ? "": "right"}}>
                       <Button
-                        text="Study Multiple"
-                        disabled={selected.length <= 1}
+                        text={"Study " + selected.length + " cards"}
+                        disabled={selected.length < 1}
                         style={{
                           paddingTop: '11px',
                           paddingBottom: '11px',
