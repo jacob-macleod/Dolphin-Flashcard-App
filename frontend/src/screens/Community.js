@@ -21,7 +21,8 @@ import DolphinLogo from '../componments/Logos/DolphinLogo/DolphinLogo';
 import apiManager from '../api/Api';
 
 import './Community.css';
-import { transform } from 'framer-motion';
+import '../componments/Text/Link/Link.css';
+
 
 function SearchForFlashcard() {
   // Set general variables
@@ -98,7 +99,7 @@ function SearchForFlashcard() {
                   <DolphinLogo
                     width="160px"
                     minWidth="160px"
-                    height="160px"
+                    height="170px"
                     paddingBottom="30px"
                     paddingLeft="30px"
                     paddingRight="30px"
@@ -145,6 +146,11 @@ function SearchForFlashcard() {
                   : <></>
                 }
             </WhiteOverlay>
+
+            <WhiteOverlay>
+              <p className="link">Helo</p>
+            </WhiteOverlay>
+
             </div>
           </MobilePageWrapper>
         </GridItem>

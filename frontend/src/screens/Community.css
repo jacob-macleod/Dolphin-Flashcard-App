@@ -1,6 +1,6 @@
 .search-bar{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 80px;
 }
 
 .search-bar-mobile{
