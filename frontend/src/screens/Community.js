@@ -147,33 +147,34 @@ function SearchForFlashcard() {
                 }
             </WhiteOverlay>
 
-            <WhiteOverlay>
-              <p className="link">Spanish</p>
-              <p className="link">French</p>
-              <p className="link">Latin</p>
-              <p className="link">German</p>
-              <p className="link">Japanese</p>
-              <p className="link">Italian</p>
-              <p className="link">Chinese</p>
-              <p className="link">Arabic</p>
-              <p className="link">Hindi</p>
-            </WhiteOverlay>
+            <div className="categories-wrapper">
+              <WhiteOverlay header="Languages">
+                <p className="link">Spanish</p>
+                <p className="link">French</p>
+                <p className="link">Latin</p>
+                <p className="link">German</p>
+                <p className="link">Japanese</p>
+                <p className="link">Italian</p>
+                <p className="link">Chinese</p>
+                <p className="link">Arabic</p>
+                <p className="link">Hindi</p>
+              </WhiteOverlay>
 
-            <WhiteOverlay>
-              <p className="link">History</p>
-              <p className="link">Geography</p>
-              <p className="link">English</p>
-              <p className="link">Psychology</p>
-              <p className="link">Economics</p>
-              <p className="link">Law</p>
-            </WhiteOverlay>
+              <WhiteOverlay header="Humanities">
+                <p className="link">History</p>
+                <p className="link">Geography</p>
+                <p className="link">English</p>
+                <p className="link">Psychology</p>
+                <p className="link">Economics</p>
+                <p className="link">Law</p>
+              </WhiteOverlay>
 
-            <WhiteOverlay>
-              <p className="link">Algebra</p>
-              <p className="link">General Arithemtic</p>
-              <p className="link">Other</p>
-            </WhiteOverlay>
-
+              <WhiteOverlay header="Mathematics">
+                <p className="link">Algebra</p>
+                <p className="link">General Arithemtic</p>
+                <p className="link">Other</p>
+              </WhiteOverlay>
+            </div>
             </div>
           </MobilePageWrapper>
         </GridItem>
