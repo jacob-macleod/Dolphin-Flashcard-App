@@ -1,4 +1,4 @@
-.ghost-button {
+.ghost-button, .ghost-button-disabled {
     border: solid #6A84C5;
     border-radius: 8px;
     background: transparent;
@@ -24,6 +24,11 @@
     margin-top: 16px;
     margin-bottom: 16px;
     cursor: pointer;
+}
+
+.ghost-button-disabled {
+    border: solid var(--input-text-light);
+    color: var(--input-text-light);
 }
 
 @media (hover: hover) {

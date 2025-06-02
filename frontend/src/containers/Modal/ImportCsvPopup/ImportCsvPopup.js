@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { dropIn } from "../../../animations/animations";
 import Modal from "../Modal";
 import "../Modal.css";
+import "./ImportCsvPopup.css";
 import GhostButton from "../../../componments/GhostButton";
 import Button from "../../../componments/Button";
 import Heading3 from "../../../componments/Text/Heading3/Heading3";
@@ -24,6 +25,8 @@ const ImportCsvPopup = ({ visible, setVisible, view, reload, setReload }) => {
   const buttonStyle = {
     display: "inline-grid",
     margin: "0px 16px",
+    marginBottom: "8px",
+    marginTop: "8px",
   };
   const flashcardID = visible.flashcardID;
   const currentPath = visible.path;
@@ -90,117 +93,119 @@ const ImportCsvPopup = ({ visible, setVisible, view, reload, setReload }) => {
         variants={dropIn}
         style={view !== "mobile" ? { height: "fit-content" } : null}
       >
-        <Heading3 text="Choose from CSV:" />
+        <div className={view === "mobile" ? "import-csv-modal-content" : ""}>
+          <Heading3 text="Choose from CSV:" />
 
-        <div
-          className={
-            view !== "mobile" ? "input-container" : "input-container-mobile"
-          }
-        >
-          <Paragraph
-            text="Filename: "
+          <div
+            className={
+              view !== "mobile" ? "input-container" : "input-container-mobile"
+            }
+          >
+            <Paragraph
+              text="Filename: "
+              style={{
+                marginRight: view === "mobile" ? "0px" : "14.5%",
+                textAlign: view === "mobile" ? "left" : "center",
+              }}
+            />
+            {/* <textarea cols="40" rows="5" style={{ resize: "none", width: "calc(100% - 32px)" }} className="input" placeholder='Folder description'  /> */}
+            <input
+              type="file"
+              placeholder="Folder name..."
+              onChange={(e) => setFile(e.target.files[0])}
+              accept=".csv"
+              style={{
+                width: "calc(100% - 32px)",
+                display: "flex",
+                alignSelf: "center",
+              }}
+            />
+          </div>
+
+          <div
+            className={
+              view !== "mobile" ? "input-container" : "input-container-mobile"
+            }
             style={{
-              marginRight: view === "mobile" ? "0px" : "14.5%",
-              textAlign: view === "mobile" ? "left" : "center",
+              display: view == "mobile" ? "block" : "flex",
+              marginBottom: "4%",
             }}
-          />
-          {/* <textarea cols="40" rows="5" style={{ resize: "none", width: "calc(100% - 32px)" }} className="input" placeholder='Folder description'  /> */}
-          <input
-            type="file"
-            placeholder="Folder name..."
-            onChange={(e) => setFile(e.target.files[0])}
-            accept=".csv"
+          >
+            <Paragraph
+              text="Name: "
+              style={{
+                marginRight: view === "mobile" ? "0px" : "20%",
+                textAlign: view === "mobile" ? "left" : "center",
+              }}
+            />
+            <input
+              type="text"
+              className="input"
+              placeholder="Set name..."
+              onChange={(e) => setFlashcardName(e.target.value)}
+              style={{ width: "calc(100% - 32px)" }}
+            />
+          </div>
+          <div
+            className={
+              view !== "mobile" ? "input-container" : "input-container-mobile"
+            }
             style={{
-              width: "calc(100% - 32px)",
-              display: "flex",
-              alignSelf: "center",
+              display: view == "mobile" ? "block" : "flex",
+              marginBottom: "4%",
             }}
-          />
-        </div>
+          >
+            <Paragraph
+              text="Description: "
+              style={{
+                marginRight: view === "mobile" ? "0px" : "10%",
+                textAlign: view === "mobile" ? "left" : "center",
+              }}
+            />
+            <input
+              type="text"
+              className="input"
+              placeholder="Set Description"
+              onChange={(e) => setFlashcardDescription(e.target.value)}
+              style={{ width: "calc(100% - 32px)" }}
+            />
+          </div>
 
-        <div
-          className={
-            view !== "mobile" ? "input-container" : "input-container-mobile"
-          }
-          style={{
-            display: view == "mobile" ? "block" : "flex",
-            marginBottom: "4%",
-          }}
-        >
-          <Paragraph
-            text="Name: "
-            style={{
-              marginRight: view === "mobile" ? "0px" : "20%",
-              textAlign: view === "mobile" ? "left" : "center",
-            }}
-          />
-          <input
-            type="text"
-            className="input"
-            placeholder="Set name..."
-            onChange={(e) => setFlashcardName(e.target.value)}
-            style={{ width: "calc(100% - 32px)" }}
-          />
-        </div>
-        <div
-          className={
-            view !== "mobile" ? "input-container" : "input-container-mobile"
-          }
-          style={{
-            display: view == "mobile" ? "block" : "flex",
-            marginBottom: "4%",
-          }}
-        >
-          <Paragraph
-            text="Description: "
-            style={{
-              marginRight: view === "mobile" ? "0px" : "10%",
-              textAlign: view === "mobile" ? "left" : "center",
-            }}
-          />
-          <input
-            type="text"
-            className="input"
-            placeholder="Set Description"
-            onChange={(e) => setFlashcardDescription(e.target.value)}
-            style={{ width: "calc(100% - 32px)" }}
-          />
-        </div>
+          <Heading3 text="Choose a location:" />
 
-        <Heading3 text="Choose a location:" />
+          <div className="card-overview" style={{ cursor: "pointer" }}>
+            <FolderTreeView
+              visible={visible}
+              selectedPath={selectedPath}
+              setSelectedPath={setSelectedPath}
+            />
+          </div>
 
-        <div className="card-overview" style={{ cursor: "pointer" }}>
-          <FolderTreeView
-            visible={visible}
-            selectedPath={selectedPath}
-            setSelectedPath={setSelectedPath}
+          <ErrorText
+            text={errorMessage}
+            style={{ display: errorMessageVisibility }}
           />
-        </div>
 
-        <ErrorText
-          text={errorMessage}
-          style={{ display: errorMessageVisibility }}
-        />
+          <div
+            className={
+              view !== "mobile" ? "button-container" : "button-container-mobile"
+            }
+          >
+            <GhostButton
+              text="Cancel"
+              onClick={() => {
+                setErrorMessageVisibility("none");
+                setVisible(false);
+              }}
+              style={buttonStyle}
+              view={view}
+            />
+            <Button text="Create" onClick={importSet} style={buttonStyle} view={view}/>
+          </div>
 
-        <div
-          className={
-            view !== "mobile" ? "button-container" : "button-container-mobile"
-          }
-        >
-          <GhostButton
-            text="Cancel"
-            onClick={() => {
-              setErrorMessageVisibility("none");
-              setVisible(false);
-            }}
-            style={buttonStyle}
-            view={view}
-          />
-          <Button text="Create" onClick={importSet} style={buttonStyle} />
-        </div>
-
-        <div className={"loading-icon-wrapper"}>
-          <DelayedElement child={<></>} childValue={loadingIconVisible} />
+          <div className={"loading-icon-wrapper"}>
+            <DelayedElement child={<></>} childValue={loadingIconVisible} />
+          </div>
         </div>
       </motion.div>
     </div>

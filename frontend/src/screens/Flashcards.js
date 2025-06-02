@@ -22,6 +22,8 @@ import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup
 import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
 import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
+import Heading4 from '../componments/Text/Heading4';
+import Paragraph from '../componments/Text/Paragraph';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
@@ -185,7 +187,8 @@ function Flashcards() {
                         style={{
                         display: view !== "desktop" ? "block": "flex", 
                         justifyContent: "space-between",
-                        paddingTop: view === "mobile" ? "" : "16px"
+                        paddingTop: view === "mobile" ? "" : "16px",
+                        height: view === "tablet" ? "72px" : ""
                       }}
                       >
                       <div className={view === "mobile" ? "new-item-button-container" : ""} style={{float: view !== "mobile" ? "left" : "", display: view === "tablet" ? "flex": ""}}>
@@ -246,37 +249,35 @@ function Flashcards() {
                         onClick={studyMultipleCards}
                       />
                     </div>
-                  </div>
-                </div>
-              <div style={{float: view !== "desktop" ? "": "right"}}>
-                <Button
-                  text="Study Multiple"
-                  disabled={selected.length <= 1}
-                  style={{
-                    paddingTop: "11px",
-                    paddingBottom: "11px",
-                    paddingLeft: "15px",
-                    paddingRight: "15px",
-                    marginLeft: view === "mobile" ? "0px" : ""
-                  }}
-                  onClick={studyMultipleCards}
-                />
-              </div>
-              
-              <div style={{ display: view === "desktop" ? "flex" : "", gap: '15px'}}>
-                <Button 
-                  text="Import from CSV"
-                  style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
-                  onClick={() => setImportCsvDialougeVisible(true)}
-                />
-                <GhostButton 
-                  text="Import from quizlet"
-                />
+                    </div>
 
-                <GhostButton
-                  text="Import from Anki"
-                />
-              </div>
+                    <div className={view === "mobile" ? 'mobile-import-options' : ""}>
+                      <Heading4 text="Import a set from elsewhere:" style={{paddingLeft: "0px"}}/>
+                      <Paragraph text="Import from Quizlet and Anki coming soon!" style={{textAlign: "left", margin: "0px"}}/>
+                      <div style={{ display: view === "desktop" ? "flex" : "", gap: '15px'}}>
+                        <Button 
+                          text="Import from CSV"
+                          style={{display: view === "desktop" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : "", margin: ""}}
+                          onClick={() => setImportCsvDialougeVisible(true)}
+                          view={view}
+                        />
+                        <GhostButton 
+                          text="Import from quizlet"
+                          style={{marginLeft: "0px", marginRight: "0px"}}
+                          disabled={true}
+                          view={view}
+                        />
+
+                        <GhostButton
+                          text="Import from Anki"
+                          style={{marginLeft: "0px", marginRight: "0px"}}
+                          disabled={true}
+                          view={view}
+                        />
+                      </div>
+                    </div>
+
+                </div>
               </MobilePageWrapper>
             </div>
           </WhiteOverlay>
