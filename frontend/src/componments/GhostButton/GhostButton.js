@@ -14,7 +14,7 @@ function GhostButton({ text, disabled = false, onClick = () => {}, style = {}, b
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={disabled ? "ghost-button-disabled" : "ghost-button"}
-            onClick={onClick}
+            onClick={disabled ? () => {} : onClick}
             style={buttonStyle}
         >
             {icon && <img src={icon} alt="" style={{ width: '16px',height:'16px' }} />} 
