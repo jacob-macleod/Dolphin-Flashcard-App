@@ -187,7 +187,8 @@ function Flashcards() {
                         style={{
                         display: view !== "desktop" ? "block": "flex", 
                         justifyContent: "space-between",
-                        paddingTop: view === "mobile" ? "" : "16px"
+                        paddingTop: view === "mobile" ? "" : "16px",
+                        height: view === "tablet" ? "72px" : ""
                       }}
                       >
                       <div className={view === "mobile" ? "new-item-button-container" : ""} style={{float: view !== "mobile" ? "left" : "", display: view === "tablet" ? "flex": ""}}>
@@ -248,6 +249,7 @@ function Flashcards() {
                         onClick={studyMultipleCards}
                       />
                     </div>
+                    </div>
 
                     <div className={view === "mobile" ? 'mobile-import-options' : ""}>
                       <Heading4 text="Import a set from elsewhere:" style={{paddingLeft: "0px"}}/>
@@ -255,7 +257,7 @@ function Flashcards() {
                       <div style={{ display: view === "desktop" ? "flex" : "", gap: '15px'}}>
                         <Button 
                           text="Import from CSV"
-                          style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : "", margin: ""}}
+                          style={{display: view === "desktop" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : "", margin: ""}}
                           onClick={() => setImportCsvDialougeVisible(true)}
                           view={view}
                         />
@@ -275,7 +277,6 @@ function Flashcards() {
                       </div>
                     </div>
 
-                  </div>
                 </div>
               </MobilePageWrapper>
             </div>
