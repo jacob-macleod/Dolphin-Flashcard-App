@@ -22,12 +22,15 @@ import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup
 import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
 import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
+import Heading4 from '../componments/Text/Heading4';
+import Paragraph from '../componments/Text/Paragraph';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './Flashcards.css';
 import { getCookie } from '../api/Authentication';
+import ImportCsvPopup from '../containers/Modal/ImportCsvPopup/ImportCsvPopup';
 import GhostButton from '../componments/GhostButton';
 import flashcardIcon from '../static/flashcard-set-icon.svg';
 import folderIcon from '../static/folder-icon.svg';
@@ -42,6 +45,7 @@ function Flashcards() {
   const [reload, setReload] = useState(true);
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
+  const [importCsvDialougeVisible, setImportCsvDialougeVisible] = useState(false);
   const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] = useState(false);
   const [renameFlashcardSetPopupVisible, setRenameFlashcardSetPopupVisible] = useState(false);
   const [deleteFolderConfirmationVisible, setDeleteFolderConfirmationVisible] = useState(false);
@@ -112,6 +116,7 @@ function Flashcards() {
       <CreateFlashcardSetDialogue visible={createCardDialogueVisible} setVisible={setCreateCardDialogueVisible} view={view} setReload={setReload} />
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
+      <ImportCsvPopup visible={importCsvDialougeVisible} setVisible={setImportCsvDialougeVisible} view={view} reload={reload} setReload={setReload} />
       <DeleteFlashcardConfirmation visible={deleteFlashcardConfirmationVisible} setVisible={showDeleteFlashcardConfirmation} view={view} setReload={setReload} />
       <RenameFlashcardSetPopup visible={renameFlashcardSetPopupVisible} setVisible={setRenameFlashcardSetPopupVisible} view={view} setReload={setReload} />
       <DeleteFolderConfirmation visible={deleteFolderConfirmationVisible} setVisible={setDeleteFolderConfirmationVisible} view={view} setReload={setReload} />
@@ -182,7 +187,8 @@ function Flashcards() {
                         style={{
                         display: view !== "desktop" ? "block": "flex", 
                         justifyContent: "space-between",
-                        paddingTop: view === "mobile" ? "" : "16px"
+                        paddingTop: view === "mobile" ? "" : "16px",
+                        height: view === "tablet" ? "72px" : ""
                       }}
                       >
                       <div className={view === "mobile" ? "new-item-button-container" : ""} style={{float: view !== "mobile" ? "left" : "", display: view === "tablet" ? "flex": ""}}>
@@ -243,7 +249,34 @@ function Flashcards() {
                         onClick={studyMultipleCards}
                       />
                     </div>
-                  </div>
+                    </div>
+
+                    <div className={view === "mobile" ? 'mobile-import-options' : ""}>
+                      <Heading4 text="Import a set from elsewhere:" style={{paddingLeft: "0px"}}/>
+                      <Paragraph text="Import from Quizlet and Anki coming soon!" style={{textAlign: "left", margin: "0px"}}/>
+                      <div style={{ display: view === "desktop" ? "flex" : "", gap: '15px'}}>
+                        <Button 
+                          text="Import from CSV"
+                          style={{display: view === "desktop" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : "", margin: ""}}
+                          onClick={() => setImportCsvDialougeVisible(true)}
+                          view={view}
+                        />
+                        <GhostButton 
+                          text="Import from quizlet"
+                          style={{marginLeft: "0px", marginRight: "0px"}}
+                          disabled={true}
+                          view={view}
+                        />
+
+                        <GhostButton
+                          text="Import from Anki"
+                          style={{marginLeft: "0px", marginRight: "0px"}}
+                          disabled={true}
+                          view={view}
+                        />
+                      </div>
+                    </div>
+
                 </div>
               </MobilePageWrapper>
             </div>

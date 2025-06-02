@@ -22,6 +22,19 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.14.1 - 2025-06-02
+
+## Fixed
+
+- Fixed styling for changes added by `6.14.0` on flashcards page
+
+## 6.14.0 - 2025-05-26
+
+## Added
+
+- Added API integration via importFlashcard method to handle CSV uploads
+- Created import csv modal
+
 ## 6.13.4 - 2025-05-22
 
 ### Fixed
