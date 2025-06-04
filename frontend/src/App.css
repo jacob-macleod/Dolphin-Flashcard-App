@@ -63,6 +63,8 @@
   --grey-button-dark: #404040;
   --folder-text-light: #222829;
   --folder-text-dark: #FFFFFF;
+  --folder-operations-popup-light: #FFFFFFFF;
+  --folder-operations-popup-dark: #2D2D2D;
 }
 
 body {

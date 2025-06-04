@@ -74,11 +74,7 @@ function MobileSidePanel ({visible, setVisible, selectedItem}) {
             <MenuItem text="Settings" src="/settings" imgUrl={settings_icon}/>
             <MenuItem text="Sign Out" onClick={() => {signOut()}} imgUrl={signOutIcon}/>
             <MenuItem text="Settings" src="/settings" imgUrl={settingsIcon}/>
-            <MenuItem 
-                text="Toggle Theme" 
-                onClick={toggleTheme}
-                imgUrl={selectedItem == "settings" ? settings_icon : settings_icon}
-            />
+
         </div> : <></>;
 }
 
