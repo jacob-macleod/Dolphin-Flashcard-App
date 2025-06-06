@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.14.2 - 2025-06-04
+
+### Changed
+
+- Removed theme toggle from `SidePanel.js` for streamlined UI
+
 ## 6.14.1 - 2025-06-02
 
 ## Fixed
