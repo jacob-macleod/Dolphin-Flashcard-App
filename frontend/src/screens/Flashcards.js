@@ -214,81 +214,118 @@ function Flashcards() {
             }}
             visible={view == 'mobile' ? false : true}
           >
-            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "", overflowY: "scroll" }}>
-                <MobilePageWrapper view={view} itemClicked="flashcards">
-                  <div className={view === "mobile" ? "flashcards-page-content": ""}>
-
-                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"} marginLeft="0px"/>
-                    {view !== "mobile" ? <br></br> : <></>}
-                    {view !== "mobile" ? <br></br> : <></>}
-                    <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
-                      {view === "desktop" ? <GridItem /> : <></>}
-                      <ReviewBarChartKey view={view} />
-                      {view === "desktop" ? <GridItem /> : <></>}
-                    </GridContainer>
-                    <div>
-                      <div style={{
-                        height: view === "mobile" ? "100%": "auto",
-                        overflowY: view === "mobile" ? "scroll": "",
-                      }}>
-                        <DelayedElement
-                          child={
-                            <FlashcardOverview
-                              flashcardData={todayCards}
-                              setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
-                              showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
-                              setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
-                              setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
-                              setRenameFolderPopupVisible={setRenameFolderPopupVisible}
-                              view={view}
-                              selected={selected}
-                              setSelected={setSelected}
-                            />
-                          }
-                          childValue={todayCards}
-                        />
-                      </div>
-                    </div>
-                    <div className={view === "mobile" ? "button-panel-container" : ""}
-                        style={{
-                        display: view !== "desktop" ? "block": "flex", 
-                        justifyContent: "space-between",
-                        paddingTop: view === "mobile" ? "" : "16px"
+            <div
+              style={{
+                maxWidth: '1200px',
+                margin: 'auto',
+                padding: view === 'mobile' ? '0px' : '16px',
+                height: view === 'mobile' ? '100%' : '',
+                overflowY: 'scroll',
+              }}
+            >
+              <MobilePageWrapper view={view} itemClicked="flashcards">
+                <div
+                  className={view === 'mobile' ? 'flashcards-page-content' : ''}
+                >
+                  <SearchBar
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    view={view}
+                    width={'90%'}
+                    marginLeft="0px"
+                  />
+                  {view !== 'mobile' ? <br></br> : <></>}
+                  {view !== 'mobile' ? <br></br> : <></>}
+                  <GridContainer
+                    classType="review-bar-wrapper"
+                    layout={view === 'desktop' ? '260px auto 80px' : 'auto'}
+                  >
+                    {view === 'desktop' ? <GridItem /> : <></>}
+                    <ReviewBarChartKey view={view} />
+                    {view === 'desktop' ? <GridItem /> : <></>}
+                  </GridContainer>
+                  <div>
+                    <div
+                      style={{
+                        height: view === 'mobile' ? '100%' : 'auto',
+                        overflowY: view === 'mobile' ? 'scroll' : '',
                       }}
                     >
-                      {view === 'mobile' ? (
-                        <>
-                          <PillGhostButton
-                            text="New Folder"
-                            style={{
-                              display: view !== 'mobile' ? 'inline-block' : '',
-                              marginRight: view !== 'mobile' ? '16px' : '',
-                              marginLeft: view === 'mobile' ? '0px' : '',
-                            }}
-                            onClick={() => {
-                              setCreateFolderDialogueVisible(todayCards);
-                            }}
+                      <DelayedElement
+                        child={
+                          <FlashcardOverview
+                            flashcardData={todayCards}
+                            setMoveFolderDialogueVisible={
+                              setMoveFolderDialogueVisible
+                            }
+                            showDeleteFlashcardConfirmation={
+                              showDeleteFlashcardConfirmation
+                            }
+                            setRenameFlashcardSetPopupVisible={
+                              setRenameFlashcardSetPopupVisible
+                            }
+                            setDeleteFolderConfirmationVisible={
+                              setDeleteFolderConfirmationVisible
+                            }
+                            setRenameFolderPopupVisible={
+                              setRenameFolderPopupVisible
+                            }
                             view={view}
-                            icon={folderIcon}
+                            selected={selected}
+                            setSelected={setSelected}
                           />
-                          <PillGhostButton
-                            text="New Set"
-                            style={{
-                              display: view !== 'mobile' ? 'inline-block' : '',
-                              marginLeft: view === 'mobile' ? '0px' : '',
-                            }}
-                            onClick={() => {
-                              setCreateCardDialogueVisible(todayCards);
-                            }}
-                            view={view}
-                            icon={flashcardIcon}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <GhostButton
+                        }
+                        childValue={todayCards}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    className={
+                      view === 'mobile' ? 'button-panel-container' : ''
+                    }
+                    style={{
+                      display: view !== 'desktop' ? 'block' : 'flex',
+                      justifyContent: 'space-between',
+                      paddingTop: view === 'mobile' ? '' : '16px',
+                    }}
+                  >
+                    {view === 'mobile' ? (
+                      <>
+                        <PillGhostButton
+                          text="New Folder"
+                          style={{
+                            display: view !== 'mobile' ? 'inline-block' : '',
+                            marginRight: view !== 'mobile' ? '16px' : '',
+                            marginLeft: view === 'mobile' ? '0px' : '',
+                          }}
+                          onClick={() => {
+                            setCreateFolderDialogueVisible(todayCards);
+                          }}
+                          view={view}
+                          icon={folderIcon}
+                        />
+                        <PillGhostButton
+                          text="New Set"
+                          style={{
+                            display: view !== 'mobile' ? 'inline-block' : '',
+                            marginLeft: view === 'mobile' ? '0px' : '',
+                          }}
+                          onClick={() => {
+                            setCreateCardDialogueVisible(todayCards);
+                          }}
+                          view={view}
+                          icon={flashcardIcon}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <GhostButton
                           text="+ New Folder"
-                          style={{display: view !== "mobile" ? "inline-block": "", marginRight: view !== "mobile" ? "16px": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                          style={{
+                            display: view !== 'mobile' ? 'inline-block' : '',
+                            marginRight: view !== 'mobile' ? '16px' : '',
+                            marginLeft: view === 'mobile' ? '0px' : '',
+                          }}
                           onClick={() => {
                             setCreateFolderDialogueVisible(todayCards);
                           }}
@@ -296,84 +333,86 @@ function Flashcards() {
                         />
                         <Button
                           text="+ New Set"
-                          style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
+                          style={{
+                            display: view !== 'mobile' ? 'inline-block' : '',
+                            marginLeft: view === 'mobile' ? '0px' : '',
+                          }}
                           onClick={() => {
                             setCreateCardDialogueVisible(todayCards);
                           }}
                           view={view}
                         />
                       </>
-                      }
-                      </div>
-                    <div style={{float: view === "mobile" ? "": "right"}}>
-                      <Button
-                        text={"Study " + selected.length + " cards"}
-                        disabled={selected.length < 1}
-                        style={{
-                          paddingTop: '11px',
-                          paddingBottom: '11px',
-                          paddingLeft: '15px',
-                          paddingRight: '15px',
-                          marginLeft: view === 'mobile' ? '0px' : '',
-                        }}
-                        view={view}
-                        onClick={studyMultipleCards}
-                      />
-                    </div>
+                    )}
                   </div>
-                  <div style={{ textAlign: 'left' }}>
-                    <Heading4
-                      text={'Import a set from elsewhere:'}
-                      style={{ margin: 0, padding: 0 }}
-                    />
-                    <Paragraph
-                      text={
-                        "If you're exporting from Anki or Quizlet, you'll need to export the flashcard as a CSV file first!"
-                      }
-                      style={{ textAlign: 'left' }}
-                    />
-
+                  <div style={{ float: view === 'mobile' ? '' : 'right' }}>
                     <Button
-                      text=" Import Set (.csv)"
+                      text={'Study ' + selected.length + ' cards'}
+                      disabled={selected.length < 1}
                       style={{
-                        display: view !== 'mobile' ? 'inline-block' : '',
-                        marginRight: view !== 'mobile' ? '16px' : '',
-                        marginLeft: view === 'mobile' ? '0px' : '',
-                        textAlign: 'center',
-                      }}
-                      onClick={() => {
-                        return;
-                      }}
-                      view={view}
-                      icon={importIcon}
-                    />
-                    <GhostButton
-                      text=" Import from Quizlet"
-                      style={{
-                        display: view !== 'mobile' ? 'inline-block' : '',
-                        marginRight: view !== 'mobile' ? '16px' : '',
+                        paddingTop: '11px',
+                        paddingBottom: '11px',
+                        paddingLeft: '15px',
+                        paddingRight: '15px',
                         marginLeft: view === 'mobile' ? '0px' : '',
                       }}
-                      onClick={() => {
-                        return;
-                      }}
                       view={view}
-                      icon={quizletIcon}
-                    />
-                    <GhostButton
-                      text=" Import from Anki"
-                      style={{
-                        display: view !== 'mobile' ? 'inline-block' : '',
-                        marginRight: view !== 'mobile' ? '16px' : '',
-                        marginLeft: view === 'mobile' ? '0px' : '',
-                      }}
-                      onClick={() => {
-                        setImportFromAnkiDialogueVisible(todayCards);
-                      }}
-                      view={view}
-                      icon={ankiIcon}
+                      onClick={studyMultipleCards}
                     />
                   </div>
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <Heading4
+                    text={'Import a set from elsewhere:'}
+                    style={{ margin: 0, padding: 0 }}
+                  />
+                  <Paragraph
+                    text={
+                      "If you're exporting from Anki or Quizlet, you'll need to export the flashcard as a CSV file first!"
+                    }
+                    style={{ textAlign: 'left' }}
+                  />
+
+                  <Button
+                    text=" Import Set (.csv)"
+                    style={{
+                      display: view !== 'mobile' ? 'inline-block' : '',
+                      marginRight: view !== 'mobile' ? '16px' : '',
+                      marginLeft: view === 'mobile' ? '0px' : '',
+                      textAlign: 'center',
+                    }}
+                    onClick={() => {
+                      return;
+                    }}
+                    view={view}
+                    icon={importIcon}
+                  />
+                  <GhostButton
+                    text=" Import from Quizlet"
+                    style={{
+                      display: view !== 'mobile' ? 'inline-block' : '',
+                      marginRight: view !== 'mobile' ? '16px' : '',
+                      marginLeft: view === 'mobile' ? '0px' : '',
+                    }}
+                    onClick={() => {
+                      return;
+                    }}
+                    view={view}
+                    icon={quizletIcon}
+                  />
+                  <GhostButton
+                    text=" Import from Anki"
+                    style={{
+                      display: view !== 'mobile' ? 'inline-block' : '',
+                      marginRight: view !== 'mobile' ? '16px' : '',
+                      marginLeft: view === 'mobile' ? '0px' : '',
+                    }}
+                    onClick={() => {
+                      setImportFromAnkiDialogueVisible(todayCards);
+                    }}
+                    view={view}
+                    icon={ankiIcon}
+                  />
                 </div>
               </MobilePageWrapper>
             </div>
