@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.15.0 - 2025-06-13
+
+### Changed
+
+- Removed ToggleButton component from Sidebar for cleaner UI.
+
 ## 6.14.1 - 2025-06-02
 
 ## Fixed
