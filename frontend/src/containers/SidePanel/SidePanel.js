@@ -55,11 +55,6 @@ function SidePanel ({ selectedItem }) {
                 clicked={selectedItem == "settings" ? true : false}
                 imgUrl={selectedItem == "settings" ? settings_icon_clicked : settings_icon}
             />
-            <MenuItem 
-                text="Toggle Theme" 
-                onClick={toggleTheme}
-                imgUrl={selectedItem == "settings" ? settings_icon : settings_icon}
-            />
         </div>
     </div>;
 }
