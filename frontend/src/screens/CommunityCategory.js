@@ -25,7 +25,7 @@ import './Community.css';
 import '../componments/Text/Link/Link.css';
 
 
-function SearchForFlashcard() {
+function CommunityCategory() {
   // Set general variables
   const title = "Search";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
@@ -148,33 +148,8 @@ function SearchForFlashcard() {
                 }
             </WhiteOverlay>
 
-            <div className="categories-wrapper">
-              <WhiteOverlay header="Languages">
-                <FlashcardCategoryLink category="Spanish" />
-                <FlashcardCategoryLink category="French" />
-                <FlashcardCategoryLink category="Latin" />
-                <FlashcardCategoryLink category="German" />
-                <FlashcardCategoryLink category="Japanese" />
-                <FlashcardCategoryLink category="Italian" />
-                <FlashcardCategoryLink category="Chinese" />
-                <FlashcardCategoryLink category="Arabic" />
-                <FlashcardCategoryLink category="Hindi" />
-              </WhiteOverlay>
-
-              <WhiteOverlay header="Humanities">
-                <FlashcardCategoryLink category="History"/>
-                <FlashcardCategoryLink category="Geography"/>
-                <FlashcardCategoryLink category="English"/>
-                <FlashcardCategoryLink category="Psychology"/>
-                <FlashcardCategoryLink category="Economics"/>
-                <FlashcardCategoryLink category="Law"/>
-              </WhiteOverlay>
-
-              <WhiteOverlay header="Mathematics">
-                <FlashcardCategoryLink category="Algebra"/>
-                <FlashcardCategoryLink category="General Arithmetic"/>
-                <FlashcardCategoryLink category="Other"/>
-              </WhiteOverlay>
+            <div>
+              <Heading2 text="Your sets" />
             </div>
             </div>
           </MobilePageWrapper>
@@ -185,4 +160,4 @@ function SearchForFlashcard() {
   );
 }
 
-export default SearchForFlashcard;
+export default CommunityCategory;
