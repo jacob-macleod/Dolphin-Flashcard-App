@@ -1,4 +1,3 @@
-// Make this into a component called FlashcardCategoryLink
 import React from 'react';
 
 function FlashcardCategoryLink({ category }) {

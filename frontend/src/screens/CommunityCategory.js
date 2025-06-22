@@ -17,9 +17,10 @@ import MobilePageWrapper from '../containers/MobilePageWrapper';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import DolphinLogo from '../componments/Logos/DolphinLogo/DolphinLogo';
-import FlashcardCategoryLink from '../containers/FlashcardCategoryLink/FlashcardCategoryLink';
+import FeaturedCommunitySet from '../containers/FeaturedCommunitySet/FeaturedCommunitySet';
 
 import apiManager from '../api/Api';
+import communitySets from '../classes/CommunitySets';
 
 import './Community.css';
 import '../componments/Text/Link/Link.css';
@@ -27,7 +28,11 @@ import '../componments/Text/Link/Link.css';
 
 function CommunityCategory() {
   // Set general variables
-  const title = "Search";
+  // Get name of flashcard category from URL
+  const url = window.location.href;
+  let flashcardCategory = url.split("/").pop().replace(/-/g, " ");
+  flashcardCategory = flashcardCategory.charAt(0).toUpperCase() + flashcardCategory.slice(1);
+  const title = flashcardCategory;
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
 
   // Set variables for the size
@@ -149,7 +154,15 @@ function CommunityCategory() {
             </WhiteOverlay>
 
             <div>
-              <Heading2 text="Your sets" />
+              <Heading2 text={flashcardCategory + " Flashcard Sets:"} />
+              <div>
+                {// For item in communitySets[flashcardCategory], add a FeaturedCommunitySet component with title and url
+                }
+                {communitySets[flashcardCategory] && communitySets[flashcardCategory]["gcseSets"].map((set, index) => (
+                  <FeaturedCommunitySet key={index} title={set.title} url={set.url} />
+                ))
+                }
+              </div>
             </div>
             </div>
           </MobilePageWrapper>
