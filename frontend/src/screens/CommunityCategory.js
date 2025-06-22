@@ -155,9 +155,7 @@ function CommunityCategory() {
 
             <div>
               <Heading2 text={flashcardCategory + " Flashcard Sets:"} />
-              <div>
-                {// For item in communitySets[flashcardCategory], add a FeaturedCommunitySet component with title and url
-                }
+              <div class="flashcard-recommendation-container">
                 {communitySets[flashcardCategory] && communitySets[flashcardCategory]["gcseSets"].map((set, index) => (
                   <FeaturedCommunitySet key={index} title={set.title} url={set.url} />
                 ))

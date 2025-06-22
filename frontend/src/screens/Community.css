@@ -44,3 +44,10 @@
     padding-left: 32px;
     padding-right: 32px;
 }
+
+.flashcard-recommendation-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: start;
+}
