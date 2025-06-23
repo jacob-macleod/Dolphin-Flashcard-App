@@ -1,30 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { dropIn } from '../../../animations/animations';
+import Modal from '../Modal';
+import '../Modal.css';
+import './ImportFromCSVDialogue.css';
 import GhostButton from '../../../componments/GhostButton';
 import Button from '../../../componments/Button';
 import Heading3 from '../../../componments/Text/Heading3/Heading3';
 import FolderTreeView from '../../FolderTreeView';
 import Paragraph from '../../../componments/Text/Paragraph';
-import ErrorText from '../../../componments/Text/ErrorText';
 import apiManager from '../../../api/Api';
 import { getCookie } from '../../../api/Authentication';
-import '../MoveFolderDialogue/MoveFolderDialogue.css';
-import '../Modal.css';
 import DelayedElement from '../../DelayedElement';
-import { dropIn } from '../../../animations/animations';
-import './ImportFromAnkiDialogue.css';
+import ErrorText from '../../../componments/Text/ErrorText';
 
-function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
+const ImportFromCSVDialogue = ({
+  visible,
+  setVisible,
+  view,
+  reload,
+  setReload,
+}) => {
   const [selectedPath, setSelectedPath] = React.useState(null);
-  const [filePath, setFilePath] = useState('');
-  const [ankiFile, setAnkiFile] = useState(null);
+  const [file, setFile] = useState('');
   const [flashcardName, setFlashcardName] = useState('');
   const [flashcardDescription, setFlashcardDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loadingIconVisible, setLoadingIconVisible] = useState('visible'); // If null, loading icon shows
   const [errorMessageVisibility, setErrorMessageVisibility] = useState('none');
-  const [loadingIconVisible, setLoadingIconVisible] = useState('visisnle'); // If null, loading icon shows
-  const [loadEditFlashcardPage, setLoadEditFlashcardPage] = useState(false);
-
   const buttonStyle = {
     display: 'inline-grid',
     margin: '0px 16px',
@@ -34,30 +37,6 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
   const flashcardID = visible.flashcardID;
   const currentPath = visible.path;
 
-  function clearFormData() {
-    setAnkiFile(null);
-    setFilePath('');
-    setFlashcardName('');
-    setFlashcardDescription('');
-    setErrorMessage(null);
-    setErrorMessageVisibility('none');
-  }
-
-  // When component mounts, clear the form data to stop the form errors being shown
-  useEffect(() => {
-    clearFormData();
-  }, []);
-
-  // When the flashcard name is chaned using the input box
-  const onFlashcardNameChange = (event) => {
-    setFlashcardName(event.target.value);
-  };
-
-  // When the flashcard description is chaned using the input box
-  const onFlashcardDescriptionChange = (event) => {
-    setFlashcardDescription(event.target.value);
-  };
-
   useEffect(() => {
     /* Generate an error message when the user clicks "Submit" */
     if (selectedPath === null) {
@@ -66,67 +45,40 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
       setErrorMessage('Please enter a name!');
     } else if (flashcardDescription === '') {
       setErrorMessage('Please enter a description!');
+    } else if (file === '') {
+      setErrorMessage('Please select a file!');
     } else {
       setErrorMessage(null);
     }
-  }, [selectedPath, flashcardName, flashcardDescription]);
+  }, [selectedPath, flashcardName, flashcardDescription, file]);
 
-  function createSet() {
-    setErrorMessageVisibility('block');
-    if (errorMessage === null) {
-      if (selectedPath != null) {
-        setLoadingIconVisible(null);
-        apiManager.createFlashcard(
-          getCookie('jwtToken'),
-          flashcardName,
-          flashcardDescription,
-          selectedPath,
-          [],
-          setLoadEditFlashcardPage
-        );
+  async function importSet() {
+    try {
+      setErrorMessageVisibility('block');
+      if (errorMessage === null) {
+        if (selectedPath != null) {
+          setLoadingIconVisible(null);
+          apiManager.importFlashcard(
+            file,
+            getCookie('jwtToken'),
+            selectedPath,
+            flashcardName,
+            flashcardDescription,
+            setVisible,
+            setReload
+          );
+        }
       }
+    } catch (error) {
+      console.error('Import Error: ', error);
+      setErrorMessageVisibility('block');
     }
   }
-
-  function uploadAnkiPackage() {
-    setErrorMessageVisibility('block');
-    if (errorMessage === null) {
-      if (selectedPath != null) {
-        setLoadingIconVisible(null);
-        apiManager.importFromAnki(
-          ankiFile,
-          getCookie('jwtToken'),
-          flashcardName,
-          flashcardDescription,
-          selectedPath,
-          setVisible,
-          setReload,
-          clearFormData
-        );
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (loadEditFlashcardPage != false) {
-      setLoadingIconVisible(false);
-      window.open(
-        '/edit-flashcard-set?flashcardName=' +
-          flashcardName +
-          '&folder=' +
-          selectedPath +
-          '&flashcardDescription=' +
-          flashcardDescription +
-          '&flashcardID=' +
-          loadEditFlashcardPage.flashcardID,
-        '_self'
-      );
-    }
-  }, [loadEditFlashcardPage]);
 
   useEffect(() => {
     setLoadingIconVisible('visible');
-  }, [visible]);
+    // setReload(true)
+  }, [reload]);
 
   return visible !== false ? (
     <div
@@ -146,17 +98,13 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
         variants={dropIn}
         style={view !== 'mobile' ? { height: 'fit-content' } : null}
       >
-        <div className={view === 'mobile' ? 'import-anki-modal-content' : ''}>
-          <Heading3 text="Upload Anki file (.apkg):" />
+        <div className={view === 'mobile' ? 'import-csv-modal-content' : ''}>
+          <Heading3 text="Choose from CSV:" />
+
           <div
             className={
               view !== 'mobile' ? 'input-container' : 'input-container-mobile'
             }
-            style={{
-              display: view == 'mobile' ? 'block' : 'flex',
-              marginBottom: '0%',
-              width: view === 'mobile' ? 'calc(100% - 32px);' : null,
-            }}
           >
             <Paragraph
               text="Filename: "
@@ -165,15 +113,13 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
                 textAlign: view === 'mobile' ? 'left' : 'center',
               }}
             />
+            {/* <textarea cols="40" rows="5" style={{ resize: "none", width: "calc(100% - 32px)" }} className="input" placeholder='Folder description'  /> */}
             <input
               type="file"
-              accept=".apkg"
-              multiple={false}
-              value={filePath}
-              onChange={(e) => {
-                setFilePath(e.target.value);
-                setAnkiFile(e.target.files[0]);
-              }}
+              placeholder="Folder name..."
+              value={file}
+              onChange={(e) => setFile(e.target.files[0])}
+              accept=".csv"
               style={{
                 width: 'calc(100% - 32px)',
                 display: 'flex',
@@ -202,16 +148,18 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
               type="text"
               className="input"
               placeholder="Set name..."
-              value={flashcardName}
-              onChange={onFlashcardNameChange}
+              onChange={(e) => setFlashcardName(e.target.value)}
               style={{ width: 'calc(100% - 32px)' }}
             />
           </div>
-
           <div
             className={
               view !== 'mobile' ? 'input-container' : 'input-container-mobile'
             }
+            style={{
+              display: view == 'mobile' ? 'block' : 'flex',
+              marginBottom: '4%',
+            }}
           >
             <Paragraph
               text="Description: "
@@ -220,16 +168,15 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
                 textAlign: view === 'mobile' ? 'left' : 'center',
               }}
             />
-            <textarea
-              cols="40"
-              rows="5"
-              style={{ resize: 'none', width: 'calc(100% - 32px)' }}
+            <input
+              type="text"
               className="input"
-              placeholder="Folder description"
-              value={flashcardDescription}
-              onChange={onFlashcardDescriptionChange}
+              placeholder="Set Description"
+              onChange={(e) => setFlashcardDescription(e.target.value)}
+              style={{ width: 'calc(100% - 32px)' }}
             />
           </div>
+
           <Heading3 text="Choose a location:" />
 
           <div className="card-overview" style={{ cursor: 'pointer' }}>
@@ -260,8 +207,8 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
               view={view}
             />
             <Button
-              text="Upload"
-              onClick={uploadAnkiPackage}
+              text="Create"
+              onClick={importSet}
               style={buttonStyle}
               view={view}
             />
@@ -274,6 +221,5 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
       </motion.div>
     </div>
   ) : null;
-}
-
-export default ImportFromAnkiDialogue;
+};
+export default ImportFromCSVDialogue;

@@ -23,30 +23,28 @@ import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
 import ImportFromAnkiDialogue from '../containers/Modal/ImportFromAnkiDialogue';
 import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
+import Heading4 from '../componments/Text/Heading4';
+import Paragraph from '../componments/Text/Paragraph';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './Flashcards.css';
 import { getCookie } from '../api/Authentication';
+import ImportCsvPopup from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
 import GhostButton from '../componments/GhostButton';
 import flashcardIcon from '../static/flashcard-set-icon.svg';
 import folderIcon from '../static/folder-icon.svg';
 import ankiIcon from '../static/anki.svg';
 import quizletIcon from '../static/quizlet.svg';
 import importIcon from '../static/import-icon.svg';
-import Paragraph from '../componments/Text/Paragraph';
 import Header from '../componments/Text/Header/Header';
 import Subheader from '../componments/Text/Subheader/Subheader';
 import Heading3 from '../componments/Text/Heading3/Heading3';
-import Heading4 from '../componments/Text/Heading4/Heading4';
 import Heading5 from '../componments/Text/Heading5/Heading5';
 import Text from '../componments/Text/Text/Text';
-import {
-  ankiImportsEnabled,
-  csvImportsEnabled,
-  quizletImportsEnabled,
-} from '../api/config';
+import { ankiImportsDisabled, quizletImportsDisabled } from '../api/config';
+import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
 
 function Flashcards() {
   // Set general variables
@@ -189,6 +187,14 @@ function Flashcards() {
         setReload={setReload}
       />
 
+      <ImportFromCSVDialogue
+        visible={importFromCSVDialogueVisible}
+        setVisible={setImportFromCSVDialogueVisible}
+        view={view}
+        reload={reload}
+        setReload={setReload}
+      />
+
       <ImportFromAnkiDialogue
         visible={importFromAnkiDialogueVisible}
         setVisible={setImportFromAnkiDialogueVisible}
@@ -298,6 +304,7 @@ function Flashcards() {
                       display: view !== 'desktop' ? 'block' : 'flex',
                       justifyContent: 'space-between',
                       paddingTop: view === 'mobile' ? '' : '16px',
+                      height: view === 'tablet' ? '72px' : '',
                     }}
                   >
                     {view === 'mobile' ? (
@@ -402,7 +409,7 @@ function Flashcards() {
                         // textAlign: 'center',
                       }}
                       onClick={() => {
-                        return;
+                        setImportFromCSVDialogueVisible(true);
                       }}
                       view={view}
                       icon={importIcon}
@@ -419,22 +426,22 @@ function Flashcards() {
                       }}
                       view={view}
                       icon={quizletIcon}
+                      disabled={quizletImportsDisabled}
                     />
-                    {ankiImportsEnabled && (
-                      <GhostButton
-                        text=" Import from Anki"
-                        style={{
-                          display: view !== 'mobile' ? 'inline-block' : '',
-                          marginRight: view !== 'mobile' ? '16px' : '',
-                          marginLeft: view === 'mobile' ? '0px' : '',
-                        }}
-                        onClick={() => {
-                          setImportFromAnkiDialogueVisible(todayCards);
-                        }}
-                        view={view}
-                        icon={ankiIcon}
-                      />
-                    )}
+                    <GhostButton
+                      text=" Import from Anki"
+                      style={{
+                        display: view !== 'mobile' ? 'inline-block' : '',
+                        marginRight: view !== 'mobile' ? '16px' : '',
+                        marginLeft: view === 'mobile' ? '0px' : '',
+                      }}
+                      onClick={() => {
+                        setImportFromAnkiDialogueVisible(true);
+                      }}
+                      view={view}
+                      icon={ankiIcon}
+                      disabled={ankiImportsDisabled}
+                    />
                   </div>
                 </div>
               </MobilePageWrapper>

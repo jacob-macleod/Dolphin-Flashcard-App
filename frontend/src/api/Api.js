@@ -1,3 +1,4 @@
+import { json } from 'react-router-dom';
 import serverURL from './config';
 
 // Singleton class
@@ -461,6 +462,50 @@ class ApiManager {
     });
   }
 
+  async importFlashcard(
+    file,
+    jwtToken,
+    folder,
+    flashcardName,
+    flashcardDescription
+  ) {
+    const url = 'import-flashcards';
+    // const reader = new FileReader();
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('jwtToken', jwtToken);
+      formData.append('folder', folder);
+      formData.append('flashcardName', flashcardName);
+      formData.append('flashcardDescription', flashcardDescription);
+      formData.append('delimiter', ',');
+      formData.append('firstRowOfData', '1');
+
+      console.log([...formData.entries()]);
+
+      // const response = await fetch(serverURL + url, {
+      //   method: 'POST',
+      //   headers: {
+      //     Authorization: `Bearer ${jwtToken}`,
+      //     // 'Content-Type': 'multipart/form-data'
+      //   },
+      //   body: formData,
+      // });
+      // // console.log(await response.json())
+      // const data = await response.json();
+      // console.log(data);
+      // return data;
+
+      this.fetchDataUsingFormData(formData, url, (status) => {
+        setVisible(false), setReload(true);
+      });
+    } catch (error) {
+      console.error('Error Importing CSV: ', error);
+      throw error;
+    }
+  }
+
   importFromAnki(
     file,
     jwtToken,
@@ -471,22 +516,27 @@ class ApiManager {
     setReload,
     clearFormData
   ) {
-    const url = 'import-anki-flashcards';
-    const form = new FormData();
-    form.append('file', file);
-    form.append('jwtToken', jwtToken);
-    form.append('flashcardName', flashcardName);
-    form.append('folder', folder);
-    form.append('flashcardDescription', flashcardDescription);
-    form.append('termField', 'Front');
-    form.append('definitionField', 'Back');
-    form.append('stripHtml', 'true');
+    try {
+      const url = 'import-anki-flashcards';
+      const form = new FormData();
+      form.append('file', file);
+      form.append('jwtToken', jwtToken);
+      form.append('flashcardName', flashcardName);
+      form.append('folder', folder);
+      form.append('flashcardDescription', flashcardDescription);
+      form.append('termField', 'Front');
+      form.append('definitionField', 'Back');
+      form.append('stripHtml', 'true');
 
-    this.fetchDataUsingFormData(form, url, (status) => {
-      setPopupVisible(false);
-      setReload(true);
-      clearFormData();
-    });
+      this.fetchDataUsingFormData(form, url, (status) => {
+        setPopupVisible(false);
+        setReload(true);
+        clearFormData();
+      });
+    } catch (error) {
+      console.error('Error Importing From Anki: ', error);
+      throw error;
+    }
   }
 }
 

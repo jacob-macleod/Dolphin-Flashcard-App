@@ -13,11 +13,12 @@ function Button({
   style = {
     ...style,
     width: view === 'mobile' ? '100%' : 'auto',
+    cursor: disabled ? 'not-allowed' : 'pointer',
   };
   return (
     <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
+      whileHover={{ scale: disabled ? 1 : 1.1 }}
+      whileTap={{ scale: disabled ? 0.95 : 0.9 }}
       className={disabled ? 'button-disabled' : 'button'}
       onClick={disabled ? () => {} : onClick}
       style={style}
