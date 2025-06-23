@@ -43,7 +43,7 @@ import Subheader from '../componments/Text/Subheader/Subheader';
 import Heading3 from '../componments/Text/Heading3/Heading3';
 import Heading5 from '../componments/Text/Heading5/Heading5';
 import Text from '../componments/Text/Text/Text';
-import { ankiImportsDisabled, quizletImportsDisabled } from '../api/config';
+import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
 
 function Flashcards() {

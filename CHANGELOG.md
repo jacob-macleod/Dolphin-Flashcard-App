@@ -28,7 +28,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Importing from anki package feature
 - fetchUsingFormData() in the apiManager (frontend) to fetch data using form data instead of JSON
-- A toggle to control whether the buttons for importing from Anki or Quizlet are disabled or not, found in frontend/api/config.js
+- A toggle to control whether the buttons for importing from Anki or Quizlet are disabled or not, found in frontend/config.js
 
 ### Changed
 
