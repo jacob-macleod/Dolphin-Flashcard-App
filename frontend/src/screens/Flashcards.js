@@ -223,7 +223,7 @@ function Flashcards() {
               width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
               padding: '0px',
             }}
-            visible={view == 'mobile' ? false : true}
+            visible={view === 'mobile' ? false : true}
           >
             <div
               style={{
@@ -375,68 +375,67 @@ function Flashcards() {
                       onClick={studyMultipleCards}
                     />
                   </div>
-                </div>
-
-                <div
-                  style={{
-                    textAlign: 'left',
-                    marginTop: view === 'mobile' ? '32px' : '72px',
-                    padding: view === 'mobile' ? null : '8px',
-                  }}
-                >
-                  <Heading4
-                    text={'Import a set from elsewhere:'}
-                    style={{ margin: 0, padding: 0 }}
-                  />
-                  <Paragraph
-                    text={
-                      "If you're exporting from Anki or Quizlet, you'll need to export the flashcard as a CSV file first!"
-                    }
-                    style={{ textAlign: 'left' }}
-                  />
-
-                  <Button
-                    text=" Import Set (.csv)"
+                  <div
                     style={{
-                      display: view !== 'mobile' ? 'inline-block' : '',
-                      marginRight: view !== 'mobile' ? '16px' : '',
-                      marginLeft: view === 'mobile' ? '0px' : '',
-                      textAlign: 'center',
+                      textAlign: 'left',
+                      marginTop: view === 'mobile' ? '32px' : '72px',
+                      padding: view === 'mobile' ? null : '8px',
                     }}
-                    onClick={() => {
-                      return;
-                    }}
-                    view={view}
-                    icon={importIcon}
-                  />
-                  <GhostButton
-                    text=" Import from Quizlet"
-                    style={{
-                      display: view !== 'mobile' ? 'inline-block' : '',
-                      marginRight: view !== 'mobile' ? '16px' : '',
-                      marginLeft: view === 'mobile' ? '0px' : '',
-                    }}
-                    onClick={() => {
-                      return;
-                    }}
-                    view={view}
-                    icon={quizletIcon}
-                  />
-                  {ankiImportsEnabled && (
+                  >
+                    <Heading4
+                      text={'Import a set from elsewhere:'}
+                      style={{ margin: 0, padding: 0 }}
+                    />
+                    <Paragraph
+                      text={
+                        "If you're exporting from Anki or Quizlet, you'll need to export the flashcard as a CSV file first!"
+                      }
+                      style={{ textAlign: 'left' }}
+                    />
+
+                    <Button
+                      text=" Import Set (.csv)"
+                      style={{
+                        display: view !== 'mobile' ? 'inline-block' : '',
+                        marginRight: view !== 'mobile' ? '16px' : '',
+                        marginLeft: view === 'mobile' ? '0px' : '',
+                        // textAlign: 'center',
+                      }}
+                      onClick={() => {
+                        return;
+                      }}
+                      view={view}
+                      icon={importIcon}
+                    />
                     <GhostButton
-                      text=" Import from Anki"
+                      text=" Import from Quizlet"
                       style={{
                         display: view !== 'mobile' ? 'inline-block' : '',
                         marginRight: view !== 'mobile' ? '16px' : '',
                         marginLeft: view === 'mobile' ? '0px' : '',
                       }}
                       onClick={() => {
-                        setImportFromAnkiDialogueVisible(todayCards);
+                        return;
                       }}
                       view={view}
-                      icon={ankiIcon}
+                      icon={quizletIcon}
                     />
-                  )}
+                    {ankiImportsEnabled && (
+                      <GhostButton
+                        text=" Import from Anki"
+                        style={{
+                          display: view !== 'mobile' ? 'inline-block' : '',
+                          marginRight: view !== 'mobile' ? '16px' : '',
+                          marginLeft: view === 'mobile' ? '0px' : '',
+                        }}
+                        onClick={() => {
+                          setImportFromAnkiDialogueVisible(todayCards);
+                        }}
+                        view={view}
+                        icon={ankiIcon}
+                      />
+                    )}
+                  </div>
                 </div>
               </MobilePageWrapper>
             </div>
