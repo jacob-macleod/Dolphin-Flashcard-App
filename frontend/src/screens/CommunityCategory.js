@@ -98,7 +98,7 @@ function CommunityCategory() {
           <MobilePageWrapper view={view} itemClicked="community">
 
             <div className={view === "mobile" ? "community-page-wrapper-mobile" : "community-page-wrapper"}>
-              <WhiteOverlay
+              {view === "desktop" ? <WhiteOverlay
                 className="search-section"
               >
                 <div className='search-section-header-section'>
@@ -151,18 +151,18 @@ function CommunityCategory() {
                       <Heading5 text={"No flashcards found for '" + searchTerm + "'"} />
                   : <></>
                 }
-            </WhiteOverlay>
+            </WhiteOverlay> : <></>}
 
-            <div>
+            <div className={view === "mobile" ? "community-category-page" : ""}>
               <p
                 className='link'
                 onClick={() => {window.open("/community", "_self")}}
                 style={{textAlign: "left"}}
               >{'< All Categories'}</p>
               <Heading2 text={flashcardCategory + " Flashcard Sets:"} style={{textAlign: "left"}}/>
-              <div class="flashcard-recommendation-container">
+              <div className={view === "desktop" ? "flashcard-recommendation-container" : "flashcard-recommendation-container-mobile"}>
                 {communitySets[flashcardCategory] && communitySets[flashcardCategory]["gcseSets"].map((set, index) => (
-                  <FeaturedCommunitySet key={index} title={set.title} url={set.url} />
+                  <FeaturedCommunitySet key={index} title={set.title} url={set.url} view={view}/>
                 ))
                 }
               </div>

@@ -5,7 +5,7 @@
 
 .search-bar-mobile{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
     width: calc(100% - 32px);
     margin: 0px;
     margin-left: 16px;
@@ -49,12 +49,19 @@
     display: grid;
     grid-template-columns: auto;
     grid-gap: 16px;
-    width: calc(100% - 64px);
-    padding-left: 32px;
-    padding-right: 32px;
+    width: calc(100vw - 32px);
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .flashcard-recommendation-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: start;
+}
+
+.flashcard-recommendation-container-mobile {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;

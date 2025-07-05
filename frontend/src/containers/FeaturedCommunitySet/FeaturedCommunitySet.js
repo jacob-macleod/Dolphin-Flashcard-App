@@ -4,14 +4,14 @@ import Paragraph from '../../componments/Text/Paragraph';
 import "./FeaturedCommunitySet.css";
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 
-function FeaturedCommunitySet({ title, url }) {
+function FeaturedCommunitySet({ title, url, view }) {
 
     function goToUrl() {
         window.location.href = url;
     }
 
     return (
-        <WhiteOverlay className="featured-community-set">
+        <WhiteOverlay className={view === "desktop" ? "featured-community-set" : "featured-community-set-mobile"}>
             <Paragraph text={title} style={{textAlign: "left"}}/>
             <Button text="Preview" onClick={goToUrl} />
         </WhiteOverlay>

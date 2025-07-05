@@ -25,6 +25,117 @@ import apiManager from '../api/Api';
 import './Community.css';
 import '../componments/Text/Link/Link.css';
 
+function SearchSectionDesktop({view, searchTerm, setSearchTerm, flashcardSearchData, flashcardsExist, searchForFlashcard}) {
+  return (
+    <>
+    <WhiteOverlay
+      className="search-section"
+    >
+      <div className='search-section-header-section'>
+        <DolphinLogo
+          width="160px"
+          minWidth="160px"
+          height="170px"
+          paddingBottom="30px"
+          paddingLeft="30px"
+          paddingRight="30px"
+          paddingTop="30px"
+        />
+        <div className="search-section-text">
+          <Heading2 text="Browse for flashcards for your subjects" />
+          <Heading2 text="More sets coming soon!" color="grey"/>
+        </div>
+      </div>
+
+      <div className={view !== "mobile" ? "search-bar" : "search-bar-mobile"}>
+        <SearchBar
+          view={view}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          placeholder="Search..."
+          marginTop={view === "mobile" ? "8px" : "0px"}
+          marginRight="0px"
+          borderRadius="8px 0 0 8px"
+          paddingBottom={view=== "mobile" ? "8px" : "10px"}
+          width={view === "mobile"? "calc(100% - 26px)" : "auto"}
+          />
+        <Button
+          text="Search"
+          onClick={() => {searchForFlashcard()}}
+          style={{
+            margin: "0px",
+            width: "114px",
+            borderRadius: "0px 8px 8px 0px",
+            height: "42px",
+            marginTop: view === "mobile" ? "8px" : "0px",
+          }}
+        />
+      </div>
+      </WhiteOverlay>
+
+      <div style={{
+        paddingLeft: "32px",
+        paddingRight: "32px",
+      }}>
+        {
+          flashcardSearchData != null ?
+            flashcardsExist ?
+              flashcardSearchData.map((flashcard, index) => {
+                return <FlashcardSearchResult key={index} data={flashcard} />
+              })
+            :
+              <Heading5 text={"No flashcards found for '" + searchTerm + "'"} />
+          : <></>
+        }
+      </div>
+    </>
+  );
+}
+
+function SearchSectionMobile({view, searchTerm, setSearchTerm, flashcardSearchData, flashcardsExist, searchForFlashcard}) {
+  return (
+    <>
+      <Heading2 text="Browse for flashcards for your subjects" />
+
+      <div className={view !== "mobile" ? "search-bar" : "search-bar-mobile"}>
+        <SearchBar
+          view={view}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          placeholder="Search..."
+          marginLeft="0px"
+          paddingBottom={view=== "mobile" ? "8px" : "10px"}
+          width={view === "mobile"? "calc(100% - 26px)" : "auto"}
+          />
+        <Button
+          text="Search"
+          onClick={() => {searchForFlashcard()}}
+          style={{
+            margin: "0px",
+            width: "114px",
+            height: "42px",
+            marginTop: view === "mobile" ? "8px" : "0px",
+          }}
+        />
+      </div>
+      <div style={{
+        paddingLeft: "16px",
+        paddingRight: "16px",
+      }}>
+        {
+          flashcardSearchData != null ?
+            flashcardsExist ?
+              flashcardSearchData.map((flashcard, index) => {
+                return <FlashcardSearchResult key={index} data={flashcard} />
+              })
+            :
+              <Heading5 text={"No flashcards found for '" + searchTerm + "'"} />
+          : <></>
+        }
+      </div>
+    </>
+  );
+}
 
 function SearchForFlashcard() {
   // Set general variables
@@ -35,6 +146,13 @@ function SearchForFlashcard() {
   const mobileBreakpoint = 650;
   const tabletBreakpoint = 1090;
   const view = useWindowSize(mobileBreakpoint, tabletBreakpoint);
+
+
+  const whiteOverlayMobileStyle = {
+    paddingTop: view === "mobile" ? "0px" : "",
+    borderRadius: view === "mobile" ? "8px" : "",
+  }
+
 
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
     view === "mobile" ? "8px" : "16px"
@@ -94,69 +212,35 @@ function SearchForFlashcard() {
           <MobilePageWrapper view={view} itemClicked="community">
 
             <div className={view === "mobile" ? "community-page-wrapper-mobile" : "community-page-wrapper"}>
-              <WhiteOverlay
-                className="search-section"
-              >
-                <div className='search-section-header-section'>
-                  <DolphinLogo
-                    width="160px"
-                    minWidth="160px"
-                    height="170px"
-                    paddingBottom="30px"
-                    paddingLeft="30px"
-                    paddingRight="30px"
-                    paddingTop="30px"
-                  />
-                  <div className="search-section-text">
-                    <Heading2 text="Browse for flashcards for your subjects" />
-                    <Heading2 text="More sets coming soon!" color="grey"/>
-                  </div>
-                </div>
-
-                <div className={view !== "mobile" ? "search-bar" : "search-bar-mobile"}>
-                  <SearchBar
-                    view={view}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    placeholder="Search..."
-                    marginTop={view === "mobile" ? "8px" : "0px"}
-                    marginRight="0px"
-                    borderRadius="8px 0 0 8px"
-                    paddingBottom={view=== "mobile" ? "8px" : "10px"}
-                    width={view === "mobile"? "calc(100% - 26px)" : "auto"}
-                    />
-                  <Button
-                    text="Search"
-                    onClick={() => {searchForFlashcard()}}
-                    style={{
-                      margin: "0px",
-                      width: "114px",
-                      borderRadius: "0px 8px 8px 0px",
-                      height: "42px",
-                      marginTop: view === "mobile" ? "8px" : "0px",
-                    }}
-                  />
-                </div>
-                {
-                  flashcardSearchData != null ?
-                    flashcardsExist ?
-                      flashcardSearchData.map((flashcard, index) => {
-                        return <FlashcardSearchResult key={index} data={flashcard} />
-                      })
-                    :
-                      <Heading5 text={"No flashcards found for '" + searchTerm + "'"} />
-                  : <></>
-                }
-            </WhiteOverlay>
+              {view === "desktop" ? (
+                <SearchSectionDesktop
+                  view={view}
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  flashcardSearchData={flashcardSearchData}
+                  flashcardsExist={flashcardsExist}
+                  searchForFlashcard={searchForFlashcard}
+                />
+              ) : (
+                <SearchSectionMobile
+                  view={view}
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  flashcardSearchData={flashcardSearchData}
+                  flashcardsExist={flashcardsExist}
+                  searchForFlashcard={searchForFlashcard}
+                />
+              )}
             
             <Paragraph
               text="More flashcards are being added every day, so if you can't find what you're looking for, please check back later!"
               style={{textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)"}}
             />
             <div className={view === "desktop" ? "categories-wrapper" : "categories-wrapper-mobile"}>
-              <WhiteOverlay header="Languages">
+              <WhiteOverlay header="Languages" style={whiteOverlayMobileStyle}>
                 <FlashcardCategoryLink category="Spanish" />
                 <FlashcardCategoryLink category="French" />
+                <FlashcardCategoryLink category="Hebrew" />
                 <FlashcardCategoryLink category="Latin"  disabled={true}/>
                 <FlashcardCategoryLink category="German"  disabled={true}/>
                 <FlashcardCategoryLink category="Japanese"  disabled={true}/>
@@ -164,10 +248,9 @@ function SearchForFlashcard() {
                 <FlashcardCategoryLink category="Chinese"  disabled={true}/>
                 <FlashcardCategoryLink category="Arabic"  disabled={true}/>
                 <FlashcardCategoryLink category="Hindi"  disabled={true}/>
-                <FlashcardCategoryLink category="Hebrew" />
               </WhiteOverlay>
 
-              <WhiteOverlay header="Humanities">
+              <WhiteOverlay header="Humanities" style={whiteOverlayMobileStyle}>
                 <FlashcardCategoryLink category="History" disabled={true}/>
                 <FlashcardCategoryLink category="Geography" disabled={true}/>
                 <FlashcardCategoryLink category="English" disabled={true}/>
@@ -176,7 +259,7 @@ function SearchForFlashcard() {
                 <FlashcardCategoryLink category="Law" disabled={true}/>
               </WhiteOverlay>
 
-              <WhiteOverlay header="Mathematics">
+              <WhiteOverlay header="Mathematics" style={whiteOverlayMobileStyle}>
                 <FlashcardCategoryLink category="Algebra" disabled={true}/>
                 <FlashcardCategoryLink category="General Arithmetic" disabled={true}/>
                 <FlashcardCategoryLink category="Other" disabled={true}/>
