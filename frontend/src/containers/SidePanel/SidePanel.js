@@ -14,7 +14,6 @@ import flashcard_icon_white from '../../static/flashcard-icon-white.svg';
 import community_icon_white from '../../static/community-icon-white.svg';
 import './SidePanel.css';
 import '../../componments/GridItem/GridItem.css';
-import { useTheme } from '../../context/ThemeContext';
 
 function SidePanel ({ selectedItem }) {
     const [accountDropdownVisibility, setAccountDropdownVisibility] = useState(false);
@@ -22,7 +21,6 @@ function SidePanel ({ selectedItem }) {
         width: "240px",
         padding: "0px"
     }
-    const { darkMode, toggleTheme } = useTheme();
 
 
     return <div className='grid-item' style={gridItemStyle}>
@@ -54,11 +52,6 @@ function SidePanel ({ selectedItem }) {
                 src="/settings"
                 clicked={selectedItem == "settings" ? true : false}
                 imgUrl={selectedItem == "settings" ? settings_icon_clicked : settings_icon}
-            />
-            <MenuItem 
-                text="Toggle Theme" 
-                onClick={toggleTheme}
-                imgUrl={selectedItem == "settings" ? settings_icon : settings_icon}
             />
         </div>
     </div>;
