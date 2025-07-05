@@ -45,6 +45,15 @@
     padding-right: 32px;
 }
 
+.categories-wrapper-mobile {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 16px;
+    width: calc(100% - 64px);
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
 .flashcard-recommendation-container {
     display: flex;
     flex-wrap: wrap;

@@ -18,6 +18,7 @@ import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import DolphinLogo from '../componments/Logos/DolphinLogo/DolphinLogo';
 import FlashcardCategoryLink from '../containers/FlashcardCategoryLink/FlashcardCategoryLink';
+import Paragraph from '../componments/Text/Paragraph';
 
 import apiManager from '../api/Api';
 
@@ -147,33 +148,38 @@ function SearchForFlashcard() {
                   : <></>
                 }
             </WhiteOverlay>
-
-            <div className="categories-wrapper">
+            
+            <Paragraph
+              text="More flashcards are being added every day, so if you can't find what you're looking for, please check back later!"
+              style={{textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)"}}
+            />
+            <div className={view === "desktop" ? "categories-wrapper" : "categories-wrapper-mobile"}>
               <WhiteOverlay header="Languages">
                 <FlashcardCategoryLink category="Spanish" />
                 <FlashcardCategoryLink category="French" />
-                <FlashcardCategoryLink category="Latin" />
-                <FlashcardCategoryLink category="German" />
-                <FlashcardCategoryLink category="Japanese" />
-                <FlashcardCategoryLink category="Italian" />
-                <FlashcardCategoryLink category="Chinese" />
-                <FlashcardCategoryLink category="Arabic" />
-                <FlashcardCategoryLink category="Hindi" />
+                <FlashcardCategoryLink category="Latin"  disabled={true}/>
+                <FlashcardCategoryLink category="German"  disabled={true}/>
+                <FlashcardCategoryLink category="Japanese"  disabled={true}/>
+                <FlashcardCategoryLink category="Italian"  disabled={true}/>
+                <FlashcardCategoryLink category="Chinese"  disabled={true}/>
+                <FlashcardCategoryLink category="Arabic"  disabled={true}/>
+                <FlashcardCategoryLink category="Hindi"  disabled={true}/>
+                <FlashcardCategoryLink category="Hebrew" />
               </WhiteOverlay>
 
               <WhiteOverlay header="Humanities">
-                <FlashcardCategoryLink category="History"/>
-                <FlashcardCategoryLink category="Geography"/>
-                <FlashcardCategoryLink category="English"/>
-                <FlashcardCategoryLink category="Psychology"/>
-                <FlashcardCategoryLink category="Economics"/>
-                <FlashcardCategoryLink category="Law"/>
+                <FlashcardCategoryLink category="History" disabled={true}/>
+                <FlashcardCategoryLink category="Geography" disabled={true}/>
+                <FlashcardCategoryLink category="English" disabled={true}/>
+                <FlashcardCategoryLink category="Psychology" disabled={true}/>
+                <FlashcardCategoryLink category="Economics" disabled={true}/>
+                <FlashcardCategoryLink category="Law" disabled={true}/>
               </WhiteOverlay>
 
               <WhiteOverlay header="Mathematics">
-                <FlashcardCategoryLink category="Algebra"/>
-                <FlashcardCategoryLink category="General Arithmetic"/>
-                <FlashcardCategoryLink category="Other"/>
+                <FlashcardCategoryLink category="Algebra" disabled={true}/>
+                <FlashcardCategoryLink category="General Arithmetic" disabled={true}/>
+                <FlashcardCategoryLink category="Other" disabled={true}/>
               </WhiteOverlay>
             </div>
             </div>

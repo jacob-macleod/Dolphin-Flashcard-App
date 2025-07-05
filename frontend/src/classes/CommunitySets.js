@@ -55,7 +55,20 @@ const communitySets = {
       "TODO: Add enough sets to have a seperate A-Level sets category"
     ]
   },
-  "French": { gcseSets: [], aLevelSets: [] },
+  "French": { gcseSets: [
+    {
+      title: "French Indefinite Articles",
+      url: "http://dolphinflashcards.com/preview?id=4dcc9428-0de9-54ba-ac0e-8830a5655646&name=French%20Indefinite%20Articles"
+    },
+    {
+      title: "French Definite Articles",
+      url: "http://dolphinflashcards.com/preview?id=4d9c19cc-82cb-560f-b764-0ad945150cb2&name=French%20Indefinite%20Article"
+    },
+    {
+      title: "French Object And Reflexive Pronouns",
+      url: "ttp://dolphinflashcards.com/preview?id=083ef78b-6703-5cb8-980a-ca904861c201&name=French%20Object%20And%20Reflexive%20Pronouns",
+    }
+  ], aLevelSets: [] },
   "German": { gcseSets: [], aLevelSets: [] },
   "Latin": { gcseSets: [], aLevelSets: [] },
   "Japanese": { gcseSets: [], aLevelSets: [] },

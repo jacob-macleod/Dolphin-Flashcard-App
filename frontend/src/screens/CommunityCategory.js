@@ -154,7 +154,12 @@ function CommunityCategory() {
             </WhiteOverlay>
 
             <div>
-              <Heading2 text={flashcardCategory + " Flashcard Sets:"} />
+              <p
+                className='link'
+                onClick={() => {window.open("/community", "_self")}}
+                style={{textAlign: "left"}}
+              >{'< All Categories'}</p>
+              <Heading2 text={flashcardCategory + " Flashcard Sets:"} style={{textAlign: "left"}}/>
               <div class="flashcard-recommendation-container">
                 {communitySets[flashcardCategory] && communitySets[flashcardCategory]["gcseSets"].map((set, index) => (
                   <FeaturedCommunitySet key={index} title={set.title} url={set.url} />
