@@ -1,0 +1,1 @@
+export {FeaturedCommunitySet} from './FeaturedCommunitySet/FeaturedCommunitySet';

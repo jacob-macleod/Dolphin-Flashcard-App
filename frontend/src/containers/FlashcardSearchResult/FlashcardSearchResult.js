@@ -12,7 +12,9 @@ const FlashcardSearchResult = ({ data }) => {
         <WhiteOverlay style={{
             padding: "0px",
             display: "grid",
-            gridTemplateColumns: "auto 100px",
+            gridTemplateColumns: "auto",
+            marginTop: "16px",
+            marginBottom: "16px",
         }}>
             <Paragraph text={data.name} style={{alignContent: "center", justifySelf: "left", paddingLeft: "16px"}}/>
             <Button text="Preview" onClick={onButtonClick} style={{marginRight: "16px"}}/>
