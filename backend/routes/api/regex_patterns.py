@@ -13,3 +13,12 @@ NUMBER = r"^\d+$"
 CARD_STATUS = r"^(right|wrong|easy)$"
 
 QUIZLET = r'<span class="s1q0b356"><span class="TermText notranslate lang-en">(.*?)</span>.*?<span class="hcszxtp"><span class="TermText notranslate lang-en">(.*?)</span>'
+
+# Types allowed from a quest
+QUEST_TYPE = r"^(cards_revised|xp_gained|time_spent)$"
+
+# Another kind of type allowed to quests
+QUEST_SUB_TYPE = r"^(monthly|friend)$"
+
+# User invited status possibility
+INVITE_STATUS = r"^(accepted|pending|declined)$"

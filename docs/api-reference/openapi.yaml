@@ -2152,6 +2152,516 @@ paths:
                   error:
                     type: string
                     example: "Internal server error occurred"
+  /get-quests:
+    get:
+      summary: Get Quests
+      tags:
+        - Quests
+      description: Get all quests for the user, filtered by optional query parameters.
+      parameters:
+        - in: query
+          name: questType
+          schema:
+            type: string
+            enum: [cards_revised, xp_gained, time_spent]
+          description: Filter by quest type.
+        - in: query
+          name: questSubType
+          schema:
+            type: string
+            enum: [monthly, friend]
+          description: Filter by quest sub type.
+        - in: query
+          name: questStatus
+          schema:
+            type: string
+            enum: [active, finished]
+          description: Filter by quest status.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+              properties:
+                jwtToken:
+                  type: string
+                  description: JWT token for authentication.
+      responses:
+        '200':
+          description: List of quests for the user and their participants.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quests:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        quest_id:
+                          type: string
+                        title:
+                          type: string
+                        deadline:
+                          type: string
+                          format: date-time
+                        quest_type:
+                          type: string
+                        quest_sub_type:
+                          type: string
+                        quantity:
+                          type: integer
+                        progress:
+                          type: integer
+                        participants:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_id:
+                                type: string
+                              status:
+                                type: string
+                              progress:
+                                type: integer
+                              isOwner:
+                                type: boolean
+                                description: Optional - Just to all quest creators
+                              invited_by:
+                                type: string
+                                description: Optional - Just to invited users
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /create-quest:
+    post:
+      summary: Create Quest
+      tags:
+        - Quests
+      description: Create a new quest and add the user as a participant(owner from the quest).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - deadline
+                - questType
+                - questSubType
+                - quantity
+              properties:
+                jwtToken:
+                  type: string
+                  description: JWT token for authentication.
+                deadline:
+                  type: string
+                  format: date-time
+                  description: Deadline for the quest (ISO format).
+                questType:
+                  type: string
+                  enum: [cards_revised, xp_gained, time_spent]
+                  description: Type of quest.
+                questSubType:
+                  type: string
+                  enum: [monthly, friend]
+                  description: Sub type of quest.
+                quantity:
+                  type: integer
+                  description: The target quantity for the quest.
+      responses:
+        '200':
+          description: Quest created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Quest created successfully
+                  quest:
+                    type: object
+                    properties:
+                        quest_id:
+                          type: string
+                        title:
+                          type: string
+                        deadline:
+                          type: string
+                          format: date-time
+                        quest_type:
+                          type: string
+                        quest_sub_type:
+                          type: string
+                        quantity:
+                          type: integer
+                        progress:
+                          type: integer
+                        participants:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_id:
+                                type: string
+                              status:
+                                type: string
+                              progress:
+                                type: integer
+                              isOwner:
+                                type: boolean
+        '400':
+          description: Bad Request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Deadline datetime must not be in the past
+        '422':
+          description: Unprocessable Content.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: 'quest_type: "example" is not accepted'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /delete-quest:
+    delete:
+      summary: Delete Quest
+      tags:
+        - Quests
+      description: Delete a quest if the user is the owner.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - questId
+              properties:
+                jwtToken:
+                  type: string
+                  description: JWT token for authentication.
+                questId:
+                  type: string
+                  description: The ID of the quest to delete.
+      responses:
+        '200':
+          description: Quest deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Quest deleted successfully
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User can not delete this quest
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /update-quest-progress:
+    patch:
+      summary: Update Quest Progress
+      tags:
+        - Quests
+      description: Update the progress for the quest and for a user in a quest.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - questId
+                - progress
+              properties:
+                jwtToken:
+                  type: string
+                  description: JWT token for authentication.
+                questId:
+                  type: string
+                  description: The ID of the quest.
+                progress:
+                  type: integer
+                  description: The amount of progress to add.
+      responses:
+        '200':
+          description: Progress updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Progress updated
+                  quest:
+                    type: object
+                    properties:
+                        quest_id:
+                          type: string
+                        title:
+                          type: string
+                        deadline:
+                          type: string
+                          format: date-time
+                        quest_type:
+                          type: string
+                        quest_sub_type:
+                          type: string
+                        quantity:
+                          type: integer
+                        progress:
+                          type: integer
+                        participants:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_id:
+                                type: string
+                              status:
+                                type: string
+                              progress:
+                                type: integer
+                              isOwner:
+                                type: boolean
+                                description: Optional - Just to all quest creators
+                              invited_by:
+                                type: string
+                                description: Optional - Just to invited users
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not in this quest to update progress
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /invite-to-quest:
+    post:
+      summary: Invite to Quest
+      tags:
+        - Quests
+      description: Invite another user to participate in a quest.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - questId
+                - invitedId
+              properties:
+                jwtToken:
+                  type: string
+                  description: JWT token for authentication.
+                questId:
+                  type: string
+                  description: The ID of the quest.
+                invitedId:
+                  type: string
+                  description: The ID of the user being invited.
+      responses:
+        '200':
+          description: User invited.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User invited
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Not Found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User that you trying to invite not exist
+        '409':
+          description: Conflict.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User is not in this quest to invite someone
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /update-invite-status:
+    patch:
+      summary: Update Invite Status
+      tags:
+        - Quests
+      description: Update the status of a quest invite (accept, decline, etc).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - jwtToken
+                - questId
+                - status
+              properties:
+                jwtToken:
+                  type: string
+                  description: JWT token for authentication.
+                questId:
+                  type: string
+                  description: The ID of the quest.
+                status:
+                  type: string
+                  enum: [accepted, pending, declined]
+                  description: The new status for the invite.
+      responses:
+        '200':
+          description: User status updated.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User status updated
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: User not invited to this quest
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
 
 components:
   schemas: {}
