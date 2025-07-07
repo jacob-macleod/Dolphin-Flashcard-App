@@ -8,6 +8,7 @@ import ViewFlashcards from './screens/ViewFlashcards';
 import PageNotFound from './screens/PageNotFound';
 import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary';
 import SearchForFlashcard from './screens/Community';
+import CommunityCategory from './screens/CommunityCategory';
 import PreviewFlashcard from './screens/PreviewFlashcard';
 import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
@@ -117,6 +118,16 @@ function App() {
             }
           />
           <Route path="/community" element={<SearchForFlashcard />} />
+          <Route
+            path="/community/:categoryName"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<CommunityCategory />}
+              />
+            }
+          />
           <Route path="/preview" element={<PreviewFlashcard />} />
           {/* Do not check if the user is signed in or not, because 404 pages can be accessed without jwt tokens */}
           <Route

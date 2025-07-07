@@ -22,11 +22,17 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 6.15.0 - 2025-07-02
+## 6.16.0 - 2025-07-02
 
 ### Added
 
 - Quest endpoint, with basic test switch and documentation
+
+## 6.15.0 - 2025-07-05
+
+### Added
+
+- Updated Community page by adding reccomendations of flashcard sets
 
 ## 6.14.2 - 2025-06-04
 
