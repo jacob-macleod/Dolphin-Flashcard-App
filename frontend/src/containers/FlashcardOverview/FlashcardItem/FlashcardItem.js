@@ -79,19 +79,23 @@ function FlashcardItem({
 
     /*
     Calculate how many cards are:
-    - not started (review status is 0.0)
-    - studying (just started today - review status is 0.x)
-    - recapping (review status is >0.x)
+    - not started (daily && subDaily is 0)
+    - studying (just daily is 0)
+    - recapping (neither of daily and subDaily is 0)
     */
    const cards = element.cards;
    var notStarted = 0;
    var studying = 0;
    var recapping = 0;
    for (let key in cards) {
-    let reviewStatus = cards[key].reviewStatus;
-    if (reviewStatus == 0.0) {
+    let reviewStatus = cards[key].review_status;
+    let daily = reviewStatus.split(".")[0];
+    let subDaily = reviewStatus.split(".")[1];
+    // if (reviewStatus == 0.0) {
+    if (daily === "0" && subDaily === "0") {
         notStarted++;
-    } else if (reviewStatus < 1.0) {
+    // } else if (reviewStatus < 1.0) {
+    } else if (daily === "0") {
         studying++;
     } else {
         recapping++;
