@@ -27,6 +27,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Fixed bug for incorrect tagging of card status
 
+## 6.16.0 - 2025-07-02
+
+### Added
+
+- Quest endpoint, with basic test switch and documentation
+
 ## 6.15.0 - 2025-07-05
 
 ### Added
