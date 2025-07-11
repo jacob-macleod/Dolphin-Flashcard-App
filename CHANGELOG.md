@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.0.0 - xxx-xx-xx
+
+### Changed
+
+(Among other things, say server now runs on port 8080, which is a breaking change. You also need to update the docs before pushing)
+
 ## 6.15.0 - 2025-07-05
 
 ### Added

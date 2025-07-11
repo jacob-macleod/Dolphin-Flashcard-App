@@ -16,8 +16,11 @@ app.register_blueprint(authentication_routes)
 app.register_blueprint(statistics_routes)
 app.register_blueprint(card_management_routes)
 app.register_blueprint(goal_routes)
-server_addr = ("0.0.0.0", 5000)
 
+# Used for version 6.15.0 and below
+# server_addr = ("0.0.0.0", 5000)
+# Changes after version 7.0.0
+server_addr = ("0.0.0.0", 8080)
 
 # Serve the React frontend from the frontend/build folder
 @app.route("/", defaults={"path": ""})
