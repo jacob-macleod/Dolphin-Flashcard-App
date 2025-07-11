@@ -1,58 +1,58 @@
-name: Push tag on dev branch
+# name: Push tag on dev branch
 
-on:
-  push:
-    branches:
-      - migrate_to_cloud_run_temp
+# on:
+#   push:
+#     branches:
+#       - migrate_to_cloud_run_temp
 
-jobs:  
-  push_tag:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: 'write'
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+# jobs:  
+#   push_tag:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#       pull-requests: write
+#       id-token: 'write'
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Install node
-        run: |
-          sudo apt-get update
-          sudo apt install nodejs npm
-          cd frontend
-          npm install -g create-react-app
-          npm install
+#       - name: Install node
+#         run: |
+#           sudo apt-get update
+#           sudo apt install nodejs npm
+#           cd frontend
+#           npm install -g create-react-app
+#           npm install
 
-      - name: Build the React App for Deployment
-        run: |
-          cd frontend
-          npm run build
-          rm -rf frontend/node_modules
+#       - name: Build the React App for Deployment
+#         run: |
+#           cd frontend
+#           npm run build
+#           rm -rf frontend/node_modules
 
-      - name: Build Docker Image
-        run: |
-          docker build -t $GCP_DOCKER_IMAGE_NAME .
-        env:
-          DOCKER_PASSWORD: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
+#       - name: Build Docker Image
+#         run: |
+#           docker build -t $GCP_DOCKER_IMAGE_NAME .
+#         env:
+#           DOCKER_PASSWORD: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
-      - name: Set up GCP credentials
-        run: |
-          sudo apt-get install -y google-cloud-sdk
-          echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
-          gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION
-        env:
-          GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
+#       - name: Set up GCP credentials
+#         run: |
+#           sudo apt-get install -y google-cloud-sdk
+#           echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
+#           gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION
+#         env:
+#           GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
 
-      - name: Push Docker Image to GCP Artifact Registry
-        run: |
-          docker push $GCP_DOCKER_IMAGE_NAME
-        env:
-          GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
+#       - name: Push Docker Image to GCP Artifact Registry
+#         run: |
+#           docker push $GCP_DOCKER_IMAGE_NAME
+#         env:
+#           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
-      - name: Update Google Cloud Run
-        run: |
-            sudo apt-get install -y terraform
-            export GOOGLE_APPLICATION_CREDENTIALS=$GCP_CLOUD_RUN_AND_ARTIFACT_SA
-            cd terraform
-            terraform apply
+#       - name: Update Google Cloud Run
+#         run: |
+#             sudo apt-get install -y terraform
+#             export GOOGLE_APPLICATION_CREDENTIALS=$GCP_CLOUD_RUN_AND_ARTIFACT_SA
+#             cd terraform
+#             terraform apply
