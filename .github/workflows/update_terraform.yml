@@ -3,7 +3,7 @@ name: Push tag on dev branch
 on:
   push:
     branches:
-      - migrate_to_cloud_run
+      - migrate_to_cloud_run_temp
 
 jobs:  
   push_tag:
