@@ -1,9 +1,5 @@
 .overlay {
     border-radius: 16px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    padding: 32px;
-    padding-bottom: 0px;
     box-sizing: border-box;
     border: 1px solid var(--overlay-bg-light);
     background: var(--overlay-bg-light);
@@ -13,6 +9,17 @@
     width: 100%;
     flex-shrink: 0;
     transition: all 0.5s ease;
+}
+
+.overlay-content {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 32px;
+    padding-bottom: 0px;
+}
+
+.overlay-content-header {
+    margin-top: 0px;
 }
 
 .fullscreen-card-container-wrapper{
@@ -31,4 +38,20 @@ body.dark-theme .overlay {
     border: 1px solid var(--overlay-bg-dark);
     background: var(--overlay-bg-dark);
     box-shadow: 0px 2px 16px -3px var(--overlay-bg-dark);
+}
+
+.header-wrapper {
+    background-color: var(--primary-colour-blue);
+}
+
+.white-overlay-header{
+    color: white;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+
+    padding-top: 8px;
+    padding-bottom: 8px;
 }

@@ -47,6 +47,23 @@ class BaseApiActionsMixin:
         ), f"""An unhandled exception caused an Internal Server Error ({response.status_code}) in {route}"""
 
         return json.loads(response.text)
+    
+    def patch_api(self, route: str, data: dict) -> dict:
+        """
+        Simple patch method to not repeat "patch" everytime
+        """
+
+        response = requests.patch(
+            f"http://127.0.0.1:{server_addr[1]}{route}",
+            data=json.dumps(data),
+            headers=HEADERS,
+            timeout=5,
+        )
+        assert (
+            response.status_code != 500
+        ), f"""An unhandled exception caused an Internal Server Error ({response.status_code}) in {route}"""
+
+        return json.loads(response.text)
 
     def delete_api(self, route: str, data: dict) -> dict:
         """

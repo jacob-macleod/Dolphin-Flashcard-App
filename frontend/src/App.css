@@ -7,6 +7,7 @@
   --text-light: #222829;
   --text-dark: #FFFFFF;
   --primary-colour: #5D54C3;
+  --primary-colour-blue: #6A84C5;
   --panel-bg-light: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.75) 68.23%, rgba(243, 241, 251, 0.75) 100%), linear-gradient(180deg, #F3F1FB 0%, #FFF 100%);
   --panel-bg-dark: radial-gradient(50% 50% at 50% 50%, rgba(45, 45, 45, 0.75) 68.23%, rgba(35, 35, 35, 0.75) 100%), linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
   --panel-border-light: #FFF;
@@ -63,6 +64,8 @@
   --grey-button-dark: #404040;
   --folder-text-light: #222829;
   --folder-text-dark: #FFFFFF;
+  --grey-header-light:#5F5F5F;
+  --grey-header-dark:#5F5F5F;
 }
 
 body {
