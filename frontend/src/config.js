@@ -3,3 +3,6 @@
 
 export const ankiImportsDisabled = true;
 export const quizletImportsDisabled = true;
+
+// export const ankiImportsDisabled = false;
+// export const quizletImportsDisabled = false;

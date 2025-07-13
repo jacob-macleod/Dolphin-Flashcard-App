@@ -16,6 +16,7 @@ function GhostButton({
     ...style,
     width: view === 'mobile' ? '100%' : 'auto',
     cursor: disabled ? 'not-allowed' : 'pointer',
+    gridTemplateColumns: icon ? 'auto auto' : 'auto',
   };
 
   return (

@@ -22,6 +22,19 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 6.17.0 - 2025-07-13
+
+### Added
+
+- Importing from anki package feature
+- fetchUsingFormData() in the apiManager (frontend) to fetch data using form data instead of JSON
+- A toggle to control whether the buttons for importing from Anki or Quizlet are disabled or not, found in frontend/config.js
+
+### Changed
+
+- Refactored the 'Import from CSV' code to match the consistency of the 'Importing from Anki' feature
+- Disabled buttons no longer expand on hover, the hover cursor becomes 'not-allowed' and the tap/click scale is not as dramatic
+
 ## 6.16.0 - 2025-07-02
 
 ### Added

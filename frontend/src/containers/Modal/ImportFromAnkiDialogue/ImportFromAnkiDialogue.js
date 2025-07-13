@@ -15,14 +15,14 @@ import { dropIn } from '../../../animations/animations';
 import './ImportFromAnkiDialogue.css';
 
 function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
-  const [selectedPath, setSelectedPath] = React.useState(null);
+  const [selectedPath, setSelectedPath] = useState(null);
   const [filePath, setFilePath] = useState('');
   const [ankiFile, setAnkiFile] = useState(null);
   const [flashcardName, setFlashcardName] = useState('');
   const [flashcardDescription, setFlashcardDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [errorMessageVisibility, setErrorMessageVisibility] = useState('none');
-  const [loadingIconVisible, setLoadingIconVisible] = useState('visisnle'); // If null, loading icon shows
+  const [loadingIconVisible, setLoadingIconVisible] = useState('visible'); // If null, loading icon shows
   const [loadEditFlashcardPage, setLoadEditFlashcardPage] = useState(false);
 
   const buttonStyle = {
@@ -35,12 +35,15 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
   const currentPath = visible.path;
 
   function clearFormData() {
-    setAnkiFile(null);
+    setSelectedPath(null);
     setFilePath('');
+    setAnkiFile('null');
     setFlashcardName('');
     setFlashcardDescription('');
     setErrorMessage(null);
     setErrorMessageVisibility('none');
+    setLoadingIconVisible('visible');
+    setLoadEditFlashcardPage(false);
   }
 
   // When component mounts, clear the form data to stop the form errors being shown
@@ -70,23 +73,6 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
       setErrorMessage(null);
     }
   }, [selectedPath, flashcardName, flashcardDescription]);
-
-  function createSet() {
-    setErrorMessageVisibility('block');
-    if (errorMessage === null) {
-      if (selectedPath != null) {
-        setLoadingIconVisible(null);
-        apiManager.createFlashcard(
-          getCookie('jwtToken'),
-          flashcardName,
-          flashcardDescription,
-          selectedPath,
-          [],
-          setLoadEditFlashcardPage
-        );
-      }
-    }
-  }
 
   function uploadAnkiPackage() {
     setErrorMessageVisibility('block');
@@ -253,6 +239,7 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
             <GhostButton
               text="Cancel"
               onClick={() => {
+                clearFormData();
                 setErrorMessageVisibility('none');
                 setVisible(false);
               }}

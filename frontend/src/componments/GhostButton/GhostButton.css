@@ -1,45 +1,50 @@
-.ghost-button, .ghost-button-disabled {
-    border: solid #6A84C5;
-    border-radius: 8px;
-    background: transparent;
-    
-    /* Other Panel Drop Shadow */
-    box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
+.ghost-button,
+.ghost-button-disabled {
+  border: solid #6a84c5;
+  border-radius: 8px;
+  background: transparent;
 
-    display: flex;
-    min-height: 32px;
-    padding: 8px 12px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+  /* Other Panel Drop Shadow */
+  box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
 
-    color: #6A84C5;
-    text-align: center;
-    font-family: Roboto;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 18px; /* 112.5% */
-    margin: auto;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    cursor: pointer;
+  display: flex;
+  min-height: 32px;
+  padding: 11px 15px;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  color: #6a84c5;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px; /* 112.5% */
+  margin: auto;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
 }
 
 .ghost-button-disabled {
-    border: solid var(--input-text-light);
-    color: var(--input-text-light);
+  border: solid var(--input-text-light);
+  color: var(--input-text-light);
 }
 
 @media (hover: hover) {
-    .ghost-button:hover {
-        border-radius: 8px;
-        border: solid var(--Darker-Primary-Colour, #32519E);
-        background: var(--Darker-Primary-Colour, #32519E); /* Background changes on hover */
-        color: #FFF;
-        
-        /* Other Panel Drop Shadow */
-        box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
-        cursor: pointer;
-    }
+  .ghost-button:hover {
+    border-radius: 8px;
+    border: solid var(--Darker-Primary-Colour, #32519e);
+    background: var(
+      --Darker-Primary-Colour,
+      #32519e
+    ); /* Background changes on hover */
+    color: #fff;
+
+    /* Other Panel Drop Shadow */
+    box-shadow: 0px 2px 14.8px -5px rgba(13, 41, 68, 0.12);
+    cursor: pointer;
+  }
 }

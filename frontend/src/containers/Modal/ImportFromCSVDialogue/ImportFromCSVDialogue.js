@@ -21,21 +21,35 @@ const ImportFromCSVDialogue = ({
   reload,
   setReload,
 }) => {
-  const [selectedPath, setSelectedPath] = React.useState(null);
-  const [file, setFile] = useState('');
+  const [selectedPath, setSelectedPath] = useState(null);
+  const [filePath, setFilePath] = useState('');
+  const [csvFile, setCsvFile] = useState(null);
   const [flashcardName, setFlashcardName] = useState('');
   const [flashcardDescription, setFlashcardDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
   const [loadingIconVisible, setLoadingIconVisible] = useState('visible'); // If null, loading icon shows
   const [errorMessageVisibility, setErrorMessageVisibility] = useState('none');
+
   const buttonStyle = {
     display: 'inline-grid',
     margin: '0px 16px',
     marginBottom: '8px',
     marginTop: '8px',
   };
+
   const flashcardID = visible.flashcardID;
   const currentPath = visible.path;
+
+  function clearFormData() {
+    setSelectedPath(null);
+    setFilePath('');
+    setCsvFile('null');
+    setFlashcardName('');
+    setFlashcardDescription('');
+    setErrorMessage(null);
+    setLoadingIconVisible('visible');
+    setErrorMessageVisibility('none');
+  }
 
   useEffect(() => {
     /* Generate an error message when the user clicks "Submit" */
@@ -45,12 +59,12 @@ const ImportFromCSVDialogue = ({
       setErrorMessage('Please enter a name!');
     } else if (flashcardDescription === '') {
       setErrorMessage('Please enter a description!');
-    } else if (file === '') {
+    } else if (filePath === '') {
       setErrorMessage('Please select a file!');
     } else {
       setErrorMessage(null);
     }
-  }, [selectedPath, flashcardName, flashcardDescription, file]);
+  }, [selectedPath, flashcardName, flashcardDescription, filePath]);
 
   async function importSet() {
     try {
@@ -59,7 +73,7 @@ const ImportFromCSVDialogue = ({
         if (selectedPath != null) {
           setLoadingIconVisible(null);
           apiManager.importFlashcard(
-            file,
+            filePath,
             getCookie('jwtToken'),
             selectedPath,
             flashcardName,
@@ -117,8 +131,11 @@ const ImportFromCSVDialogue = ({
             <input
               type="file"
               placeholder="Folder name..."
-              value={file}
-              onChange={(e) => setFile(e.target.files[0])}
+              value={filePath}
+              onChange={(e) => {
+                setFilePath(e.target.value);
+                setCsvFile(e.target.files[0]);
+              }}
               accept=".csv"
               style={{
                 width: 'calc(100% - 32px)',
@@ -200,6 +217,7 @@ const ImportFromCSVDialogue = ({
             <GhostButton
               text="Cancel"
               onClick={() => {
+                clearFormData();
                 setErrorMessageVisibility('none');
                 setVisible(false);
               }}
