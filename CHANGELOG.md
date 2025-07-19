@@ -21,6 +21,11 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 6.16.0 - 2025-05-08
+
+### Fixed
+
+- Fixed bug for incorrect tagging of card status
 
 ## 6.17.0 - 2025-07-13
 
