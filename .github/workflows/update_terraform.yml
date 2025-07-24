@@ -46,6 +46,7 @@ jobs:
 
       - name: Set up GCP credentials
         run: |
+          sudo apt-get update
           sudo apt-get install -y google-cloud-sdk
           echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
           gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION
