@@ -21,7 +21,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-## 6.16.0 - 2025-05-08
+
+## 6.18.1 - 2025-07-24
+
+### Fixed
+
+- Updated frontend config to use HTTPS site
+
+## 6.18.0 - 2025-05-08
 
 ### Fixed
 
