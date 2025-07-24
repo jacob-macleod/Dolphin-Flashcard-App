@@ -37,8 +37,9 @@ jobs:
       - name: Build Docker Image
         run: |
           echo "Docker image name"
+          export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
           echo $GCP_DOCKER_IMAGE_NAME
-          echo $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest
+          echo $GCP_DOCKER_IMAGE_NAME:latest
           docker build -t $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest .
         env:
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
