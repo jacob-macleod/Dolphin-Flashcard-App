@@ -69,11 +69,12 @@ jobs:
         run: |
             export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
             echo $GCP_DOCKER_IMAGE_NAME
+            echo $$GCP_DOCKER_IMAGE_NAME:latest
             gcloud run deploy flashcard-app \
             --project dev-vms-jacob
-            --image=$GCP_DOCKER_IMAGE_NAME:latest \
-            --region=europe-west1 \
-            --platform=managed \
+            --image $GCP_DOCKER_IMAGE_NAME:latest \
+            --region europe-west1 \
+            --platform managed \
             --allow-unauthenticated
 
             # wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
