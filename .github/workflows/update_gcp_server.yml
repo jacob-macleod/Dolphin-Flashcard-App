@@ -3,7 +3,7 @@ name: Update GCP server
 on:
   push:
     branches:
-      - migrate_to_cloud_run
+      - main
 
 jobs:  
   push_tag:
