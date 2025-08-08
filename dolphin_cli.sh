@@ -101,7 +101,7 @@ delete_database_data() {
     [ "$(cat "$DATABASE_STATUS_FILE")" != "running" ] && \
         { echo -e "${RED}Start database first${NC}"; return 1; }
     
-    curl -X DELETE "http://localhost:8080/emulator/v1/projects/dummy-project-id/databases/(default)/documents" && {
+    curl -X DELETE "http://localhost:5000/emulator/v1/projects/dummy-project-id/databases/(default)/documents" && {
         date "+%Y-%m-%d %H:%M:%S" > "$DATABASE_DELETE_LOG"
         echo -e "${GREEN}Data deleted${NC}"
     } || echo -e "${RED}Data deletion failed${NC}"
