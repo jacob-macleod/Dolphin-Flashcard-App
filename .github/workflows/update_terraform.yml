@@ -17,6 +17,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Firebase credentials
+        run: |
+          echo "$FIREBASE_KEY" > credentials.json
+          echo "$FIREBASE_URL" > firebase_url
+          echo "$FIREBASE_CONFIG" > firebase_config.json
+          echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
+          echo "$JWT_PRIVATE_KEY" > jwt_key.json
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+          FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+
       - name: Install node
         run: |
           sudo apt-get update
