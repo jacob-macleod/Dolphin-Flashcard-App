@@ -116,7 +116,7 @@ services:
   flashcard-app:
     image: jacobmacleod/flashcard-app:latest
     ports:
-      - "5000:5000" 
+      - "8080:8080" 
 ```
 - `docker-compose up` can be used to build the code, and `docker-compose up --force-recreate --build -d && docker image prune -f` to update the container
 
