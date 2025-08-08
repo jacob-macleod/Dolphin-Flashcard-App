@@ -58,6 +58,18 @@ jobs:
         env:
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
+      - name: Set up GCP credentials
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-cli
+          echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
+          cat gcp_credentials.json
+          gcloud auth activate-service-account --key-file=gcp_credentials.json
+          gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION --quiet
+        env:
+          GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
+          GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
+
       - name: Clean up old Docker images
         run: |
           IMAGE_PATH="europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app"
@@ -72,18 +84,6 @@ jobs:
               gcloud artifacts docker images delete "$IMAGE_PATH@$DIGEST" --quiet --delete-tags
             fi
           done
-
-      - name: Set up GCP credentials
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-cloud-cli
-          echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
-          cat gcp_credentials.json
-          gcloud auth activate-service-account --key-file=gcp_credentials.json
-          gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION --quiet
-        env:
-          GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
-          GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
 
       - name: Push Docker Image to GCP Artifact Registry
         run: |
