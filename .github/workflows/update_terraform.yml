@@ -73,6 +73,7 @@ jobs:
             export GOOGLE_APPLICATION_CREDENTIALS=$GCP_CLOUD_RUN_AND_ARTIFACT_SA
             cd terraform
             echo "Credentials.json"
+            echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
             cat gcp_credentials.json
             echo "$TERRAFORM_VARS" > terraform.tfvars
             gcloud auth activate-service-account --key-file=gcp_credentials.json
@@ -80,3 +81,4 @@ jobs:
             terraform apply
         env:
           TERRAFORM_VARS: ${{ secrets.TERRAFORM_VARS }}
+          GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
