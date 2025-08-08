@@ -71,7 +71,7 @@ jobs:
             echo $GCP_DOCKER_IMAGE_NAME
             echo $$GCP_DOCKER_IMAGE_NAME:latest
             gcloud run deploy flashcard-app \
-            --project dev-vms-jacob
+            --project dev-vms-jacob \
             --image $GCP_DOCKER_IMAGE_NAME:latest \
             --region europe-west1 \
             --platform managed \
