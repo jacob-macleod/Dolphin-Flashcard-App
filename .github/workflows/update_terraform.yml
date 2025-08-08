@@ -79,23 +79,6 @@ jobs:
         env:
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
-      - name: Install jq
-        run: sudo apt-get install -y jq
-      
-      - name: Clean up old Docker images
-        run: |
-          IMAGE_PATH="europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app"
-          gcloud artifacts docker images list-tags "$IMAGE_PATH" \
-            --format="json" > image_tags.json
-      
-          LATEST_DIGEST=$(jq -r '.[] | select(.tags != null and (.tags | index("latest"))) | .version' image_tags.json)
-          echo "Latest digest: $LATEST_DIGEST"
-      
-          jq -r '.[] | select(.version != "'"$LATEST_DIGEST"'") | .version' image_tags.json | while read -r DIGEST; do
-            echo "Deleting old digest: $DIGEST"
-            gcloud artifacts docker images delete "$IMAGE_PATH@$DIGEST" --quiet --delete-tags
-          done
-
       - name: Update Google Cloud Run
         run: |
             export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
