@@ -78,7 +78,7 @@ jobs:
             echo "$TERRAFORM_VARS" > terraform.tfvars
             gcloud auth activate-service-account --key-file=gcp_credentials.json
             terraform init
-            terraform apply
+            terraform apply -auto-approve
         env:
           TERRAFORM_VARS: ${{ secrets.TERRAFORM_VARS }}
           GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
