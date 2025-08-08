@@ -67,18 +67,27 @@ jobs:
 
       - name: Update Google Cloud Run
         run: |
-            wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-            sudo apt update -y && sudo apt install terraform -y
-            export GOOGLE_APPLICATION_CREDENTIALS=gcp_credentials.json
-            cd terraform
-            echo "Credentials.json"
-            echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
-            cat gcp_credentials.json
-            echo "$TERRAFORM_VARS" > terraform.tfvars
-            gcloud auth activate-service-account --key-file=gcp_credentials.json
-            terraform init
-            terraform apply -auto-approve
+            export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
+            echo $GCP_DOCKER_IMAGE_NAME
+            gcloud run deploy flashcard-app \
+            --image=$GCP_DOCKER_IMAGE_NAME:latest \
+            --region=europe-west1 \
+            --platform=managed \
+            --allow-unauthenticated
+
+            # wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+            # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+            # sudo apt update -y && sudo apt install terraform -y
+            # export GOOGLE_APPLICATION_CREDENTIALS=gcp_credentials.json
+            # cd terraform
+            # echo "Credentials.json"
+            # echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
+            # cat gcp_credentials.json
+            # echo "$TERRAFORM_VARS" > terraform.tfvars
+            # gcloud auth activate-service-account --key-file=gcp_credentials.json
+            # terraform init
+            # terraform apply -auto-approve
         env:
           TERRAFORM_VARS: ${{ secrets.TERRAFORM_VARS }}
           GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
+          GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
