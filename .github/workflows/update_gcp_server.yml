@@ -3,7 +3,7 @@ name: Update GCP server
 on:
   push:
     branches:
-      - main
+      - migrate_to_cloud_run
 
 jobs:  
   push_tag:
@@ -109,7 +109,6 @@ jobs:
 
   verify-server:
     runs-on: ubuntu-latest
-    needs: ssh-server
     steps:
       - name: Test GCP Server is Running
         run: |
