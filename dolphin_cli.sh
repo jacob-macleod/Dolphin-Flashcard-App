@@ -404,7 +404,7 @@ check_config() {
         
 
         elif grep -q '^[[:space:]]*//[[:space:]]*const serverURL\s*=\s*"http://dolphinflashcards.com/api/";' "$CONFIG_JS" && \
-        grep -q '^[[:space:]]*const serverURL\s*=\s*"http://127.0.0.1:5000/api/";' "$CONFIG_JS"; then
+        grep -q '^[[:space:]]*const serverURL\s*=\s*"http://127.0.0.1:8080/api/";' "$CONFIG_JS"; then
             echo -e "${YELLOW}WARNING: Localhost API is active.${NC}"
             echo -e "${RED}Please switch to the production API before committing.${NC}"
             fe_config_ok=false
