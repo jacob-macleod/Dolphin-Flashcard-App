@@ -107,9 +107,6 @@ jobs:
           GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
-  verify-server:
-    runs-on: ubuntu-latest
-    steps:
       - name: Test GCP Server is Running
         run: |
           curl GET https://dolphinflashcards.com
