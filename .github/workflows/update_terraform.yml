@@ -75,6 +75,7 @@ jobs:
             echo "Terraform vars"
             echo "$TERRAFORM_VARS"
             echo "$TERRAFORM_VARS" > terraform.tfvars
+            gcloud auth application-default login
             terraform init
             terraform apply
         env:
