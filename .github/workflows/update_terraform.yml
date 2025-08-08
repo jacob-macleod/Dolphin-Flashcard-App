@@ -39,7 +39,7 @@ jobs:
           export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
           echo $GCP_DOCKER_IMAGE_NAME
           echo $GCP_DOCKER_IMAGE_NAME:latest
-          docker build -t $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest .
+          docker build -t $GCP_DOCKER_IMAGE_NAME:latest .
         env:
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
@@ -54,8 +54,10 @@ jobs:
 
       - name: Push Docker Image to GCP Artifact Registry
         run: |
-          echo "Pushing to $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest"
-          docker push $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest
+          export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
+          echo $GCP_DOCKER_IMAGE_NAME
+          echo "Pushing to $GCP_DOCKER_IMAGE_NAME:latest"
+          docker push $GCP_DOCKER_IMAGE_NAME:latest
         env:
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
