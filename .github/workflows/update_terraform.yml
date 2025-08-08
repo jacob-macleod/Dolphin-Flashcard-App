@@ -54,6 +54,7 @@ jobs:
           gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION --quiet
         env:
           GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
+          GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
 
       - name: Push Docker Image to GCP Artifact Registry
         run: |
