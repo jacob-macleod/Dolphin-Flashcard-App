@@ -48,6 +48,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-cloud-cli
           echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
+          cat gcp_credentials.json
           gcloud auth activate-service-account --key-file=gcp_credentials.json
           gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION --quiet
         env:
