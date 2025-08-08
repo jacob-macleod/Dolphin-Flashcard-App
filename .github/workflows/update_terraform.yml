@@ -72,5 +72,10 @@ jobs:
             sudo apt update -y && sudo apt install terraform -y
             export GOOGLE_APPLICATION_CREDENTIALS=$GCP_CLOUD_RUN_AND_ARTIFACT_SA
             cd terraform
+            echo "Terraform vars"
+            echo "$TERRAFORM_VARS"
+            echo "$TERRAFORM_VARS" > terraform.tfvars
             terraform init
             terraform apply
+        env:
+          TERRAFORM_VARS: ${{ secrets.TERRAFORM_VARS }}
