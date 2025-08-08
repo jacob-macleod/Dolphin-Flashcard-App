@@ -72,4 +72,5 @@ jobs:
             sudo apt update -y && sudo apt install terraform -y
             export GOOGLE_APPLICATION_CREDENTIALS=$GCP_CLOUD_RUN_AND_ARTIFACT_SA
             cd terraform
+            terraform init
             terraform apply
