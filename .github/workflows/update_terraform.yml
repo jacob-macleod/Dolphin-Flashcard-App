@@ -48,13 +48,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-cloud-cli
           echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
-          gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION
+          gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION -y
         env:
           GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
 
       - name: Push Docker Image to GCP Artifact Registry
         run: |
-          docker push $GCP_DOCKER_IMAGE_NAME
+          echo "Pushing to $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest"
+          docker push $GCP_DOCKER_IMAGE_NAME/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app:latest
         env:
           GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
 
