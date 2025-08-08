@@ -194,6 +194,35 @@
           "pages": ["api-reference/endpoint/statistics/update-heat-map"]
         }
       ]
+    },
+    {
+      "group": "Quests",
+      "pages": [
+        {
+          "group": "Get quests",
+          "pages": ["api-reference/endpoint/quest/get-quests"]
+        },
+        {
+          "group": "Create quest",
+          "pages": ["api-reference/endpoint/quest/create-quest"]
+        },
+        {
+          "group": "Delete quest",
+          "pages": ["api-reference/endpoint/quest/delete-quest"]
+        },
+        {
+          "group": "Update quest progress",
+          "pages": ["api-reference/endpoint/quest/update-quest-progress"]
+        },
+        {
+          "group": "Invite to quest",
+          "pages": ["api-reference/endpoint/quest/invite-to-quest"]
+        },
+        {
+          "group": "Update invite status",
+          "pages": ["api-reference/endpoint/quest/update-invite-status"]
+        }
+      ]
     }
   ],
   "footerSocials": {

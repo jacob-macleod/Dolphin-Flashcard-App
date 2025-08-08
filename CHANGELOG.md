@@ -22,11 +22,43 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-## 7.0.0 - xxx-xx-xx
+## 7.0.0 - 2025-08-08
 
 ### Changed
 
-(Among other things, say server now runs on port 8080, which is a breaking change. You also need to update the docs before pushing)
+- Updated pipeline to update cloud run server, not the GCP vm
+- The server now runs on port 8080, which is a breaking change
+
+## 6.18.1 - 2025-07-24
+
+### Fixed
+
+- Updated frontend config to use HTTPS site
+
+## 6.18.0 - 2025-05-08
+
+### Fixed
+
+- Fixed bug for incorrect tagging of card status
+
+## 6.17.0 - 2025-07-13
+
+### Added
+
+- Importing from anki package feature
+- fetchUsingFormData() in the apiManager (frontend) to fetch data using form data instead of JSON
+- A toggle to control whether the buttons for importing from Anki or Quizlet are disabled or not, found in frontend/config.js
+
+### Changed
+
+- Refactored the 'Import from CSV' code to match the consistency of the 'Importing from Anki' feature
+- Disabled buttons no longer expand on hover, the hover cursor becomes 'not-allowed' and the tap/click scale is not as dramatic
+
+## 6.16.0 - 2025-07-02
+
+### Added
+
+- Quest endpoint, with basic test switch and documentation
 
 ## 6.15.0 - 2025-07-05
 
@@ -84,16 +116,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ### Changed
 
-* Also make the site a PWA and add an icon for when it is installed
-*  Fix the edit flashcard page on desktop 
-* Make the nav bar follow dark mode
-* Make search bar on community page fill screen for mobile
-* Add loading animation for cards on daily dose mode
-* Change the percentage of cards completed on Flashcard page to say "x% completed"
-* Change mobile (and desktop) flashcards pages so that you don't click the flashcard name itself, instead you click the study button next to the flashcard then click "Study multiple". "Study multiple" should be changed to say "Study x cards"*
-* Allow dark mode to be switched on using the settings page on mobile
-* Optimise the full screen pages on mobile so that all the buttons are close to the user’s fingers
-* Allow anywhere on the flashcard to be tapped to turn over
+- Also make the site a PWA and add an icon for when it is installed
+- Fix the edit flashcard page on desktop
+- Make the nav bar follow dark mode
+- Make search bar on community page fill screen for mobile
+- Add loading animation for cards on daily dose mode
+- Change the percentage of cards completed on Flashcard page to say "x% completed"
+- Change mobile (and desktop) flashcards pages so that you don't click the flashcard name itself, instead you click the study button next to the flashcard then click "Study multiple". "Study multiple" should be changed to say "Study x cards"\*
+- Allow dark mode to be switched on using the settings page on mobile
+- Optimise the full screen pages on mobile so that all the buttons are close to the user’s fingers
+- Allow anywhere on the flashcard to be tapped to turn over
 
 ## 6.12.0 - 2025-04-07
 
@@ -131,7 +163,6 @@ This changelog follows the semantic versioning standard(https://semver.org)
 ### Added
 
 - Allow Users to Unflip flashcards "Your Daily Dose" mode to view the question
-
 
 ## 6.7.1 - 2025-03-09
 
@@ -240,23 +271,24 @@ This changelog follows the semantic versioning standard(https://semver.org)
 ## 6.1.4 - 2025-02-13
 
 ### Fixed
+
 - Completed the FAQ section of the landing page
 
-## 6.1.3 - 2025-02-12 
+## 6.1.3 - 2025-02-12
 
 ### Changed
 
 - Made user's name right aligned in left menu
 
-## 6.1.2 - 2025-02-11  
+## 6.1.2 - 2025-02-11
 
-### Added  
+### Added
 
-- Created a Tutorials section in the documentation.  
-- Added Frontend page.  
-- Added Backend** page.  
-- Added Unit Tests page.  
-- Added Introduction page to help contributors navigate the tutorials.  
+- Created a Tutorials section in the documentation.
+- Added Frontend page.
+- Added Backend\*\* page.
+- Added Unit Tests page.
+- Added Introduction page to help contributors navigate the tutorials.
 
 ## 6.1.1 - 2025-01-31
 
