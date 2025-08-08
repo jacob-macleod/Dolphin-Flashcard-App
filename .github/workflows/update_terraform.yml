@@ -70,6 +70,7 @@ jobs:
             export GCP_DOCKER_IMAGE_NAME=europe-west1-docker.pkg.dev/dev-vms-jacob/dolphin-flashcards-mirror/flashcard-app
             echo $GCP_DOCKER_IMAGE_NAME
             gcloud run deploy flashcard-app \
+            --project dev-vms-jacob
             --image=$GCP_DOCKER_IMAGE_NAME:latest \
             --region=europe-west1 \
             --platform=managed \
