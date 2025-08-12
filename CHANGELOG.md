@@ -21,6 +21,25 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+
+
+## 6.17.1 - 2025-08-12
+
+### Added
+
+- added margins between panels on the Dashboard page
+- added a Multiple Choice Mode button on the ViewFlashcards page
+
+### Fixed
+
+- Fixed bug where long answers do not fit properly on flashcards on CardOverview
+
+
+### Changed
+
+- Made the CardOverview component adjust its height based on its answers, improving responsiveness on smaller screen sizes
+
+
 ## 6.16.0 - 2025-05-08
 
 ### Fixed
