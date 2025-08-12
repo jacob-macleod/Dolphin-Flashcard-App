@@ -23,7 +23,8 @@ function StreakWidget () {
         marginLeft: "16px",
         marginRight: "0px",
         width: "90%",
-        marginTop: "0px"
+        marginTop: "0px",
+        marginBottom:"16px"
       }
 
       useEffect(() => {
