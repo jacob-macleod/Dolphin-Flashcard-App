@@ -1,0 +1,109 @@
+name: Update GCP server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:  
+  push_tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: 'write'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Firebase credentials
+        run: |
+          echo "$FIREBASE_KEY" > credentials.json
+          echo "$FIREBASE_URL" > firebase_url
+          echo "$FIREBASE_CONFIG" > firebase_config.json
+          echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
+          echo "$JWT_PRIVATE_KEY" > jwt_key.json
+        env:
+          FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
+          FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+
+      - name: Install node
+        run: |
+          sudo apt-get update
+          sudo apt install nodejs npm
+          cd frontend
+          npm install -g create-react-app
+          npm install
+
+      - name: Build the React App for Deployment
+        run: |
+          echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
+          cd frontend
+          npm run build
+          rm -rf frontend/node_modules
+        env:
+          MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
+
+      - name: Build Docker Image
+        run: |
+          echo "Docker image name"
+          echo $GCP_DOCKER_IMAGE_NAME
+          echo $GCP_DOCKER_IMAGE_NAME:latest
+          docker build -t $GCP_DOCKER_IMAGE_NAME:latest .
+        env:
+          GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
+
+      - name: Set up GCP credentials
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-cli
+          echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
+          cat gcp_credentials.json
+          gcloud auth activate-service-account --key-file=gcp_credentials.json
+          gcloud auth configure-docker $GCP_ARTIFACT_REGISTRY_LOCATION --quiet
+        env:
+          GCP_ARTIFACT_REGISTRY_LOCATION: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}
+          GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
+
+      - name: Push Docker Image to GCP Artifact Registry
+        run: |
+          echo $GCP_DOCKER_IMAGE_NAME
+          echo "Pushing to $GCP_DOCKER_IMAGE_NAME:latest"
+          docker push $GCP_DOCKER_IMAGE_NAME:latest
+        env:
+          GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
+
+      - name: Update Google Cloud Run
+        run: |
+            echo $GCP_DOCKER_IMAGE_NAME
+            echo $$GCP_DOCKER_IMAGE_NAME:latest
+            gcloud run deploy flashcard-app \
+            --project dev-vms-jacob \
+            --image $GCP_DOCKER_IMAGE_NAME:latest \
+            --region europe-west1 \
+            --platform managed \
+            --allow-unauthenticated
+
+            # wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+            # echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+            # sudo apt update -y && sudo apt install terraform -y
+            # export GOOGLE_APPLICATION_CREDENTIALS=gcp_credentials.json
+            # cd terraform
+            # echo "Credentials.json"
+            # echo "$GCP_CLOUD_RUN_AND_ARTIFACT_SA" > gcp_credentials.json
+            # cat gcp_credentials.json
+            # echo "$TERRAFORM_VARS" > terraform.tfvars
+            # gcloud auth activate-service-account --key-file=gcp_credentials.json
+            # terraform init
+            # terraform apply -auto-approve
+        env:
+          TERRAFORM_VARS: ${{ secrets.TERRAFORM_VARS }}
+          GCP_CLOUD_RUN_AND_ARTIFACT_SA: ${{ secrets.GCP_CLOUD_RUN_AND_ARTIFACT_SA }}
+          GCP_DOCKER_IMAGE_NAME: ${{ secrets.GCP_DOCKER_IMAGE_NAME }}
+
+      - name: Test GCP Server is Running
+        run: |
+          curl GET https://dolphinflashcards.com
