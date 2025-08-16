@@ -1,7 +1,7 @@
 sudo docker run \
 --env "FIRESTORE_PROJECT_ID=dummy-project-id" \
 --env "PORT=5000" \
---publish 5000:5000 \
+--publish 5000:8080 \
 mtlynch/firestore-emulator-docker
 
 # Clear the stored data
