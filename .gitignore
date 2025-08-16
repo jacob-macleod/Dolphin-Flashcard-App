@@ -44,3 +44,10 @@ frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 android/
+
+# Terraform files
+terraform/terraform.tfvars
+*.tfstate
+*.tfstate.backup
+terraform/.terraform/
+terraform/gcr_key.json
