@@ -22,8 +22,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
-
-## 6.17.1 - 2025-08-12
+## 6.18.2 - 2025-08-12
 
 ### Added
 
@@ -40,7 +39,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Made the CardOverview component adjust its height based on its answers, improving responsiveness on smaller screen sizes
 
 
-## 6.16.0 - 2025-05-08
+## 6.18.1 - 2025-07-24
+
+### Fixed
+
+- Updated frontend config to use HTTPS site
+
+## 6.18.0 - 2025-05-08
 
 ### Fixed
 

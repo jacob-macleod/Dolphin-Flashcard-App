@@ -24,7 +24,7 @@ with open(FRONTEND_CONFIG_FILE, "r") as file:
         # For each line, check if it is a comment
         if line[0] != "/" and line[1] != "/":
             # If the line is a variable definition
-            if 'constserverURL="http://dolphinflashcards.com/api/";' in line:
+            if 'constserverURL="https://dolphinflashcards.com/api/";' in line:
                 SERVER_DEFINED = True
             # If the line exports the variable
             elif 'exportdefaultserverURL;' in line:
