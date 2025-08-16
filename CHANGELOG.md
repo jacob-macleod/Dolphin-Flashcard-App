@@ -28,6 +28,23 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Updated pipeline to update cloud run server, not the GCP vm
 - The server now runs on port 8080, which is a breaking change
+- The firebase emulator now runs on port 5000
+
+## 6.18.2 - 2025-08-12
+
+### Added
+
+- added margins between panels on the Dashboard page
+- added a Multiple Choice Mode button on the ViewFlashcards page
+
+### Fixed
+
+- Fixed bug where long answers do not fit properly on flashcards on CardOverview
+
+
+### Changed
+
+- Made the CardOverview component adjust its height based on its answers, improving responsiveness on smaller screen sizes
 
 ## 6.18.1 - 2025-07-24
 

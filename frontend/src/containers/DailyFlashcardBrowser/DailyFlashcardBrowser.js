@@ -228,7 +228,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   description={currentCard.back}
                   showResponseOptions={true}
                   setResponse={setResponse}
-                  height={isFullscreen ? '100%' : '264px'}
+                  height={isFullscreen ? '100%' : 'fit-content'}
                   toggleFullscreen={toggleFullscreen}
                   fullscreen={isFullscreen}
                   view={view}
@@ -236,7 +236,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
               </div>
               {!isFullscreen &&(
                 <div style={{position:"relative",width:"100%"}}>
-              <ReviewBarChartKey style={{ paddingTop: '8px' }} />
+              <ReviewBarChartKey style={{ paddingTop: '8px'}} />
               {view !== "mobile"  ?
                 <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
                 : <></>

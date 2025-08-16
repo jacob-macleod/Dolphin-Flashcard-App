@@ -23,6 +23,7 @@ function sanitizeHtml(html) {
 const ghostButtonStyle = {
     marginLeft: "0px",
     marginRight: "0px",
+    marginTop: "0px"
 };
 
 function ResponseOptions({ ghostButtonStyle, setResponse }) {
@@ -106,6 +107,7 @@ function CardOverview({
         };
     }, []);
 
+
     return (
         <>
         <WhiteOverlay
@@ -115,12 +117,14 @@ function CardOverview({
             className={isInEditPage ? "edit-page-flashcard-wrapper" : fullscreen ? "fullscreen-card-container-wrapper" : ""}
             children={
                 <div style={{
-                    paddingTop: "22px",
+                    paddingTop: "10px",
                     paddingBottom: "22px",
                     paddingLeft: "30px",
                     paddingRight: "30px",
                     perspective: "1000px",
                     height: height,
+                    maxHeight: "650px",
+                    minHeight:"260px"
                 }}
                 >
                     {(showTurnOverButton || showResponseOptions && isFlipped === false) &&
@@ -131,6 +135,9 @@ function CardOverview({
                                 backgroundColor: "transparent",
                                 boxShadow: "none",
                                 color: "#6A84C5",
+                                marginBottom: "0px",
+                                marginTop: fullscreen ? "30px" : "0px"
+                                
                             }}
                         />
                     }
