@@ -481,6 +481,20 @@ class ApiManager {
         }
         
   }
+
+  async importQuizletSet(jwtToken, folder, file, name) {
+    const url = 'import-from-quizlet'
+    try {
+      const body = { jwtToken, folder, file, name }
+      const response = await fetch(serverURL + url, body)
+      const data = await response.json()
+      console.log(data)
+      return data
+    } catch (error) {
+      console.error("Error importing Quizlet set: ", error)
+      throw error
+    }
+  }
 }
 
 const apiManager = new ApiManager();

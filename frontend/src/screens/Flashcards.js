@@ -34,6 +34,7 @@ import ImportCsvPopup from '../containers/Modal/ImportCsvPopup/ImportCsvPopup';
 import GhostButton from '../componments/GhostButton';
 import flashcardIcon from '../static/flashcard-set-icon.svg';
 import folderIcon from '../static/folder-icon.svg';
+import ImportQuizletPopup from '../containers/Modal/ImportQuizletPopup/ImportQuizletPopup';
 
 
 function Flashcards() {
@@ -46,6 +47,7 @@ function Flashcards() {
   const [createCardDialogueVisible, setCreateCardDialogueVisible] = useState(false);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
   const [importCsvDialougeVisible, setImportCsvDialougeVisible] = useState(false);
+  const [importQuizletDialougeVisisble, setImportQuizletDislougeVisible] = useState(false);
   const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] = useState(false);
   const [renameFlashcardSetPopupVisible, setRenameFlashcardSetPopupVisible] = useState(false);
   const [deleteFolderConfirmationVisible, setDeleteFolderConfirmationVisible] = useState(false);
@@ -117,6 +119,7 @@ function Flashcards() {
       <MoveFolderDialogue visible={moveFolderDialogueVisible} setVisible={setMoveFolderDialogueVisible} view={view} setReload={setReload} />
       <CreateFolderDialogue visible={createFolderDialogueVisible} setVisible={setCreateFolderDialogueVisible} view={view} setReload={setReload} />
       <ImportCsvPopup visible={importCsvDialougeVisible} setVisible={setImportCsvDialougeVisible} view={view} reload={reload} setReload={setReload} />
+      <ImportQuizletPopup visible={importQuizletDialougeVisisble} setVisible={setImportQuizletDislougeVisible} view={view} setReload={setReload} />
       <DeleteFlashcardConfirmation visible={deleteFlashcardConfirmationVisible} setVisible={showDeleteFlashcardConfirmation} view={view} setReload={setReload} />
       <RenameFlashcardSetPopup visible={renameFlashcardSetPopupVisible} setVisible={setRenameFlashcardSetPopupVisible} view={view} setReload={setReload} />
       <DeleteFolderConfirmation visible={deleteFolderConfirmationVisible} setVisible={setDeleteFolderConfirmationVisible} view={view} setReload={setReload} />
@@ -264,7 +267,8 @@ function Flashcards() {
                         <GhostButton 
                           text="Import from quizlet"
                           style={{marginLeft: "0px", marginRight: "0px"}}
-                          disabled={true}
+                          onClick={() => setImportQuizletDislougeVisible(true)}
+                          disabled={false}
                           view={view}
                         />
 
