@@ -10,28 +10,44 @@ class ApiManager {
     return ApiManager.instance;
   }
 
-  fetchData(data, url, successCallback, method = "POST") {
+  fetchData(data, url, successCallback, method = 'POST') {
     fetch(serverURL + url, {
       method: method,
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*", // Allow requests from any origin
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS", // Specify allowed methods
-        "Access-Control-Allow-Headers": "Content-Type",
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Specify allowed methods
+        'Access-Control-Allow-Headers': 'Content-Type',
         // Add any other headers if required
       },
       body: JSON.stringify(data), // Convert data to JSON string
     })
       .then((response) => {
-        console.log(response);
         if (response.ok) {
           return response.json(); // Parse JSON response
         }
-        throw new Error("Network response was not ok.");
+        throw new Error('Network response was not ok.');
       })
       .then(successCallback)
       .catch((error) => {
-        console.error("There was an error:", error);
+        console.error('There was an error:', error);
+      });
+  }
+
+  fetchDataUsingFormData(formData, url, successCallback, method = 'POST') {
+    fetch(serverURL + url, {
+      method: method,
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json(); // Parse JSON response
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(successCallback)
+      .catch((error) => {
+        console.error('There was an error:', error);
       });
   }
 
@@ -39,7 +55,7 @@ class ApiManager {
     const data = {
       jwtToken: jwtToken,
     };
-    const url = "calculate-streak";
+    const url = 'calculate-streak';
 
     this.fetchData(data, url, ([streak, status]) => {
       if (status === 200) {
@@ -53,7 +69,7 @@ class ApiManager {
     const data = {
       jwtToken: jwtToken,
     };
-    const url = "update-goal-status";
+    const url = 'update-goal-status';
 
     this.fetchData(data, url, (goals) => {
       setGoals(goals);
@@ -61,7 +77,7 @@ class ApiManager {
   }
 
   createXpGoal(jwtToken, goalXp, endDate, setStatus) {
-    const url = "create-xp-goal";
+    const url = 'create-xp-goal';
     const data = {
       jwtToken: jwtToken,
       goalXP: goalXp,
@@ -74,7 +90,7 @@ class ApiManager {
   }
 
   createCardGoal(jwtToken, numOfCards, endDate, setStatus) {
-    const url = "create-card-goal";
+    const url = 'create-card-goal';
     const data = {
       jwtToken: jwtToken,
       cardsToRevise: numOfCards,
@@ -94,7 +110,7 @@ class ApiManager {
     newCardsToRevise,
     setPopupVisible
   ) {
-    const url = "edit-card-goal";
+    const url = 'edit-card-goal';
     const data = {
       jwtToken: jwtToken,
       goalID: goalID,
@@ -114,7 +130,7 @@ class ApiManager {
     newGoalXP,
     setPopupVisible
   ) {
-    const url = "edit-xp-goal";
+    const url = 'edit-xp-goal';
     const data = {
       jwtToken: jwtToken,
       goalID: goalID,
@@ -127,7 +143,7 @@ class ApiManager {
   }
 
   deleteGoal(jwtToken, goalID, reloadPage) {
-    const url = "delete-goal";
+    const url = 'delete-goal';
     const data = {
       jwtToken: jwtToken,
       goalID: goalID,
@@ -138,12 +154,12 @@ class ApiManager {
       (status) => {
         reloadPage();
       },
-      "DELETE"
+      'DELETE'
     );
   }
 
   getHeatmap(jwtToken, setHeatmap) {
-    const url = "get-heatmap";
+    const url = 'get-heatmap';
     const data = {
       jwtToken: jwtToken,
     };
@@ -153,7 +169,7 @@ class ApiManager {
   }
 
   getXP(jwtToken, setWeeklyXP, setTotalXP) {
-    const url = "get-user-stats";
+    const url = 'get-user-stats';
     const data = {
       jwtToken: jwtToken,
     };
@@ -164,11 +180,11 @@ class ApiManager {
         setWeeklyXP(xpData[0].weeklyXP);
         setTotalXP(xpData[0].totalXP);
       },
-      "POST"
+      'POST'
     );
   }
   getWeeklyXp(jwtToken, setWeeklyXp) {
-    const url = "get-weekly-xp";
+    const url = 'get-weekly-xp';
     const data = {
       jwtToken: jwtToken,
     };
@@ -178,7 +194,7 @@ class ApiManager {
   }
 
   getTotalXp(jwtToken, setTotalXP) {
-    const url = "get-total-xp";
+    const url = 'get-total-xp';
     const data = {
       jwtToken: jwtToken,
     };
@@ -188,7 +204,7 @@ class ApiManager {
   }
 
   getTodayCards(jwtToken, setTodayCards) {
-    const url = "get-today-cards";
+    const url = 'get-today-cards';
     const data = {
       jwtToken: jwtToken,
     };
@@ -206,7 +222,7 @@ class ApiManager {
     setPopupVisible,
     setReload
   ) {
-    const url = "move-flashcard-set";
+    const url = 'move-flashcard-set';
     const data = {
       jwtToken: jwtToken,
       currentLocation: currentLocation,
@@ -232,7 +248,7 @@ class ApiManager {
     /*
         Create a flashcard
         */
-    const url = "create-flashcard";
+    const url = 'create-flashcard';
     if (data === null) {
       data = {
         jwtToken: jwtToken,
@@ -250,7 +266,7 @@ class ApiManager {
   }
 
   createFolder(jwtToken, folderPath, setPopupVisible, setReload) {
-    const url = "create-folder";
+    const url = 'create-folder';
     const data = {
       jwtToken: jwtToken,
       folder: folderPath,
@@ -263,7 +279,7 @@ class ApiManager {
   }
 
   getFlashcard(jwtToken, flashcardID, setFlashcardData) {
-    const url = "get-flashcard";
+    const url = 'get-flashcard';
     const data = {
       jwtToken: jwtToken,
       flashcardID: flashcardID,
@@ -275,7 +291,7 @@ class ApiManager {
   }
 
   getPublicFlashcard(flashcardID, setFlashcardData) {
-    const url = "get-public-flashcard";
+    const url = 'get-public-flashcard';
     const data = {
       flashcardID: flashcardID,
     };
@@ -286,7 +302,7 @@ class ApiManager {
   }
 
   getFlashcardItem(cardID, setFlashcardItem) {
-    const url = "get-flashcard-item";
+    const url = 'get-flashcard-item';
     const data = {
       cardID: cardID,
     };
@@ -297,7 +313,7 @@ class ApiManager {
   }
 
   updateCardProgress(jwtToken, cardData, setCardsRevised) {
-    const url = "update-card-progress";
+    const url = 'update-card-progress';
     const data = {
       jwtToken: jwtToken,
       cardData: cardData,
@@ -309,7 +325,7 @@ class ApiManager {
   }
 
   deleteFlashcard(jwtToken, flashcardID, setPopupVisible, setReload) {
-    const url = "delete-flashcard";
+    const url = 'delete-flashcard';
     const data = {
       jwtToken: jwtToken,
       flashcardID: flashcardID,
@@ -322,12 +338,12 @@ class ApiManager {
         setPopupVisible(false);
         setReload(true);
       },
-      "DELETE"
+      'DELETE'
     );
   }
 
   renameFlashcard(jwtToken, flashcardID, newName, setPopupVisible, setReload) {
-    const url = "rename-flashcard";
+    const url = 'rename-flashcard';
     const data = {
       jwtToken: jwtToken,
       flashcardID: flashcardID,
@@ -341,7 +357,7 @@ class ApiManager {
   }
 
   deleteFolder(jwtToken, folderPath, setPopupVisible, setReload) {
-    const url = "delete-folder";
+    const url = 'delete-folder';
     const data = {
       jwtToken: jwtToken,
       folder: folderPath,
@@ -354,12 +370,12 @@ class ApiManager {
         setPopupVisible(false);
         setReload(true);
       },
-      "DELETE"
+      'DELETE'
     );
   }
 
   renameFolder(jwtToken, folderPath, newName, setPopupVisible, setReload) {
-    const url = "rename-folder";
+    const url = 'rename-folder';
     const data = {
       jwtToken: jwtToken,
       currentName: folderPath,
@@ -373,7 +389,7 @@ class ApiManager {
   }
 
   deleteCard(jwtToken, flashcardID, cardID, setLoadingIconVisible, setReload) {
-    const url = "delete-card";
+    const url = 'delete-card';
     const data = {
       jwtToken: jwtToken,
       flashcardID: flashcardID,
@@ -387,19 +403,19 @@ class ApiManager {
         setLoadingIconVisible(null);
         setReload(true);
       },
-      "DELETE"
+      'DELETE'
     );
   }
 
   searchForFlashcard(searchTerm, setResults) {
-    const url = "search?name=" + searchTerm;
+    const url = 'search?name=' + searchTerm;
     this.fetchData({}, url, (results) => {
       setResults(results);
     });
   }
 
   addFlashcardToFolder(jwtToken, flashcardID, folder, setLoadFlashcard) {
-    const url = "add-flashcard-to-folder";
+    const url = 'add-flashcard-to-folder';
     const data = {
       jwtToken: jwtToken,
       flashcardID: flashcardID,
@@ -413,7 +429,7 @@ class ApiManager {
   }
 
   getUser(userID, setUserData) {
-    const url = "get-user";
+    const url = 'get-user';
     const data = {
       userID: userID,
     };
@@ -424,7 +440,7 @@ class ApiManager {
   }
 
   getUserFromJwt(jwtToken, setUserData) {
-    const url = "get-user-from-jwt";
+    const url = 'get-user-from-jwt';
     const data = {
       jwtToken: jwtToken,
     };
@@ -435,7 +451,7 @@ class ApiManager {
   }
 
   flashcardExists(jwtToken, flashcardID, setFlashcardExists) {
-    const url = "flashcard-exists";
+    const url = 'flashcard-exists';
     const data = {
       jwtToken: jwtToken,
       flashcardID: flashcardID,
@@ -446,40 +462,81 @@ class ApiManager {
     });
   }
 
-  async importFlashcard(file, jwtToken, folder, flashcardName, flashcardDescription) {
-    const url = "import-flashcards";
+  async importFlashcard(
+    file,
+    jwtToken,
+    folder,
+    flashcardName,
+    flashcardDescription
+  ) {
+    const url = 'import-flashcards';
     // const reader = new FileReader();
-    
-        try {
 
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("jwtToken", jwtToken)
-            formData.append("folder", folder);
-            formData.append("flashcardName", flashcardName);
-            formData.append("flashcardDescription", flashcardDescription);
-            formData.append("delimiter", ",");
-            formData.append("firstRowOfData", "1");
-            
-            console.log([...formData.entries()])
-            
-            const response = await fetch(serverURL + url, {
-                method: "POST",
-                headers: {
-                    'Authorization': `Bearer ${jwtToken}`,
-                    // 'Content-Type': 'multipart/form-data'
-                },
-                body: formData
-            })
-            // console.log(await response.json())
-            const data = await response.json()
-            console.log(data)
-            return data
-        } catch (error) {
-            console.error("Error Importing CSV: ", error)
-            throw error
-        }
-        
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('jwtToken', jwtToken);
+      formData.append('folder', folder);
+      formData.append('flashcardName', flashcardName);
+      formData.append('flashcardDescription', flashcardDescription);
+      formData.append('delimiter', ',');
+      formData.append('firstRowOfData', '1');
+
+      console.log([...formData.entries()]);
+
+      // const response = await fetch(serverURL + url, {
+      //   method: 'POST',
+      //   headers: {
+      //     Authorization: `Bearer ${jwtToken}`,
+      //     // 'Content-Type': 'multipart/form-data'
+      //   },
+      //   body: formData,
+      // });
+      // // console.log(await response.json())
+      // const data = await response.json();
+      // console.log(data);
+      // return data;
+
+      this.fetchDataUsingFormData(formData, url, (status) => {
+        setVisible(false), setReload(true);
+      });
+    } catch (error) {
+      console.error('Error Importing CSV: ', error);
+      throw error;
+    }
+  }
+
+  importFromAnki(
+    file,
+    jwtToken,
+    flashcardName,
+    flashcardDescription,
+    folder,
+    setPopupVisible,
+    setReload,
+    clearFormData
+  ) {
+    try {
+      const url = 'import-anki-flashcards';
+      const form = new FormData();
+      form.append('file', file);
+      form.append('jwtToken', jwtToken);
+      form.append('flashcardName', flashcardName);
+      form.append('folder', folder);
+      form.append('flashcardDescription', flashcardDescription);
+      form.append('termField', 'Front');
+      form.append('definitionField', 'Back');
+      form.append('stripHtml', 'true');
+
+      this.fetchDataUsingFormData(form, url, (status) => {
+        setPopupVisible(false);
+        setReload(true);
+        clearFormData();
+      });
+    } catch (error) {
+      console.error('Error Importing From Anki: ', error);
+      throw error;
+    }
   }
 
   async importQuizletSet(jwtToken, folder, file, name) {

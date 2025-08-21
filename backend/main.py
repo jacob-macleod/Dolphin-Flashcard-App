@@ -7,6 +7,7 @@ from routes.api.authentication import authentication_routes
 from routes.api.statistics import statistics_routes
 from routes.api.card_management import card_management_routes
 from routes.api.goals import goal_routes
+from routes.api.quests import quest_routes
 
 print("Starting")
 
@@ -16,8 +17,12 @@ app.register_blueprint(authentication_routes)
 app.register_blueprint(statistics_routes)
 app.register_blueprint(card_management_routes)
 app.register_blueprint(goal_routes)
-server_addr = ("0.0.0.0", 5000)
+app.register_blueprint(quest_routes)
 
+# Used for version 6.15.0 and below
+# server_addr = ("0.0.0.0", 5000)
+# Changes after version 7.0.0
+server_addr = ("0.0.0.0", 8080)
 
 # Serve the React frontend from the frontend/build folder
 @app.route("/", defaults={"path": ""})

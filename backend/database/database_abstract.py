@@ -9,6 +9,7 @@ from database.handlers.read_write_access import ReadWriteAccess
 from database.handlers.users import Users
 from database.handlers.statistics import Statistics
 from database.handlers.goals import Goals
+from database.handlers.quests import Quests
 
 
 class DatabaseAbstract(ABC):
@@ -24,6 +25,7 @@ class DatabaseAbstract(ABC):
         self._read_write_access = None
         self._users = None
         self._statistics = None
+        self._quests = None
 
     def _init_database_handlers(self):
         """Initialise the database handlers. This can't be placed in this abstract init class
@@ -36,6 +38,7 @@ class DatabaseAbstract(ABC):
         self._users = Users(self.db)
         self._statistics = Statistics(self.db)
         self._goals = Goals(self.db)
+        self._quests = Quests(self.db)
 
     @property
     def query(self):
@@ -112,6 +115,15 @@ class DatabaseAbstract(ABC):
             Goals: The Goals class
         """
         return self._goals
+    
+    @property
+    def quests(self):
+        """Return the Goals class
+
+        Returns:
+            Goals: The Goals class
+        """
+        return self._quests
 
     @abstractmethod
     def verify_id_token(self, id_token: str, user_id: str):

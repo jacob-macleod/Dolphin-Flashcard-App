@@ -26,6 +26,7 @@
   height: calc(100% - 140px);
   margin-top: 70px;
   margin-bottom: 70px;
+  padding-top:10px;
 }
 
 body.dark-theme .fullscreen{
@@ -35,9 +36,10 @@ body.dark-theme .fullscreen{
   .card-container {
     position: relative;
     width: 100%;
-    height: 264px;
-    overflow: hidden;
+    height: fit-content; 
+    overflow: visible;
     flex-direction: column;
+    
   }
   
   .expand-button {

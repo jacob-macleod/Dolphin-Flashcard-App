@@ -119,7 +119,7 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
                   flashcardID={flashcardID}
                   numberStudying={flashcardName ? flashcardName.length : 0}
                 />
-                <div style={{ maxWidth: "548px", margin: "auto" }}>
+                <div style={{ maxWidth: "640px", margin: "auto"}}>
                   <div className="mode-selector-container">
                     <p
                       className={mode === "daily" ? "link" : "inactive-link"}
@@ -156,6 +156,7 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
                   <Heading4 text="Other modes" />
                   <div className={view === "mobile" ? "button-container-mobile" : 'button-container'}>
                     <Button text="Generate Quiz" disabled={true} view={view}/>
+                    <Button text="Multiple Choice Mode" disabled={true} view={view}/>
                     <Button text="Match Mode" disabled={true} view={view}/>
                   </div>
                 </div>

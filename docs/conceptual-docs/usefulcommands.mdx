@@ -25,7 +25,7 @@ Below, you can see some useful commands to use when developing features for Dolp
 - Stop the local database
     - `docker stop $(docker ps -aq --filter "ancestor=mtlynch/firestore-emulator-docker")`
 - Delete all data from the local database
-    - `curl -v -X DELETE "http://localhost:8080/emulator/v1/projects/dummy-project-id/databases/(default)/documents"`
+    - `curl -v -X DELETE "http://localhost:5000/emulator/v1/projects/dummy-project-id/databases/(default)/documents"`
 - Run unit tests
     - `bash testing/run_tests.sh`
 

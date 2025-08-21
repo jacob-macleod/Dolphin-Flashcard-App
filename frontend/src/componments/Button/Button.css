@@ -9,7 +9,7 @@
   display: flex;
   min-height: 32px;
   padding: 11px 15px;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   gap: 10px;

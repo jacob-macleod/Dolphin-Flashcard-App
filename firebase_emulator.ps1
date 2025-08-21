@@ -8,5 +8,5 @@ Write-Host "Pulling Firestore emulator Docker image..."
 docker pull mtlynch/firestore-emulator-docker
 # Start the Firestore emulator in a Docker container
 Write-Host "Starting Firestore emulator..."
-docker run --name firestore-emulator --env "FIRESTORE_PROJECT_ID=dummy-project-id" --env "PORT=8080" --publish 8080:8080 mtlynch/firestore-emulator-docker
+docker run --name firestore-emulator --env "FIRESTORE_PROJECT_ID=dummy-project-id" --env "PORT=5000" --publish 5000:5000 mtlynch/firestore-emulator-docker
 }

@@ -2,8 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { slideRight, flipVariants } from '../../animations/animations';
 import './WhiteOverlay.css';
+import Heading2 from '../Text/Heading2';
 
-function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible=true, onClick=null, className=null }) {
+function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible=true, onClick=null, className=null, header=null }) {
   return (
     <div className={className}>
       {visible ? <>
@@ -21,7 +22,12 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
                 transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
               }}
             >
-              {children}
+              {header !== null ? <div className="header-wrapper">
+                <Heading2 text={header} style={{fontWeight: "600"}}/>
+              </div>: <></>}
+              <div className='overlay-content'>
+                {children}
+              </div>
             </motion.div>
           </motion.div>
         ) : (
@@ -34,8 +40,13 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
             variants={slideRight}
             onClick={() => {onClick !== null ? onClick() : null}}
           >
-            {children}
-          </motion.div>
+            {header !== null ? <div className="header-wrapper">
+              <Heading2 text={header} className="white-overlay-header" style={{fontWeight: "600"}}/>
+            </div>: <></>}
+            <div className={'overlay-content '  + (header === null ? "" : "overlay-content-header")}>
+                {children}
+              </div>
+            </motion.div>
         )}
       </>: children}
     </div>

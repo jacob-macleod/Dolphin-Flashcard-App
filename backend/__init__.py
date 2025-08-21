@@ -1,5 +1,3 @@
-"""Package level information
-"""
+"""Package level information"""
 
-__version__ = "6.14.1"
-
+__version__ = "7.0.0"
