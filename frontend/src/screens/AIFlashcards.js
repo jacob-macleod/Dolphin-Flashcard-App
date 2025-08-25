@@ -45,6 +45,8 @@ import Heading5 from '../componments/Text/Heading5/Heading5';
 import Text from '../componments/Text/Text/Text';
 import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
+import PromptBar from '../componments/PromptBar/PromptBar';
+import BoldParagraph from '../componments/Text/BoldParagraph/BoldParagraph';
 
 function AIFlashcards() {
   // Set general variables
@@ -60,13 +62,13 @@ function AIFlashcards() {
   
   return (
     <div style={{ top: '0px' }}>
-      {/* <Helmet>
-        <title>{"hello"}</title>
+      <Helmet>
+        <title>{"aiflashcards"}</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         ></meta>
-      </Helmet> */}
+      </Helmet> 
 
       
 
@@ -75,8 +77,115 @@ function AIFlashcards() {
         classType="two-column-grid"
       >
         {view !== 'mobile' ? <SidePanel selectedItem="flashcards" /> : <></>}
+          <GridItem
+          style={{
+            paddingLeft:
+              view === 'mobile' ? '0px' : flashcardBoxHorizontalPadding,
+            paddingRight:
+              view === 'mobile' ? '0px' : flashcardBoxHorizontalPadding,
+            paddingTop: '0px',
+            paddingBottom: view === 'mobile' ? '0px' : '',
+            width: view === 'mobile' ? '100vw' : '',
+            display: view === 'mobile' ? 'block' : 'flex',
+            flexDirection: 'column',
+            margin:'16px',
+          }}
+        >
+          
+         <WhiteOverlay
+            style={{
+              height: '100%',
+              paddingBottom: view === 'mobile' ? '80px' : '',
+              width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
+              marginBottom:'0px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+            
+          >
+          <div style={{width:'100%', display:'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', margin:'16px', marginBottom:'8px'}}>
+            <PromptBar width={"90%"}
+            borderRadius="8px 0 0 8px"
+            
+            />
+              <Button
+              text="Submit"
+              onClick={() => {searchForFlashcard()}}
+              style={{
+                margin: "0px",
+                width: "114px",
+                borderRadius: "0px 8px 8px 0px",
+                height: "42px",
+                marginTop: view === "mobile" ? "8px" : "0px",
+              }}
+            />
+            </div>
 
+             <div style={{width:'100%', display:'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', margin:'16px' , height:'100px'}}>
+            <PromptBar width={"90%"}
+            height={'100%'}
+            borderRadius="8px 0 0 8px"
+            
+            />
+              <Button
+              text="Submit"
+              onClick={() => {searchForFlashcard()}}
+              style={{
+                margin: "0px",
+                width: "114px",
+                borderRadius: "0px 8px 8px 0px",
+                height: "122px",
+                marginTop: view === "mobile" ? "8px" : "0px",
+              }}
+            />
+            </div>
+            <div style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%'}}>
+               <GridContainer
+                  layout={view !== 'mobile' ? '5fr 5fr 1fr' : 'auto'}
+                  classType="ai-flashcards-grid"
+              >
+                 <GridItem
+                  style={{
+                    paddingTop: '0px',
+                    paddingBottom: view === 'mobile' ? '0px' : '',
+                    width: '100%',
+                    display: view === 'mobile' ? 'block' : 'flex',
+                    flexDirection: 'column',
+                  }}
+              >
+                <BoldParagraph text={"Term:"} />
+              </GridItem>
 
+                <GridItem
+                style={{
+                  paddingTop: '0px',
+                  paddingBottom: view === 'mobile' ? '0px' : '',
+                  width: '100%',
+                  display: view === 'mobile' ? 'block' : 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <BoldParagraph text={"Definition:"} />
+              </GridItem>
+              <GridItem
+                  style={{
+                    paddingTop: '0px',
+                    paddingBottom: view === 'mobile' ? '0px' : '',
+                    width: '10%',
+                    display: view === 'mobile' ? 'block' : 'flex',
+                    flexDirection: 'column',
+                  }}
+              >
+              </GridItem>
+              </GridContainer>
+            <Paragraph
+              text="More flashcards are being added every day, so if you can't find what you're looking for, please check back later!"
+              style={{textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)"}}
+            />
+            </div>
+          </WhiteOverlay>
+          </GridItem>
       </GridContainer>
       <BlobBackground />
     </div>
