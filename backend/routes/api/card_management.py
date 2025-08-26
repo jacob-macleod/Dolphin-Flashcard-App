@@ -109,6 +109,11 @@ IMPORT_ANKI_FLASHCARDS_FORMAT = {
     "stripHtml": ""
 }
 
+GENERATE_AI_FLASHCARD_FORMAT = {
+    "jwtToken": "",
+    "flashcardPrompt": "",
+    "quantity": ""
+}
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
@@ -1102,3 +1107,20 @@ def import_anki_flashcards(user_id):
             "error": "Unexpected error during Anki import", 
             "details": str(unexpected_error)
         }, 500)
+
+@card_management_routes.route("/api/generate-ai-flashcard", methods=["POST"])
+@validate_json(GENERATE_AI_FLASHCARD_FORMAT)
+def generate_ai_flashcard():
+    """
+    Import flashcards from a CSV file.
+    """
+    try:
+
+        return jsonify(
+            {
+                "front": "What is a wave?",
+                "back": "A displacement in matter"
+            }
+        , 200)
+    except Exception as e:
+        return jsonify(str(e)), 500
