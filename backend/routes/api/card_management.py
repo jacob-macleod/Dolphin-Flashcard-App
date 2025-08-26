@@ -18,6 +18,7 @@ import zipfile
 import sqlite3
 import json
 import html
+import google.generativeai as genai
 
 card_management_routes = Blueprint("card_management_routes", __name__)
 
@@ -1115,12 +1116,32 @@ def generate_ai_flashcard():
     Import flashcards from a CSV file.
     """
     try:
+        # TODO: ADD check if userID is correct
+        api_key = os.environ.get("GEMINI_API_KEY")
+        genai.configure(api_key=api_key)
+        topic = request.get_json()["flashcardPrompt"]
 
-        return jsonify(
-            {
-                "front": "What is a wave?",
-                "back": "A displacement in matter"
-            }
-        , 200)
+        model = genai.GenerativeModel("gemini-2.5-flash")
+
+        prompt = f"Create a single flashcard for UK A-level Physics about {topic}. Return it as JSON with fields 'front' and 'back'. Do not add ``` or 'json'"
+        prompt = prompt.replace("```json", "")
+        prompt = prompt.replace("\`\`\`", "")
+
+        response = model.generate_content(prompt)
+
+        # Gemini sometimes returns text, so parse it into JSON
+        try:
+            flashcard = json.loads(response.text)
+        except Exception:
+            # Fallback: wrap text into JSON manually
+            flashcard = {"front": "Error parsing AI response", "back": response.text}
+
+        # return jsonify(
+        #     {
+        #         "front": "What is a wave?",
+        #         "back": "A displacement in matter"
+        #     }
+        # , 200)
+        return flashcard
     except Exception as e:
         return jsonify(str(e)), 500
