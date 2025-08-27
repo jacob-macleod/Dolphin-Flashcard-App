@@ -48,6 +48,6 @@
   display: grid;
   z-index: 2;
   position: inherit;
-  width: 50%;
-  height: 60vh;
+  width: 100%;
+  height: fit-content;
 }

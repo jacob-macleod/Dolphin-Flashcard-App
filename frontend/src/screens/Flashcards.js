@@ -90,6 +90,8 @@ function Flashcards() {
 
   const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
 
+  useEffect(() => {console.log(todayCards)}, [todayCards]);
+
   function studyMultipleCards() {
     let urlPath = '';
 
