@@ -11,11 +11,16 @@ class GeminiModel:
     """
 
     def __init__(self, api_key_file="ai_api_key.txt"):
-        with open(api_key_file, "r", encoding="utf-8") as api_file:
-            api_key = api_file.read().strip()
+        try:
+            with open(api_key_file, "r", encoding="utf-8") as api_file:
+                api_key = api_file.read().strip()
 
-        genai.configure(api_key=api_key)
-        self._model = genai.GenerativeModel("gemini-2.5-flash")
+            genai.configure(api_key=api_key)
+            self._model = genai.GenerativeModel("gemini-2.5-flash")
+        except FileNotFoundError:
+            # When the API key file is not found
+            print (f"API key file {api_key_file} does not exist, using hardcoded flashcard values")
+            self._model = "local"
 
     def send_prompt(self, prompt: str) -> str:
         """
@@ -27,6 +32,9 @@ class GeminiModel:
         Returns:
             str: The returned text
         """
+        if self._model == "local":
+            return "You have not set up API credentials properly, so this flashcard couldn't be generated with AI"
+
         response = self._model.generate_content(prompt)
         return response.text if hasattr(response, "text") else str(response)
 
