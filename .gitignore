@@ -17,6 +17,7 @@ jwt_key.json
 .backend_pid
 .database_status
 .database_delete_log
+ai_api_key.txt
 
 # Frontend files
 # dependencies
