@@ -38,7 +38,9 @@ function PromptBar({
             }}
             type='text'
             placeholder={placeholder}
-        />
+        >
+        
+        </textarea>
     );
 }
 
