@@ -349,8 +349,8 @@ function Flashcards() {
                           onClick={() => {
                             setCreateFolderDialogueVisible(todayCards);
                           }}
-                          view={view}
                         />
+                         
                         <Button
                           text="+ New Set"
                           style={{
