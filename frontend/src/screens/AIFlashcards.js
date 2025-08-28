@@ -47,58 +47,16 @@ import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
 import PromptBar from '../componments/PromptBar/PromptBar';
 import BoldParagraph from '../componments/Text/BoldParagraph/BoldParagraph';
-import AICardOverview from '../componments/AICardOverview/AICardOverview';
-import AICardItem from '../componments/AICardItem/AICardItem';
+import AICardRow from '../componments/AICardRow/AICardRow';
+import NewFlashcardPopup from '../containers/Modal/NewFlashcardPopup/NewFlashcardPopup';
 
 
 function AIFlashcards() {
   // Set general variables
 
-  const aiFlashcardData = [
-    {
-        "back": "Back 5",
-        "front": "Front 5",
-        "cardID": "037d15ea-a124-5dcc-af03-7e44d5bee608",
-        "review_status": "0.1",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 3",
-        "front": "Front 3",
-        "cardID": "2ad0dbd9-a205-5882-b396-3195dbb501cf",
-        "review_status": "1.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 1",
-        "front": "Front 1",
-        "cardID": "40b18db0-3886-5217-a3d2-35d51760a966",
-        "review_status": "2.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 2",
-        "front": "Front 2",
-        "cardID": "4fd811ef-90d8-5115-99ed-fe43fd5d7087",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 4",
-        "front": "Front 4",
-        "cardID": "761380a0-ce04-53a6-8ef4-dfe31ae91d60",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 6",
-        "front": "Front 6",
-        "cardID": "a55072db-05f8-5e77-b7fa-837e21e98470",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    
-]
+ 
+
+  const [aiFlashcardData, setAIFlashcardData] = useState(apiManager.getAIFlashcardData());
   
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -111,12 +69,23 @@ function AIFlashcards() {
   const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] =
     useState(false);
   const [reload, setReload] = useState(false);
+  const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] =
+    useState(false);
+    const [initialTerm, setInitialTerm] = useState('');
+  const [initialDefinition, setInitialDefinition] = useState('');
+
+  useEffect(() => {
+    console.log("AI Flashcard Data:", aiFlashcardData);
+  }, [aiFlashcardData]);
+
+
+  
 
   
   return (
     <div style={{ top: '0px' }}>
       <Helmet>
-        <title>{"aiflashcards"}</title>
+        <title>{"AIflashcards"}</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
@@ -128,6 +97,18 @@ function AIFlashcards() {
         setVisible={showDeleteFlashcardConfirmation}
         view={view}
         setReload={setReload}
+      />
+      <NewFlashcardPopup
+        visible={editFlashcardPopupVisible}
+        setVisible={setEditFlashcardPopupVisible}
+        view={view}
+        flashcardData={aiFlashcardData}
+        flashcardItems={aiFlashcardData}
+        setFlashcardItems={setAIFlashcardData}
+        editExistingFlashcard={true}
+        initialTerm={initialTerm}
+        initialDefinition={initialDefinition}
+        isInAIPage={true}
       />
 
       
@@ -182,44 +163,37 @@ function AIFlashcards() {
               }}
             />
             </div>
-            <div style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%'}}>
-               <GridContainer
-                  style={{width:'50%'}}
-                  layout={view !== 'mobile' ? '5fr 5fr' : 'auto'}
-                  classType="ai-flashcards-grid"
-              >
-                 <GridItem
-                  style={{
-                    paddingTop: '0px',
-                    paddingBottom: view === 'mobile' ? '0px' : '',
-                    width: '100%',
-                    display: view === 'mobile' ? 'block' : 'flex',
-                    flexDirection: 'column',
-                  }}
-              >
-                <BoldParagraph text={"Term:"} />
-              </GridItem>
+            <div style={{display:'flex', flexDirection:'column', width:'50%', margin:'auto'}}>
+                   <div className='two-column-text'>
+                    <BoldParagraph text="Term:" />
+                    <BoldParagraph text="Definition:" />
+                  </div>
 
-                <GridItem
-                style={{
-                  paddingTop: '0px',
-                  paddingBottom: view === 'mobile' ? '0px' : '',
-                  width: '100%',
-                  display: view === 'mobile' ? 'block' : 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <BoldParagraph text={"Definition:"} />
-              </GridItem>
-              </GridContainer>
-              
-              <GridContainer
-                layout={view !== 'mobile' ? 'auto' : 'auto'}
-                classType="ai-flashcards-grid"
-                style={{width:'50%'}}
-                  >
-                <AICardOverview cardData={aiFlashcardData}/>
-              </GridContainer>
+                  {
+                  aiFlashcardData === null
+                    ? <div className={"loading-icon-wrapper"} style={{width: '100%'}}>
+                      <DelayedElement child={<></>} childValue={null} />
+                    </div>
+                    : aiFlashcardData.cards?.length !== 0
+                      ? aiFlashcardData.map((item) => (
+                        <AICardRow
+                          key={item.id}
+                          cardID={item.cardID}
+                          front={item.front}
+                          back={item.back}
+                          //flashcardID={aiFlashcardData.flashcard_id}
+                          view={view}
+                          showEditPopup={setEditFlashcardPopupVisible}
+                          showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                          setInitialTerm={setInitialTerm}
+                          setInitialDefinition={setInitialDefinition}
+                          setReload={setReload}
+                          isInEditPage={true}
+                          isInAIPage={true}
+                          setAIFlashcardData={setAIFlashcardData}
+                        />
+                      ))
+                      : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />}
             
 
             <Button
