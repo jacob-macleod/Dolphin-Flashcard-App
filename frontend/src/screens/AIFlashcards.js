@@ -73,6 +73,7 @@ function AIFlashcards() {
     useState(false);
     const [initialTerm, setInitialTerm] = useState('');
   const [initialDefinition, setInitialDefinition] = useState('');
+  const [ShowAddToSetPopup, setShowAddToSetPopup] = useState(false);
 
   useEffect(() => {
     console.log("AI Flashcard Data:", aiFlashcardData);
@@ -184,7 +185,7 @@ function AIFlashcards() {
                           //flashcardID={aiFlashcardData.flashcard_id}
                           view={view}
                           showEditPopup={setEditFlashcardPopupVisible}
-                          showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                          
                           setInitialTerm={setInitialTerm}
                           setInitialDefinition={setInitialDefinition}
                           setReload={setReload}
@@ -204,7 +205,7 @@ function AIFlashcards() {
               marginRight:'60px',
               }}
               onClick={() => {
-              // ShowAddToSetPopup();
+              ShowAddToSetPopup(true);
                 }}
               view={view}
               />

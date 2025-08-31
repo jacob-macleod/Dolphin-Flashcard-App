@@ -56,7 +56,6 @@ function CardOperationsPopup({
                     showEditPopup(true);
                 }}/>
                 <MenuItem text="Delete" src={window.location.href} imgUrl={deleteIcon} margin="0px" float={float} onClick={() => {
-                    showDeleteFlashcardConfirmation(true);
                     if (!isInAIPage){
                         deleteCard();
                     }

@@ -39,7 +39,6 @@ function AICardRow({ front, back, view, showEditPopup, setInitialTerm, setInitia
                 flashcardID={flashcardID}
                 isInAIPage={isInAIPage}
                 setAIFlashcardData={setAIFlashcardData}
-                showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
 
             />
             <div>
