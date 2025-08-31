@@ -22,6 +22,11 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.1.1 - 2025-08-31
+
+### Fixed
+
+- Changed pipeline to fix error in tets-docker stage
 
 ## 7.1.0 - 2025-08-27
 
