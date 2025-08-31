@@ -63,7 +63,7 @@ jobs:
       - name: Test Docker Image
         run: |
           docker login -u jacobmacleod -p $DOCKER_PASSWORD
-          docker run -d -p 8080:5000 jacobmacleod/flashcard-app:latest
+          docker run -d -p 8080:8080 jacobmacleod/flashcard-app:latest
           sleep 10
           curl GET http://localhost:8080          
         env:
