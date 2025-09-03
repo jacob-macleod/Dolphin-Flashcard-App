@@ -22,6 +22,17 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.2.1 - 2025-09-04
+
+### Added
+
+- added "generate flashcards" button on Flashcards page
+- created frontend for the AI Flashcards page
+- Added a new component `AICardRow.js` to effectively display flashcards on the AI flashcards page
+- added a new function `deleteAICard` into `FlashcardOperationsMenu.js` specifically to delete AI flashcards
+### Fixed
+- made it so flashcards on the edit flashcards page can no longer be turned over
+
 ## 7.1.1 - 2025-08-31
 
 ### Fixed
