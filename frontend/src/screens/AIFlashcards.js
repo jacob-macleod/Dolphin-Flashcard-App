@@ -54,10 +54,10 @@ import NewFlashcardPopup from '../containers/Modal/NewFlashcardPopup/NewFlashcar
 function AIFlashcards() {
   // Set general variables
 
- 
 
-  const [aiFlashcardData, setAIFlashcardData] = useState(apiManager.getAIFlashcardData());
   
+  const [aiFlashcardData, setAIFlashcardData] = useState(null);
+
   // Set variables for the size
   const mobileBreakpoint = 650;
   const tabletBreakpoint = 1090;
@@ -65,24 +65,50 @@ function AIFlashcards() {
 
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] =
     useState(view === 'mobile' ? '8px' : '16px');
-  
+
   const [deleteFlashcardConfirmationVisible, showDeleteFlashcardConfirmation] =
     useState(false);
   const [reload, setReload] = useState(false);
+  const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
   const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] =
     useState(false);
-    const [initialTerm, setInitialTerm] = useState('');
+  const [initialTerm, setInitialTerm] = useState('');
   const [initialDefinition, setInitialDefinition] = useState('');
   const [ShowAddToSetPopup, setShowAddToSetPopup] = useState(false);
+  const [prompt, setPrompt] = useState('');
+  const [timesFlashcardsGenerated, setTimesFlashcardsGenerated] = useState(0);
+  const [createCardDialogueVisible, setCreateCardDialogueVisible]= useState(false);
+  // useEffect(() => {
+  //   console.log("AI Flashcard Data:", aiFlashcardData);
+  // }, [aiFlashcardData]);
+
+  function getTodayDate() {
+  let today = new Date();
+  let day = String(today.getDate()).padStart(2, '0');
+  let month = String(today.getMonth() + 1).padStart(2, '0');
+  let year = today.getFullYear();
+  return `${day}/${month}/${year}`;
+}
 
   useEffect(() => {
-    console.log("AI Flashcard Data:", aiFlashcardData);
+    console.log(timesFlashcardsGenerated)
+    if (timesFlashcardsGenerated > 0) {
+      console.log(prompt)
+      apiManager.getAIFlashcardData(getCookie("jwtToken"), prompt, '', setAIFlashcardData,getTodayDate);
+    }
+    else {
+
+    }
+  }, [timesFlashcardsGenerated]);
+
+  useEffect(() => {
+    console.log("Updated flashcards:", aiFlashcardData);
   }, [aiFlashcardData]);
 
 
-  
 
-  
+
+
   return (
     <div style={{ top: '0px' }}>
       <Helmet>
@@ -91,7 +117,15 @@ function AIFlashcards() {
           name="viewport"
           content="width=device-width, initial-scale=1.0"
         ></meta>
-      </Helmet> 
+      </Helmet>
+
+       <CreateFlashcardSetDialogue
+        visible={createCardDialogueVisible}
+        setVisible={setCreateCardDialogueVisible}
+        view={view}
+        setReload={setReload}
+        flashcards={aiFlashcardData}
+      />
 
       <DeleteFlashcardConfirmation
         visible={deleteFlashcardConfirmationVisible}
@@ -112,14 +146,14 @@ function AIFlashcards() {
         isInAIPage={true}
       />
 
-      
+
 
       <GridContainer
         layout={view !== 'mobile' ? '240px auto' : 'auto'}
         classType="two-column-grid"
       >
         {view !== 'mobile' ? <SidePanel selectedItem="flashcards" /> : <></>}
-          <GridItem
+        <GridItem
           style={{
             paddingLeft:
               view === 'mobile' ? '0px' : flashcardBoxHorizontalPadding,
@@ -130,52 +164,62 @@ function AIFlashcards() {
             width: view === 'mobile' ? '100vw' : '',
             display: view === 'mobile' ? 'block' : 'flex',
             flexDirection: 'column',
-            margin:'16px',
+            margin: '16px',
           }}
         >
-          
-         <WhiteOverlay
+
+          <WhiteOverlay
             style={{
               height: '100%',
               paddingBottom: view === 'mobile' ? '80px' : '',
               width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
-              marginBottom:'0px',
+              marginBottom: '0px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
-            
+
           >
 
-             <div style={{width:'100%', display:'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', margin:'16px' ,marginTop:'100px',marginBottom:'30px', height:'100px'}}>
-            <PromptBar width={"90%"}
-            height={'100%'}
-            borderRadius="8px 0 0 8px"
-            
-            />
-              <Button
-              text="Submit"
-              style={{
-                margin: "0px",
-                width: "114px",
-                borderRadius: "0px 8px 8px 0px",
-                height: "122px",
-                marginTop: view === "mobile" ? "8px" : "0px",
-              }}
-            />
-            </div>
-            <div style={{display:'flex', flexDirection:'column', width:'50%', margin:'auto'}}>
-                   <div className='two-column-text'>
-                    <BoldParagraph text="Term:" />
-                    <BoldParagraph text="Definition:" />
-                  </div>
+            <div style={{ width: '90%', display: 'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', marginLeft: 'auto', marginRight: 'auto', marginTop: '100px', marginBottom: '30px', height: '100px' }}>
+              <PromptBar width={"100%"}
+                style={{ margin: "auto" }}
 
-                  {
-                  aiFlashcardData === null
-                    ? <div className={"loading-icon-wrapper"} style={{width: '100%'}}>
+                setSearchTerm={setPrompt}
+
+                height={'100%'}
+                borderRadius="8px 0 0 8px"
+              />
+              <Button
+                text="Submit"
+                style={{
+                  margin: "0px",
+                  width: "114px",
+                  borderRadius: "0px 8px 8px 0px",
+                  height: "122px",
+                  marginTop: "0px"
+                }}
+                onClick={() => {
+                  setAIFlashcardData(null)
+                  setTimesFlashcardsGenerated(prev => prev + 1)
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '70%', margin: 'auto' }}>
+              <div className='two-column-text'>
+                <BoldParagraph text="Term:" />
+                <BoldParagraph text="Definition:" />
+              </div>
+
+              {
+                aiFlashcardData === null && timesFlashcardsGenerated <= 0
+                  ? <Heading5 text="You dont have any flashcards yet. Submit a prompt to generate flashcards!" style={{ margin: "auto" }} />
+                  : aiFlashcardData === null && timesFlashcardsGenerated > 0
+                    ? <div className={"loading-icon-wrapper"} style={{ width: '100%' }}>
                       <DelayedElement child={<></>} childValue={null} />
                     </div>
-                    : aiFlashcardData.cards?.length !== 0
+                    :
+                    aiFlashcardData.cards?.length !== 0
                       ? aiFlashcardData.map((item) => (
                         <AICardRow
                           key={item.id}
@@ -185,7 +229,7 @@ function AIFlashcards() {
                           //flashcardID={aiFlashcardData.flashcard_id}
                           view={view}
                           showEditPopup={setEditFlashcardPopupVisible}
-                          
+
                           setInitialTerm={setInitialTerm}
                           setInitialDefinition={setInitialDefinition}
                           setReload={setReload}
@@ -194,30 +238,32 @@ function AIFlashcards() {
                           setAIFlashcardData={setAIFlashcardData}
                         />
                       ))
-                      : <Heading5 text="You don't have any flashcards yet!" style={{ margin: "8px" }} />}
-            
+                      : <div className={"loading-icon-wrapper"} style={{ width: '100%' }}>
+                        <DelayedElement child={<></>} childValue={null} />
+                      </div>}
 
-            <Button
-              text="+ Add to set"
-              style={{
-              display: view !== 'mobile' ? 'inline-block' : '',
-              marginLeft: 'auto',
-              marginRight:'60px',
-              }}
-              onClick={() => {
-              ShowAddToSetPopup(true);
+
+              <Button
+                text="Create Set"
+                style={{
+                  display: view !== 'mobile' ? 'inline-block' : '',
+                  marginLeft: 'auto',
+                  marginRight: '60px',
                 }}
-              view={view}
+                onClick={() => {
+                    setCreateCardDialogueVisible(todayCards);
+                }}
+                view={view}
               />
-               
-            
-            <Paragraph
-              text="AI-generated flashcards may contain errors. Please verify important information."
-              style={{textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)"}}
-            />
+
+
+              <Paragraph
+                text="AI-generated flashcards may contain errors. Please ensure you have checked flashcards."
+                style={{ textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)" }}
+              />
             </div>
           </WhiteOverlay>
-          </GridItem>
+        </GridItem>
       </GridContainer>
       <BlobBackground />
     </div>

@@ -258,7 +258,6 @@ class ApiManager {
         cards: cards,
       };
     }
-
     this.fetchData(data, url, (status) => {
       data.flashcardID = status[0].flashcardID;
       loadEditFlashcardPage(data);
@@ -538,41 +537,28 @@ class ApiManager {
       throw error;
     }
   }
-  getAIFlashcardData(){
-  return ([
-    {
-        "back": "Back 1",
-        "front": "Front 1",
-        "cardID": "a55072db-05f8-5e77-b7fa-837e21e98470",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 2",
-        "front": "Front 2",
-        "cardID": "a55072db-05f8-5e77-b7fa-837e21e93470",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 3",
-        "front": "Front 3",
-        "cardID": "a55072db-05f8-5e77-b7fa-837e21e98170",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 4",
-        "front": "Front 4",
-        "cardID": "a55072db-05f8-5e77-b7fa-837e21e98400",
-        "review_status": "0.0",
-        "last_review": "30/08/2024"
-    },
-    {
-        "back": "Back 5",
-        "front": "Front 5",
-        "cardID": "a55072db-05f8-5e77-b7fa-837e21e94470"}]);
 
+  getAIFlashcardData(jwtToken,flashcardPrompt,quantity,setAIFlashcardData,getTodayDate){
+  const url = 'generate-ai-flashcard';
+
+ 
+  const data = {
+      jwtToken:jwtToken,
+      flashcardPrompt: flashcardPrompt,
+      quantity: quantity
+    };
+  console.log(data)
+  //loops through each flashcard and adds a reviewStatus and lastReview value
+this.fetchData(data, url, (flashcards) => {
+    const updated = (flashcards).map(card => ({
+      ...card,
+      reviewStatus: "0.0",
+      lastReview: getTodayDate()
+    }));
+
+    setAIFlashcardData(updated);
+
+  });
 }
 }
 
