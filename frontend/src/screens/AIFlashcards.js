@@ -112,7 +112,7 @@ function AIFlashcards() {
   return (
     <div style={{ top: '0px' }}>
       <Helmet>
-        <title>{"AIflashcards"}</title>
+        <title>AI Flashcards</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
@@ -147,7 +147,6 @@ function AIFlashcards() {
       />
 
 
-
       <GridContainer
         layout={view !== 'mobile' ? '240px auto' : 'auto'}
         classType="two-column-grid"
@@ -164,23 +163,23 @@ function AIFlashcards() {
             width: view === 'mobile' ? '100vw' : '',
             display: view === 'mobile' ? 'block' : 'flex',
             flexDirection: 'column',
-            margin: '16px',
+            margin: view === "mobile" ? "0px" : '16px',
           }}
         >
-
+          <MobilePageWrapper view={view} itemClicked="dashboard">
           <WhiteOverlay
             style={{
               height: '100%',
-              paddingBottom: view === 'mobile' ? '80px' : '',
-              width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
+              paddingBottom: '',
+              width: '100%',
               marginBottom: '0px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
+            visible={view === "desktop" ? true : false}
 
           >
-
             <div style={{ width: '90%', display: 'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', marginLeft: 'auto', marginRight: 'auto', marginTop: '100px', marginBottom: '30px', height: '100px' }}>
               <PromptBar width={"100%"}
                 style={{ margin: "auto" }}
@@ -211,6 +210,9 @@ function AIFlashcards() {
                 <BoldParagraph text="Definition:" />
               </div>
 
+              <div
+              style={{maxHeight: "60vh", overflowY: "auto"}}
+              >
               {
                 aiFlashcardData === null && timesFlashcardsGenerated <= 0
                   ? <Heading5 text="You dont have any flashcards yet. Submit a prompt to generate flashcards!" style={{ margin: "auto" }} />
@@ -241,7 +243,7 @@ function AIFlashcards() {
                       : <div className={"loading-icon-wrapper"} style={{ width: '100%' }}>
                         <DelayedElement child={<></>} childValue={null} />
                       </div>}
-
+                </div>
 
               <Button
                 text="Create Set"
@@ -259,10 +261,14 @@ function AIFlashcards() {
 
               <Paragraph
                 text="AI-generated flashcards may contain errors. Please ensure you have checked flashcards."
-                style={{ textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)" }}
+                style={{
+                  textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)",
+                  paddingBottom: view === "mobile" ? "70px" : "0px"
+                }}
               />
             </div>
           </WhiteOverlay>
+          </MobilePageWrapper>
         </GridItem>
       </GridContainer>
       <BlobBackground />
