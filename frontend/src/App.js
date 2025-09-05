@@ -14,6 +14,7 @@ import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
 import Settings from './screens/Settings';
+import AIFlashcards from './screens/AIFlashcards';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -114,6 +115,16 @@ function App() {
                 jwtToken={jwtToken}
                 setJwtToken={setJwtToken}
                 child={<Settings />}
+              />
+            }
+          />
+          <Route
+            path="/aiflashcards"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<AIFlashcards />}
               />
             }
           />

@@ -90,6 +90,8 @@ function Flashcards() {
 
   const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
 
+  useEffect(() => {console.log(todayCards)}, [todayCards]);
+
   function studyMultipleCards() {
     let urlPath = '';
 
@@ -347,8 +349,8 @@ function Flashcards() {
                           onClick={() => {
                             setCreateFolderDialogueVisible(todayCards);
                           }}
-                          view={view}
                         />
+                         
                         <Button
                           text="+ New Set"
                           style={{
@@ -413,6 +415,19 @@ function Flashcards() {
                       }}
                       view={view}
                       icon={importIcon}
+                    />
+                    <GhostButton
+                      text=" Generate AI Flashcards"
+                      style={{
+                        display: view !== 'mobile' ? 'inline-block' : '',
+                        marginRight: view !== 'mobile' ? '16px' : '',
+                        marginLeft: view === 'mobile' ? '0px' : '',
+                      }}
+                      onClick={() => {
+                        window.location.href = '/aiflashcards';
+                      }}
+                      view={view}
+                      //icon={quizletIcon}
                     />
                     <GhostButton
                       text=" Import from Quizlet"
