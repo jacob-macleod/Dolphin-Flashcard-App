@@ -22,6 +22,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.2.1 - 2025-09-05
+
+### Changed
+
+- Enabled import from anki
+- Added UI improvements for AI flashcards screen
+
 ## 7.2.0 - 2025-09-04
 
 ### Added
