@@ -258,7 +258,6 @@ class ApiManager {
         cards: cards,
       };
     }
-
     this.fetchData(data, url, (status) => {
       data.flashcardID = status[0].flashcardID;
       loadEditFlashcardPage(data);
@@ -538,7 +537,33 @@ class ApiManager {
       throw error;
     }
   }
+
+  getAIFlashcardData(jwtToken,flashcardPrompt,quantity,setAIFlashcardData,getTodayDate){
+  const url = 'generate-ai-flashcard';
+
+ 
+  const data = {
+      jwtToken:jwtToken,
+      flashcardPrompt: flashcardPrompt,
+      quantity: quantity
+    };
+  console.log(data)
+  //loops through each flashcard and adds a reviewStatus and lastReview value
+this.fetchData(data, url, (flashcards) => {
+    const updated = (flashcards).map(card => ({
+      ...card,
+      reviewStatus: "0.0",
+      lastReview: getTodayDate()
+    }));
+
+    setAIFlashcardData(updated);
+
+  });
 }
+}
+
+
+
 
 const apiManager = new ApiManager();
 export default apiManager;

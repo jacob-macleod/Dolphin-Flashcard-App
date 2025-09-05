@@ -43,3 +43,11 @@
   display: grid;
   height: 32px;
 }
+
+.ai-flashcards-grid {
+  display: grid;
+  z-index: 2;
+  position: inherit;
+  width: 100%;
+  height: fit-content;
+}
