@@ -13,8 +13,10 @@ import { getCookie } from "../../../api/Authentication";
 
 const ImportQuizletPopup = ({ visible, setVisible, view, reload, setReload }) => {
     const [selectedPath, setSelectedPath] = React.useState(null);
-    const [file, setFile] = useState("")
+    const [flashcards, setFlashcards] = useState("")
     const [flashcardName, setFlashcardName] = useState("")
+    const [termDefSeparator, setTermDefSeparator] = useState(",")
+    const [termSeparator, setTermSeparator] = useState("\n")
     const [loadingIconVisible, setLoadingIconVisible] = useState("visible");
     const [errorMessage, setErrorMessage] = useState(null);
     const [errorMessageVisibility, setErrorMessageVisibility] = useState("none");
@@ -24,18 +26,66 @@ const ImportQuizletPopup = ({ visible, setVisible, view, reload, setReload }) =>
         marginBottom: "8px",
         marginTop: "8px",
     };
+
+    function clearFormData() {
+      setSelectedPath(null)
+      setFlashcards('')
+      setFlashcardName('')
+      setErrorMessage(null)
+      setLoadingIconVisible('visible')
+      setErrorMessageVisibility('none')
+    }
    
+    useEffect(() => {
+        /* Generate an error message when the user clicks "Submit" */
+        if (selectedPath === null) {
+          setErrorMessage('Please select a folder!');
+        } else if (flashcardName === '') {
+          setErrorMessage('Please enter a name!');
+        } else if (flashcards === '') {
+          setErrorMessage('Please enter quizlet export!!');
+        } else {
+          setErrorMessage(null);
+        }
+      }, [selectedPath, flashcardName, flashcards]);
 
     async function importSet() {
         try {
-            await apiManager.importQuizletSet(
-              getCookie("jwtToken"),
-              selectedPath,
-              file,
-              flashcardName
-            )       
+            const validations = [
+              { valid: flashcardName.trim(), message: 'Please enter a name!' },
+              { valid: flashcards, message: 'Please enter quizlet export!' },
+              { valid: selectedPath !== null, message: 'Please select a folder!'}
+            ]
+
+            const error = validations.find(el => !el.valid)
+            if (error) {
+              setErrorMessage(error.message)
+              setErrorMessageVisibility("block")
+              return;
+            }
+
+            setErrorMessage(null)
+            setErrorMessageVisibility('none')
+            setLoadingIconVisible(null)
+
+            if (errorMessage === null) {
+              if (selectedPath !== null) {
+                await apiManager.importQuizletSet(
+                  getCookie("jwtToken"),
+                  selectedPath,
+                  flashcards,
+                  termDefSeparator,
+                  termSeparator,
+                  flashcardName,
+                )
+              }
+            }
+
+            setVisible(false),
+            setReload(true),
+            clearFormData()
         } catch (error) {
-            consoele.error("Import Error: ", error)
+            console.error("Import Error: ", error)
             setErrorMessageVisibility("block")
         }
     }
@@ -65,32 +115,6 @@ const ImportQuizletPopup = ({ visible, setVisible, view, reload, setReload }) =>
             className={
               view !== "mobile" ? "input-container" : "input-container-mobile"
             }
-          >
-            <Paragraph
-              text="Filename: "
-              style={{
-                marginRight: view === "mobile" ? "0px" : "14.5%",
-                textAlign: view === "mobile" ? "left" : "center",
-              }}
-            />
-            {/* <textarea cols="40" rows="5" style={{ resize: "none", width: "calc(100% - 32px)" }} className="input" placeholder='Folder description'  /> */}
-            <input
-              type="file"
-              placeholder="Folder name..."
-              onChange={(e) => setFile(e.target.files[0])}
-              accept=".csv"
-              style={{
-                width: "calc(100% - 32px)",
-                display: "flex",
-                alignSelf: "center",
-              }}
-            />
-          </div>
-
-          <div
-            className={
-              view !== "mobile" ? "input-container" : "input-container-mobile"
-            }
             style={{
               display: view == "mobile" ? "block" : "flex",
               marginBottom: "4%",
@@ -112,30 +136,20 @@ const ImportQuizletPopup = ({ visible, setVisible, view, reload, setReload }) =>
             />
           </div>
 
-          {/* <div
+          <div
             className={
               view !== "mobile" ? "input-container" : "input-container-mobile"
             }
-            style={{
-              display: view == "mobile" ? "block" : "flex",
-              marginBottom: "4%",
-            }}
           >
-            <Paragraph
-              text="Description: "
+            <label
               style={{
-                marginRight: view === "mobile" ? "0px" : "10%",
-                textAlign: view === "mobile" ? "left" : "center",
+                marginRight: '2.5rem'
               }}
-            />
-            <input
-              type="text"
-              className="input"
-              placeholder="Set Description"
-              onChange={(e) => setFlashcardDescription(e.target.value)}
-              style={{ width: "calc(100% - 32px)" }}
-            />
-          </div> */}
+            >Flashcards: </label>
+            <textarea cols="40" rows="5" style={{ resize: "none", width: "calc(100% - 32px)" }} className="input" placeholder='Quizlet Export...' onChange={(e) => setFlashcards(e.target.value)}  />
+          </div>
+
+          
 
           <Heading3 text="Choose a location:" />
 
@@ -160,13 +174,14 @@ const ImportQuizletPopup = ({ visible, setVisible, view, reload, setReload }) =>
             <GhostButton
               text="Cancel"
               onClick={() => {
+                clearFormData();
                 setErrorMessageVisibility("none");
                 setVisible(false);
               }}
               style={buttonStyle}
               view={view}
             />
-            <Button text="Create" style={buttonStyle} view={view}/>
+            <Button text="Create" style={buttonStyle} view={view} onClick={importSet}/>
           </div>
 
           <div className={"loading-icon-wrapper"}>
