@@ -1,1 +1,0 @@
-/home/jacob/Development/Python/Dolphin-Flashcards-Premium-Features/frontend/src/screens/newScreen.js

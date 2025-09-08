@@ -8,11 +8,18 @@ from routes.api.statistics import statistics_routes
 from routes.api.card_management import card_management_routes
 from routes.api.goals import goal_routes
 from routes.api.quests import quest_routes
+import importlib
+app = Flask(__name__, template_folder="../templates", static_folder="../frontend/build")
+CORS(app)
+
+try:
+    from dolphin_flashcards_premium_features.backend.routes.api.demo_routes import demo_routes
+    app.register_blueprint(demo_routes)
+except:
+    None
 
 print("Starting")
 
-app = Flask(__name__, template_folder="../templates", static_folder="../frontend/build")
-CORS(app)
 app.register_blueprint(authentication_routes)
 app.register_blueprint(statistics_routes)
 app.register_blueprint(card_management_routes)

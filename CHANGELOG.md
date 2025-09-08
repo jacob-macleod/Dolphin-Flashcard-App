@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.2.2 - 2025-09-08
+
+### Changed
+
+- Made small changes to allow optional import of premium repo
+
 ## 7.2.1 - 2025-09-05
 
 ### Changed
