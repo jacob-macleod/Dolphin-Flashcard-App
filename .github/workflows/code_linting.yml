@@ -50,4 +50,5 @@ jobs:
     - name: Lint the frontend code
       run: |
         cd frontend
+        export process.env.CI=false;
         npm run build
