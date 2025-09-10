@@ -31,6 +31,12 @@ frontend/src/api/secretKeys.js
 # testing
 frontend//coverage
 
+# Premium repo
+frontend/src/Dolphin-Flashcards-Premium-Features/*
+frontend/src/Dolphin-Flashcards-Premium-Features/
+backend/dolphin_flashcards_premium_features/*
+backend/dolphin_flashcards_premium_features
+
 # production
 frontend//build
 
