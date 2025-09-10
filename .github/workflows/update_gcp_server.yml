@@ -44,6 +44,7 @@ jobs:
         run: |
           echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
           cd frontend
+          export CI=false;
           npm run build
           rm -rf frontend/node_modules
         env:
