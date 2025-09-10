@@ -45,7 +45,7 @@ jobs:
       - name: Build the React App for Deployment
         run: |
           cd frontend
-          export process.env.CI=false;
+          export CI=false;
           npm run build
           rm -rf frontend/node_modules
       - name: Build the Docker image
