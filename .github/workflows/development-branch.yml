@@ -3,8 +3,7 @@ name: CI/CD Workflow
 on:
   push:
     branches:
-      # - development
-      - add_premium_repo
+      - development
 
 jobs:
   build:
@@ -43,10 +42,6 @@ jobs:
           cd frontend
           npm install -g create-react-app
           npm install
-      - name: Activate the Premium Module
-        run: |
-          git clone https://github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
-          bash install_premium_repo.sh
       - name: Build the React App for Deployment
         run: |
           cd frontend

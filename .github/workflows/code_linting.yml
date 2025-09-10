@@ -47,6 +47,11 @@ jobs:
         npm install react-scripts
         npm install
 
+    - name: Activate Premium Repo
+      run: |
+        git clone https://github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+        bash install_premium_repo.sh
+
     - name: Lint the frontend code
       run: |
         cd frontend
