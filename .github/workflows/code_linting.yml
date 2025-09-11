@@ -49,11 +49,8 @@ jobs:
 
     - name: Activate Premium Repo...
       run: |
-        pwd 
         cd frontend/src
         git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
-        echo "Printing out files"
-        ls Dolphin-Flashcards-Premium-Features
         cd ../..
         bash install_premium_repo.sh
       env:
@@ -62,5 +59,4 @@ jobs:
     - name: Lint the frontend code
       run: |
         cd frontend
-        export CI=false;
         npm run build
