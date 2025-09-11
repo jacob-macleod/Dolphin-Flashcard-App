@@ -49,7 +49,7 @@ jobs:
 
     - name: Activate Premium Repo...
       run: |
-        git clone https://dfdffd:ACCESS_TOKEN_GITHUB@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+        git clone https://$ACCESS_TOKEN_GITHUB@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
         bash install_premium_repo.sh
       env:
           ACCESS_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN_GITHUB }}
