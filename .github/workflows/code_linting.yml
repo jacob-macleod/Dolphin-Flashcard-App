@@ -50,9 +50,9 @@ jobs:
     - name: Activate Premium Repo...
       run: |
         pwd 
-        cd src
-        git clone https://$PREMIUM_REPO_ACCESS_TOKEN@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
-        echo "Printing out files"#
+        cd frontend/src
+        git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+        echo "Printing out files"
         ls Dolphin-Flashcards-Premium-Features
         cd ../..
         bash install_premium_repo.sh
