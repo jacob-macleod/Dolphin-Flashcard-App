@@ -1,0 +1,43 @@
+---
+title: 'Premium Modules'
+---
+
+Welcome! Here, you'll learn how to set up and start using the premium repository. Soon, there will be a video linked here to help you
+quickly get up to speed.
+
+## What is the premium repo?
+
+### Overview
+
+Dolphin Flashcards is open source, which means its code is publically accessible and usuable by anyone on Github.
+However, there are also some *optional modules*, which hold the code for premium features. While Dolphin Flashcards
+can be fully used just by using the open source code, the premium features can also be imported to access extra features
+
+There is one repository which stores all the premium features. This repository is closed source, so everyone needs to be
+added by [jacob-macleod](https://github.com/jacob-macleod). This repository also uses a different license.
+
+### How does it work?
+
+The premium repository is an optional module:
+
+* It is cloned as a submodule in `frontend/src`
+* A symbolic link is created from `frontend/src/<the submodule repository>` to `backend`
+    * This means the files are copy and pasted from one location to the other.
+    Any change in one location also changes the files in the other location
+    * The folder in `backend` is named `dolphin_flashcards_premium_features`
+
+## Installation Guide
+
+Before following these steps, you need to be granted access to the repository by [jacob-macleod](https://github.com/jacob-macleod).
+
+### Linux and MacOS
+
+Clone Dolphin Flashcards and run `bash install_premium_repo.sh`. This will:
+* Clone the repository to `frontend/src`
+* Symbolically link the repository to `backend/`, under the folder name `dolphin_flashcards_premium_features`
+
+### Windows
+
+Follow the above steps yourself. If your changes are correct, you should be able to see a folder called `Dolphin-Flashcards-Premium-Features`
+in `frontend/src` and `dolphin_flashcards_premium_features` in `backend/`. If you have any questions, contact
+[jacob-macleod](https://github.com/jacob-macleod).
