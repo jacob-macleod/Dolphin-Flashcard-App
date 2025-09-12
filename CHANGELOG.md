@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.2.3 - 2025-09-11
+
+### Changed
+
+- Added premium module install to `npm run build` and added info to docs
+
 ## 7.2.2 - 2025-09-08
 
 ### Changed
