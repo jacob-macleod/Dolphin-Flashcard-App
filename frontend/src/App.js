@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SignInPage from './screens/SignIn';
 import MainPage from './screens/MainPage';
@@ -14,6 +14,7 @@ import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
 import Settings from './screens/Settings';
+import AIFlashcards from './screens/AIFlashcards';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -39,8 +40,20 @@ function ErrorChecking({ jwtToken, setJwtToken, child }) {
 }
 
 function App() {
-  // const [jwtToken, setJwtToken] = useState('4be0643f-1d98-573b-97cd-ca98a65347dd');
   const [jwtToken, setJwtToken] = useState(getCookie('jwtToken'));
+  const [TestScreen, setTestScreen] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const module = await import("./Dolphin-Flashcards-Premium-Features/frontend/screens/testScreen"); // try importing
+        setTestScreen(() => module.default);
+      } catch (err) {
+        console.warn("OptionalComponent not found, continuing without it");
+      }
+    })();
+  }, []);
+
 
   return (
     <ThemeProvider>
@@ -117,6 +130,16 @@ function App() {
               />
             }
           />
+          <Route
+            path="/aiflashcards"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<AIFlashcards />}
+              />
+            }
+          />
           <Route path="/community" element={<SearchForFlashcard />} />
           <Route
             path="/community/:categoryName"
@@ -125,6 +148,18 @@ function App() {
                 jwtToken={jwtToken}
                 setJwtToken={setJwtToken}
                 child={<CommunityCategory />}
+              />
+            }
+          />
+          <Route
+            path="/premium-repo-installed"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={
+                  TestScreen ? <TestScreen /> : <p>No optional component</p>
+              }
               />
             }
           />

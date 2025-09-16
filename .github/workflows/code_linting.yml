@@ -47,6 +47,15 @@ jobs:
         npm install react-scripts
         npm install
 
+    - name: Activate Premium Repo...
+      run: |
+        cd frontend/src
+        git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+        cd ../..
+        bash install_premium_repo.sh
+      env:
+          PREMIUM_REPO_ACCESS_TOKEN: ${{ secrets.PREMIUM_REPO_ACCESS_TOKEN }}
+
     - name: Lint the frontend code
       run: |
         cd frontend

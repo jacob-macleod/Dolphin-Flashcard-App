@@ -23,12 +23,14 @@ jobs:
           echo "$FIREBASE_CONFIG" > firebase_config.json
           echo "$MAILCHIMP_API_KEY" > frontend/src/api/secretKeys.js
           echo "$JWT_PRIVATE_KEY" > jwt_key.json
+          echo "$GEMINI_API_KEY" > ai_api_key.txt
         env:
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           MAILCHIMP_API_KEY: ${{ secrets.MAILCHIMP_API_KEY }}
           JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
       - name: Install node
         run: |
@@ -37,6 +39,15 @@ jobs:
           cd frontend
           npm install -g create-react-app
           npm install
+
+      - name: Activate Premium Repo...
+        run: |
+          cd frontend/src
+          git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+          cd ../..
+          bash install_premium_repo.sh
+        env:
+            PREMIUM_REPO_ACCESS_TOKEN: ${{ secrets.PREMIUM_REPO_ACCESS_TOKEN }}
 
       - name: Build the React App for Deployment
         run: |

@@ -57,7 +57,8 @@ function CardOverview({
     toggleFullscreen=null,
     fullscreen=false,
     view="desktop",
-    isInEditPage=false
+    isInEditPage=false,
+    turnable=true
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -76,6 +77,7 @@ function CardOverview({
     }, [fullscreen]);
 
     function turnOverCard() {
+        if (!turnable) return;
         setIsFlipped((prev) => !prev);
         setTimeout(() => {
             setCardText((prev) => (prev === sanitizedFront ? sanitizedBack : sanitizedFront));

@@ -17,6 +17,7 @@ jwt_key.json
 .backend_pid
 .database_status
 .database_delete_log
+ai_api_key.txt
 
 # Frontend files
 # dependencies
@@ -29,6 +30,12 @@ frontend/src/api/secretKeys.js
 .docs_pid
 # testing
 frontend//coverage
+
+# Premium repo
+frontend/src/Dolphin-Flashcards-Premium-Features/*
+frontend/src/Dolphin-Flashcards-Premium-Features/
+backend/dolphin_flashcards_premium_features/*
+backend/dolphin_flashcards_premium_features
 
 # production
 frontend//build

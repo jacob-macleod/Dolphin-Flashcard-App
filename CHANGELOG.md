@@ -22,6 +22,54 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.2.4 - 2025-09-15
+
+### Fixed
+
+- Fixed AI flashcard generation prompt
+
+## 7.2.3 - 2025-09-11
+
+### Changed
+
+- Added premium module install to `npm run build` and added info to docs
+
+## 7.2.2 - 2025-09-08
+
+### Changed
+
+- Made small changes to allow optional import of premium repo
+
+## 7.2.1 - 2025-09-05
+
+### Changed
+
+- Enabled import from anki
+- Added UI improvements for AI flashcards screen
+
+## 7.2.0 - 2025-09-04
+
+### Added
+
+- added "generate flashcards" button on Flashcards page
+- created frontend for the AI Flashcards page
+- Added a new component `AICardRow.js` to effectively display flashcards on the AI flashcards page
+- added a new function `deleteAICard` into `FlashcardOperationsMenu.js` specifically to delete AI flashcards
+### Fixed
+- made it so flashcards on the edit flashcards page can no longer be turned over
+
+## 7.1.1 - 2025-08-31
+
+### Fixed
+
+- Changed pipeline to fix error in tets-docker stage
+
+## 7.1.0 - 2025-08-27
+
+### Changed
+
+- Added API route to generate flashcard using AI
+
 ## 7.0.0 - 2025-08-08
 
 ### Changed
