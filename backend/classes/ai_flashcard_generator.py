@@ -67,7 +67,7 @@ class FlashcardGenerator:
             dict | list: Parsed JSON of generated flashcards
         """
         prompt = (
-            f"Create a flashcard set with {number_of_cards} cards for UK A-level Physics about {topic}. "
+            f"Create a flashcard set with {number_of_cards} cards for UK A-level about {topic}. "
             f"Return it as JSON with fields 'front' and 'back'. Do not add ``` or 'json'."
         )
 
