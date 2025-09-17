@@ -85,41 +85,6 @@ class SharedFolderSets(DatabaseHandler):
         
         user_progress.set(user_data)
 
-    # def update_card_progress(self, user_id: str, shared_folder_id: str, flashcard_set_id: str, card_progress_data: list):
-    #     """Update progress for multiple cards in a shared flashcard set
-
-    #     Args:
-    #         user_id (str): The user ID
-    #         shared_folder_id (str): The shared folder ID
-    #         flashcard_set_id (str): The flashcard set ID
-    #         card_progress_data (list): List of card progress updates
-    #             [{"cardID": "card1", "review_status": "1.0", "last_review": "21/08/2025"}]
-    #     """
-    #     user_progress = self._context.collection(self._db_name).document(user_id)
-    #     user_data = user_progress.get().to_dict()
-        
-    #     if user_data is None:
-    #         raise ValueError("User progress data not found")
-        
-    #     if shared_folder_id not in user_data:
-    #         raise ValueError("Shared folder progress not found for user")
-        
-    #     if flashcard_set_id not in user_data[shared_folder_id]:
-    #         raise ValueError("Flashcard set progress not found for user")
-        
-    #     # Update card progress
-    #     for card_data in card_progress_data:
-    #         card_id = card_data.get("cardID")
-    #         review_status = card_data.get("review_status")
-    #         last_review = card_data.get("last_review")
-            
-    #         if card_id in user_data[shared_folder_id][flashcard_set_id]["cards"]:
-    #             user_data[shared_folder_id][flashcard_set_id]["cards"][card_id] = {
-    #                 "review_status": review_status,
-    #                 "last_review": last_review
-    #             }
-        
-    #     user_progress.set(user_data)
     def update_card_progress(self, user_id: str, shared_folder_id: str, flashcard_set_id: str, card_progress_data: list):
         """Update progress for multiple cards in a shared flashcard set"""
         user_progress = self._context.collection(self._db_name).document(user_id)
