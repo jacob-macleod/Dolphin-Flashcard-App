@@ -3,7 +3,8 @@
 
 from database.handlers.database_handler import DatabaseHandler
 from classes.date import Date
-
+import json
+from datetime import datetime, timedelta
 
 class SharedFolderSets(DatabaseHandler):
     """Provides utility classes for interacting with the sharedFolderSets database
@@ -19,6 +20,37 @@ class SharedFolderSets(DatabaseHandler):
         """
         super().__init__(context, db_name="sharedFolderSets")
         self._date = Date()
+
+        # Load card presets (same as FlashcardCollection)
+        try:
+            with open("card_presets.json", "r") as f:
+                self._card_presets = json.load(f)
+        except FileNotFoundError:
+            # Fallback defaults if file not found
+            self._card_presets = {
+                "notStarted": 20,
+                "activelyStudying": 20,
+                "recapping": 200
+            }
+
+    def _is_card_due_today(self, card_progress: dict, current_date: datetime) -> bool:
+        """Check if a card is due for review today (adapted from FlashcardCollection._is_for_today)."""
+        try:
+            review_status = card_progress.get("review_status", "0.0")
+            last_review = card_progress.get("last_review")
+
+            if not last_review:
+                return False
+
+            days_until_next_review = int(float(review_status))
+            last_review_date = datetime.strptime(last_review, "%d/%m/%Y")
+
+            if last_review_date + timedelta(days=days_until_next_review) <= current_date:
+                return True
+        except (ValueError, TypeError):
+            return False
+
+        return False
 
     def initialize_user_progress(self, user_id: str, shared_folder_id: str, flashcard_set_id: str, card_ids: list):
         """Initialize progress tracking for a user on a shared flashcard set
@@ -217,16 +249,15 @@ class SharedFolderSets(DatabaseHandler):
         # This would need to integrate with existing FlashcardCollection logic
         # For now, return the structure
         today_cards = {}
-        current_date = self._date.get_current_date()
+        current_date = datetime.strptime(self._date.get_current_date(), "%d/%m/%Y")
         
         for shared_folder_id, folder_data in user_data.items():
             today_cards[shared_folder_id] = {}
             for flashcard_set_id, set_data in folder_data.items():
                 cards_for_today = {}
                 for card_id, card_progress in set_data.get("cards", {}).items():
-                    # This would use the same logic as FlashcardCollection._is_for_today
-                    # For now, just include all cards
-                    cards_for_today[card_id] = card_progress
+                    if self._is_card_due_today(card_progress, current_date):
+                        cards_for_today[card_id] = card_progress
                 
                 if cards_for_today:
                     today_cards[shared_folder_id][flashcard_set_id] = {

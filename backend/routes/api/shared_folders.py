@@ -600,14 +600,14 @@ def get_shared_folder_members():
                         "userID": member_id,
                         "name": member_user_data.get("name", "Unknown User"),
                         "profilePicUrl": member.get("profilePicUrl", ""),
-                        "joinedDate": "2024-01-05"  # This would need to be tracked in the schema
+                        # "joinedDate": "2024-01-05"  # This would need to be tracked in the schema
                     })
         
         response_data = {
             "owner": {
                 "userID": owner_id,
                 "name": owner_data.get("name", "Unknown User") if owner_data else "Unknown User",
-                "joinedDate": "2024-01-01"  # This would need to be tracked in the schema
+                # "joinedDate": "2024-01-01"  # This would need to be tracked in the schema
             },
             "members": members
         }
