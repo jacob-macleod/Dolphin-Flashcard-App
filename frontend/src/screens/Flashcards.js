@@ -35,6 +35,7 @@ import ImportCsvPopup from '../containers/Modal/ImportFromCSVDialogue/ImportFrom
 import GhostButton from '../componments/GhostButton';
 import flashcardIcon from '../static/flashcard-set-icon.svg';
 import folderIcon from '../static/folder-icon.svg';
+import ImportQuizletPopup from '../containers/Modal/ImportQuizletPopup/ImportQuizletPopup';
 import ankiIcon from '../static/anki.svg';
 import quizletIcon from '../static/quizlet.svg';
 import importIcon from '../static/import-icon.svg';
@@ -70,10 +71,8 @@ function Flashcards() {
     useState(false);
   const [importFromCSVDialogueVisible, setImportFromCSVDialogueVisible] =
     useState(false);
-  const [
-    importFromQuizletDialogueVisible,
-    setImportFromQuizletDialogueVisible,
-  ] = useState(false);
+  const [importCsvDialougeVisible, setImportCsvDialougeVisible] = useState(false);
+  const [importQuizletDialougeVisisble, setImportQuizletDislougeVisible] = useState(false);
   const [selected, setSelected] = useState([]);
 
   // Set variables for the size
@@ -161,6 +160,19 @@ function Flashcards() {
       <CreateFolderDialogue
         visible={createFolderDialogueVisible}
         setVisible={setCreateFolderDialogueVisible}
+        view={view}
+        setReload={setReload}
+      />
+      <ImportCsvPopup
+        visible={importCsvDialougeVisible}
+        setVisible={setImportCsvDialougeVisible}
+        view={view}
+        reload={reload}
+        setReload={setReload}
+      />
+      <ImportQuizletPopup
+        visible={importQuizletDialougeVisisble}
+        setVisible={setImportQuizletDislougeVisible}
         view={view}
         setReload={setReload}
       />
@@ -436,9 +448,7 @@ function Flashcards() {
                         marginRight: view !== 'mobile' ? '16px' : '',
                         marginLeft: view === 'mobile' ? '0px' : '',
                       }}
-                      onClick={() => {
-                        return;
-                      }}
+                      onClick={() => setImportQuizletDislougeVisible(true)}
                       view={view}
                       icon={quizletIcon}
                       disabled={quizletImportsDisabled}

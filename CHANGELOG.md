@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.4.0 - 2025-09-20
+
+### Added
+
+- Added import from Quizlet
+
 ## 7.3.0 - 2025-09-17
 
 ### Added
