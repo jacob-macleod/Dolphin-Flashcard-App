@@ -21,6 +21,11 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 7.5.0 - 2025-10-5
+
+### Added
+
+- Added a Bug Reporting button onto both the mobile view and the desktop view, in the navbars
 
 ## 7.4.0 - 2025-09-20
 
