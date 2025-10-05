@@ -12,8 +12,11 @@ import settings_icon_clicked from '../../static/settings-icon-white.svg'
 import dashboard_icon from '../../static/dashboard-icon.svg';
 import flashcard_icon_white from '../../static/flashcard-icon-white.svg';
 import community_icon_white from '../../static/community-icon-white.svg';
+import warning_icon from '../../static/warning-icon.svg';
+import warning_icon_white from '../../static/warning-icon-white.svg';
 import './SidePanel.css';
 import '../../componments/GridItem/GridItem.css';
+
 
 function SidePanel ({ selectedItem }) {
     const [accountDropdownVisibility, setAccountDropdownVisibility] = useState(false);
@@ -52,6 +55,12 @@ function SidePanel ({ selectedItem }) {
                 src="/settings"
                 clicked={selectedItem == "settings" ? true : false}
                 imgUrl={selectedItem == "settings" ? settings_icon_clicked : settings_icon}
+            />
+             <MenuItem
+                text="Report Issues"
+                src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAHPmNG5UOU1JOVBHTkNRMjREM0o2V0cwM0VXS0JCUC4u"
+                clicked={selectedItem == "report_issues" ? true : false}
+                imgUrl={selectedItem == "report_issues" ? warning_icon_white : warning_icon}
             />
         </div>
     </div>;

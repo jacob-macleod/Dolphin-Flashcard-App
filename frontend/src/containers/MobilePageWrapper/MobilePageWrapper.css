@@ -34,7 +34,7 @@
 .nav-bar {
     width: 100%;
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto;
     z-index: 5;
     padding-top: 8px;
     background-color: var(--panel-bg-light);
