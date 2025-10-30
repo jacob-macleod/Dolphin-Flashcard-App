@@ -792,7 +792,7 @@ paths:
                 Example 1:
                   value:
                     error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
-      operationId: get-get-today-cards
+      operationId: get-today-cards
       x-stoplight:
         id: 144ypjxh6u3n4
       description: 'Get all the flashcards to be learned today for a user. If a card''s review status is `0.0`, it is not started; if it is `0.x`, it is actively studying; if it is >= `1.x`, it is learned.'
@@ -2662,9 +2662,13 @@ paths:
                 properties:
                   error:
                     type: string
-  /api/create-shared-folder:
+  /create-shared-folder:
     post:
-      summary: Create a new shared folder
+      summary: Create New Shared Folder
+      x-stoplight:
+        id: 144ypjxh6u3d4
+      tags:
+        - Card management
       requestBody:
         required: true
         content:
@@ -2701,7 +2705,8 @@ paths:
         '500':
           description: Server error
       operationId: create-shared-folder
-  /api/get-shared-folders:
+      description: ''
+  /get-shared-folders:
     post:
       summary: Get all shared folders for a user
       requestBody:
@@ -2728,7 +2733,7 @@ paths:
                   description: Example folder
         '500':
           description: Server error
-  /api/get-shared-folder:
+  /get-shared-folder:
     post:
       summary: Get details of a specific shared folder
       requestBody:
@@ -2757,7 +2762,7 @@ paths:
           description: Folder not found
         '500':
           description: Server error
-  /api/delete-shared-folder:
+  /delete-shared-folder:
     delete:
       summary: Delete a shared folder (owner only)
       requestBody:
@@ -2786,7 +2791,7 @@ paths:
           description: Folder not found
         '500':
           description: Server error
-  /api/rename-shared-folder:
+  /rename-shared-folder:
     post:
       summary: Rename a shared folder (owner only)
       requestBody:
@@ -2817,7 +2822,7 @@ paths:
           description: Only owner can rename
         '500':
           description: Server error
-  /api/add-flashcard-to-shared-folder:
+  /add-flashcard-to-shared-folder:
     post:
       summary: Add a flashcard to a shared folder (owner only)
       requestBody:
@@ -2850,7 +2855,7 @@ paths:
           description: Flashcard not found
         '500':
           description: Server error
-  /api/remove-flashcard-from-shared-folder:
+  /remove-flashcard-from-shared-folder:
     delete:
       summary: Remove a flashcard from a shared folder (owner only)
       requestBody:
@@ -2881,7 +2886,7 @@ paths:
           description: Only owner can remove
         '500':
           description: Server error
-  /api/get-shared-folder-flashcards:
+  /get-shared-folder-flashcards:
     post:
       summary: Get all flashcards in a shared folder
       requestBody:
@@ -2910,7 +2915,7 @@ paths:
           description: Folder not found
         '500':
           description: Server error
-  /api/generate-shared-folder-invite:
+  /generate-shared-folder-invite:
     post:
       summary: Generate or regenerate invite link (owner only)
       requestBody:
@@ -2942,7 +2947,7 @@ paths:
           description: Folder not found
         '500':
           description: Server error
-  /api/join-shared-folder:
+  /join-shared-folder:
     post:
       summary: Join shared folder using invite link
       requestBody:
@@ -2971,7 +2976,7 @@ paths:
           description: Folder not found
         '500':
           description: Server error
-  /api/leave-shared-folder:
+  /leave-shared-folder:
     post:
       summary: Leave a shared folder
       requestBody:
@@ -2998,7 +3003,7 @@ paths:
           description: Not a member or owner cannot leave
         '500':
           description: Server error
-  /api/remove-user-from-shared-folder:
+  /remove-user-from-shared-folder:
     post:
       summary: Remove a user from a shared folder (owner only)
       requestBody:
@@ -3031,7 +3036,7 @@ paths:
           description: Only owner can remove
         '500':
           description: Server error
-  /api/get-shared-folder-members:
+  /get-shared-folder-members:
     post:
       summary: Get all members of a shared folder
       requestBody:
@@ -3060,7 +3065,7 @@ paths:
           description: Folder not found
         '500':
           description: Server error
-  /api/transfer-shared-folder-ownership:
+  /transfer-shared-folder-ownership:
     post:
       summary: Transfer ownership of a shared folder
       requestBody:
@@ -3105,7 +3110,7 @@ paths:
           description: Not a member
         '500':
           description: Server error
-  /api/copy-shared-flashcard-to-personal:
+  /copy-shared-flashcard-to-personal:
     post:
       summary: Copy shared flashcard to personal collection
       requestBody:
@@ -3139,7 +3144,7 @@ paths:
           description: Not a member
         '500':
           description: Server error
-  /api/update-shared-card-progress:
+  /update-shared-card-progress:
     post:
       summary: Update progress for cards in a shared flashcard set
       requestBody:
