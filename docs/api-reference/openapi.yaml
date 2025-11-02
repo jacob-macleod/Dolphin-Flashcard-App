@@ -2708,6 +2708,12 @@ paths:
       description: ''
   /get-shared-folders:
     post:
+      tags:
+        - Card management
+      operationId: get-shared-folders
+      description: ''
+      x-stoplight:
+        id: 144ypjxh6u3d5
       summary: Get all shared folders for a user
       requestBody:
         required: true
@@ -2728,9 +2734,9 @@ paths:
           content:
             application/json:
                 example:
-                - id: folder1
-                  name: Folder One
-                  description: Example folder
+                  - id: folder1
+                    name: Folder One
+                    description: Example folder
         '500':
           description: Server error
   /get-shared-folder:
@@ -3083,26 +3089,6 @@ paths:
                   type: string
               required:
               - jwton/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                flashcardID:
-                  type: string
-                personalFolder:
-                  type: string
-              required:
-                - jwtToken
-                - sharedFolderID
-                - flashcardID
-              example:
-                jwtToken: '...'
-                sharedFolderID: folder-id
-                flashcardID: flashcard-id
-                personalFolder: My Spanish
       responses:
         '200':
           description: Flashcard copied
@@ -3112,6 +3098,7 @@ paths:
           description: Server error
   /copy-shared-flashcard-to-personal:
     post:
+      operationId: copy-shared-flashcard-to-personal
       summary: Copy shared flashcard to personal collection
       requestBody:
         required: true

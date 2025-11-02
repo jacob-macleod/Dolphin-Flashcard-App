@@ -177,40 +177,40 @@
           "pages": ["api-reference/endpoint/card-management/remove-flashcard-from-shared-folder"]
         },
         {
+          "group": "Generate shared folder invite",
+          "pages": ["api-reference/endpoint/card-management/generate-shared-folder-invite"]
+        },
+        {
+          "group": "Join shared folder",
+          "pages": ["api-reference/endpoint/card-management/join-shared-folder"]
+        },
+        {
+          "group": "Leave shared folder",
+          "pages": ["api-reference/endpoint/card-management/leave-shared-folder"]
+        },
+        {
+          "group": "Remove user from shared folder",
+          "pages": ["api-reference/endpoint/card-management/remove-user-from-shared-folder"]
+        },
+        {
+          "group": "Get shared folder members",
+          "pages": ["api-reference/endpoint/card-management/get-shared-folder-members"]
+        },
+        {
           "group": "Get shared folder flashcards",
           "pages": ["api-reference/endpoint/card-management/get-shared-folder-flashcards"]
         },
         {
-          "group": "Generate shared folder invite",
-          "pages": ["api-reference/endpoint/card-management/generate-shared-invite"]
+          "group": "Transfer shared folder ownership",
+          "pages": ["api-reference/endpoint/card-management/transfer-shared-folder-ownership"]
         },
         {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
+          "group": "Copy shared flashcard to personal",
+          "pages": ["api-reference/endpoint/card-management/copy-shared-flashcard-to-personal"]
         },
         {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
-        },
-        {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
-        },
-        {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
-        },
-        {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
-        },
-        {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
-        },
-        {
-          "group": "Create shared folder",
-          "pages": ["api-reference/endpoint/card-management/create-shared-folder"]
+          "group": "Update shared card progress",
+          "pages": ["api-reference/endpoint/card-management/update-shared-card-progress"]
         }
       ]
     },

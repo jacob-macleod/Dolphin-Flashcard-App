@@ -21,7 +21,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-## 7.5.0 - 2025-10-5
+
+## 7.5.1 - 2025-11-02
+
+### Added
+
+- Added documentation for shared folder system
+
+## 7.5.0 - 2025-10-05
 
 ### Added
 
