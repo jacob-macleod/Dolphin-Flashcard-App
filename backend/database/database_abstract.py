@@ -10,7 +10,8 @@ from database.handlers.users import Users
 from database.handlers.statistics import Statistics
 from database.handlers.goals import Goals
 from database.handlers.quests import Quests
-
+from database.handlers.shared_folders import SharedFolders
+from database.handlers.shared_folder_sets import SharedFolderSets
 
 class DatabaseAbstract(ABC):
     """Abstract class for the database"""
@@ -25,7 +26,10 @@ class DatabaseAbstract(ABC):
         self._read_write_access = None
         self._users = None
         self._statistics = None
+        self._goals = None
         self._quests = None
+        self._shared_folders = None
+        self._shared_folder_sets = None
 
     def _init_database_handlers(self):
         """Initialise the database handlers. This can't be placed in this abstract init class
@@ -39,6 +43,8 @@ class DatabaseAbstract(ABC):
         self._statistics = Statistics(self.db)
         self._goals = Goals(self.db)
         self._quests = Quests(self.db)
+        self._shared_folders = SharedFolders(self.db)
+        self._shared_folder_sets = SharedFolderSets(self.db)
 
     @property
     def query(self):
@@ -118,13 +124,31 @@ class DatabaseAbstract(ABC):
     
     @property
     def quests(self):
-        """Return the Goals class
+        """Return the Quests class
 
         Returns:
-            Goals: The Goals class
+            Quests: The Quests class
         """
         return self._quests
 
+    @property
+    def shared_folders(self):
+        """Return the SharedFolders class
+
+        Returns:
+            SharedFolders: The SharedFolders class
+        """
+        return self._shared_folders
+
+    @property
+    def shared_folder_sets(self):
+        """Return the SharedFolderSets class
+
+        Returns:
+            SharedFolderSets: The SharedFolderSets class
+        """
+        return self._shared_folder_sets
+    
     @abstractmethod
     def verify_id_token(self, id_token: str, user_id: str):
         """

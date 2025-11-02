@@ -22,6 +22,36 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.5.1 - 2025-11-02
+
+### Added
+
+- Added documentation for shared folder system
+
+## 7.5.0 - 2025-10-05
+
+### Added
+
+- Added a Bug Reporting button onto both the mobile view and the desktop view, in the navbars
+
+## 7.4.0 - 2025-09-20
+
+### Added
+
+- Added import from Quizlet
+
+## 7.3.0 - 2025-09-17
+
+### Added
+
+- Shared Folder System: Implemented full backend support for shared folders, including:
+    - Creation, renaming, and deletion of shared folders
+    - Flashcard set management within shared folders (add/remove/list)
+    - Invite link generation using JWT (with optional expiry)
+    - Membership management (join, leave, remove members, transfer ownership)
+    - Progress tracking per user via sharedFolderSets
+    - API routes for folder/member access and copying shared flashcards to personal collections
+
 ## 7.2.4 - 2025-09-15
 
 ### Fixed
