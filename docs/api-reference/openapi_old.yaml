@@ -5,26 +5,23 @@ info:
   title: DolphinFlashcardApp API
   version: '1.0'
   summary: Manage flashcards
-  description: 'Set up user accounts, create or manage flashcards, set learning goals,
-    and track performances with user''s heatmap and streak data. Data is available
-    in JSON format only. <br></br>**Note**: All parameters are case-sensitive. Request
-    body parameters are required, but the query parameters are optional. '
+  description: 'Set up user accounts, create or manage flashcards, set learning goals, and track performances with user''s heatmap and streak data. Data is available in JSON format only. <br></br>**Note**: All parameters are case-sensitive. Request body parameters are required, but the query parameters are optional. '
   contact:
     name: Dolphin Flashcards
-    url: https://dolphinflashcards.com/contact
+    url: 'https://dolphinflashcards.com/contact'
     email: dolphinflashcards@outlook.com
   license:
     name: MIT
-    url: https://github.com/jacob-macleod/Dolphin-Flashcard-App/blob/main/LICENSE
+    url: 'https://github.com/jacob-macleod/Dolphin-Flashcard-App/blob/main/LICENSE'
 servers:
-- url: http://dolphinflashcards.com/api
-  description: baseurl
+  - url: 'http://dolphinflashcards.com/api'
+    description: baseurl
 paths:
   /create-account:
     post:
       summary: Create account
       tags:
-      - Account
+        - Account
       responses:
         '200':
           description: Sign-in successful, returns a JWT token
@@ -39,23 +36,21 @@ paths:
                   token:
                     type: string
                     description: The generated JWT token for the user
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: Your supplied json keys do not match the expected format...
+                    error: 'Your supplied json keys do not match the expected format...'
                 properties:
                   error:
                     type: string
-                    description: Describes the nature of the error and provides a
-                      possible solution.
-                    example: Your supplied json keys do not match the expected format...
+                    description: Describes the nature of the error and provides a possible solution.
+                    example: 'Your supplied json keys do not match the expected format...'
       operationId: post-create-account
       x-stoplight:
         id: 7n7de91o3dz9d
@@ -70,14 +65,14 @@ paths:
                   userID: user1
                   displayName: testAccount
                   rawAccessToken: test
-                  accessToken: "duh32*\xA3dh"
+                  accessToken: duh32*£dh
                   idToken: eu26bdj7s...
               required:
-              - userID
-              - displayName
-              - rawAccessToken
-              - accessToken
-              - idToken
+                - userID
+                - displayName
+                - rawAccessToken
+                - accessToken
+                - idToken
               properties:
                 userID:
                   type: string
@@ -93,7 +88,7 @@ paths:
                   description: The raw access token to use to authenticate the Alpha
                 accessToken:
                   type: string
-                  example: "duh32*\xA3dh"
+                  example: duh32*£dh
                   description: The hashed version of the rawAccessToken
                 idToken:
                   type: string
@@ -103,7 +98,7 @@ paths:
     post:
       summary: Sign in
       tags:
-      - Account
+        - Account
       responses:
         '200':
           description: Sign-in successful, returns a JWT token
@@ -118,27 +113,21 @@ paths:
                   token:
                     type: string
                     description: The generated JWT token for the user
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''userID'': '''', ''rawAccessToken'':
-                      '''', ''accessToken'': '''', ''idToken'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''rawAccessToken'': '''', ''accessToken'': '''', ''idToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: Describes the nature of the error and provides a
-                      possible solution.
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''userID'': '''', ''rawAccessToken'':
-                      '''', ''accessToken'': '''', ''idToken'': ''''}'
+                    description: Describes the nature of the error and provides a possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''userID'': '''', ''rawAccessToken'': '''', ''accessToken'': '''', ''idToken'': ''''}'
         '403':
           description: Forbidden, user does not exist or token mismatch
           content:
@@ -151,7 +140,7 @@ paths:
                     example: false
                   error:
                     type: string
-                    example: User ID does not match token.
+                    example: "User ID does not match token."
         '500':
           description: Internal server error, JWT encoding failed
           content:
@@ -161,7 +150,7 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: JWT encoding failed due to an unexpected error
+                    example: "JWT encoding failed due to an unexpected error"
       operationId: post-sign-in
       x-stoplight:
         id: 7n7de91o3dz9d
@@ -175,13 +164,13 @@ paths:
                 Example 1:
                   userID: user123
                   rawAccessToken: test
-                  accessToken: "duh32*\xA3dh"
+                  accessToken: duh32*£dh
                   idToken: eu26bdj7s...
               required:
-              - userID
-              - rawAccessToken
-              - accessToken
-              - idToken
+                - userID
+                - rawAccessToken
+                - accessToken
+                - idToken
               properties:
                 userID:
                   type: string
@@ -193,7 +182,7 @@ paths:
                   description: The raw access token to use to authenticate the Alpha
                 accessToken:
                   type: string
-                  example: "duh32*\xA3dh"
+                  example: duh32*£dh
                   description: The hashed version of the rawAccessToken
                 idToken:
                   type: string
@@ -211,11 +200,11 @@ paths:
                 type: array
                 x-examples:
                   Example 1:
-                  - success: true
+                    - success: true
                 items:
                   type:
-                  - object
-                  - integer
+                    - object
+                    - integer
                   properties:
                     '200':
                       type: integer
@@ -226,32 +215,22 @@ paths:
                       type: boolean
                       description: Indicates that a new flashcard was created successfully.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''flashcardName'':
-                      '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'':
-                      [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'':
-                      ''''}]}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''flashcardName'':
-                      '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'':
-                      [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'':
-                      ''''}]}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''flashcardName'': '''', ''flashcardDescription'': '''', ''folder'': '''', ''cards'': [{''front'': '''', ''back'': '''', ''reviewStatus'': '''', ''lastReview'': ''''}]}'
       operationId: create-flashcard
       x-stoplight:
         id: xhqqqo1sd3bqu
-      description: Create or edit a flashcard set for a user. Flashcards contain front,
-        back, review status, and last review date properties.
+      description: 'Create or edit a flashcard set for a user. Flashcards contain front, back, review status, and last review date properties.'
       requestBody:
         content:
           application/json:
@@ -264,24 +243,24 @@ paths:
                   flashcardDescription: A set of flashcards for tracking expenses
                   folder: folder-name/folder-2
                   cards:
-                  - front: Monday
-                    back: Evening
-                    reviewStatus: '0.0'
-                    lastReview: 13-07-2024
-                  - front: Tuesday
-                    back: Morning
-                    reviewStatus: '0.0'
-                    lastReview: 14-07-2024
-                  - front: Wednesday
-                    back: Afternoon
-                    reviewStatus: '0.0'
-                    lastReview: 15-07-2024
+                    - front: Monday
+                      back: Evening
+                      reviewStatus: '0.0'
+                      lastReview: 13-07-2024
+                    - front: Tuesday
+                      back: Morning
+                      reviewStatus: '0.0'
+                      lastReview: 14-07-2024
+                    - front: Wednesday
+                      back: Afternoon
+                      reviewStatus: '0.0'
+                      lastReview: 15-07-2024
               required:
-              - jwtToken
-              - flashcardName
-              - flashcardDescription
-              - folder
-              - cards
+                - jwtToken
+                - flashcardName
+                - flashcardDescription
+                - folder
+                - cards
               properties:
                 jwtToken:
                   type: string
@@ -297,21 +276,17 @@ paths:
                   example: my first flashcard
                 folder:
                   type: string
-                  description: The name of the folder containing the flashcard sets.
-                    Set to "" to set as a top level flashcard, otherwise set it to
-                    the parent folder name. If there are multiple parent folders,
-                    add the folder name seperated by numeric figures.
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by numeric figures.'
                   example: top-level-parent-name/parent-name-2/parent-name-3
                 cards:
                   type: array
-                  description: A list of flashcards. Each flashcard object has `front`,
-                    `back`, `review status`, and `last review` properties.
+                  description: 'A list of flashcards. Each flashcard object has `front`, `back`, `review status`, and `last review` properties.'
                   items:
                     type: object
                     properties:
                       front:
                         type: string
-                        description: The front side content of the flashcard.
+                        description: 'The front side content of the flashcard.'
                         example: Monday
                       back:
                         type: string
@@ -323,18 +298,17 @@ paths:
                         example: '0.0'
                       lastReview:
                         type: string
-                        description: The date when the flashcard was last reviewed,
-                          in dd/mm/yyyy format.
+                        description: 'The date when the flashcard was last reviewed, in dd/mm/yyyy format.'
                         example: 13/08/2024
         description: ''
       parameters: []
       tags:
-      - Card management
+        - Card management
   /create-folder:
     post:
       summary: Create Folder
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
           description: OK
@@ -351,25 +325,19 @@ paths:
                     example: Folder "folderName" created
                     description: Indicates that the folder has been successfully created.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''folder'':
-                      ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: Describes the nature of the error and provides a
-                      possible solution.
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''folder'':
-                      ''''}'
+                    description: Describes the nature of the error and provides a possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': ''''}'
       operationId: post-create-folder
       x-stoplight:
         id: 1kcsx8hucsylb
@@ -384,8 +352,8 @@ paths:
                   jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                   folder: firstFolder
               required:
-              - jwtToken
-              - folder
+                - jwtToken
+                - folder
               properties:
                 jwtToken:
                   type: string
@@ -399,7 +367,7 @@ paths:
     get:
       summary: Get Flashcard
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
           description: OK
@@ -410,14 +378,13 @@ paths:
                 x-examples:
                   Example 1:
                     cards:
-                    - '34491285524799755658107639929006996702748532692311513250222807523742322598240'
+                      - '34491285524799755658107639929006996702748532692311513250222807523742322598240'
                     description: my first flashcard
                     name: firstCard
                 properties:
                   cards:
                     type: array
-                    description: The card ID, a unique numerical identifier of the
-                      exact flashcard retrieved from the folder.
+                    description: 'The card ID, a unique numerical identifier of the exact flashcard retrieved from the folder.'
                     items:
                       type: string
                   description:
@@ -429,31 +396,23 @@ paths:
                     example: firstCard
                     description: ' The name of the flashcard. '
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''folder'':
-                      '''', ''flashcardName'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''folder'':
-                      '''', ''flashcardName'': ''''}'
-                    description: 'Describes the nature of the error and provides a
-                      possible solution.  '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
+                    description: 'Describes the nature of the error and provides a possible solution.  '
       operationId: get-get-flashcard
       x-stoplight:
         id: un39klju80sc5
-      description: Retrieve a flashcard set based on the specified name, folder, and
-        user ID. Returns null if the request body contains an invalid flashcard name
-        and/or folder name
+      description: 'Retrieve a flashcard set based on the specified name, folder, and user ID. Returns null if the request body contains an invalid flashcard name and/or folder name'
       requestBody:
         content:
           application/json:
@@ -465,9 +424,9 @@ paths:
                   folder: firstFolder
                   flashcardName: My new set
               required:
-              - jwtToken
-              - folder
-              - flashcardName
+                - jwtToken
+                - folder
+                - flashcardName
               properties:
                 jwtToken:
                   type: string
@@ -484,7 +443,7 @@ paths:
     post:
       summary: Get Flashcard
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
           description: OK
@@ -495,14 +454,13 @@ paths:
                 x-examples:
                   Example 1:
                     cards:
-                    - '34491285524799755658107639929006996702748532692311513250222807523742322598240'
+                      - '34491285524799755658107639929006996702748532692311513250222807523742322598240'
                     description: my first flashcard
                     name: firstCard
                 properties:
                   cards:
                     type: array
-                    description: The card ID, a unique numerical identifier of the
-                      exact flashcard retrieved from the folder.
+                    description: 'The card ID, a unique numerical identifier of the exact flashcard retrieved from the folder.'
                     items:
                       type: string
                   description:
@@ -514,31 +472,23 @@ paths:
                     example: firstCard
                     description: 'The name of the flashcard.    '
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''folder'':
-                      '''', ''flashcardName'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: 'Describes the nature of the error and provides a
-                      possible solution.  '
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''folder'':
-                      '''', ''flashcardName'': ''''}'
+                    description: 'Describes the nature of the error and provides a possible solution.  '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''folder'': '''', ''flashcardName'': ''''}'
       operationId: post-get-flashcard
       x-stoplight:
         id: 0g9zs158608yt
-      description: Retrieve a flashcard set based on the specified name, folder, and
-        user ID. Returns null if the request body contains an invalid flashcard name
-        and/or folder name.
+      description: 'Retrieve a flashcard set based on the specified name, folder, and user ID. Returns null if the request body contains an invalid flashcard name and/or folder name.'
       requestBody:
         content:
           application/json:
@@ -550,9 +500,9 @@ paths:
                   folder: firstFolder
                   flashcardName: firstCard
               required:
-              - jwtToken
-              - folder
-              - flashcardName
+                - jwtToken
+                - folder
+                - flashcardName
               properties:
                 jwtToken:
                   type: string
@@ -590,30 +540,25 @@ paths:
                     example: Monday
                     description: The front side content of the flashcard.
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''cardID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''cardID'': ''''}'
-                    description: 'Describes the nature of the error and provides a
-                      possible solution. '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': ''''}'
+                    description: 'Describes the nature of the error and provides a possible solution. '
       operationId: get-get-flashcard-item
       x-stoplight:
         id: 0l2f7242pkl9c
-      description: Get a flashcard item based on the card ID. Flashcard sets store
-        multiple flashcard items, which are the individual flashcards.
+      description: 'Get a flashcard item based on the card ID. Flashcard sets store multiple flashcard items, which are the individual flashcards.'
       tags:
-      - Card management
+        - Card management
       requestBody:
         content:
           application/json:
@@ -623,17 +568,16 @@ paths:
                 Example 1:
                   cardID: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
               required:
-              - cardID
+                - cardID
               properties:
                 cardID:
                   type: string
-                  description: ' A unique numerical identifier of the specific card
-                    to be retrieved from the flashcard set.'
+                  description: ' A unique numerical identifier of the specific card to be retrieved from the flashcard set.'
                   example: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
     post:
       summary: Get Flashcard Item
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
           description: OK
@@ -655,28 +599,23 @@ paths:
                     description: 'The front side content of the flashcard. '
                     example: Monday
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''cardID'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: ' Describes the nature of the error and provides
-                      a possible solution.      '
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''cardID'': '' ''}'
+                    description: ' Describes the nature of the error and provides a possible solution.      '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''cardID'': '' ''}'
       operationId: post-get-flashcard-item
       x-stoplight:
         id: gyf4io0ai9fsp
-      description: Get a flashcard item based on the card ID. Flashcard sets store
-        multiple flashcard items, which are the individual flashcards.
+      description: 'Get a flashcard item based on the card ID. Flashcard sets store multiple flashcard items, which are the individual flashcards.'
       requestBody:
         content:
           application/json:
@@ -686,18 +625,17 @@ paths:
                 Example 1:
                   cardID: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
               required:
-              - cardID
+                - cardID
               properties:
                 cardID:
                   type: string
                   example: '34491212345799755658107639929006996702748532692311513250209090523742322511111'
-                  description: The unique numerical identifier of the specific card
-                    being retrieved from the flashcard set.
+                  description: The unique numerical identifier of the specific card being retrieved from the flashcard set.
   /get-today-cards:
     post:
       summary: Get Today Cards
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
           description: OK
@@ -747,32 +685,23 @@ paths:
                         properties:
                           cards:
                             type: object
-                            description: An object contaning the `cardID` of the current
-                              flashcard.
+                            description: An object contaning the `cardID` of the current flashcard.
                             properties:
                               cardID:
                                 type: object
-                                description: A unique numerical identifier of a specific
-                                  card item within the flashcard. Has `last_review`
-                                  and `review_status` properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
-                                    description: 'The date when the card was last
-                                      reviewed, formatted as dd/mm/yyyy. '
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                     example: 15/07/2024
                                   review_status:
                                     type: string
-                                    description: The current review status of the
-                                      card, where `0.0` indicates that the card is
-                                      not started; `0.x` indicates that the card is
-                                      actively studying; and >= `1.x` indicates that
-                                      the card is learned.
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned.'
                                     example: '0.0'
                           flashcardID:
                             type: string
-                            description: A unique numerical identifier of the current
-                              flashcard. This is different from `cardID`.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                             example: '6796878844471389968582206160161573797336081811111331165973477783999823937257'
                           flashcardName:
                             type: string
@@ -784,51 +713,38 @@ paths:
                         properties:
                           cards:
                             type: object
-                            description: An object contaning the `cardID` of the current
-                              flashcard.
+                            description: An object contaning the `cardID` of the current flashcard.
                             properties:
                               cardID:
                                 type: object
-                                description: A unique numerical identifier of a specific
-                                  card item within the flashcard. Has `last_review`
-                                  and `review_status` properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
-                                    description: 'The date when the card was last
-                                      reviewed, formatted as dd/mm/yyyy. '
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                     example: 15/07/2024
                                   review_status:
                                     type: string
-                                    description: The current review status of the
-                                      card, where `0.0` indicates that the card is
-                                      not started; `0.x` indicates that the card is
-                                      actively studying; and >= `1.x` indicates that
-                                      the card is learned.
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned.'
                                     example: '0.0'
                           flashcardID:
                             type: string
-                            description: A unique numerical identifier of the current
-                              flashcard. This is different from `cardID`.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                           flashcardName:
                             type: string
                             description: 'The name of the current flashcard.  '
                             example: secondFlashCard
                   top-level-parent-name:
                     type: object
-                    description: Another parent folder within the same account that
-                      contains nested folders and flashcards. It has a different naming
-                      convention from the previous folder.
+                    description: Another parent folder within the same account that contains nested folders and flashcards. It has a different naming convention from the previous folder.
                     properties:
                       parent-name-2:
                         type: object
-                        description: A folder nested within the `top-level-parent-name`
-                          folder that further organizes flashcards.
+                        description: A folder nested within the `top-level-parent-name` folder that further organizes flashcards.
                         properties:
                           parent-name-3:
                             type: object
-                            description: A folder nested within the `parent-name-2
-                              folder`, containing specific flashcards.
+                            description: 'A folder nested within the `parent-name-2 folder`, containing specific flashcards.'
                             properties:
                               Flashcard:
                                 type: object
@@ -838,73 +754,55 @@ paths:
                                 properties:
                                   cards:
                                     type: object
-                                    description: An object contaning the `cardID`
-                                      of the current flashcard.
+                                    description: An object contaning the `cardID` of the current flashcard.
                                     properties:
                                       cardID:
                                         type: object
                                         x-stoplight:
                                           id: 7spigejsdhd9s
-                                        description: A unique numerical identifier
-                                          of a specific card item within the flashcard.
-                                          Has `last_review` and `review_status` properties.
+                                        description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                         properties:
                                           last_review:
                                             type: string
-                                            description: 'The date when the card was
-                                              last reviewed, formatted as dd/mm/yyyy. '
+                                            description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                           review_status:
                                             type: string
-                                            description: The current review status
-                                              of the card, where `0.0` indicates that
-                                              the card is not started; `0.x` indicates
-                                              that the card is actively studying;
-                                              and >= `1.x` indicates that the card
-                                              is learned.
+                                            description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned.'
                                   flashcardID:
                                     type: string
-                                    description: A unique numerical identifier of
-                                      the current flashcard. This is different from
-                                      `cardID`.
+                                    description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                                   flashcardName:
                                     type: string
                                     description: 'The name of the current flashcard.  '
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''string''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' ''}'
-                    description: Describes the nature of the error and provides a
-                      possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''}'
+                    description: Describes the nature of the error and provides a possible solution.
               examples:
                 Example 1:
                   value:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''string''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
       operationId: get-get-today-cards
       x-stoplight:
         id: 144ypjxh6u3n4
-      description: Get all the flashcards to be learned today for a user. If a card's
-        review status is `0.0`, it is not started; if it is `0.x`, it is actively
-        studying; if it is >= `1.x`, it is learned.
+      description: 'Get all the flashcards to be learned today for a user. If a card''s review status is `0.0`, it is not started; if it is `0.x`, it is actively studying; if it is >= `1.x`, it is learned.'
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
@@ -917,11 +815,10 @@ paths:
     post:
       summary: Get All Cards
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
-          description: 'OK. Returns the string: `"User has no flashcards"` when supplied
-            an invalid jwtToken.'
+          description: 'OK. Returns the string: `"User has no flashcards"` when supplied an invalid jwtToken.'
           content:
             application/json:
               schema:
@@ -970,30 +867,21 @@ paths:
                         properties:
                           cards:
                             type: object
-                            description: An object contaning the `cardID` of the current
-                              flashcard.
+                            description: An object contaning the `cardID` of the current flashcard.
                             properties:
                               cardID:
                                 type: object
-                                description: A unique numerical identifier of a specific
-                                  card item within the flashcard. Has `last_review`
-                                  and `review_status` properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
-                                    description: 'The date when the card was last
-                                      reviewed, formatted as dd/mm/yyyy. '
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                   review_status:
                                     type: string
-                                    description: 'The current review status of the
-                                      card, where `0.0` indicates that the card is
-                                      not started; `0.x` indicates that the card is
-                                      actively studying; and >= `1.x` indicates that
-                                      the card is learned. '
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned. '
                           flashcardID:
                             type: string
-                            description: A unique numerical identifier of the current
-                              flashcard. This is different from `cardID`.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                           flashcardName:
                             type: string
                             description: The name of the current flashcard.
@@ -1003,48 +891,35 @@ paths:
                         properties:
                           cards:
                             type: object
-                            description: An object contaning the `cardID` of the current
-                              flashcard.
+                            description: An object contaning the `cardID` of the current flashcard.
                             properties:
                               cardID:
                                 type: object
-                                description: A unique numerical identifier of a specific
-                                  card item within the flashcard. Has `last_review`
-                                  and `review_status` properties.
+                                description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                 properties:
                                   last_review:
                                     type: string
-                                    description: 'The date when the card was last
-                                      reviewed, formatted as dd/mm/yyyy. '
+                                    description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                   review_status:
                                     type: string
-                                    description: 'The current review status of the
-                                      card, where `0.0` indicates that the card is
-                                      not started; `0.x` indicates that the card is
-                                      actively studying; and >= `1.x` indicates that
-                                      the card is learned. '
+                                    description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned. '
                           flashcardID:
                             type: string
-                            description: A unique numerical identifier of the current
-                              flashcard. This is different from `cardID`.
+                            description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                           flashcardName:
                             type: string
                             description: The name of the current flashcard.
                   top-level-parent-name:
                     type: object
-                    description: Another parent folder within the same account that
-                      contains nested folders and flashcards. It has a different naming
-                      convention from the previous folder.
+                    description: Another parent folder within the same account that contains nested folders and flashcards. It has a different naming convention from the previous folder.
                     properties:
                       parent-name-2:
                         type: object
-                        description: A folder nested within the `top-level-parent-name`
-                          folder that further organizes flashcards.
+                        description: A folder nested within the `top-level-parent-name` folder that further organizes flashcards.
                         properties:
                           parent-name-3:
                             type: object
-                            description: A folder nested within the `parent-name-2`
-                              folder, containing specific flashcards.
+                            description: 'A folder nested within the `parent-name-2` folder, containing specific flashcards.'
                             properties:
                               Flashcard:
                                 type: object
@@ -1054,55 +929,40 @@ paths:
                                 properties:
                                   cards:
                                     type: object
-                                    description: An object contaning the `cardID`
-                                      of the current flashcard.
+                                    description: An object contaning the `cardID` of the current flashcard.
                                     properties:
                                       cardID:
                                         type: object
-                                        description: A unique numerical identifier
-                                          of a specific card item within the flashcard.
-                                          Has `last_review` and `review_status` properties.
+                                        description: A unique numerical identifier of a specific card item within the flashcard. Has `last_review` and `review_status` properties.
                                         x-stoplight:
                                           id: vtzd3ybisgqvr
                                         properties:
                                           last_review:
                                             type: string
-                                            description: 'The date when the card was
-                                              last reviewed, formatted as dd/mm/yyyy. '
+                                            description: 'The date when the card was last reviewed, formatted as dd/mm/yyyy. '
                                           review_status:
                                             type: string
-                                            description: 'The current review status
-                                              of the card, where `0.0` indicates that
-                                              the card is not started; `0.x` indicates
-                                              that the card is actively studying;
-                                              and >= `1.x` indicates that the card
-                                              is learned. '
+                                            description: 'The current review status of the card, where `0.0` indicates that the card is not started; `0.x` indicates that the card is actively studying; and >= `1.x` indicates that the card is learned. '
                                   flashcardID:
                                     type: string
-                                    description: A unique numerical identifier of
-                                      the current flashcard. This is different from
-                                      `cardID`.
+                                    description: A unique numerical identifier of the current flashcard. This is different from `cardID`.
                                   flashcardName:
                                     type: string
                                     description: The name of the current flashcard.
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''''
-                    description: Describes the nature of the error and provides a
-                      possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''''
+                    description: Describes the nature of the error and provides a possible solution.
       operationId: post-get-all-cards
       x-stoplight:
         id: 6fceyn25gp85g
@@ -1116,7 +976,7 @@ paths:
                 Example 1:
                   jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
@@ -1126,53 +986,40 @@ paths:
     post:
       summary: Move Flashcard Set
       tags:
-      - Card management
+        - Card management
       responses:
         '200':
-          description: 'OK. Returns the string: `"Flashcard not found in current location"`
-            when supplied an invalid folder path.'
+          description: 'OK. Returns the string: `"Flashcard not found in current location"` when supplied an invalid folder path.'
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    success: The flashcard set at /users/user700430/flashcards/top-level-parent-name/parent-name-2/parent-name-3/flashcardName/6796878844881389968582206160161573797336081897254331165973477783999823937257
-                      has been moved to My third folder
+                    success: The flashcard set at /users/user700430/flashcards/top-level-parent-name/parent-name-2/parent-name-3/flashcardName/6796878844881389968582206160161573797336081897254331165973477783999823937257 has been moved to My third folder
                 properties:
                   success:
                     type: string
-                    example: The flashcard set at /users/user700430/flashcards/top-level-parent-name/parent-name-2/parent-name-3/flashcardName/6796878844881389968582206160161573797336081897254331165973477783999823937257
-                      has been moved to My third folder
-                    description: Indicates that the flashcard set at the specified
-                      path has been successfully moved to a new folder.
+                    example: The flashcard set at /users/user700430/flashcards/top-level-parent-name/parent-name-2/parent-name-3/flashcardName/6796878844881389968582206160161573797336081897254331165973477783999823937257 has been moved to My third folder
+                    description: Indicates that the flashcard set at the specified path has been successfully moved to a new folder.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''currentLocation'':
-                      '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''currentLocation'':
-                      '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
-                    description: 'Describes the nature of the error and provides a
-                      possible solution. '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''currentLocation'': '''', ''flashcardID'': '''', ''moveLocation'': ''''}'
+                    description: 'Describes the nature of the error and provides a possible solution. '
       operationId: post-move-flashcard-set
       x-stoplight:
         id: o2sks9y2lv56j
-      description: Move a flashcard set to a new location. Folder locations, such
-        as `currentLocation` or `moveLocation`, are in the format `myfolder1/myfolder2`.
-        If the card is in the root folder, the folder path should be an empty string
-        `""`.
+      description: Move a flashcard set to a new location. Folder locations, such as `currentLocation` or `moveLocation`, are in the format `myfolder1/myfolder2`. If the card is in the root folder, the folder path should be an empty string `""`.
       requestBody:
         content:
           application/json:
@@ -1185,15 +1032,14 @@ paths:
                   flashcardID: '6796878844881'
                   moveLocation: My-third-folder
               required:
-              - jwtToken
-              - currentLocation
-              - flashcardID
-              - moveLocation
+                - jwtToken
+                - currentLocation
+                - flashcardID
+                - moveLocation
               properties:
                 jwtToken:
                   type: string
-                  description: 'The identity of the user moving their flashcard set
-                    to a new location. '
+                  description: 'The identity of the user moving their flashcard set to a new location. '
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 currentLocation:
                   type: string
@@ -1201,8 +1047,7 @@ paths:
                   example: My-first-folder
                 flashcardID:
                   type: string
-                  description: A unique numerical identifier of the flashcard. This
-                    is different from `cardID`.
+                  description: A unique numerical identifier of the flashcard. This is different from `cardID`.
                   example: '22456683691481111127441553357143855166282726011111761972795191711430217049598'
                 moveLocation:
                   type: string
@@ -1225,28 +1070,21 @@ paths:
                   success:
                     type: string
                     example: Goal created successfully
-                    description: Provides additional information confirming that the
-                      request was successful.
+                    description: Provides additional information confirming that the request was successful.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format:  {''jwtToken'': ''string'',
-                      ''goalXP'': ''number'', ''endDate'': ''sample-date''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format:  {''jwtToken'': ''string'', ''goalXP'': ''number'', ''endDate'': ''sample-date''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' '', ''goalXP'':
-                      '' '', ''endDate'': '' ''}'
-                    description: 'Describes the nature of the error and provides a
-                      possible solution. '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalXP'': '' '', ''endDate'': '' ''}'
+                    description: 'Describes the nature of the error and provides a possible solution. '
               examples:
                 Example 1:
                   value:
@@ -1254,10 +1092,7 @@ paths:
       operationId: post-create-xp-goal
       x-stoplight:
         id: 9wibu13wmmqj7
-      description: Create an experience points (XP) goal for the user. XP goals have
-        an `ID`, `type`, `title`, `end date`, `status` (failed, completed, or in progress),
-        `fail date` (if failed), and `data storing` (start date, starting XP, desired
-        XP) properties.
+      description: 'Create an experience points (XP) goal for the user. XP goals have an `ID`, `type`, `title`, `end date`, `status` (failed, completed, or in progress), `fail date` (if failed), and `data storing` (start date, starting XP, desired XP) properties.'
       requestBody:
         content:
           application/json:
@@ -1269,9 +1104,9 @@ paths:
                   goalXP: '100'
                   endDate: 30/07/2024
               required:
-              - jwtToken
-              - goalXP
-              - endDate
+                - jwtToken
+                - goalXP
+                - endDate
               properties:
                 jwtToken:
                   type: string
@@ -1280,13 +1115,11 @@ paths:
                 goalXP:
                   type: string
                   example: '100'
-                  description: The desired amount of experience points (XP) the user
-                    aims to achieve with this goal.
+                  description: The desired amount of experience points (XP) the user aims to achieve with this goal.
                 endDate:
                   type: string
                   example: 30/07/2024
-                  description: The date by which the user intends to achieve the XP
-                    goal, in dd/mm/yyyy format.
+                  description: 'The date by which the user intends to achieve the XP goal, in dd/mm/yyyy format.'
             examples:
               Example 1:
                 value:
@@ -1294,10 +1127,10 @@ paths:
                   goalXP: '100'
                   endDate: 30/07/2024
       tags:
-      - Goal
+        - Goal
     servers:
-    - url: http://dolphinflashcards.com/api
-      description: create-xp
+      - url: 'http://dolphinflashcards.com/api'
+        description: create-xp
   /create-card-goal:
     post:
       summary: Create Card Goal
@@ -1314,37 +1147,26 @@ paths:
                 properties:
                   success:
                     type: string
-                    description: ' Provides additional information confirming that
-                      the request was successful.'
+                    description: ' Provides additional information confirming that the request was successful.'
                     example: Goal created successfully
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''cardsToRevise'':
-                      '''', ''endDate'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''cardsToRevise'': '''', ''endDate'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: ' Describes the nature of the error and provides
-                      a possible solution.   '
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' '', ''cardsToRevise'':
-                      '' '', ''endDate'': '' ''}'
+                    description: ' Describes the nature of the error and provides a possible solution.   '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''cardsToRevise'': '' '', ''endDate'': '' ''}'
       operationId: post-create-card-goal
       x-stoplight:
         id: 35ujdrtoyfzr9
-      description: "Create a card goal for the user. Card goals have the following\
-        \ properties: `ID`, `type` (XP), `title`, `end date`, `status` (failed, completed,\
-        \ or in progress), `fail date` (if failed), and `data storing` (cards revised\
-        \ so far, starting XP, desired cards to revise). A card goal is similar to\
-        \ an XP goal but differs in the data section.\r\n\r\n"
+      description: "Create a card goal for the user. Card goals have the following properties: `ID`, `type` (XP), `title`, `end date`, `status` (failed, completed, or in progress), `fail date` (if failed), and `data storing` (cards revised so far, starting XP, desired cards to revise). A card goal is similar to an XP goal but differs in the data section.\r\n\r\n"
       requestBody:
         content:
           application/json:
@@ -1356,9 +1178,9 @@ paths:
                   cardsToRevise: '4'
                   endDate: 30/07/2024
               required:
-              - jwtToken
-              - cardsToRevise
-              - endDate
+                - jwtToken
+                - cardsToRevise
+                - endDate
               properties:
                 jwtToken:
                   type: string
@@ -1366,19 +1188,17 @@ paths:
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 cardsToRevise:
                   type: string
-                  description: The number of cards the user intends to revise for
-                    the current goal.
+                  description: The number of cards the user intends to revise for the current goal.
                   example: '5'
                 endDate:
                   type: string
-                  description: "The date by which the user intends to achieve the\
-                    \ card revision goal, in dd/mm/yyyy format.\t"
+                  description: "The date by which the user intends to achieve the card revision goal, in dd/mm/yyyy format.\t"
                   example: 30/07/2024
       tags:
-      - Goal
+        - Goal
     servers:
-    - url: http://dolphinflashcards.com/api
-      description: ''
+      - url: 'http://dolphinflashcards.com/api'
+        description: ''
   /update-goal-status:
     post:
       summary: Update Goal Status
@@ -1415,42 +1235,32 @@ paths:
                     type: object
                     x-stoplight:
                       id: vp5tii3oejq4d
-                    description: 'A unique identifier or key associated with each
-                      goal. '
+                    description: 'A unique identifier or key associated with each goal. '
                     properties:
                       data:
                         type: object
-                        description: ' An object containing goal-specific metrics,
-                          such as `goal_xp`, `start_date`, and `starting_xp` for XP
-                          goals or `cards_to_revise` and `cards_revised_so_far` for
-                          card goals '
+                        description: ' An object containing goal-specific metrics, such as `goal_xp`, `start_date`, and `starting_xp` for XP goals or `cards_to_revise` and `cards_revised_so_far` for card goals '
                         properties:
                           cards_revised_so_far:
                             type: string
-                            description: Associated with card goals, this indicates
-                              the number of cards revised so far.
+                            description: 'Associated with card goals, this indicates the number of cards revised so far.'
                             example: '0'
                           cards_to_revise:
                             type: string
-                            description: Associated with card goals, this specifies
-                              the total number of cards to be revised.
+                            description: 'Associated with card goals, this specifies the total number of cards to be revised.'
                             example: '4'
                       end_date:
                         type: string
                         example: 30/07/2024
-                        description: The date by which the current goal must end,
-                          in dd/mm/yyyy format.
+                        description: 'The date by which the current goal must end, in dd/mm/yyyy format.'
                       fail_date:
                         type: string
                         example: '" "'
-                        description: The date on which the goal's status changed to
-                          'failed'. This field is only populated if the goal fails;
-                          otherwise, it is an empty string.
+                        description: 'The date on which the goal''s status changed to ''failed''. This field is only populated if the goal fails; otherwise, it is an empty string.'
                       status:
                         type: string
                         example: in progress
-                        description: The current status of a goal, which can be either
-                          `completed`, `in progress`, or `failed`.
+                        description: 'The current status of a goal, which can be either `completed`, `in progress`, or `failed`.'
                       title:
                         type: string
                         example: Revise 4 cards by 15/07/2024
@@ -1458,54 +1268,40 @@ paths:
                       type:
                         type: string
                         example: Card
-                        description: ' The nature of a goal. Goals can either be of
-                          type `Card` or `XP`. '
+                        description: ' The nature of a goal. Goals can either be of type `Card` or `XP`. '
                   goalID-2:
                     type: object
                     x-stoplight:
                       id: 4f9jwlnkfq031
-                    description: 'A unique identifier or key associated with each
-                      goal. '
+                    description: 'A unique identifier or key associated with each goal. '
                     properties:
                       data:
                         type: object
-                        description: ' An object containing goal-specific metrics,
-                          such as `goal_xp`, `start_date`, and `starting_xp` for XP
-                          goals or `cards_to_revise` and `cards_revised_so_far` for
-                          card goals '
+                        description: ' An object containing goal-specific metrics, such as `goal_xp`, `start_date`, and `starting_xp` for XP goals or `cards_to_revise` and `cards_revised_so_far` for card goals '
                         properties:
                           goal_xp:
                             type: string
-                            description: Associated with XP goals, this specifies
-                              the target amount of experience points (XP) the user
-                              aims to achieve.
+                            description: 'Associated with XP goals, this specifies the target amount of experience points (XP) the user aims to achieve.'
                             example: '60'
                           start_date:
                             type: string
-                            description: ' Associated with XP goals, this indicates
-                              the date when the XP goal began. '
+                            description: ' Associated with XP goals, this indicates the date when the XP goal began. '
                             example: 15/07/2024
                           starting_xp:
                             type: string
-                            description: Associated with XP goals, this indicates
-                              the initial amount of experience points (XP) at the
-                              beginning of the goal.
+                            description: 'Associated with XP goals, this indicates the initial amount of experience points (XP) at the beginning of the goal.'
                             example: '0'
                       end_date:
                         type: string
-                        description: The date by which the current goal must end,
-                          in dd/mm/yyyy format.
+                        description: 'The date by which the current goal must end, in dd/mm/yyyy format.'
                         example: 30/07/2024
                       fail_date:
                         type: string
-                        description: The date on which the goal's status changed to
-                          'failed'. This field is only populated if the goal fails;
-                          otherwise, it is an empty string.
+                        description: 'The date on which the goal''s status changed to ''failed''. This field is only populated if the goal fails; otherwise, it is an empty string.'
                         example: ' " "'
                       status:
                         type: string
-                        description: The current status of a goal, which can be either
-                          `completed`, `in progress`, or `failed`.
+                        description: 'The current status of a goal, which can be either `completed`, `in progress`, or `failed`.'
                         example: in progress
                       title:
                         type: string
@@ -1513,50 +1309,42 @@ paths:
                         example: Gain 60 XP by 30/07/2024
                       type:
                         type: string
-                        description: ' The nature of a goal. Goals can either be of
-                          type `Card` or `XP`. '
+                        description: ' The nature of a goal. Goals can either be of type `Card` or `XP`. '
                         example: XP
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''string''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' ''} '
-                    description: Describes the nature of the error and provides a
-                      possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''} '
+                    description: Describes the nature of the error and provides a possible solution.
       operationId: post-update-goal-status
       x-stoplight:
         id: hmtbfg51sa572
-      description: Update the status of a goal. The possible values for the status
-        of a goal are `completed`, `in progress`, or `failed`. Returns an empty object
-        when the jwtToken provided is invalid.
+      description: 'Update the status of a goal. The possible values for the status of a goal are `completed`, `in progress`, or `failed`. Returns an empty object when the jwtToken provided is invalid.'
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
                   x-stoplight:
                     id: z79bhm434n5vx
-                  description: An identifier for the user who is updating the goal
-                    status.
+                  description: An identifier for the user who is updating the goal status.
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
       tags:
-      - Goal
+        - Goal
   /edit-card-goal:
     post:
       summary: Edit Card Goal
@@ -1574,30 +1362,21 @@ paths:
                   success:
                     type: string
                     example: Goal updated successfully
-                    description: Provides additional information confirming that the
-                      request was successful.
+                    description: Provides additional information confirming that the request was successful.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''goalID'':
-                      '''', ''newEndDate'': '''', ''newTitle'': '''', ''newCardsToRevise'':
-                      ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''goalID'': '''', ''newEndDate'': '''', ''newTitle'': '''', ''newCardsToRevise'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' '', ''goalID'':
-                      '' '', ''newEndDate'': '''', ''newTitle'': '' '', ''newCardsToRevise'':
-                      '' ''}'
-                    description: Describes the nature of the error and provides a
-                      possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalID'': '' '', ''newEndDate'': '''', ''newTitle'': '' '', ''newCardsToRevise'': '' ''}'
+                    description: Describes the nature of the error and provides a possible solution.
         '500':
           description: Internal Server Error
           content:
@@ -1629,11 +1408,11 @@ paths:
                   newTitle: Updated Goal
                   newCardsToRevise: 8
               required:
-              - jwtToken
-              - goalID
-              - newEndDate
-              - newTitle
-              - newCardsToRevise
+                - jwtToken
+                - goalID
+                - newEndDate
+                - newTitle
+                - newCardsToRevise
               properties:
                 jwtToken:
                   type: string
@@ -1641,13 +1420,11 @@ paths:
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 goalID:
                   type: string
-                  description: A unique identifier or key associated with the card
-                    goal being edited.
+                  description: A unique identifier or key associated with the card goal being edited.
                   example: '11110748168480479028433924465493243860761911102946223297681236368808083322222'
                 newEndDate:
                   type: string
-                  description: 'The new end date for the card goal, in `dd/mm/yyyy`
-                    format. '
+                  description: 'The new end date for the card goal, in `dd/mm/yyyy` format. '
                   example: 30/07/2024
                 newTitle:
                   type: string
@@ -1655,19 +1432,18 @@ paths:
                   example: Updated Goal
                 newCardsToRevise:
                   type: string
-                  description: 'Specifies the updated number of cards the user intends
-                    to revise for this goal. '
+                  description: 'Specifies the updated number of cards the user intends to revise for this goal. '
                   example: '4'
             examples:
               Example 1:
                 value:
-                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
                   goalID: goal1
                   newEndDate: 30/07/2024
                   newTitle: title1
                   newCardsToRevise: '4'
       tags:
-      - Goal
+        - Goal
   /edit-xp-goal:
     post:
       summary: Edit XP Goal
@@ -1685,30 +1461,21 @@ paths:
                   success:
                     type: string
                     example: Goal updated successfully
-                    description: Provides additional information confirming that the
-                      request was successful.
+                    description: Provides additional information confirming that the request was successful.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''goalID'':
-                      '''', ''newEndDate'': ''^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$'',
-                      ''newTitle'': '''', ''newGoalXP'': ''^\\d+$''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''goalID'': '''', ''newEndDate'': ''^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$'', ''newTitle'': '''', ''newGoalXP'': ''^\\d+$''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' '', ''goalID'':
-                      '' '', ''newEndDate'': '' '', ''newTitle'': '' '', ''newGoalXP'':
-                      '' ''}'
-                    description: 'Describes the nature of the error and provides a
-                      possible solution. '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalID'': '' '', ''newEndDate'': '' '', ''newTitle'': '' '', ''newGoalXP'': '' ''}'
+                    description: 'Describes the nature of the error and provides a possible solution. '
         '500':
           description: Internal Server Error.
           content:
@@ -1740,19 +1507,18 @@ paths:
                   newTitle: Updated Title for XP Goal
                   newGoalXP: '80'
               required:
-              - jwtToken
-              - goalID
-              - newEndDate
-              - newTitle
-              - newGoalXP
+                - jwtToken
+                - goalID
+                - newEndDate
+                - newTitle
+                - newGoalXP
               properties:
                 jwtToken:
                   type: string
                   description: 'Identifies the user who is editing their XP goal.    '
                 goalID:
                   type: string
-                  description: A unique identifier or key associated with the XP goal
-                    being edited.
+                  description: A unique identifier or key associated with the XP goal being edited.
                   example: '55335192866017507647804408894345572659406282731228567391554804537877046919111'
                 newEndDate:
                   type: string
@@ -1765,8 +1531,7 @@ paths:
                 newGoalXP:
                   type: string
                   example: '80'
-                  description: The new desired amount of experience points (XP) the
-                    user intends to achieve with this goal.
+                  description: The new desired amount of experience points (XP) the user intends to achieve with this goal.
             examples:
               Example 1:
                 value:
@@ -1776,7 +1541,7 @@ paths:
                   newTitle: title1
                   newGoalXP: '40'
       tags:
-      - Goal
+        - Goal
   /delete-goal:
     delete:
       summary: Delete Goal
@@ -1794,28 +1559,21 @@ paths:
                   success:
                     type: string
                     example: Goal deleted successfully
-                    description: Provides additional information confirming that the
-                      request was successful.
+                    description: Provides additional information confirming that the request was successful.
         '400':
-          description: A bad request error. Returned when the request body parameters
-            are not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameters are not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '''', ''goalID'':
-                      ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '''', ''goalID'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: 'Describes the nature of the error and provides a
-                      possible solution. '
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' '', ''goalID'':
-                      '' ''}'
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' '', ''goalID'': '' ''}'
       operationId: delete-delete-goal
       x-stoplight:
         id: nbiozq3qumve3
@@ -1827,11 +1585,11 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
                   goalID: goal1
               required:
-              - jwtToken
-              - goalID
+                - jwtToken
+                - goalID
               properties:
                 jwtToken:
                   type: string
@@ -1839,20 +1597,18 @@ paths:
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 goalID:
                   type: string
-                  description: A unique identifier or key associated with the goal
-                    being deleted.
+                  description: A unique identifier or key associated with the goal being deleted.
                   example: goal1
       tags:
-      - Goal
+        - Goal
   /update-heatmap:
     post:
       summary: Update Heat map
       tags:
-      - Statistics
+        - Statistics
       responses:
         '200':
-          description: OK. Returns an object that contains dates (formatted as `dd/mm/yyyy`)
-            as keys and the corresponding streak counts as values.
+          description: OK. Returns an object that contains dates (formatted as `dd/mm/yyyy`) as keys and the corresponding streak counts as values.
           content:
             application/json:
               schema:
@@ -1867,24 +1623,20 @@ paths:
                     x-stoplight:
                       id: cszxyu7bml0lm
                     example: '2'
-                    description: A key-value pair of dates (formatted as `dd-mm-yyyy`)
-                      and the user's streak count for that date.
+                    description: A key-value pair of dates (formatted as `dd-mm-yyyy`) and the user's streak count for that date.
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''''}'
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                     description: Provides more details about the error.
         '500':
           description: Internal server error.
@@ -1911,10 +1663,9 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  ? eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
-                  : '123'
+                  eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp: '123'
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
@@ -1926,11 +1677,10 @@ paths:
     post:
       summary: Get Heatmap
       tags:
-      - Statistics
+        - Statistics
       responses:
         '200':
-          description: OK. Returns an object that contains dates (formatted as `dd/mm/yyyy`)
-            as keys and the corresponding streak counts as values.
+          description: OK. Returns an object that contains dates (formatted as `dd/mm/yyyy`) as keys and the corresponding streak counts as values.
           content:
             application/json:
               schema:
@@ -1942,26 +1692,21 @@ paths:
                   16-07-2024:
                     type: string
                     example: '2'
-                    description: A key-value pair of dates (formatted as `dd-mm-yyyy`)
-                      and the user's streak count for that date.
+                    description: A key-value pair of dates (formatted as `dd-mm-yyyy`) and the user's streak count for that date.
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    description: 'Describes the nature of the error and provides a
-                      possible solution. '
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' ''}'
+                    description: 'Describes the nature of the error and provides a possible solution. '
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''}'
         '500':
           description: Internal Server Error.
           content:
@@ -1987,9 +1732,9 @@ paths:
               type: object
               x-examples:
                 Example 1:
-                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
@@ -1999,7 +1744,7 @@ paths:
     post:
       summary: Calculate Streak
       tags:
-      - Statistics
+        - Statistics
       responses:
         '200':
           description: OK.
@@ -2009,11 +1754,11 @@ paths:
                 type: array
                 x-examples:
                   Example 1:
-                  - streak: 0
+                    - streak: 0
                 items:
                   type:
-                  - object
-                  - integer
+                    - object
+                    - integer
                   properties:
                     '200':
                       type: integer
@@ -2025,23 +1770,19 @@ paths:
                       example: '1'
                       description: Specifies the user's calculated streak.
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': ''''}'
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''''}'
                 properties:
                   error:
                     type: string
-                    example: 'Your supplied json keys do not match the expected format.
-                      The request should be in the format: {''jwtToken'': '' ''}'
-                    description: Describes the nature of the error and provides a
-                      possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': '' ''}'
+                    description: Describes the nature of the error and provides a possible solution.
         '500':
           description: 'Internal server error. '
           content:
@@ -2054,44 +1795,41 @@ paths:
                 properties:
                   error:
                     type: string
-                    description: Describes the nature of the error and provides a
-                      possible reason.
+                    description: Describes the nature of the error and provides a possible reason.
                     example: User does not exist.
       operationId: post-calculate-streak
       x-stoplight:
         id: ma1gh4uftumtw
-      description: Calculate the user's streak, and increase it if necessary.
+      description: 'Calculate the user''s streak, and increase it if necessary.'
       parameters:
-      - schema:
-          type: boolean
-        in: query
-        name: increase
-        description: Can be added to the query string to increase a user's streak.
-          If needed, set `increase = true`
+        - schema:
+            type: boolean
+          in: query
+          name: increase
+          description: 'Can be added to the query string to increase a user''s streak. If needed, set `increase = true`'
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
                   x-stoplight:
                     id: ulxhv08jir4pf
-                  description: The unique identifier of the user to calculate the
-                    streak for.
+                  description: The unique identifier of the user to calculate the streak for.
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
             examples:
               Example 1:
                 value:
-                  jwtToken: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
+                  jwtToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp'
   /search:
     post:
       summary: Search
       tags:
-      - Card Management
+        - Card Management
       responses:
         '200':
           description: OK.
@@ -2101,11 +1839,11 @@ paths:
                 type: array
                 x-examples:
                   Example 1:
-                  - streak: 0
+                    - streak: 0
                 items:
                   type:
-                  - object
-                  - integer
+                    - object
+                    - integer
                   properties:
                     '200':
                       type: integer
@@ -2114,28 +1852,22 @@ paths:
                       description: HTTP status code indicating a successful operation.
                     streak:
                       type: array
-                      example:
-                      - name: Flashcard1
-                        id: '1'
+                      example: [{"name": "Flashcard1", "id": "1"}]
                       description: Specifies the user's calculated streak.
         '400':
-          description: A bad request error. Returned when the request body parameter
-            is not in the expected JSON format.
+          description: A bad request error. Returned when the request body parameter is not in the expected JSON format.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: Your supplied json keys do not match the expected format.
-                      The request should be in the format...
+                    error: 'Your supplied json keys do not match the expected format. The request should be in the format...'
                 properties:
                   error:
                     type: string
-                    example: Your supplied json keys do not match the expected format.
-                      The request should be in the format...
-                    description: Describes the nature of the error and provides a
-                      possible solution.
+                    example: 'Your supplied json keys do not match the expected format. The request should be in the format...'
+                    description: Describes the nature of the error and provides a possible solution.
         '500':
           description: 'Internal server error. '
           content:
@@ -2144,22 +1876,20 @@ paths:
                 type: object
                 x-examples:
                   Example 1:
-                    error: (Error Message)
+                    error: '(Error Message)'
                 properties:
                   error:
                     type: string
-                    description: Describes the nature of the error and provides a
-                      possible reason.
+                    description: Describes the nature of the error and provides a possible reason.
                     example: User does not exist.
       operationId: post-search
-      description: Search for a flashcard by it's title. The flashcard could be owned
-        by any user
+      description: 'Search for a flashcard by it''s title. The flashcard could be owned by any user'
       parameters:
-      - schema:
-          type: string
-        in: query
-        name: name
-        description: The name of the flashcard to search for
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: 'The name of the flashcard to search for'
   /import-flashcards:
     post:
       summary: Import Flashcard
@@ -2172,11 +1902,11 @@ paths:
                 type: array
                 x-examples:
                   Example 1:
-                  - success: true
+                    - success: true
                 items:
                   type:
-                  - object
-                  - integer
+                    - object
+                    - integer
                   properties:
                     '200':
                       type: integer
@@ -2187,22 +1917,20 @@ paths:
                       type: boolean
                       description: Indicates that a new flashcard was created successfully.
         '400':
-          description: A bad request error. Returned when a flashcard set with the
-            same name already exists.
+          description: A bad request error. Returned when a flashcard set with the same name already exists.
           content:
             application/json:
               schema:
                 type: object
                 x-examples:
                   Example 1:
-                    error: Flashcard set name already exists
+                    error: 'Flashcard set name already exists'
                 properties:
                   error:
                     type: string
-                    example: Flashcard set name already exists
+                    example: 'Flashcard set name already exists'
       operationId: import-flashcard
-      description: Import flashcards from a CSV file. The API accepts CSV files and
-        creates flashcards under the specified folder.
+      description: 'Import flashcards from a CSV file. The API accepts CSV files and creates flashcards under the specified folder.'
       requestBody:
         content:
           multipart/form-data:
@@ -2218,13 +1946,13 @@ paths:
                   delimiter: ','
                   firstRowOfData: 2
               required:
-              - file
-              - jwtToken
-              - flashcardName
-              - flashcardDescription
-              - folder
-              - delimiter
-              - firstRowOfData
+                - file
+                - jwtToken
+                - flashcardName
+                - flashcardDescription
+                - folder
+                - delimiter
+                - firstRowOfData
               properties:
                 file:
                   type: string
@@ -2244,23 +1972,19 @@ paths:
                   example: my first flashcard
                 folder:
                   type: string
-                  description: The name of the folder containing the flashcard sets.
-                    Set to "" to set as a top level flashcard, otherwise set it to
-                    the parent folder name. If there are multiple parent folders,
-                    add the folder name seperated by /
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by /'
                   example: top-level-parent-name/parent-name-2/parent-name-3
                 delimiter:
                   type: string
-                  description: The delimiter used in the CSV file (e.g., comma, semicolon).
+                  description: 'The delimiter used in the CSV file (e.g., comma, semicolon).'
                   example: ','
                 firstRowOfData:
                   type: string
-                  description: Defines the first row where actual data is stored in
-                    the CSV. Defaults to row 2 if not provided.
+                  description: 'Defines the first row where actual data is stored in the CSV. Defaults to row 2 if not provided.'
                   example: '2'
       parameters: []
       tags:
-      - Card management
+        - Card management
   /import-from-quizlet:
     post:
       summary: Import flashcards from Quizlet
@@ -2273,12 +1997,12 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
-              - folder
-              - flashcards
-              - term_def_separator
-              - term_separator
-              - flashcard_name
+                - jwtToken
+                - folder
+                - flashcards
+                - term_def_separator
+                - term_separator
+                - flashcard_name
               properties:
                 jwtToken:
                   type: string
@@ -2286,28 +2010,25 @@ paths:
                   example: eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImEzMmZkZDRiMTQ2Njc3NzE5YWIyMzcyODYxYmRlZDg5In0.eyJpc3MiOiJodHRwOi8vZG9scGhpbmZsYXNoY2FyZHMuY29tIiwiYXVkIjoiYXBpIiwic3ViIjoidU5RR2lIencxdk9EaExybTVDRWtaQ1ZoTU93MSIsImFjY2Vzc190b2tlbiI6IjRiZTA2NDNmLTFkOTgtNTczYi05N2NkLWNhOThhNjUzNDdkZCIsImFjY2Vzc190b2tlbl9yYXciOiJ0ZXN0IiwiaWF0IjoxNzI2Nzc0MTYzfQ.F-fxFitPQF-gGHyhGPGxE_zj_b8XJybqe4J_iYG66BC4Dqm4LTb8RpcDLyYUhRCcpphihpWGbdp
                 folder:
                   type: string
-                  description: The name of the folder containing the flashcard sets.
-                    Set to "" to set as a top level flashcard, otherwise set it to
-                    the parent folder name. If there are multiple parent folders,
-                    add the folder name seperated by /
+                  description: 'The name of the folder containing the flashcard sets. Set to "" to set as a top level flashcard, otherwise set it to the parent folder name. If there are multiple parent folders, add the folder name seperated by /'
                   example: top-level-parent-name/parent-name-2/parent-name-3
                 flashcards:
                   type: string
                   description: Copied flashcard data from Quizlet
-                  example: term1:definition1\nterm2:definition2
+                  example: 'term1:definition1\nterm2:definition2'
                 term_def_separator:
                   type: string
                   description: Separator between term and definition
-                  example: ','
+                  example: ","
                 term_separator:
                   type: string
                   description: Separator between term-definition pairs
-                  example: \n
+                  example: "\\n"
                 flashcard_name:
                   type: string
                   description: Name of the flashcard set
       responses:
-        '200':
+        "200":
           description: Flashcards imported successfully
           content:
             application/json:
@@ -2322,7 +2043,7 @@ paths:
                     type: string
                   card_count:
                     type: integer
-        '400':
+        "400":
           description: Invalid request format or flashcard parsing error
           content:
             application/json:
@@ -2331,7 +2052,7 @@ paths:
                 properties:
                   error:
                     type: string
-        '500':
+        "500":
           description: Internal server error.
           content:
             application/json:
@@ -2341,24 +2062,23 @@ paths:
                   error:
                     type: string
       tags:
-      - Card management
+        - Card management
   /import-anki-flashcards:
     post:
       summary: Import flashcards from an Anki .apkg file
-      description: Imports flashcards from an Anki deck package (.apkg) and stores
-        them in the specified folder
+      description: Imports flashcards from an Anki deck package (.apkg) and stores them in the specified folder
       operationId: import-anki-flashcards
       tags:
-      - Card management
+        - Card management
       requestBody:
         content:
           multipart/form-data:
             schema:
               type: object
               required:
-              - file
-              - jwtToken
-              - flashcardName
+                - file
+                - jwtToken
+                - flashcardName
               properties:
                 file:
                   type: string
@@ -2367,38 +2087,35 @@ paths:
                 jwtToken:
                   type: string
                   description: JWT authentication token
-                  example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIxMjM0NSJ9.abc123...
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiIxMjM0NSJ9.abc123..."
                 folder:
                   type: string
-                  description: Folder path to store the flashcards (empty string for
-                    root)
-                  default: ''
-                  example: Languages/Spanish
+                  description: Folder path to store the flashcards (empty string for root)
+                  default: ""
+                  example: "Languages/Spanish"
                 flashcardName:
                   type: string
                   description: Name for the new flashcard set
-                  example: Spanish Vocabulary
+                  example: "Spanish Vocabulary"
                 flashcardDescription:
                   type: string
                   description: Optional description for the flashcard set
-                  example: Imported from Anki deck
+                  example: "Imported from Anki deck"
                 termField:
                   type: string
                   description: Term field name (e.g., "Front") or index (0-based integer)
-                  default: Front
-                  example: Front
+                  default: "Front"
+                  example: "Front"
                 definitionField:
                   type: string
-                  description: Definition field name (e.g., "Back") or index (0-based
-                    integer)
-                  default: Back
-                  example: Back
+                  description: Definition field name (e.g., "Back") or index (0-based integer)
+                  default: "Back"
+                  example: "Back"
                 stripHtml:
                   type: string
-                  description: Whether to remove HTML tags from fields ("true" or
-                    "false" as string)
-                  default: 'true'
-                  example: 'true'
+                  description: Whether to remove HTML tags from fields ("true" or "false" as string)
+                  default: "true"
+                  example: "true"
       responses:
         '200':
           description: Successfully imported flashcards
@@ -2410,7 +2127,7 @@ paths:
                   flashcardID:
                     type: string
                     description: ID of the created flashcard set
-                    example: '987654321'
+                    example: "987654321"
         '400':
           description: Bad request
           content:
@@ -2421,16 +2138,10 @@ paths:
                   error:
                     type: string
                     examples:
-                      noFile: No file provided
-                      invalidFormat: Invalid Anki file format
-                      exists: Flashcard set name already exists
-                      noValidCards: 'No valid flashcards found. Possible reasons:
-
-                        1. Incorrect field selection
-
-                        2. All content was removed during HTML stripping
-
-                        3. Unsupported Anki note type'
+                      noFile: "No file provided"
+                      invalidFormat: "Invalid Anki file format"
+                      exists: "Flashcard set name already exists"
+                      noValidCards: "No valid flashcards found. Possible reasons:\n1. Incorrect field selection\n2. All content was removed during HTML stripping\n3. Unsupported Anki note type"
         '500':
           description: Internal server error
           content:
@@ -2440,39 +2151,32 @@ paths:
                 properties:
                   error:
                     type: string
-                    example: Internal server error occurred
+                    example: "Internal server error occurred"
   /get-quests:
     get:
       summary: Get Quests
       tags:
-      - Quests
+        - Quests
       description: Get all quests for the user, filtered by optional query parameters.
       parameters:
-      - in: query
-        name: questType
-        schema:
-          type: string
-          enum:
-          - cards_revised
-          - xp_gained
-          - time_spent
-        description: Filter by quest type.
-      - in: query
-        name: questSubType
-        schema:
-          type: string
-          enum:
-          - monthly
-          - friend
-        description: Filter by quest sub type.
-      - in: query
-        name: questStatus
-        schema:
-          type: string
-          enum:
-          - active
-          - finished
-        description: Filter by quest status.
+        - in: query
+          name: questType
+          schema:
+            type: string
+            enum: [cards_revised, xp_gained, time_spent]
+          description: Filter by quest type.
+        - in: query
+          name: questSubType
+          schema:
+            type: string
+            enum: [monthly, friend]
+          description: Filter by quest sub type.
+        - in: query
+          name: questStatus
+          schema:
+            type: string
+            enum: [active, finished]
+          description: Filter by quest status.
       requestBody:
         required: true
         content:
@@ -2480,7 +2184,7 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
+                - jwtToken
               properties:
                 jwtToken:
                   type: string
@@ -2552,9 +2256,8 @@ paths:
     post:
       summary: Create Quest
       tags:
-      - Quests
-      description: Create a new quest and add the user as a participant(owner from
-        the quest).
+        - Quests
+      description: Create a new quest and add the user as a participant(owner from the quest).
       requestBody:
         required: true
         content:
@@ -2562,11 +2265,11 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
-              - deadline
-              - questType
-              - questSubType
-              - quantity
+                - jwtToken
+                - deadline
+                - questType
+                - questSubType
+                - quantity
               properties:
                 jwtToken:
                   type: string
@@ -2577,16 +2280,11 @@ paths:
                   description: Deadline for the quest (ISO format).
                 questType:
                   type: string
-                  enum:
-                  - cards_revised
-                  - xp_gained
-                  - time_spent
+                  enum: [cards_revised, xp_gained, time_spent]
                   description: Type of quest.
                 questSubType:
                   type: string
-                  enum:
-                  - monthly
-                  - friend
+                  enum: [monthly, friend]
                   description: Sub type of quest.
                 quantity:
                   type: integer
@@ -2605,34 +2303,34 @@ paths:
                   quest:
                     type: object
                     properties:
-                      quest_id:
-                        type: string
-                      title:
-                        type: string
-                      deadline:
-                        type: string
-                        format: date-time
-                      quest_type:
-                        type: string
-                      quest_sub_type:
-                        type: string
-                      quantity:
-                        type: integer
-                      progress:
-                        type: integer
-                      participants:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            user_id:
-                              type: string
-                            status:
-                              type: string
-                            progress:
-                              type: integer
-                            isOwner:
-                              type: boolean
+                        quest_id:
+                          type: string
+                        title:
+                          type: string
+                        deadline:
+                          type: string
+                          format: date-time
+                        quest_type:
+                          type: string
+                        quest_sub_type:
+                          type: string
+                        quantity:
+                          type: integer
+                        progress:
+                          type: integer
+                        participants:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_id:
+                                type: string
+                              status:
+                                type: string
+                              progress:
+                                type: integer
+                              isOwner:
+                                type: boolean
         '400':
           description: Bad Request.
           content:
@@ -2666,7 +2364,7 @@ paths:
     delete:
       summary: Delete Quest
       tags:
-      - Quests
+        - Quests
       description: Delete a quest if the user is the owner.
       requestBody:
         required: true
@@ -2675,8 +2373,8 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
-              - questId
+                - jwtToken
+                - questId
               properties:
                 jwtToken:
                   type: string
@@ -2727,7 +2425,7 @@ paths:
     patch:
       summary: Update Quest Progress
       tags:
-      - Quests
+        - Quests
       description: Update the progress for the quest and for a user in a quest.
       requestBody:
         required: true
@@ -2736,9 +2434,9 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
-              - questId
-              - progress
+                - jwtToken
+                - questId
+                - progress
               properties:
                 jwtToken:
                   type: string
@@ -2763,38 +2461,38 @@ paths:
                   quest:
                     type: object
                     properties:
-                      quest_id:
-                        type: string
-                      title:
-                        type: string
-                      deadline:
-                        type: string
-                        format: date-time
-                      quest_type:
-                        type: string
-                      quest_sub_type:
-                        type: string
-                      quantity:
-                        type: integer
-                      progress:
-                        type: integer
-                      participants:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            user_id:
-                              type: string
-                            status:
-                              type: string
-                            progress:
-                              type: integer
-                            isOwner:
-                              type: boolean
-                              description: Optional - Just to all quest creators
-                            invited_by:
-                              type: string
-                              description: Optional - Just to invited users
+                        quest_id:
+                          type: string
+                        title:
+                          type: string
+                        deadline:
+                          type: string
+                          format: date-time
+                        quest_type:
+                          type: string
+                        quest_sub_type:
+                          type: string
+                        quantity:
+                          type: integer
+                        progress:
+                          type: integer
+                        participants:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_id:
+                                type: string
+                              status:
+                                type: string
+                              progress:
+                                type: integer
+                              isOwner:
+                                type: boolean
+                                description: Optional - Just to all quest creators
+                              invited_by:
+                                type: string
+                                description: Optional - Just to invited users
         '400':
           description: Bad request.
           content:
@@ -2827,7 +2525,7 @@ paths:
     post:
       summary: Invite to Quest
       tags:
-      - Quests
+        - Quests
       description: Invite another user to participate in a quest.
       requestBody:
         required: true
@@ -2836,9 +2534,9 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
-              - questId
-              - invitedId
+                - jwtToken
+                - questId
+                - invitedId
               properties:
                 jwtToken:
                   type: string
@@ -2902,7 +2600,7 @@ paths:
     patch:
       summary: Update Invite Status
       tags:
-      - Quests
+        - Quests
       description: Update the status of a quest invite (accept, decline, etc).
       requestBody:
         required: true
@@ -2911,9 +2609,9 @@ paths:
             schema:
               type: object
               required:
-              - jwtToken
-              - questId
-              - status
+                - jwtToken
+                - questId
+                - status
               properties:
                 jwtToken:
                   type: string
@@ -2923,10 +2621,7 @@ paths:
                   description: The ID of the quest.
                 status:
                   type: string
-                  enum:
-                  - accepted
-                  - pending
-                  - declined
+                  enum: [accepted, pending, declined]
                   description: The new status for the invite.
       responses:
         '200':
@@ -2967,509 +2662,7 @@ paths:
                 properties:
                   error:
                     type: string
-  /create-shared-folder:
-    post:
-      summary: Create a new shared folder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                folderName:
-                  type: string
-                description:
-                  type: string
-              required:
-              - jwtToken
-              - folderName
-              - description
-            example:
-              jwtToken: '...'
-              folderName: Advanced Spanish Vocabulary
-              description: Comprehensive Spanish vocabulary for advanced learners
-      responses:
-        '200':
-          description: Shared folder created successfully
-          content:
-            application/json:
-              example:
-                success: true
-                sharedFolderID: '12345'
-                inviteCode: abc123xyz
-        '401':
-          description: Invalid JWT
-        '500':
-          description: Server error
-  /get-shared-folders:
-    post:
-      summary: Get all shared folders for a user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-              required:
-              - jwtToken
-            example:
-              jwtToken: '...'
-      responses:
-        '200':
-          description: List of shared folders returned
-          content:
-            application/json:
-              example:
-              - id: folder1
-                name: Folder One
-                description: Example folder
-        '500':
-          description: Server error
-  /get-shared-folder:
-    post:
-      summary: Get details of a specific shared folder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-      responses:
-        '200':
-          description: Shared folder details returned
-        '403':
-          description: Access denied
-        '404':
-          description: Folder not found
-        '500':
-          description: Server error
-  /delete-shared-folder:
-    delete:
-      summary: Delete a shared folder (owner only)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-      responses:
-        '200':
-          description: Folder deleted successfully
-        '403':
-          description: Only owner can delete
-        '404':
-          description: Folder not found
-        '500':
-          description: Server error
-  /rename-shared-folder:
-    post:
-      summary: Rename a shared folder (owner only)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                newName:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-              - newName
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              newName: Updated Name
-      responses:
-        '200':
-          description: Folder renamed successfully
-        '403':
-          description: Only owner can rename
-        '500':
-          description: Server error
-  /add-flashcard-to-shared-folder:
-    post:
-      summary: Add a flashcard to a shared folder (owner only)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                flashcardID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-              - flashcardID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              flashcardID: flashcard-id
-      responses:
-        '200':
-          description: Flashcard added
-        '403':
-          description: Only owner can add
-        '404':
-          description: Flashcard not found
-        '500':
-          description: Server error
-  /remove-flashcard-from-shared-folder:
-    delete:
-      summary: Remove a flashcard from a shared folder (owner only)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                flashcardID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-              - flashcardID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              flashcardID: flashcard-id
-      responses:
-        '200':
-          description: Flashcard removed
-        '403':
-          description: Only owner can remove
-        '500':
-          description: Server error
-  /get-shared-folder-flashcards:
-    post:
-      summary: Get all flashcards in a shared folder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-      responses:
-        '200':
-          description: Flashcards listed
-        '403':
-          description: Not a member
-        '404':
-          description: Folder not found
-        '500':
-          description: Server error
-  /generate-shared-folder-invite:
-    post:
-      summary: Generate or regenerate invite link (owner only)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                expiryDays:
-                  type: integer
-              required:
-              - jwtToken
-              - sharedFolderID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              expiryDays: 30
-      responses:
-        '200':
-          description: Invite generated
-        '403':
-          description: Only owner can generate
-        '404':
-          description: Folder not found
-        '500':
-          description: Server error
-  /join-shared-folder:
-    post:
-      summary: Join shared folder using invite link
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                inviteCode:
-                  type: string
-              required:
-              - jwtToken
-              - inviteCode
-            example:
-              jwtToken: '...'
-              inviteCode: xyz789abc
-      responses:
-        '200':
-          description: Joined successfully
-        '400':
-          description: Invalid invite or already member
-        '404':
-          description: Folder not found
-        '500':
-          description: Server error
-  /leave-shared-folder:
-    post:
-      summary: Leave a shared folder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-      responses:
-        '200':
-          description: Left successfully
-        '400':
-          description: Not a member or owner cannot leave
-        '500':
-          description: Server error
-  /remove-user-from-shared-folder:
-    post:
-      summary: Remove a user from a shared folder (owner only)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                targetUserID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-              - targetUserID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              targetUserID: user-id
-      responses:
-        '200':
-          description: User removed
-        '400':
-          description: Invalid action
-        '403':
-          description: Only owner can remove
-        '500':
-          description: Server error
-  /get-shared-folder-members:
-    post:
-      summary: Get all members of a shared folder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-      responses:
-        '200':
-          description: Members listed
-        '403':
-          description: Not a member
-        '404':
-          description: Folder not found
-        '500':
-          description: Server error
-  /transfer-shared-folder-ownership:
-    post:
-      summary: Transfer ownership of a shared folder
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                newOwnerID:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-              - newOwnerID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              newOwnerID: user-id
-      responses:
-        '200':
-          description: Ownership transferred
-        '403':
-          description: Only owner can transfer
-        '400':
-          description: Invalid action
-        '500':
-          description: Server error
-  /copy-shared-flashcard-to-personal:
-    post:
-      summary: Copy shared flashcard to personal collection
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                flashcardID:
-                  type: string
-                personalFolder:
-                  type: string
-              required:
-              - jwtToken
-              - sharedFolderID
-              - flashcardID
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              flashcardID: flashcard-id
-              personalFolder: My Spanish
-      responses:
-        '200':
-          description: Flashcard copied
-        '403':
-          description: Not a member
-        '500':
-          description: Server error
-  /update-shared-card-progress:
-    post:
-      summary: Update progress for cards in a shared flashcard set
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                jwtToken:
-                  type: string
-                sharedFolderID:
-                  type: string
-                flashcardSetID:
-                  type: string
-                cardData:
-                  type: array
-                  items:
-                    type: object
-              required:
-              - jwtToken
-              - sharedFolderID
-              - flashcardSetID
-              - cardData
-            example:
-              jwtToken: '...'
-              sharedFolderID: folder-id
-              flashcardSetID: set-id
-              cardData:
-              - cardID: card1
-                review_status: '1.0'
-                last_review: 21/08/2025
-      responses:
-        '200':
-          description: Progress updated
-        '403':
-          description: Not a member
-        '500':
-          description: Server error
+
 components:
   schemas: {}
   securitySchemes:
@@ -3479,11 +2672,11 @@ components:
       in: query
   requestBodies: {}
 tags:
-- name: Account
-  description: Groups the endpoints required to create an account.
-- name: Card management
-  description: Groups the endpoints required to create and manage flashcards.
-- name: Goal
-  description: Groups the endpoints required to create and manage goals.
-- name: Statistics
-  description: Groups the endpoints required to track heatmap and streak.
+  - name: Account
+    description: Groups the endpoints required to create an account.
+  - name: Card management
+    description: Groups the endpoints required to create and manage flashcards.
+  - name: Goal
+    description: Groups the endpoints required to create and manage goals.
+  - name: Statistics
+    description: Groups the endpoints required to track heatmap and streak.
