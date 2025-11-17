@@ -20,7 +20,8 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
     const newGoalsButtonStyle = {
         marginLeft: view === "mobile" ? "16px" : "0px",
         marginRight: view === "mobile" ? "16px" : "0px",
-        width: view === "mobile" ? "90%" : "auto"
+        width: view === "mobile" ? "90%" : "auto",
+        paddingLeft: view === "mobile" ? "" : "8px"
     }
 
     const panelTitleStyle = {
