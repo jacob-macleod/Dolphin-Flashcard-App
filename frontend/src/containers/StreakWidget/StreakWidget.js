@@ -20,10 +20,6 @@ function StreakWidget () {
         width: "100%"
       }
       const overlayStyle = {
-        marginLeft: "16px",
-        marginRight: "0px",
-        width: "90%",
-        marginTop: "0px",
         marginBottom:"16px"
       }
 
@@ -33,7 +29,7 @@ function StreakWidget () {
       }, []);
 
     return <>
-    <WhiteOverlay style={overlayStyle}>
+    <WhiteOverlay style={overlayStyle} className="grid-item-child">
         <div style={{display: "inline-flex"}}>
         <DelayedElement child={<Header text={streak} style={{margin: "8px", marginTop: "0px"}}/>} childValue={streak} />
         <Heading4 color="blue" text="days streak" style={{justifyContent: "space-around", alignItems: "center", padding: "8px", paddingTop: "0px", paddingLeft: "0px"}}/>

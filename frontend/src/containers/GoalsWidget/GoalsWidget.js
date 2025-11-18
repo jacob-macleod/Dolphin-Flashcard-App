@@ -28,9 +28,6 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
         padding: "8px"
       }
       const overlayStyle = {
-        marginLeft: "16px",
-        marginRight: "0px",
-        width: "90%"
       }
 
       useEffect(() => {
@@ -38,7 +35,7 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
       }, [newGoalPopupVisible, editGoalPopupVisible]);
 
     return <>
-    <WhiteOverlay style={overlayStyle}>
+    <WhiteOverlay style={overlayStyle} className="grid-item-child">
         <Heading5 text="Goals" style={panelTitleStyle} />
 
         <div style={newGoalsButtonStyle}>

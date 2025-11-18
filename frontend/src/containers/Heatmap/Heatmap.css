@@ -1,6 +1,6 @@
 .heatmap-container{
     height: max-content;
-    padding: 16px;
+    padding: 8px;
     display: flex;
     flex-wrap: wrap;
 }
