@@ -112,7 +112,7 @@ function Dashboard() {
         </GridItem>
 
         {view == "desktop" ?
-        <GridItem style={{padding: "0px"}}>
+        <GridItem style={{padding: "0px 16px 0px 0px"}}>
           {third_collum}
         </GridItem>
         : <></>}
