@@ -21,7 +21,7 @@ const FlashcardSearch = ({ view, currentValue="", handleSearchClick}) => {
         borderRadius="8px 0 0 8px"
         paddingBottom="8px"
         placeholder="Search..."
-        width={view === "mobile"? "calc(100% - 26px)" : "calc(100% - 42px)"}
+        width={view === "mobile"? "calc(100% - 26px)" : "100%"}
       />
       <Button
         text="Search"

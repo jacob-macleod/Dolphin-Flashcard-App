@@ -137,15 +137,16 @@ function Flashcards() {
                   height: "max-content",
                   padding: "16px",
                   paddingBottom: view === "mobile" ? "80px" : "",
-                  width: view === "desktop" ? "100%" : "calc(100% - 16px)"
+                  width: view === "desktop" ? "100%" : "calc(100% - 16px)",
                 }}
+                visible={view === 'mobile' ? false : true}
               >
                 <div style={{ maxWidth: "1200px", margin: "auto", width: "100%" }}>
                   <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} flashcardID={flashcardID}/>
                   <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
                   <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} />
 
-                  <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} />
+                  <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} style={{marginLeft: "16px"}}/>
 
                   <div className='two-column-text'>
                     <BoldParagraph text="Term:" />
