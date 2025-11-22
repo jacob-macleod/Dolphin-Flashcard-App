@@ -235,8 +235,8 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                 />
               </div>
               {!isFullscreen &&(
-                <div style={{position:"relative",width:"100%"}}>
-              <ReviewBarChartKey style={{ paddingTop: '8px'}} />
+                <div style={{position:"relative",width:"100%", marginLeft: "8px"}}>
+                  <ReviewBarChartKey style={{ paddingTop: '8px'}} />
               {view !== "mobile"  ?
                 <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
                 : <></>
