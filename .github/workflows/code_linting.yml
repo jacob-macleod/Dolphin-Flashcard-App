@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x' # Use the appropriate Python version
+          python-version: '3.12' # Use the appropriate Python version. 3.12 uses an older version of pip which is compatable with the expected version of ast
 
       - name: Setup database config
         run: |
