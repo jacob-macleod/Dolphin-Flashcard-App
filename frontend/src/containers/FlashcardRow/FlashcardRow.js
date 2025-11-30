@@ -33,7 +33,7 @@ function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setIni
                 flashcardID={flashcardID}
             />
             <div>
-                <Image url={ThreeDots} width="16px" minWidth="16px" maxHeight="16px" onClick={handleClick}/>
+                <Image url={ThreeDots} width="16px" minWidth="16px" maxHeight="16px" paddingRight='0px' onClick={handleClick}/>
             </div>
             <div></div>
             <div></div>

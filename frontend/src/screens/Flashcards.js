@@ -241,7 +241,8 @@ function Flashcards() {
               height: 'max-content',
               paddingBottom: view === 'mobile' ? '80px' : '',
               width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
-              padding: '0px',
+              padding: "0px",
+              marginTop: '16px',
             }}
             visible={view === 'mobile' ? false : true}
           >

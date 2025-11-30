@@ -158,7 +158,7 @@ function CardOverview({
             }
             style={{
                 width: "100%",
-                margin: "7px",
+                margin: "8px",
                 padding: "0px",
                 height: fullscreen ? "70%" : "90%",
             }}

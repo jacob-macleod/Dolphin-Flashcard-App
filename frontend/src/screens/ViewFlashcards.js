@@ -90,6 +90,7 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
           style={{
             paddingLeft: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
             paddingRight: view !== "mobile" ? flashcardBoxHorizontalPadding : "",
+            marginTop: "16px",
             paddingTop: "0px",
             paddingBottom: view === "mobile" ? "0px" : "32px",
             width: view === "mobile" ? "100%" : "",

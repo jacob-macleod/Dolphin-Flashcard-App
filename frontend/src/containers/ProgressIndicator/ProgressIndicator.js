@@ -5,9 +5,8 @@ import 'react-circular-progressbar/dist/styles.css';
 
 function ProgressIndicator({start, end}) {
 
-    
     return (<>
-        <div style={{width: "96px", height: "96px", padding: "16px"}}>
+        <div style={{width: "130px", height: "130px", alignContent: "center"}}>
             <CircularProgressbarWithChildren
                 value={(start/end)*100}
                 strokeWidth={12}
