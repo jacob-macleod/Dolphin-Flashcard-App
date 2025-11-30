@@ -20,7 +20,7 @@ function HamburgerBar ({ menuVisible, setMenuVisible, selectedItem }) {
                         paddingLeft: "8px",
                         paddingRight: "8px",
                         display: "inline-flex",
-                        alignItems: "center",
+                        alignItems: "center"
                     }}/>
                     <Image width={iconSize} height={iconSize} minWidth={iconSize} url={greyHamburger} onClick={clickEvent} paddingRight='16px'/>
                 </div>

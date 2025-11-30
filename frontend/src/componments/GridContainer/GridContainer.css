@@ -2,8 +2,7 @@
   display: grid;
   z-index: 2;
   position: absolute;
-  padding-right: 7vw;
-  width: calc(100vw - 85px);
+  width: 100%;
   height: 100vh;
 }
 

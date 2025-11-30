@@ -42,7 +42,14 @@ function AICardRow({ front, back, view, showEditPopup, setInitialTerm, setInitia
 
             />
             <div>
-                <Image url={ThreeDots} width="16px" minWidth="16px" maxHeight="16px" style={{marginLeft:'20px'}} onClick={handleClick}/>
+                <Image
+                    url={ThreeDots}
+                    width="16px"
+                    minWidth="16px"
+                    maxHeight="16px"
+                    style={{marginLeft:'20px'}}
+                    onClick={handleClick}
+                />
             </div>
             <div></div>
             <div></div>
