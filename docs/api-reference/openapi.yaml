@@ -792,7 +792,7 @@ paths:
                 Example 1:
                   value:
                     error: 'Your supplied json keys do not match the expected format. The request should be in the format: {''jwtToken'': ''string''}'
-      operationId: get-get-today-cards
+      operationId: get-today-cards
       x-stoplight:
         id: 144ypjxh6u3n4
       description: 'Get all the flashcards to be learned today for a user. If a card''s review status is `0.0`, it is not started; if it is `0.x`, it is actively studying; if it is >= `1.x`, it is learned.'
@@ -1890,7 +1890,7 @@ paths:
           in: query
           name: name
           description: 'The name of the flashcard to search for'
-  /import-flashcards:
+  /import-flashcard:
     post:
       summary: Import Flashcard
       responses:
@@ -2662,6 +2662,515 @@ paths:
                 properties:
                   error:
                     type: string
+  /create-shared-folder:
+    post:
+      summary: Create New Shared Folder
+      x-stoplight:
+        id: 144ypjxh6u3d4
+      tags:
+        - Card management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                folderName:
+                  type: string
+                description:
+                  type: string
+              required:
+              - jwtToken
+              - folderName
+              - description
+              example:
+                jwtToken: '...'
+                folderName: Advanced Spanish Vocabulary
+                description: Comprehensive Spanish vocabulary for advanced learners
+      responses:
+        '200':
+          description: Shared folder created successfully
+          content:
+            application/json:
+              schema:
+                example:
+                  success: true
+                  sharedFolderID: '12345'
+                  inviteCode: abc123xyz
+        '401':
+          description: Invalid JWT
+        '500':
+          description: Server error
+      operationId: create-shared-folder
+      description: ''
+  /get-shared-folders:
+    post:
+      tags:
+        - Card management
+      operationId: get-shared-folders
+      description: ''
+      x-stoplight:
+        id: 144ypjxh6u3d5
+      summary: Get all shared folders for a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+              required:
+              - jwtToken
+              example:
+                jwtToken: '...'
+      responses:
+        '200':
+          description: List of shared folders returned
+          content:
+            application/json:
+                example:
+                  - id: folder1
+                    name: Folder One
+                    description: Example folder
+        '500':
+          description: Server error
+  /get-shared-folder:
+    post:
+      summary: Get details of a specific shared folder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+              required:
+              - jwtToken
+              - sharedFolderID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+      responses:
+        '200':
+          description: Shared folder details returned
+        '403':
+          description: Access denied
+        '404':
+          description: Folder not found
+        '500':
+          description: Server error
+  /delete-shared-folder:
+    delete:
+      summary: Delete a shared folder (owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+              required:
+              - jwtToken
+              - sharedFolderID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+      responses:
+        '200':
+          description: Folder deleted successfully
+        '403':
+          description: Only owner can delete
+        '404':
+          description: Folder not found
+        '500':
+          description: Server error
+  /rename-shared-folder:
+    post:
+      summary: Rename a shared folder (owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                newName:
+                  type: string
+              required:
+              - jwtToken
+              - sharedFolderID
+              - newName
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                newName: Updated Name
+      responses:
+        '200':
+          description: Folder renamed successfully
+        '403':
+          description: Only owner can rename
+        '500':
+          description: Server error
+  /add-flashcard-to-shared-folder:
+    post:
+      summary: Add a flashcard to a shared folder (owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                flashcardID:
+                  type: string
+              required:
+                - jwtToken
+                - sharedFolderID
+                - flashcardID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                flashcardID: flashcard-id
+      responses:
+        '200':
+          description: Flashcard added
+        '403':
+          description: Only owner can add
+        '404':
+          description: Flashcard not found
+        '500':
+          description: Server error
+  /remove-flashcard-from-shared-folder:
+    delete:
+      summary: Remove a flashcard from a shared folder (owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                flashcardID:
+                  type: string
+              required:
+              - jwtToken
+              - sharedFolderID
+              - flashcardID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                flashcardID: flashcard-id
+      responses:
+        '200':
+          description: Flashcard removed
+        '403':
+          description: Only owner can remove
+        '500':
+          description: Server error
+  /get-shared-folder-flashcards:
+    post:
+      summary: Get all flashcards in a shared folder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+              required:
+              - jwtToken
+              - sharedFolderID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+      responses:
+        '200':
+          description: Flashcards listed
+        '403':
+          description: Not a member
+        '404':
+          description: Folder not found
+        '500':
+          description: Server error
+  /generate-shared-folder-invite:
+    post:
+      summary: Generate or regenerate invite link (owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                expiryDays:
+                  type: integer
+              required:
+              - jwtToken
+              - sharedFolderID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                expiryDays: 30
+      responses:
+        '200':
+          description: Invite generated
+        '403':
+          description: Only owner can generate
+        '404':
+          description: Folder not found
+        '500':
+          description: Server error
+  /join-shared-folder:
+    post:
+      summary: Join shared folder using invite link
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                inviteCode:
+                  type: string
+              required:
+              - jwtToken
+              - inviteCode
+              example:
+                jwtToken: '...'
+                inviteCode: xyz789abc
+      responses:
+        '200':
+          description: Joined successfully
+        '400':
+          description: Invalid invite or already member
+        '404':
+          description: Folder not found
+        '500':
+          description: Server error
+  /leave-shared-folder:
+    post:
+      summary: Leave a shared folder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+              required:
+                - jwtToken
+                - sharedFolderID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+      responses:
+        '200':
+          description: Left successfully
+        '400':
+          description: Not a member or owner cannot leave
+        '500':
+          description: Server error
+  /remove-user-from-shared-folder:
+    post:
+      summary: Remove a user from a shared folder (owner only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                targetUserID:
+                  type: string
+              required:
+                - jwtToken
+                - sharedFolderID
+                - targetUserID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                targetUserID: user-id
+      responses:
+        '200':
+          description: User removed
+        '400':
+          description: Invalid action
+        '403':
+          description: Only owner can remove
+        '500':
+          description: Server error
+  /get-shared-folder-members:
+    post:
+      summary: Get all members of a shared folder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+              required:
+                - jwtToken
+                - sharedFolderID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+      responses:
+        '200':
+          description: Members listed
+        '403':
+          description: Not a member
+        '404':
+          description: Folder not found
+        '500':
+          description: Server error
+  /transfer-shared-folder-ownership:
+    post:
+      summary: Transfer ownership of a shared folder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                newOwnerID:
+                  type: string
+              required:
+              - jwton/json:
+      responses:
+        '200':
+          description: Flashcard copied
+        '403':
+          description: Not a member
+        '500':
+          description: Server error
+  /copy-shared-flashcard-to-personal:
+    post:
+      operationId: copy-shared-flashcard-to-personal
+      summary: Copy shared flashcard to personal collection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                flashcardID:
+                  type: string
+                personalFolder:
+                  type: string
+              required:
+                - jwtToken
+                - sharedFolderID
+                - flashcardID
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                flashcardID: flashcard-id
+                personalFolder: My Spanish
+      responses:
+        '200':
+          description: Flashcard copied
+        '403':
+          description: Not a member
+        '500':
+          description: Server error
+  /update-shared-card-progress:
+    post:
+      summary: Update progress for cards in a shared flashcard set
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                jwtToken:
+                  type: string
+                sharedFolderID:
+                  type: string
+                flashcardSetID:
+                  type: string
+                cardData:
+                  type: array
+                  items:
+                    type: object
+              required:
+                - jwtToken
+                - sharedFolderID
+                - flashcardSetID
+                - cardData
+              example:
+                jwtToken: '...'
+                sharedFolderID: folder-id
+                flashcardSetID: set-id
+                cardData:
+                - cardID: card1
+                  review_status: '1.0'
+                  last_review: 21/08/2025
+      responses:
+        '200':
+          description: Progress updated
+        '403':
+          description: Not a member
+        '500':
+          description: Server error
 
 components:
   schemas: {}
