@@ -50,7 +50,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
                     url={showChildren ?
                         selected ? verticalTriangleWhite : verticalTriangle
                         : selected ? horizontalTriangleWhite : horizontalTriangle}
-                    width='16px' height="16px"
+                    width='16px' height="16px" minWidth='16px'
                     onClick={toggleChildren}
                 />
                 <Paragraph text={name} style={{
