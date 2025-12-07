@@ -22,6 +22,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.5.3 - 2025-12-07
+
+### Changed
+
+- Added various small padding improvements
+- Made the flashcard formatting buttons have the decoration that they apply
+
 ## 7.5.2 - 2025-11-30
 
 ### Changed
