@@ -59,9 +59,6 @@
     margin: 0px;
   }
 
-.text-effects{
-    display: flex;
-}
 
 .selected-color-style{
     color: var(--Primary-Colour, #6A84C5);
@@ -70,5 +67,34 @@
     font-style: normal;
     font-weight: 700;
     line-height: 20px; /* 125% */
-    margin-top: 8px;
+    margin: 0px;
+}
+
+.text-effects .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px; /* spacing between buttons */
+}
+
+.text-effects .color-picker-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.text-effects .color-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 2;
+}
+
+.text-effects .toolbar > * {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
