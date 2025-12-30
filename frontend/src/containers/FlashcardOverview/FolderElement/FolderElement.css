@@ -18,7 +18,7 @@
     background-color: #6A84C5;
     width: fit-content;
     border-radius: 8px;
-    padding: 8px;
+    padding: 8px 16px 8px 11px;
 }
 
 body.dark-theme .flashcard-item{
