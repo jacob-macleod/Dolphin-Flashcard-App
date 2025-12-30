@@ -28,6 +28,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - Added various small padding improvements
 - Made the flashcard formatting buttons have the decoration that they apply, and made them spill over to subsequent lines if they do not fit in the currrent line
+- Added padding and alignment fixes for generate flashcards with AI page
 
 ## 7.5.2 - 2025-11-30
 

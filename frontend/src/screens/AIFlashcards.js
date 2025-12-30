@@ -152,27 +152,35 @@ function AIFlashcards() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              paddingTop: '16px',
             }}
             visible={view === "desktop" ? true : false}
 
           >
-            <div style={{ width: '90%', display: 'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', marginLeft: 'auto', marginRight: 'auto', marginTop: '100px', marginBottom: '30px', height: '100px' }}>
+            <div
+              style={{
+                width: '90%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                marginTop: '16px',
+                marginLeft: '20px',
+                height: '100px'
+              }}>
               <PromptBar width={"100%"}
                 style={{ margin: "auto" }}
 
                 setSearchTerm={setPrompt}
 
                 height={'100%'}
-                borderRadius="8px 0 0 8px"
+                borderRadius="8px"
               />
               <Button
                 text="Submit"
                 style={{
                   margin: "0px",
-                  width: "114px",
-                  borderRadius: "0px 8px 8px 0px",
-                  height: "122px",
-                  marginTop: "0px"
+                  borderRadius: "8px",
+                  marginLeft: "8px",
                 }}
                 onClick={() => {
                   setAIFlashcardData(null)
@@ -180,6 +188,15 @@ function AIFlashcards() {
                 }}
               />
             </div>
+
+            <Paragraph
+              text="AI-generated flashcards may contain errors. Please ensure you have checked flashcards."
+              style={{
+                textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)",
+                paddingBottom: view === "mobile" ? "70px" : "0px"
+              }}
+            />
+
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', margin: 'auto' }}>
               <div className='two-column-text'>
                 <BoldParagraph text="Term:" />
@@ -234,14 +251,6 @@ function AIFlashcards() {
                 view={view}
               />
 
-
-              <Paragraph
-                text="AI-generated flashcards may contain errors. Please ensure you have checked flashcards."
-                style={{
-                  textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)",
-                  paddingBottom: view === "mobile" ? "70px" : "0px"
-                }}
-              />
             </div>
           </WhiteOverlay>
           </MobilePageWrapper>
