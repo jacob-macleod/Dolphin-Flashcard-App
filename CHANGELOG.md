@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.5.4 - 2026-01-01
+
+### Fixed
+
+- Fixed bug when creating flashcards
+
 ## 7.5.3 - 2025-12-07
 
 ### Changed

@@ -246,8 +246,11 @@ class ApiManager {
     data = null
   ) {
     /*
-        Create a flashcard
-        */
+      Create a flashcard
+    */
+    if (cards == undefined) {
+      cards = [];
+    }
     const url = 'create-flashcard';
     if (data === null) {
       data = {
