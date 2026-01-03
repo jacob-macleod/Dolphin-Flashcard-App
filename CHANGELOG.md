@@ -22,6 +22,16 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.6.0 - 2025-01-03
+
+### Added
+
+- Email/password authentication using Firebase Auth
+- EmailSignupForm component for user registration and login with email/password
+- Scroll functionality for "Get Started" button to signup section
+- Support for both Google OAuth and email/password authentication methods
+- Password complexity validation handled by Firebase Auth
+
 ## 7.5.3 - 2025-12-07
 
 ### Changed

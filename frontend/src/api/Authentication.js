@@ -137,6 +137,53 @@ export function getCookie(cookieName) {
     return null;
   }  
 
+export function signUpWithEmail(email, password, displayName, setJwtToken, setErrorMessage) {
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        setErrorMessage('Please enter a valid email address.');
+        return;
+    }
+    
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(async (result) => {
+            const user = result.user;
+            await user.updateProfile({ displayName: displayName });
+            const idToken = await user.getIdToken();
+            
+            createAccount(user.uid, displayName, idToken, setJwtToken, "test", "4be0643f-1d98-573b-97cd-ca98a65347dd", setErrorMessage);
+            createCookie('userName', displayName);
+        })
+        .catch((error) => {
+            setErrorMessage(getFirebaseErrorMessage(error.code));
+        });
+}
+
+export function signInWithEmail(email, password, setJwtToken, setErrorMessage) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(async (result) => {
+            const user = result.user;
+            const idToken = await user.getIdToken();
+            
+            signIn(user.uid, idToken, setJwtToken, "test", "4be0643f-1d98-573b-97cd-ca98a65347dd", setErrorMessage);
+            createCookie('userName', user.displayName || user.email);
+        })
+        .catch((error) => {
+            setErrorMessage(getFirebaseErrorMessage(error.code));
+        });
+}
+
+function getFirebaseErrorMessage(errorCode) {
+    switch (errorCode) {
+        case 'auth/email-already-in-use': return 'Email already registered. Try signing in.';
+        case 'auth/weak-password': return 'Password should be at least 6 characters.';
+        case 'auth/invalid-email': return 'Please enter a valid email address.';
+        case 'auth/user-not-found': return 'No account found with this email.';
+        case 'auth/wrong-password': return 'Incorrect password.';
+        default: return 'An error occurred. Please try again.';
+    }
+}
+
 export function logOut() {
     firebase.auth().signOut().then(function() {
         console.log('Signed Out');

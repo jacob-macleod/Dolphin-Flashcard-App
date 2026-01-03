@@ -23,6 +23,8 @@ import DevSection from '../componments/DevSection';
 import LandingPageFooter from '../componments/LandingPageFooter';
 import MailChimpInput from '../containers/MailChimpWidget/MailChimpInput';
 import ProjectProgress from '../componments/ProjectProgress';
+import Button from '../componments/Button';
+import EmailSignupForm from '../componments/EmailSignupForm';
 import SignInButton from '../componments/SignInButton';
 
 function FeaturesBento({
@@ -68,7 +70,12 @@ function FeaturesBento({
           justifyContent: 'flex-start',
         }}
       >
-        <SignInButton setJwtToken={setJwtToken} />
+        <Button 
+          text="Get Started"
+          onClick={() => {
+            document.getElementById('signup-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
       </div>
     </div>
   );
@@ -416,11 +423,11 @@ function LandingPage({ setJwtToken }) {
               </div>
             </div>
           </div>
-          <div>
+          <div id="signup-section">
             <Header text="So, what are you waiting for?" />
             <div
               style={{
-                width: view === 'mobile' ? '100%' : 0.3 * width,
+                width: view === 'mobile' ? '100%' : 0.4 * width,
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
@@ -428,15 +435,7 @@ function LandingPage({ setJwtToken }) {
                 margin: '0 auto',
               }}
             >
-              <Paragraph
-                text="Sign up to our newsletter today to get updates about dolphin flashcards - and to be notified when we launch!"
-                style={{
-                  color: '#616583',
-                  lineHeight: '30px',
-                }}
-              />
-
-              <MailChimpInput />
+              <EmailSignupForm setJwtToken={setJwtToken} />
             </div>
           </div>
           <LandingPageFooter width={width} view={view} />
