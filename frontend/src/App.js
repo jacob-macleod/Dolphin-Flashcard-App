@@ -14,6 +14,8 @@ import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
 import Settings from './screens/Settings';
+import SharedFolder from './screens/SharedFolder';
+import CreatedSharedFolder from './screens/CreatedSharedFolder';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -125,6 +127,26 @@ function App() {
                 jwtToken={jwtToken}
                 setJwtToken={setJwtToken}
                 child={<CommunityCategory />}
+              />
+            }
+          />
+          <Route
+            path="/SharedFolder"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<SharedFolder />}
+              />
+            }
+          />
+          <Route
+            path="/CreatedSharedFolder"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<CreatedSharedFolder />}
               />
             }
           />

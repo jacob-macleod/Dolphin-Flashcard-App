@@ -18,7 +18,7 @@ import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolde
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
 import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
 import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
-import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
+import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup'
 import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
 import ImportFromAnkiDialogue from '../containers/Modal/ImportFromAnkiDialogue';
 import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
@@ -35,6 +35,7 @@ import ImportCsvPopup from '../containers/Modal/ImportFromCSVDialogue/ImportFrom
 import GhostButton from '../componments/GhostButton';
 import flashcardIcon from '../static/flashcard-set-icon.svg';
 import folderIcon from '../static/folder-icon.svg';
+import ImportQuizletPopup from '../containers/Modal/ImportQuizletPopup/ImportQuizletPopup';
 import ankiIcon from '../static/anki.svg';
 import quizletIcon from '../static/quizlet.svg';
 import importIcon from '../static/import-icon.svg';
@@ -45,6 +46,9 @@ import Heading5 from '../componments/Text/Heading5/Heading5';
 import Text from '../componments/Text/Text/Text';
 import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
+import CreateNewSharedFolderPopup from '../containers/Modal/CreateNewSharedFolderPopup/CreateNewSharedFolderPopup';
+
+
 
 function Flashcards() {
   // Set general variables
@@ -70,11 +74,15 @@ function Flashcards() {
     useState(false);
   const [importFromCSVDialogueVisible, setImportFromCSVDialogueVisible] =
     useState(false);
+  const [importCsvDialogueVisible, setImportCsvDialogueVisible] =
+    useState(false);
   const [
     importFromQuizletDialogueVisible,
     setImportFromQuizletDialogueVisible,
   ] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] = useState(false);
+  const [createNewSharedFolderPopupVisible, setCreateNewSharedFolderPopupVisible] = useState(false);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -89,6 +97,8 @@ function Flashcards() {
   }, [view]);
 
   const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
+
+  useEffect(() => {console.log(todayCards)}, [todayCards]);
 
   function studyMultipleCards() {
     let urlPath = '';
@@ -162,6 +172,19 @@ function Flashcards() {
         view={view}
         setReload={setReload}
       />
+      <ImportCsvPopup
+        visible={importCsvDialogueVisible}
+        setVisible={setImportCsvDialogueVisible}
+        view={view}
+        reload={reload}
+        setReload={setReload}
+      />
+      <ImportQuizletPopup
+        visible={importFromQuizletDialogueVisible}
+        setVisible={setImportFromQuizletDialogueVisible}
+        view={view}
+        setReload={setReload}
+      />
       <DeleteFlashcardConfirmation
         visible={deleteFlashcardConfirmationVisible}
         setVisible={showDeleteFlashcardConfirmation}
@@ -230,84 +253,63 @@ function Flashcards() {
               padding: '0px',
             }}
             visible={view === 'mobile' ? false : true}
-          >
+        >
             <div
-              style={{
-                maxWidth: '1200px',
-                margin: 'auto',
-                padding: view === 'mobile' ? '0px' : '16px',
-                height: view === 'mobile' ? '100%' : '',
-                overflowY: 'scroll',
-              }}
-            >
-              <MobilePageWrapper view={view} itemClicked="flashcards">
-                <div
-                  className={view === 'mobile' ? 'flashcards-page-content' : ''}
-                >
-                  <SearchBar
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    view={view}
-                    width={'90%'}
-                    marginLeft="0px"
-                  />
-                  {view !== 'mobile' ? <br></br> : <></>}
-                  {view !== 'mobile' ? <br></br> : <></>}
-                  <GridContainer
-                    classType="review-bar-wrapper"
-                    layout={view === 'desktop' ? '260px auto 80px' : 'auto'}
-                  >
-                    {view === 'desktop' ? <GridItem /> : <></>}
-                    <ReviewBarChartKey view={view} />
-                    {view === 'desktop' ? <GridItem /> : <></>}
-                  </GridContainer>
-                  <div>
-                    <div
-                      style={{
-                        height: view === 'mobile' ? '100%' : 'auto',
-                        overflowY: view === 'mobile' ? 'scroll' : '',
-                      }}
-                    >
-                      <DelayedElement
-                        child={
-                          <FlashcardOverview
-                            flashcardData={todayCards}
-                            setMoveFolderDialogueVisible={
-                              setMoveFolderDialogueVisible
-                            }
-                            showDeleteFlashcardConfirmation={
-                              showDeleteFlashcardConfirmation
-                            }
-                            setRenameFlashcardSetPopupVisible={
-                              setRenameFlashcardSetPopupVisible
-                            }
-                            setDeleteFolderConfirmationVisible={
-                              setDeleteFolderConfirmationVisible
-                            }
-                            setRenameFolderPopupVisible={
-                              setRenameFolderPopupVisible
-                            }
-                            view={view}
-                            selected={selected}
-                            setSelected={setSelected}
-                          />
-                        }
-                        childValue={todayCards}
-                      />
+            style={{
+              maxWidth: '1200px',
+              margin: 'auto',
+              padding: view === 'mobile' ? '0px' : '16px',
+              height: view === 'mobile' ? '100%' : '',
+              overflowY: 'scroll',
+            }}
+            className={"LeftPanel"}
+            visible={view === 'mobile' ? false : true}
+          >
+            <Heading4 text="Your Personal Folders" style={{textAlign: "left", marginBottom: "16px"}}/>
+            <div style={{padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
+                <MobilePageWrapper view={view} itemClicked="flashcards">
+                  <div className={view === "mobile" ? "flashcards-page-content": ""}>
+
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"} marginLeft="0px"/>
+                    {view !== "mobile" ? <br></br> : <></>}
+                    {view !== "mobile" ? <br></br> : <></>}
+                    <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
+                      {view === "desktop" ? <GridItem /> : <></>}
+                      <ReviewBarChartKey view={view} />
+                      {view === "desktop" ? <GridItem /> : <></>}
+                    </GridContainer>
+                    <div>
+                      <div style={{
+                        height: view === "mobile" ? "100%": "auto",
+                        overflowY: view === "mobile" ? "scroll": "",
+                      }}>
+                        <DelayedElement
+                          child={
+                            <FlashcardOverview
+                              flashcardData={todayCards}
+                              setMoveFolderDialogueVisible={setMoveFolderDialogueVisible}
+                              showDeleteFlashcardConfirmation={showDeleteFlashcardConfirmation}
+                              setRenameFlashcardSetPopupVisible={setRenameFlashcardSetPopupVisible}
+                              setDeleteFolderConfirmationVisible={setDeleteFolderConfirmationVisible}
+                              setRenameFolderPopupVisible={setRenameFolderPopupVisible}
+                              view={view}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+                          }
+                          childValue={todayCards}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    className={
-                      view === 'mobile' ? 'button-panel-container' : ''
-                    }
-                    style={{
-                      display: view !== 'desktop' ? 'block' : 'flex',
-                      justifyContent: 'space-between',
-                      paddingTop: view === 'mobile' ? '' : '16px',
-                      height: view === 'tablet' ? '72px' : '',
-                    }}
-                  >
-                    {view === 'mobile' ? (
+                    <div className={view === "mobile" ? "button-panel-container" : ""}
+                        style={{
+                        display: view !== "desktop" ? "block": "flex", 
+                        justifyContent: "space-between",
+                        paddingTop: view === "mobile" ? "" : "16px",
+                        height: view === "tablet" ? "72px" : ""
+                      }}
+                      >
+                        {view === 'mobile' ? (
                       <>
                         <PillGhostButton
                           text="New Folder"
@@ -347,8 +349,8 @@ function Flashcards() {
                           onClick={() => {
                             setCreateFolderDialogueVisible(todayCards);
                           }}
-                          view={view}
                         />
+                         
                         <Button
                           text="+ New Set"
                           style={{
@@ -368,7 +370,7 @@ function Flashcards() {
                       float: view === 'mobile' ? '' : 'right',
                     }}
                   >
-                    <Button
+                    <Button 
                       text={'Study ' + selected.length + ' cards'}
                       disabled={selected.length < 1}
                       style={{
@@ -379,7 +381,7 @@ function Flashcards() {
                         marginLeft: view === 'mobile' ? '0px' : '',
                       }}
                       view={view}
-                      onClick={studyMultipleCards}
+                      // onClick={window.location.href = `flashcards/createsharedfolder`}
                     />
                   </div>
                   <div
@@ -442,10 +444,54 @@ function Flashcards() {
                       icon={ankiIcon}
                       disabled={ankiImportsDisabled}
                     />
+
                   </div>
                 </div>
               </MobilePageWrapper>
             </div>
+            </div>
+          </WhiteOverlay>
+          
+          <WhiteOverlay
+            style={{
+              height: "max-height",
+              paddingBottom: "0px",
+              minWidth: "240px",
+              padding: "0px",
+              margin: "16px",
+              width: "100%",
+              flex: "1",
+            }}
+            className={"RightPanel"}
+          >
+            <Heading4 text="Shared With You" style={{textAlign: "left", marginBottom: "16px"}}/>
+            {/* <div className="grid-container"> */}
+              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
+                <div className="overlay-content">
+                  <Paragraph text={title} style={{textAlign: "middle"}}/>
+                  <Button text="View" onClick={() => {window.location.href = "/SharedFolder";}} />
+                </div>
+              </WhiteOverlay>
+              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
+                <div className="overlay-content">
+                  <Paragraph text={title} style={{textAlign: "middle"}}/>
+                  <Button text="View" onClick={() => {}} />
+                </div> 
+              </WhiteOverlay>
+              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
+                <div className="overlay-content">
+                  <Paragraph text={title} style={{textAlign: "middle"}}/>
+                  <Button text="View" onClick={() => {}} />
+                </div> 
+              </WhiteOverlay>
+              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
+                <div className="overlay-content">
+                  <Paragraph text={title} style={{textAlign: "middle"}}/>
+                  <Button text="View" onClick={() => {}} />
+                </div> 
+              </WhiteOverlay>
+            <Button text="New Shared Folder" onClick={() => setCreateNewSharedFolderPopupVisible(true)} />
+
           </WhiteOverlay>
         </GridItem>
       </GridContainer>

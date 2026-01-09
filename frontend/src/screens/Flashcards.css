@@ -24,3 +24,12 @@
     height: fit-content;
     position: relative;
 }
+
+.LeftPanel{
+    width: 70%;
+}
+
+.RightPanel{
+    width: 30%;
+}
+

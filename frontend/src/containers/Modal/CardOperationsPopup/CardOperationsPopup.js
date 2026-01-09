@@ -24,6 +24,8 @@ function CardOperationsPopup({ visible, showMovePopup, showDeleteConfirmation, s
                 <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" onClick={() => setRenameFlashcardSetPopupVisible(cardData)} float={float}/>
                 <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}} float={float}/>
                 <MenuItem text="Delete" imgUrl={deleteIcon} onClick={() => {showDeleteConfirmation(cardData)}} margin="0px" float={float}/>
+                <MenuItem text="Edit" imgUrl={renameIcon} onClick={() => { window.open("/edit-flashcard-set?flashcardName=" + flashcardName + "&folder=" + folder + "&flashcardID=" + flashcardID, "_self") }} margin="0px" float={float}/>
+                
             </div>
         </div>
         : <></>
