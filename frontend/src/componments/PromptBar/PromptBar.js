@@ -22,7 +22,7 @@ function PromptBar({
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             onKeyDown={onKeyDown}
-            defaultValue="“Generate a flashcard set with 20 cards explaining the properties of waves for A-Level AQA Physics”"
+            placeholder="“Generate a flashcard set with 20 cards explaining the properties of waves for A-Level AQA Physics”"
             style={{
                 marginBottom: "0px",
                 float: "left",
@@ -37,7 +37,6 @@ function PromptBar({
                 resize: "none",
             }}
             type='text'
-            placeholder={placeholder}
         >
         
         </textarea>

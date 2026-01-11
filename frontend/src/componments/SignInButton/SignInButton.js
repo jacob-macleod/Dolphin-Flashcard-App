@@ -16,19 +16,20 @@ function signInButton({ setJwtToken, active = true }) {
   );
 
   function signIn() {
-    // Initialise the firebase project and sign in with google
-    // This should be fine to expose - if its not I need to resolve it ASAP
-    firebase.initializeApp({
-      apiKey: 'AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M',
-      authDomain: 'dolphin-flashcards.firebaseapp.com',
-      databaseURL:
-        'https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app',
-      projectId: 'dolphin-flashcards',
-      storageBucket: 'dolphin-flashcards.appspot.com',
-      messagingSenderId: '481940183221',
-      appId: '1:481940183221:web:67bdc346eef4a5306286fc',
-      measurementId: 'G-76Y8VTC390',
-    });
+    // Firebase is already initialized in EmailSignupForm if present
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: 'AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M',
+        authDomain: 'dolphin-flashcards.firebaseapp.com',
+        databaseURL:
+          'https://dolphin-flashcards-default-rtdb.europe-west1.firebasedatabase.app',
+        projectId: 'dolphin-flashcards',
+        storageBucket: 'dolphin-flashcards.appspot.com',
+        messagingSenderId: '481940183221',
+        appId: '1:481940183221:web:67bdc346eef4a5306286fc',
+        measurementId: 'G-76Y8VTC390',
+      });
+    }
     signInWithGoogle(
       setJwtToken,
       setSignInErrorMessage,

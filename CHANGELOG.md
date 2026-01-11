@@ -22,6 +22,30 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.6.1 - 2026-01-01
+
+### Fixed
+
+- Fixed bug when creating flashcards
+
+## 7.6.0 - 2025-01-03
+
+### Added
+
+- Email/password authentication using Firebase Auth
+- EmailSignupForm component for user registration and login with email/password
+- Scroll functionality for "Get Started" button to signup section
+- Support for both Google OAuth and email/password authentication methods
+- Password complexity validation handled by Firebase Auth
+
+## 7.5.3 - 2025-12-07
+
+### Changed
+
+- Added various small padding improvements
+- Made the flashcard formatting buttons have the decoration that they apply, and made them spill over to subsequent lines if they do not fit in the currrent line
+- Added padding and alignment fixes for generate flashcards with AI page
+
 ## 7.5.2 - 2025-11-30
 
 ### Changed

@@ -8,43 +8,20 @@ import GridContainer from '../componments/GridContainer/GridContainer';
 import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
-import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview';
 import DelayedElement from '../containers/DelayedElement';
 import Button from '../componments/Button';
-import PillGhostButton from '../componments/PillGhostButton';
-import SearchBar from '../componments/SearchBar/SearchBar';
-import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
-import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
 import DeleteFlashcardConfirmation from '../containers/Modal/DeleteFlashcardConfirmation';
-import CreateFolderDialogue from '../containers/Modal/CreateFolderDialogue';
-import RenameFlashcardSetPopup from '../containers/Modal/RenameFlashcardSetPopup';
-import RenameFolderPopup from '../containers/Modal/RenameFolderPopup';
-import ImportFromAnkiDialogue from '../containers/Modal/ImportFromAnkiDialogue';
-import DeleteFolderConfirmation from '../containers/Modal/DeleteFolderConfirmation';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
-import Heading4 from '../componments/Text/Heading4';
 import Paragraph from '../componments/Text/Paragraph';
 import apiManager from '../api/Api';
 import '../componments/Text/Text/Text.css';
 import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import './Flashcards.css';
+import "./AIFlashcards.css"
 import { getCookie } from '../api/Authentication';
-import ImportCsvPopup from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
-import GhostButton from '../componments/GhostButton';
-import flashcardIcon from '../static/flashcard-set-icon.svg';
-import folderIcon from '../static/folder-icon.svg';
-import ankiIcon from '../static/anki.svg';
-import quizletIcon from '../static/quizlet.svg';
-import importIcon from '../static/import-icon.svg';
-import Header from '../componments/Text/Header/Header';
-import Subheader from '../componments/Text/Subheader/Subheader';
-import Heading3 from '../componments/Text/Heading3/Heading3';
 import Heading5 from '../componments/Text/Heading5/Heading5';
-import Text from '../componments/Text/Text/Text';
-import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
-import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
 import PromptBar from '../componments/PromptBar/PromptBar';
 import BoldParagraph from '../componments/Text/BoldParagraph/BoldParagraph';
 import AICardRow from '../componments/AICardRow/AICardRow';
@@ -74,7 +51,6 @@ function AIFlashcards() {
     useState(false);
   const [initialTerm, setInitialTerm] = useState('');
   const [initialDefinition, setInitialDefinition] = useState('');
-  const [ShowAddToSetPopup, setShowAddToSetPopup] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [timesFlashcardsGenerated, setTimesFlashcardsGenerated] = useState(0);
   const [createCardDialogueVisible, setCreateCardDialogueVisible]= useState(false);
@@ -176,27 +152,35 @@ function AIFlashcards() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              paddingTop: '16px',
             }}
             visible={view === "desktop" ? true : false}
 
           >
-            <div style={{ width: '90%', display: 'flex', flexDirection: 'row', alignItems: view === 'mobile' ? 'flex-start' : 'center', marginLeft: 'auto', marginRight: 'auto', marginTop: '100px', marginBottom: '30px', height: '100px' }}>
+            <div
+              style={{
+                width: '90%',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                marginTop: '16px',
+                marginLeft: '20px',
+                height: '100px'
+              }}>
               <PromptBar width={"100%"}
                 style={{ margin: "auto" }}
 
                 setSearchTerm={setPrompt}
 
                 height={'100%'}
-                borderRadius="8px 0 0 8px"
+                borderRadius="8px"
               />
               <Button
                 text="Submit"
                 style={{
                   margin: "0px",
-                  width: "114px",
-                  borderRadius: "0px 8px 8px 0px",
-                  height: "122px",
-                  marginTop: "0px"
+                  borderRadius: "8px",
+                  marginLeft: "8px",
                 }}
                 onClick={() => {
                   setAIFlashcardData(null)
@@ -204,14 +188,23 @@ function AIFlashcards() {
                 }}
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', width: '70%', margin: 'auto' }}>
+
+            <Paragraph
+              text="AI-generated flashcards may contain errors. Please ensure you have checked flashcards."
+              style={{
+                textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)",
+                paddingBottom: view === "mobile" ? "70px" : "0px"
+              }}
+            />
+
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%', margin: 'auto' }}>
               <div className='two-column-text'>
                 <BoldParagraph text="Term:" />
                 <BoldParagraph text="Definition:" />
               </div>
 
               <div
-              style={{maxHeight: "60vh", overflowY: "auto"}}
+              className="flashcards-content-wrapper"
               >
               {
                 aiFlashcardData === null && timesFlashcardsGenerated <= 0
@@ -258,14 +251,6 @@ function AIFlashcards() {
                 view={view}
               />
 
-
-              <Paragraph
-                text="AI-generated flashcards may contain errors. Please ensure you have checked flashcards."
-                style={{
-                  textAlign: "center", marginTop: "16px", color: "var(--grey-header-light)",
-                  paddingBottom: view === "mobile" ? "70px" : "0px"
-                }}
-              />
             </div>
           </WhiteOverlay>
           </MobilePageWrapper>
