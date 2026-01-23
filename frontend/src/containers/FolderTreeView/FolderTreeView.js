@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FlashcardFolder from '../FlashcardOverview/FlashcardFolder/FlashcardFolder';
 import FolderElement from '../FlashcardOverview/FolderElement/FolderElement';
 import '../Modal/MoveFolderDialogue/MoveFolderDialogue.css';
@@ -10,12 +10,21 @@ function FolderTreeView({ visible, selectedPath, setSelectedPath }) {
         visible = {"Your Account": visible}
     };
 
+
+    // Select the root folder if no folder is selected
+    useEffect(() => {
+        if (selectedPath === null || selectedPath === undefined) {
+            setSelectedPath("");
+        }
+    }, [selectedPath]);
+    
     const renderElement = (element, folderName, path="") => {
         if (path !== "") {
             path = path + "/" + folderName;
         } else {
             path = folderName;
         }
+
 
         if (element.cards) {
         } else {

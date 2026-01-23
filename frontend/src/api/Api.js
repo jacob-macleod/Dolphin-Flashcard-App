@@ -469,10 +469,11 @@ class ApiManager {
     jwtToken,
     folder,
     flashcardName,
-    flashcardDescription
+    flashcardDescription,
+    setVisible,
+    setReload
   ) {
     const url = 'import-flashcards';
-    // const reader = new FileReader();
 
     try {
       const formData = new FormData();
@@ -487,10 +488,10 @@ class ApiManager {
       console.log([...formData.entries()]);
 
       this.fetchDataUsingFormData(formData, url, (status) => {
-        setVisible(false), setReload(true);
+        setVisible(false);
+        setReload(true);
       });
     } catch (error) {
-      console.error('Error Importing CSV: ', error);
       throw error;
     }
   }

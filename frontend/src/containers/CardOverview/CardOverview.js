@@ -47,6 +47,7 @@ function ResponseOptions({ ghostButtonStyle, setResponse }) {
 }
 
 function CardOverview({
+    key="", // Allows re-rendering when key changes in DailyFlashcardBrowser
     text,
     description: back = "",
     showResponseOptions = false,

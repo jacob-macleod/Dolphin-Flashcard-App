@@ -46,13 +46,13 @@ function MobilePageWrapper({ children, view, itemClicked }) {
                     unclickedImage={settingsIconUnclicked}
                     clicked={itemClicked === "settings"}
                 />
-                <NavBarButton
+                {/*<NavBarButton
                     text="Leaderboard"
                     src="/leaderboard"
                     clickedImage={leaderboardIconClicked}
                     unclickedImage={leaderboardIconUnclicked}
                     clicked={itemClicked === "leaderboard"}
-                />
+                />*/}
                 <NavBarButton
                     text="Report Issues"
                     src="/https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAHPmNG5UOU1JOVBHTkNRMjREM0o2V0cwM0VXS0JCUC4u"

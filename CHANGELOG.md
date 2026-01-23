@@ -22,6 +22,20 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.6.2 - 2026-01-23
+
+### Fixed
+
+- Fixed issue when importing CSV cards
+- Fixed problem where DailyFlashcardBrowser did not properly re-render when new card loaded
+- In FolderTree, selected "Your Account" by default
+- Added sign in flow
+
+### Removed
+
+- Removed "Forgot password" button since it was not implemented
+- Commented out quests and leaderboard from pages (since they're not implemented yet)
+
 ## 7.6.1 - 2026-01-01
 
 ### Fixed
