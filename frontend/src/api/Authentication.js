@@ -174,13 +174,14 @@ export function signInWithEmail(email, password, setJwtToken, setErrorMessage) {
 }
 
 function getFirebaseErrorMessage(errorCode) {
+    console.log("Firebase error code: " + errorCode);
     switch (errorCode) {
-        case 'auth/email-already-in-use': return 'Email already registered. Try signing in.';
-        case 'auth/weak-password': return 'Password should be at least 6 characters.';
-        case 'auth/invalid-email': return 'Please enter a valid email address.';
-        case 'auth/user-not-found': return 'No account found with this email.';
-        case 'auth/wrong-password': return 'Incorrect password.';
-        default: return 'An error occurred. Please try again.';
+        case 'auth/email-already-in-use': return 'Email already registered. Try signing in';
+        case 'auth/weak-password': return 'Password should be at least 6 characters';
+        case 'auth/invalid-email': return 'Please enter a valid email address';
+        case 'auth/user-not-found': return 'No account found with this email';
+        case 'auth/invalid-credential': return 'Incorrect password/email address.';
+        default: return 'An error occurred. Please try again';
     }
 }
 
