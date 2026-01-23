@@ -11,11 +11,12 @@ import verticalTriangleWhite from '../../../static/vertical-triangle-white.svg';
 import '../FlashcardFolder.css';
 import './FolderElement.css';
 
-function FolderElement({ element, name, child, folderKey, path, selectedPath, setSelectedPath }) {
-    const [selected, setSelected] = React.useState(false);
+function FolderElement({ element, name, child, folderKey, path, selectedPath, setSelectedPath}) {
     const [showChildren, setShowChildren] = useState(false);
     const isYourAccount = name === "Your Account";
+    const [selected, setSelected] = isYourAccount ? useState(true) : useState(false);
     const {darkMode} = useTheme();
+
 
     function toggleChildren() {
         setShowChildren(!showChildren);
@@ -32,7 +33,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
     }
 
     useEffect(() => {
-        if (selectedPath !== path) {
+        if (selectedPath !== path && selectedPath !== null) {
             setSelected(false);
         }
     }, [selectedPath]);

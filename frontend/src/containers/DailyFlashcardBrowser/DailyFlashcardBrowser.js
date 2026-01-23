@@ -224,6 +224,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
             <div className={isFullscreen ? 'fullscreen' : ''}>
               <div className="card-container">
                 <CardOverview
+                  key={currentCard.cardID}
                   text={currentCard.front}
                   description={currentCard.back}
                   showResponseOptions={true}

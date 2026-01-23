@@ -73,7 +73,7 @@ const ImportFromCSVDialogue = ({
         if (selectedPath != null) {
           setLoadingIconVisible(null);
           apiManager.importFlashcard(
-            filePath,
+            csvFile,
             getCookie('jwtToken'),
             selectedPath,
             flashcardName,
@@ -91,7 +91,6 @@ const ImportFromCSVDialogue = ({
 
   useEffect(() => {
     setLoadingIconVisible('visible');
-    // setReload(true)
   }, [reload]);
 
   return visible !== false ? (

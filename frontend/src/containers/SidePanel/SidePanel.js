@@ -48,8 +48,8 @@ function SidePanel ({ selectedItem }) {
                 clicked={selectedItem == "community" ? true : false}
                 imgUrl={selectedItem == "community" ? community_icon_white : community_icon}
             />
-            <MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>    
-            <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>
+            {/*<MenuItem text="Quests" src="/quests" imgUrl={quests_icon}/>    
+            <MenuItem text="Leaderboard" src="/leaderboard" imgUrl={leaderboard_icon}/>*/}
             <MenuItem
                 text="Settings"
                 src="/settings"

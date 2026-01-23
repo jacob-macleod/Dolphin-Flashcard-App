@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
 import { signUpWithEmail, signInWithEmail, signInWithGoogle } from '../../api/Authentication';
 import Button from '../Button';
+import GhostButton from '../GhostButton';
 import ErrorText from '../Text/ErrorText';
 
 function EmailSignupForm({ setJwtToken }) {
@@ -10,7 +11,7 @@ function EmailSignupForm({ setJwtToken }) {
     const [displayName, setDisplayName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!firebase.apps.length) {
             firebase.initializeApp({
                 apiKey: 'AIzaSyDHQNMbyP9qi3KqdymzauLb0wAP_aGrY-M',
@@ -25,7 +26,7 @@ function EmailSignupForm({ setJwtToken }) {
         }
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSignUp = (e) => {
         e.preventDefault();
         setErrorMessage('');
 
@@ -33,20 +34,40 @@ function EmailSignupForm({ setJwtToken }) {
             setErrorMessage('Please enter your name.');
             return;
         }
-        signUpWithEmail(email, password, displayName, setJwtToken, setErrorMessage);
+
+        signUpWithEmail(
+            email,
+            password,
+            displayName,
+            setJwtToken,
+            setErrorMessage
+        );
+    };
+
+    const handleSignIn = () => {
+        setErrorMessage('');
+        signInWithEmail(
+            email,
+            password,
+            setJwtToken,
+            setErrorMessage
+        );
     };
 
     return (
         <div style={{ width: '100%', maxWidth: '400px', margin: '0 auto' }}>
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <form
+                onSubmit={handleSignUp}
+                style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+            >
                 <input
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Full Name (sign up only)"
                     value={displayName}
                     onChange={(e) => setDisplayName(e.target.value)}
                     style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '16px' }}
-                    required
                 />
+
                 <input
                     type="email"
                     placeholder="Email address"
@@ -55,6 +76,7 @@ function EmailSignupForm({ setJwtToken }) {
                     style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '16px' }}
                     required
                 />
+
                 <input
                     type="password"
                     placeholder="Password"
@@ -63,24 +85,46 @@ function EmailSignupForm({ setJwtToken }) {
                     style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '16px' }}
                     required
                 />
-                
-                <div style={{ textAlign: 'right' }}>
+
+                {/*<div style={{ textAlign: 'right' }}>
                     <button
                         type="button"
-                        style={{ background: 'none', border: 'none', color: '#6366F1', textDecoration: 'underline', cursor: 'pointer', fontSize: '14px' }}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            color: '#6366F1',
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                            fontSize: '14px'
+                        }}
                     >
                         Forgot Password?
                     </button>
-                </div>
-                
+                </div>*/}
+
+                {/* Sign up */}
                 <Button text="Sign Up" type="submit" />
-                
-                <Button 
-                    text="Or, sign in with Google" 
-                    onClick={() => signInWithGoogle(setJwtToken, setErrorMessage, false)}
-                    style={{ backgroundColor: 'transparent', color: '#6366F1', border: '1px solid #6366F1' }}
+
+                {/* Sign in */}
+                <GhostButton
+                    text="Sign In"
+                    type="button"
+                    onClick={handleSignIn}
+                    style={{
+                        width: '100%',
+                    }}
                 />
-                
+
+                <GhostButton
+                    text="Or, sign in with Google"
+                    onClick={() =>
+                        signInWithGoogle(setJwtToken, setErrorMessage, false)
+                    }
+                    style={{
+                        width: '100%',
+                    }}
+                />
+
                 <ErrorText text={errorMessage} />
             </form>
         </div>
