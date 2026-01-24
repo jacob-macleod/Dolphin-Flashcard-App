@@ -47,7 +47,7 @@ import Text from '../componments/Text/Text/Text';
 import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
 import CreateNewSharedFolderPopup from '../containers/Modal/CreateNewSharedFolderPopup/CreateNewSharedFolderPopup';
-
+import SharedFoldersOverview from '../containers/SharedFoldersOverview/SharedFoldersOverview';
 
 
 function Flashcards() {
@@ -240,7 +240,8 @@ function Flashcards() {
             paddingTop: '0px',
             paddingBottom: view === 'mobile' ? '0px' : '',
             width: view === 'mobile' ? '100vw' : '',
-            display: view === 'mobile' ? 'block' : 'flex',
+            display: view === 'mobile' ? 'block' : 'grid',
+            gridTemplateColumns: view === 'desktop' ? "auto 292px" : "auto",
             flexDirection: 'row',
             justifyContent: 'center',
           }}
@@ -254,26 +255,30 @@ function Flashcards() {
               marginTop: '16px',
             }}
             visible={view === 'mobile' ? false : true}
+            innerOverlayClassName={"left-panel-wrapper flashcards-page"}
         >
             <div
             style={{
-              maxWidth: '1200px',
-              margin: 'auto',
-              padding: view === 'mobile' ? '0px' : '16px',
               height: view === 'mobile' ? '100%' : '',
-              overflowY: 'scroll',
             }}
             className={"LeftPanel"}
             visible={view === 'mobile' ? false : true}
           >
-            <Heading4 text="Your Personal Folders" style={{textAlign: "left", marginBottom: "16px"}}/>
+            {view !== "mobile" ?
+              <Heading4 text="Your Personal Folders" style={{textAlign: "left", marginBottom: "16px"}}/>
+            : <></>
+            }
+            
             <div style={{padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
                 <MobilePageWrapper view={view} itemClicked="flashcards">
                   <div className={view === "mobile" ? "flashcards-page-content": ""}>
 
+                    {/* Commented for now until it's implemented
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} view={view} width={"90%"} marginLeft="0px"/>
+
                     {view !== "mobile" ? <br></br> : <></>}
                     {view !== "mobile" ? <br></br> : <></>}
+                    */}
                     <GridContainer classType="review-bar-wrapper" layout={view === "desktop" ? "260px auto 80px" : "auto"}>
                       {view === "desktop" ? <GridItem /> : <></>}
                       <ReviewBarChartKey view={view} />
@@ -464,47 +469,18 @@ function Flashcards() {
             </div>
           </WhiteOverlay>
           
-          <WhiteOverlay
-            style={{
-              height: "max-height",
-              paddingBottom: "0px",
-              minWidth: "240px",
-              padding: "0px",
-              margin: "16px",
-              width: "100%",
-              flex: "1",
-            }}
-            className={"RightPanel"}
-          >
-            <Heading4 text="Shared With You" style={{textAlign: "left", marginBottom: "16px"}}/>
-            {/* <div className="grid-container"> */}
-              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
-                <div className="overlay-content">
-                  <Paragraph text={title} style={{textAlign: "middle"}}/>
-                  <Button text="View" onClick={() => {window.location.href = "/SharedFolder";}} />
-                </div>
-              </WhiteOverlay>
-              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
-                <div className="overlay-content">
-                  <Paragraph text={title} style={{textAlign: "middle"}}/>
-                  <Button text="View" onClick={() => {}} />
-                </div> 
-              </WhiteOverlay>
-              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
-                <div className="overlay-content">
-                  <Paragraph text={title} style={{textAlign: "middle"}}/>
-                  <Button text="View" onClick={() => {}} />
-                </div> 
-              </WhiteOverlay>
-              <WhiteOverlay style={{paddingTop: "8px", marginBottom: "16px"}}>
-                <div className="overlay-content">
-                  <Paragraph text={title} style={{textAlign: "middle"}}/>
-                  <Button text="View" onClick={() => {}} />
-                </div> 
-              </WhiteOverlay>
-            <Button text="New Shared Folder" onClick={() => setCreateNewSharedFolderPopupVisible(true)} />
+          {view !== "mobile"
 
-          </WhiteOverlay>
+            ? <SharedFoldersOverview
+              onCreateNewSharedFolder={() => {
+                setCreateNewSharedFolderPopupVisible(true);
+              }}
+              onViewSharedFolder={() => {
+                window.location.href = '/sharedfolder?folderID=exampleID';
+              }}
+            />
+            : <></>
+          }
         </GridItem>
       </GridContainer>
       <BlobBackground />

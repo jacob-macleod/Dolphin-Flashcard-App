@@ -14,12 +14,10 @@ import { getCookie } from './api/Authentication';
 import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
 import Settings from './screens/Settings';
-<<<<<<< HEAD
 import SharedFolder from './screens/SharedFolder';
 import CreatedSharedFolder from './screens/CreatedSharedFolder';
-=======
 import AIFlashcards from './screens/AIFlashcards';
->>>>>>> upstream/development
+import SharedFolderOverviewMobile from './screens/SharedFolderOverviewMobile';
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -153,6 +151,16 @@ function App() {
                 jwtToken={jwtToken}
                 setJwtToken={setJwtToken}
                 child={<CommunityCategory />}
+              />
+            }
+          />
+          <Route
+            path="/shared-folder-overview-mobile"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<SharedFolderOverviewMobile />}
               />
             }
           />

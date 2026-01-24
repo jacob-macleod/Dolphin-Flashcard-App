@@ -14,9 +14,9 @@
 .flashcards-page-content {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 48px 32px minmax(200px, auto) 180px 40px;
+    grid-template-rows: 32px minmax(200px, auto) 120px 40px;
     height: 100%;
-    padding: 0px 16px;
+    padding: 16px 16px 0px 16px;
     overflow-y: scroll;
 }
 
@@ -24,12 +24,3 @@
     height: fit-content;
     position: relative;
 }
-
-.LeftPanel{
-    width: 70%;
-}
-
-.RightPanel{
-    width: 30%;
-}
-
