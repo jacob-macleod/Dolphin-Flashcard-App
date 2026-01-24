@@ -10,14 +10,18 @@ function GhostButton({
   border = null,
   icon = null,
   view,
+  type="submit"
 }) {
   const buttonStyle = {
     border: border,
-    ...style,
     width: view === 'mobile' ? '100%' : 'auto',
     cursor: disabled ? 'not-allowed' : 'pointer',
     gridTemplateColumns: icon ? 'auto auto' : 'auto',
+    ...style,
   };
+  console.log(text);
+  console.log(style);
+  console.log(buttonStyle);
 
   return (
     <motion.button
@@ -26,6 +30,7 @@ function GhostButton({
       className={disabled ? 'ghost-button-disabled' : 'ghost-button'}
       onClick={disabled ? () => {} : onClick}
       style={buttonStyle}
+      type={type}
     >
       {icon && (
         <img

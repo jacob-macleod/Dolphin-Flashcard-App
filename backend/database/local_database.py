@@ -12,7 +12,7 @@ class LocalDatabase(DatabaseAbstract):
     def __init__(self):
         super().__init__()
         project_id = "dummy-project-id"
-        os.environ["FIRESTORE_EMULATOR_HOST"] = "localhost:8080"
+        os.environ["FIRESTORE_EMULATOR_HOST"] = "localhost:5000"
 
         cred = AnonymousCredentials()
         self.db = Client(project=project_id, credentials=cred)

@@ -20,16 +20,14 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
     const newGoalsButtonStyle = {
         marginLeft: view === "mobile" ? "16px" : "0px",
         marginRight: view === "mobile" ? "16px" : "0px",
-        width: view === "mobile" ? "90%" : "auto"
+        width: view === "mobile" ? "90%" : "auto",
+        paddingLeft: view === "mobile" ? "" : "8px"
     }
 
     const panelTitleStyle = {
         padding: "8px"
       }
       const overlayStyle = {
-        marginLeft: "16px",
-        marginRight: "0px",
-        width: "90%"
       }
 
       useEffect(() => {
@@ -37,7 +35,7 @@ function GoalsWidget ({newGoalPopupVisible, setNewGoalPopupVisible, editGoalPopu
       }, [newGoalPopupVisible, editGoalPopupVisible]);
 
     return <>
-    <WhiteOverlay style={overlayStyle}>
+    <WhiteOverlay style={overlayStyle} className="grid-item-child">
         <Heading5 text="Goals" style={panelTitleStyle} />
 
         <div style={newGoalsButtonStyle}>

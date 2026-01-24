@@ -8,18 +8,30 @@ from routes.api.statistics import statistics_routes
 from routes.api.card_management import card_management_routes
 from routes.api.goals import goal_routes
 from routes.api.quests import quest_routes
+from routes.api.shared_folders import shared_folders_routes
+import importlib
+app = Flask(__name__, template_folder="../templates", static_folder="../frontend/build")
+CORS(app)
+
+try:
+    from dolphin_flashcards_premium_features.backend.routes.api.demo_routes import demo_routes
+    app.register_blueprint(demo_routes)
+except:
+    None
 
 print("Starting")
 
-app = Flask(__name__, template_folder="../templates", static_folder="../frontend/build")
-CORS(app)
 app.register_blueprint(authentication_routes)
 app.register_blueprint(statistics_routes)
 app.register_blueprint(card_management_routes)
 app.register_blueprint(goal_routes)
 app.register_blueprint(quest_routes)
-server_addr = ("0.0.0.0", 5000)
+app.register_blueprint(shared_folders_routes)
 
+# Used for version 6.15.0 and below
+# server_addr = ("0.0.0.0", 5000)
+# Changes after version 7.0.0
+server_addr = ("0.0.0.0", 8080)
 
 # Serve the React frontend from the frontend/build folder
 @app.route("/", defaults={"path": ""})

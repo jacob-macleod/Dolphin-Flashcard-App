@@ -18,6 +18,7 @@
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
+
 ##  1. <a name='BroadOverview'></a>Broad Overview
 This app is designed to improve simiar apps like Quizlet and Anki by implementing a spaced repetition system in an easy to use and visually pleasing UI. The website, which is in development, can be seen [here](http://dolphinflashcards.com)
 
@@ -116,7 +117,7 @@ services:
   flashcard-app:
     image: jacobmacleod/flashcard-app:latest
     ports:
-      - "5000:5000" 
+      - "8080:8080" 
 ```
 - `docker-compose up` can be used to build the code, and `docker-compose up --force-recreate --build -d && docker image prune -f` to update the container
 

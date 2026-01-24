@@ -78,6 +78,7 @@ body {
   height: 100%;
   position: relative;
   font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
 }
 
 body.dark-theme {

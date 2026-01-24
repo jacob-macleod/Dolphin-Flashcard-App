@@ -66,11 +66,11 @@ function RichTextBox({ flashcardData, setFlashcardData, type, view="desktop" }) 
     marginRight: "6px",
   };
 
-  const renderButton = (command, label, active) => (
+  const renderButton = (command, label, active, style) => (
     active ? (
-      <Button style={iconStyle} text={label} onClick={command} />
+      <Button style={{...iconStyle, ...style}} text={label} onClick={command} />
     ) : (
-      <GhostButton style={iconStyle} text={label} onClick={command} />
+      <GhostButton style={{...iconStyle, ...style}} text={label} onClick={command} />
     )
   );
 
@@ -78,23 +78,26 @@ function RichTextBox({ flashcardData, setFlashcardData, type, view="desktop" }) 
     <div className="editor-container">
       <BoldParagraph text={type} />
       <div className="text-effects">
-        {renderButton(() => editor.chain().focus().toggleBold().run(), 'B', editor?.isActive('bold'))}
-        {renderButton(() => editor.chain().focus().toggleItalic().run(), 'I', editor?.isActive('italic'))}
-        {renderButton(() => editor.chain().focus().toggleUnderline().run(), 'U', editor?.isActive('underline'))}
-        {renderButton(() => editor.chain().focus().toggleStrike().run(), 'S', editor?.isActive('strike'))}
+        {/* single flex-wrap toolbar so buttons wrap dynamically */}
+        <div className="toolbar">
+          {renderButton(() => editor.chain().focus().toggleBold().run(), 'B', editor?.isActive('bold'), {fontWeight: "700"})}
+          {renderButton(() => editor.chain().focus().toggleItalic().run(), 'I', editor?.isActive('italic'), {fontStyle: "italic"})}
+          {renderButton(() => editor.chain().focus().toggleUnderline().run(), 'U', editor?.isActive('underline'), {textDecoration: "underline"})}
+          {renderButton(() => editor.chain().focus().toggleStrike().run(), 'S', editor?.isActive('strike'), {textDecoration: "line-through"})}
 
-        <div className="text-effects">
-          <GhostButton style={{ ...iconStyle, backgroundColor: selectedColor }} text="" onClick={() => setShowColorPicker(!showColorPicker)} />
-          <p className="selected-color-style">{selectedColor}</p>
-          {showColorPicker && (
-            <div style={{ position: 'absolute', zIndex: 2 }}>
-              <SketchPicker color={selectedColor} onChange={handleColorChange} />
-            </div>
-          )}
+          <div className="color-picker-wrap" ref={dropdownRef}>
+            <GhostButton style={{ ...iconStyle, backgroundColor: selectedColor }} text="" onClick={() => setShowColorPicker(!showColorPicker)} />
+            <p className="selected-color-style">{selectedColor}</p>
+            {showColorPicker && (
+              <div className="color-popover">
+                <SketchPicker color={selectedColor} onChange={handleColorChange} />
+              </div>
+            )}
+          </div>
+
+          {renderButton(() => editor.chain().focus().toggleBulletList().run(), <Image url={UnnumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('bulletList'))}
+          {renderButton(() => editor.chain().focus().toggleOrderedList().run(), <Image url={NumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('orderedList'))}
         </div>
-
-        {renderButton(() => editor.chain().focus().toggleBulletList().run(), <Image url={UnnumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('bulletList'))}
-        {renderButton(() => editor.chain().focus().toggleOrderedList().run(), <Image url={NumberedListIcon} width="16px" minWidth='16px' paddingRight='0px'/>, editor?.isActive('orderedList'))}
       </div>
       <EditorContent editor={editor} className={view === "mobile" ? "rich-text-box-mobile" : "rich-text-box"} />
     </div>

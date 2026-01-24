@@ -12,8 +12,9 @@ import '../MoveFolderDialogue/MoveFolderDialogue.css';
 import '../Modal.css';
 import DelayedElement from '../../DelayedElement';
 import { dropIn } from '../../../animations/animations';
+import CardOperationsPopup from '../FlashcardOperationsMenu';
 
-function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
+function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload,flashcards}) {
   const [selectedPath, setSelectedPath] = React.useState(null);
   const [flashcardName, setFlashcardName] = useState('');
   const [flashcardDescription, setFlashcardDescription] = useState('');
@@ -61,7 +62,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload }) {
           flashcardName,
           flashcardDescription,
           selectedPath,
-          [],
+          flashcards,
           setLoadEditFlashcardPage
         );
       }

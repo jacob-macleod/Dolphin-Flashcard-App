@@ -18,7 +18,6 @@ function FlashcardOverview({
     /*
     Remove everything from flashcard data except the flashcard with the title
     */
- 
     // Helper function for deep search
     function search(obj) {
       if (typeof obj !== 'object' || obj === null) return null;

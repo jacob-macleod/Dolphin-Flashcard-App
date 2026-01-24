@@ -20,7 +20,7 @@ function UserProfileHeader({ setAccountDropdownVisibility, accountDropdownVisibi
                 paddingRight: "8px",
                 display: "inline-flex",
                 alignItems: "center",
-                textAlign: "right",
+                textAlign: "center",
             }}/>
             <Image width={dropdownArrowSize} height={dropdownArrowSize} minWidth={dropdownArrowSize} url={dropdownArrow} onClick={handleClick} paddingRight='8px'/>
             <Image width={iconSize} height={iconSize} minWidth={iconSize} url={getCookie("profileImage")} borderRadius="50%" paddingRight='0px'/>

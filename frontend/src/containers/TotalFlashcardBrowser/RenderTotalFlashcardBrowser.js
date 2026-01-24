@@ -86,16 +86,16 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
             </AnimatePresence>
             {isFullscreen && (
               <div className="">
-                     <Image url={GreyLeftArrow} onClick={leftButtonClick} className="arrow-left" />
-                     <Image url={GreyRightArrow} onClick={rightButtonClick} className="arrow-right" />
+                     <Image url={GreyLeftArrow} onClick={leftButtonClick} className="arrow-left" paddingRight="0px"/>
+                     <Image url={GreyRightArrow} onClick={rightButtonClick} className="arrow-right" paddingRight="0px"/>
               </div>
             )}
           </div>
           {!isFullscreen && (
             <div className="controls-panel">
-              <Image url={GreyLeftArrow} onClick={leftButtonClick} />
+              <Image url={GreyLeftArrow} onClick={leftButtonClick} paddingRight="0px" />
               <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
-              <Image url={GreyRightArrow} onClick={rightButtonClick} />
+              <Image url={GreyRightArrow} onClick={rightButtonClick} paddingRight="0px"/>
               <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-icon'/>                        
             </div>
           )}

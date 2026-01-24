@@ -23,7 +23,8 @@ function NewFlashcardPopup({
     initialDefinition="",
     flashcardName,
     flashcardDescription,
-    unsetSearchValue
+    unsetSearchValue,
+    isInAIPage=false,
     }) {
     const [term, setTerm] = useState(initialTerm);
     const [definition, setDefinition] = useState(initialDefinition);
@@ -57,6 +58,14 @@ function NewFlashcardPopup({
                     newFlashcardItems[i].back = definition;
                 }
             }
+        }
+        // Currently for the AI flashcard page there is no API for editing cards, because when cards are first generated they are not saved to the database
+        // So for now, just update the state directly
+        if (isInAIPage){
+            setLoadingIconVisible("visible");
+            setFlashcardItems(newFlashcardItems);
+            setVisible(false)
+            return
         }
 
         // var flashcardDataRequest = {}

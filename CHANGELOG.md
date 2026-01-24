@@ -21,7 +21,160 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
-## 6.16.0 - 2025-05-08
+
+## 7.6.2 - 2026-01-23
+
+### Fixed
+
+- Fixed issue when importing CSV cards
+- Fixed problem where DailyFlashcardBrowser did not properly re-render when new card loaded
+- In FolderTree, selected "Your Account" by default
+- Added sign in flow
+
+### Removed
+
+- Removed "Forgot password" button since it was not implemented
+- Commented out quests and leaderboard from pages (since they're not implemented yet)
+
+## 7.6.1 - 2026-01-01
+
+### Fixed
+
+- Fixed bug when creating flashcards
+
+## 7.6.0 - 2025-01-03
+
+### Added
+
+- Email/password authentication using Firebase Auth
+- EmailSignupForm component for user registration and login with email/password
+- Scroll functionality for "Get Started" button to signup section
+- Support for both Google OAuth and email/password authentication methods
+- Password complexity validation handled by Firebase Auth
+
+## 7.5.3 - 2025-12-07
+
+### Changed
+
+- Added various small padding improvements
+- Made the flashcard formatting buttons have the decoration that they apply, and made them spill over to subsequent lines if they do not fit in the currrent line
+- Added padding and alignment fixes for generate flashcards with AI page
+
+## 7.5.2 - 2025-11-30
+
+### Changed
+
+- Added various small frontend improvements
+
+## 7.5.1 - 2025-11-02
+
+### Added
+
+- Added documentation for shared folder system
+
+## 7.5.0 - 2025-10-05
+
+### Added
+
+- Added a Bug Reporting button onto both the mobile view and the desktop view, in the navbars
+
+## 7.4.0 - 2025-09-20
+
+### Added
+
+- Added import from Quizlet
+
+## 7.3.0 - 2025-09-17
+
+### Added
+
+- Shared Folder System: Implemented full backend support for shared folders, including:
+    - Creation, renaming, and deletion of shared folders
+    - Flashcard set management within shared folders (add/remove/list)
+    - Invite link generation using JWT (with optional expiry)
+    - Membership management (join, leave, remove members, transfer ownership)
+    - Progress tracking per user via sharedFolderSets
+    - API routes for folder/member access and copying shared flashcards to personal collections
+
+## 7.2.4 - 2025-09-15
+
+### Fixed
+
+- Fixed AI flashcard generation prompt
+
+## 7.2.3 - 2025-09-11
+
+### Changed
+
+- Added premium module install to `npm run build` and added info to docs
+
+## 7.2.2 - 2025-09-08
+
+### Changed
+
+- Made small changes to allow optional import of premium repo
+
+## 7.2.1 - 2025-09-05
+
+### Changed
+
+- Enabled import from anki
+- Added UI improvements for AI flashcards screen
+
+## 7.2.0 - 2025-09-04
+
+### Added
+
+- added "generate flashcards" button on Flashcards page
+- created frontend for the AI Flashcards page
+- Added a new component `AICardRow.js` to effectively display flashcards on the AI flashcards page
+- added a new function `deleteAICard` into `FlashcardOperationsMenu.js` specifically to delete AI flashcards
+### Fixed
+- made it so flashcards on the edit flashcards page can no longer be turned over
+
+## 7.1.1 - 2025-08-31
+
+### Fixed
+
+- Changed pipeline to fix error in tets-docker stage
+
+## 7.1.0 - 2025-08-27
+
+### Changed
+
+- Added API route to generate flashcard using AI
+
+## 7.0.0 - 2025-08-08
+
+### Changed
+
+- Updated pipeline to update cloud run server, not the GCP vm
+- The server now runs on port 8080, which is a breaking change
+- The firebase emulator now runs on port 5000
+
+## 6.18.2 - 2025-08-12
+
+### Added
+
+- added margins between panels on the Dashboard page
+- added a Multiple Choice Mode button on the ViewFlashcards page
+
+### Fixed
+
+- Fixed bug where long answers do not fit properly on flashcards on CardOverview
+
+
+### Changed
+
+- Made the CardOverview component adjust its height based on its answers, improving responsiveness on smaller screen sizes
+
+## 6.18.1 - 2025-07-24
+
+### Fixed
+
+- Updated frontend config to use HTTPS site
+
+## 6.18.0 - 2025-05-08
 
 ### Fixed
 

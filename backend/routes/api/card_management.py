@@ -18,6 +18,7 @@ import zipfile
 import sqlite3
 import json
 import html
+from classes.ai_flashcard_generator import FlashcardGenerator
 
 card_management_routes = Blueprint("card_management_routes", __name__)
 
@@ -109,6 +110,11 @@ IMPORT_ANKI_FLASHCARDS_FORMAT = {
     "stripHtml": ""
 }
 
+GENERATE_AI_FLASHCARD_FORMAT = {
+    "jwtToken": "",
+    "flashcardPrompt": "",
+    "quantity": ""
+}
 
 @card_management_routes.route("/api/create-flashcard", methods=["POST"])
 @validate_json(CREATE_FLASHCARD_FORMAT)
@@ -1102,3 +1108,19 @@ def import_anki_flashcards(user_id):
             "error": "Unexpected error during Anki import", 
             "details": str(unexpected_error)
         }, 500)
+
+@card_management_routes.route("/api/generate-ai-flashcard", methods=["POST"])
+@validate_json(GENERATE_AI_FLASHCARD_FORMAT)
+def generate_ai_flashcard():
+    """
+    Import flashcards from a CSV file.
+    """
+    try:
+        generator = FlashcardGenerator()
+        topic = request.get_json()["flashcardPrompt"]
+        num_of_cards = request.get_json()["quantity"]
+        flashcard = generator.generate_flashcard(topic, num_of_cards)
+
+        return flashcard
+    except Exception as e:
+        return jsonify(str(e)), 500

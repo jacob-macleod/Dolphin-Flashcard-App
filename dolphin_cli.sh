@@ -101,7 +101,7 @@ delete_database_data() {
     [ "$(cat "$DATABASE_STATUS_FILE")" != "running" ] && \
         { echo -e "${RED}Start database first${NC}"; return 1; }
     
-    curl -X DELETE "http://localhost:8080/emulator/v1/projects/dummy-project-id/databases/(default)/documents" && {
+    curl -X DELETE "http://localhost:5000/emulator/v1/projects/dummy-project-id/databases/(default)/documents" && {
         date "+%Y-%m-%d %H:%M:%S" > "$DATABASE_DELETE_LOG"
         echo -e "${GREEN}Data deleted${NC}"
     } || echo -e "${RED}Data deletion failed${NC}"
@@ -404,7 +404,7 @@ check_config() {
         
 
         elif grep -q '^[[:space:]]*//[[:space:]]*const serverURL\s*=\s*"http://dolphinflashcards.com/api/";' "$CONFIG_JS" && \
-        grep -q '^[[:space:]]*const serverURL\s*=\s*"http://127.0.0.1:5000/api/";' "$CONFIG_JS"; then
+        grep -q '^[[:space:]]*const serverURL\s*=\s*"http://127.0.0.1:8080/api/";' "$CONFIG_JS"; then
             echo -e "${YELLOW}WARNING: Localhost API is active.${NC}"
             echo -e "${RED}Please switch to the production API before committing.${NC}"
             fe_config_ok=false

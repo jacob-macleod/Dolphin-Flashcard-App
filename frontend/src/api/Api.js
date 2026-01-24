@@ -246,8 +246,11 @@ class ApiManager {
     data = null
   ) {
     /*
-        Create a flashcard
-        */
+      Create a flashcard
+    */
+    if (cards == undefined) {
+      cards = [];
+    }
     const url = 'create-flashcard';
     if (data === null) {
       data = {
@@ -258,7 +261,6 @@ class ApiManager {
         cards: cards,
       };
     }
-
     this.fetchData(data, url, (status) => {
       data.flashcardID = status[0].flashcardID;
       loadEditFlashcardPage(data);
@@ -467,10 +469,11 @@ class ApiManager {
     jwtToken,
     folder,
     flashcardName,
-    flashcardDescription
+    flashcardDescription,
+    setVisible,
+    setReload
   ) {
     const url = 'import-flashcards';
-    // const reader = new FileReader();
 
     try {
       const formData = new FormData();
@@ -484,24 +487,11 @@ class ApiManager {
 
       console.log([...formData.entries()]);
 
-      // const response = await fetch(serverURL + url, {
-      //   method: 'POST',
-      //   headers: {
-      //     Authorization: `Bearer ${jwtToken}`,
-      //     // 'Content-Type': 'multipart/form-data'
-      //   },
-      //   body: formData,
-      // });
-      // // console.log(await response.json())
-      // const data = await response.json();
-      // console.log(data);
-      // return data;
-
       this.fetchDataUsingFormData(formData, url, (status) => {
-        setVisible(false), setReload(true);
+        setVisible(false);
+        setReload(true);
       });
     } catch (error) {
-      console.error('Error Importing CSV: ', error);
       throw error;
     }
   }
@@ -538,7 +528,58 @@ class ApiManager {
       throw error;
     }
   }
+
+
+  async importQuizletSet(jwtToken, folder, flashcards, termDefSeparator, termSeparator, flashcardName) {
+    const url = 'import-from-quizlet'
+
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ jwtToken, folder, flashcards, term_def_separator:termDefSeparator, term_separator:termSeparator, flashcard_name:flashcardName })
+    }
+    try { 
+      const response = await fetch(serverURL + url, options)
+      if (!response.ok) {
+        const err = await response.text()
+        throw new Error(`Server error: ${response.status}`, err)
+      }
+      const data = await response.json()
+      console.log(data)
+      // return data
+    } catch (error) {
+      console.error("Error importing Quizlet set: ", error)
+      throw error
+    }
+  }
+
+  getAIFlashcardData(jwtToken,flashcardPrompt,quantity,setAIFlashcardData,getTodayDate){
+  const url = 'generate-ai-flashcard';
+
+ 
+  const data = {
+      jwtToken:jwtToken,
+      flashcardPrompt: flashcardPrompt,
+      quantity: quantity
+    };
+  console.log(data)
+  //loops through each flashcard and adds a reviewStatus and lastReview value
+this.fetchData(data, url, (flashcards) => {
+    const updated = (flashcards).map(card => ({
+      ...card,
+      reviewStatus: "0.0",
+      lastReview: getTodayDate()
+    }));
+
+    setAIFlashcardData(updated);
+
+  });
+
 }
+}
+
+
+
 
 const apiManager = new ApiManager();
 export default apiManager;

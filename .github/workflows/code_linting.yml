@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x' # Use the appropriate Python version
+          python-version: '3.12' # Use the appropriate Python version. 3.12 uses an older version of pip which is compatable with the expected version of ast
 
       - name: Setup database config
         run: |
@@ -46,6 +46,15 @@ jobs:
         npm install -g create-react-app
         npm install react-scripts
         npm install
+
+    - name: Activate Premium Repo...
+      run: |
+        cd frontend/src
+        git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+        cd ../..
+        bash install_premium_repo.sh
+      env:
+          PREMIUM_REPO_ACCESS_TOKEN: ${{ secrets.PREMIUM_REPO_ACCESS_TOKEN }}
 
     - name: Lint the frontend code
       run: |

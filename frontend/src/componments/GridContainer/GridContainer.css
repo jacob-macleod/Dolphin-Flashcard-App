@@ -2,8 +2,7 @@
   display: grid;
   z-index: 2;
   position: absolute;
-  padding-right: 7vw;
-  width: calc(100vw - 85px);
+  width: 100%;
   height: 100vh;
 }
 
@@ -42,4 +41,12 @@
 .review-bar-wrapper {
   display: grid;
   height: 32px;
+}
+
+.ai-flashcards-grid {
+  display: grid;
+  z-index: 2;
+  position: inherit;
+  width: 100%;
+  height: fit-content;
 }

@@ -22,7 +22,11 @@ function CardOperationsPopup({
     cardID,
     setLoadingIconVisible,
     flashcardID,
-    setReload
+    setReload,
+    isInAIPage,
+    aiFlashcardData,
+    setAIFlashcardData,
+    showDeleteFlashcardConfirmation
 }) {
     const float = view == "mobile" ? "left" : null;
     const dropdownRef = useRef(null);
@@ -38,6 +42,9 @@ function CardOperationsPopup({
             setReload
         );
     }
+    function deleteAICard() {
+        setAIFlashcardData(prev => prev.filter(card => card.cardID !== cardID));
+    }
 
     return (
         visible ?
@@ -49,7 +56,12 @@ function CardOperationsPopup({
                     showEditPopup(true);
                 }}/>
                 <MenuItem text="Delete" src={window.location.href} imgUrl={deleteIcon} margin="0px" float={float} onClick={() => {
-                    deleteCard();
+                    if (!isInAIPage){
+                        deleteCard();
+                    }
+                    else{
+                        deleteAICard();
+                    }
                 }}/>
             </div>
         </div>

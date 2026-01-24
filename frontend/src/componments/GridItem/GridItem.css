@@ -4,3 +4,9 @@
     font-size: 30px;
     text-align: center;
   }
+
+  .grid-item-child {
+    transform: none;
+    padding-right: 16px;
+    padding-left: 16px;
+  }

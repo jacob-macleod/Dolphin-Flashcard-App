@@ -250,7 +250,8 @@ function Flashcards() {
               height: 'max-content',
               paddingBottom: view === 'mobile' ? '80px' : '',
               width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
-              padding: '0px',
+              padding: "0px",
+              marginTop: '16px',
             }}
             visible={view === 'mobile' ? false : true}
         >
@@ -417,15 +418,26 @@ function Flashcards() {
                       icon={importIcon}
                     />
                     <GhostButton
-                      text=" Import from Quizlet"
+                      text=" Generate AI Flashcards"
                       style={{
                         display: view !== 'mobile' ? 'inline-block' : '',
                         marginRight: view !== 'mobile' ? '16px' : '',
                         marginLeft: view === 'mobile' ? '0px' : '',
                       }}
                       onClick={() => {
-                        return;
+                        window.location.href = '/aiflashcards';
                       }}
+                      view={view}
+                      //icon={quizletIcon}
+                    />
+                    <GhostButton
+                      text=" Import from Quizlet"
+                      style={{
+                        display: view !== 'mobile' ? 'inline-block' : '',
+                        marginRight: view !== 'mobile' ? '16px' : '',
+                        marginLeft: view === 'mobile' ? '0px' : '',
+                      }}
+                      onClick={() => setImportQuizletDislougeVisible(true)}
                       view={view}
                       icon={quizletIcon}
                       disabled={quizletImportsDisabled}
