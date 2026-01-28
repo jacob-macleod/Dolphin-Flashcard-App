@@ -18,6 +18,8 @@ import flashcardReviewer from '../../classes/FlashcardReviewer';
 import Image from '../../componments/Image/Image';
 import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
 import GhostButton from '../../componments/GhostButton';
+import Button from '../../componments/Button';
+import copyIcon from '../../static/copy-icon-white.svg';
 
 
 const slideVariants = {
@@ -236,12 +238,23 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                 />
               </div>
               {!isFullscreen &&(
-                <div style={{position:"relative",width:"100%", marginLeft: "8px"}}>
+                <div style={{width:"100%", marginLeft: "8px" , display:'flex'}}>
                   <ReviewBarChartKey style={{ paddingTop: '8px'}} />
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginLeft:'auto' }}>
+                  <Button
+                      style={{
+                        //marginLeft:'auto',
+                        // textAlign: 'center',
+                      }}
+                      onClick={() => {
+                      }}
+                      icon={copyIcon}
+                    />
               {view !== "mobile"  ?
                 <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
                 : <></>
-              }                 
+              }     
+              </div>          
               </div>
               )}
               {!isFullscreen &&(

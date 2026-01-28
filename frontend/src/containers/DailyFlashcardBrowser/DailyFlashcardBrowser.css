@@ -44,8 +44,7 @@ body.dark-theme .fullscreen{
   }
   
   .expand-button {
-    position: absolute;
-    right: 10px;
+    margin-left:auto;
   }
   
   .review-bar-chart-wrapper {

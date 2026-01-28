@@ -11,6 +11,8 @@ import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
 import GhostButton from '../../componments/GhostButton';
+import Button from '../../componments/Button';
+import copyIcon from '../../static/copy-icon-white.svg';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -93,10 +95,23 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
           </div>
           {!isFullscreen && (
             <div className="controls-panel">
+              <div style={{ display: 'flex', margin:'auto',position:'absolute',left:'50%',transform: 'translateX(-50%)'}}>
               <Image url={GreyLeftArrow} onClick={leftButtonClick} paddingRight="0px" />
               <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
               <Image url={GreyRightArrow} onClick={rightButtonClick} paddingRight="0px"/>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' ,marginLeft:'auto'}}>
+              <Button
+                      style={{
+                        //marginLeft:'auto',
+                        // textAlign: 'center',
+                      }}
+                      onClick={() => {
+                      }}
+                      icon={copyIcon}
+                    />
               <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-icon'/>                        
+            </div>
             </div>
           )}
           {isFullscreen &&(
