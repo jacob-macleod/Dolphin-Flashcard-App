@@ -45,6 +45,9 @@ function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [notStarted, setNotStarted] = useState(0);
   const [currentCard, setCurrentCard] = useState(null);
   const [cardReviewer, setCardReviewer] = useState(null);
+  const id = flashcardID?.[0];
+  const name = flashcardName?.[0];
+  const previewUrl = `${window.location.origin}/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
 
   function saveFlashcards(newCardData) {
     /*
@@ -218,6 +221,24 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
       setIsFullscreen(!isFullscreen);
     };
 
+//   useEffect(() => {
+//   if (!ownsFlashcard && id) {
+//     // redirect to preview page
+//     window.location.replace(`/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`);
+//   }
+// }, [ownsFlashcard, id, name]);
+
+  const CopyPreviewURL = async () => {
+   
+    
+    try{
+      await navigator.clipboard.writeText(previewUrl)
+      alert("Share link copied!")
+    } catch(err){
+      alert("could not copy link")
+    }
+  }
+
   return (
     <>
     <DelayedElement child={
@@ -247,6 +268,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                         // textAlign: 'center',
                       }}
                       onClick={() => {
+                        CopyPreviewURL()
                       }}
                       icon={copyIcon}
                     />
