@@ -12,7 +12,6 @@ import FlashcardOverview from '../containers/FlashcardOverview/FlashcardOverview
 import DelayedElement from '../containers/DelayedElement';
 import Button from '../componments/Button';
 import PillGhostButton from '../componments/PillGhostButton';
-import SearchBar from '../componments/SearchBar/SearchBar';
 import ReviewBarChartKey from '../containers/ReviewBarChartKey/ReviewBarChartKey';
 import MoveFolderDialogue from '../containers/Modal/MoveFolderDialogue/MoveFolderDialogue';
 import CreateFlashcardSetDialogue from '../containers/Modal/CreateFlashcardSetDialogue/CreateFlashcardSetDialogue';
@@ -39,16 +38,14 @@ import ImportQuizletPopup from '../containers/Modal/ImportQuizletPopup/ImportQui
 import ankiIcon from '../static/anki.svg';
 import quizletIcon from '../static/quizlet.svg';
 import importIcon from '../static/import-icon.svg';
-import Header from '../componments/Text/Header/Header';
-import Subheader from '../componments/Text/Subheader/Subheader';
-import Heading3 from '../componments/Text/Heading3/Heading3';
-import Heading5 from '../componments/Text/Heading5/Heading5';
-import Text from '../componments/Text/Text/Text';
 import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
-import CreateNewSharedFolderPopup from '../containers/Modal/CreateNewSharedFolderPopup/CreateNewSharedFolderPopup';
-import SharedFoldersOverview from '../containers/SharedFoldersOverview/SharedFoldersOverview';
 
+// The optional premium modules imported
+import { safeImport } from '../utils/safeImport';
+const SharedFoldersOverview = safeImport(
+  '../containers/SharedFoldersOverview/SharedFoldersOverview'
+);
 
 function Flashcards() {
   // Set general variables
@@ -469,7 +466,7 @@ function Flashcards() {
             </div>
           </WhiteOverlay>
           
-          {view !== "mobile"
+          {view !== "mobile" && SharedFoldersOverview
 
             ? <SharedFoldersOverview
               onCreateNewSharedFolder={() => {
