@@ -21,6 +21,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 7.7.2 - 2026-01-05
+
+### Added
+
+- Added copy share link button on daily flashcards and all flashcards study pages.
+- Made it so if the user tries going to the view page of a flashcard set they dont own, it takes them to the preview page instead
 
 ## 7.6.2 - 2026-01-23
 
