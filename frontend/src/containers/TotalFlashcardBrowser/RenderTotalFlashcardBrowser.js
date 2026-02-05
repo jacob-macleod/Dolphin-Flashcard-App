@@ -59,6 +59,20 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
     };
   }, [handleKeyDown]);
 
+  
+
+  const CopyPreviewURL = async () => {
+   
+    
+    try{
+      console.log(todayCards)
+      await navigator.clipboard.writeText(previewUrl)
+      alert("Share link copied!")
+    } catch(err){
+      alert("could not copy link")
+    }
+  }
+
   return (
     <div className={isFullscreen ? 'fullscreen' : ''}>
       {flashcardItems && flashcardItems.length !== 0 ? (
@@ -106,7 +120,7 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
                         //marginLeft:'auto',
                         // textAlign: 'center',
                       }}
-                      onClick={() => {
+                      onClick={() => { CopyPreviewURL()
                       }}
                       icon={copyIcon}
                     />

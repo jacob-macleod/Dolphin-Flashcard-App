@@ -228,10 +228,21 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
 //   }
 // }, [ownsFlashcard, id, name]);
 
+  const ownsFlashcardSet = Object.values(todayCards || {}).some(
+  set => set.flashcardID === id
+  );
+
+  useEffect (() => {
+    if(id && (ownsFlashcardSet === false)){
+      window.location.replace(previewUrl);
+    }
+  }, [id, ownsFlashcardSet, previewUrl]);
+
   const CopyPreviewURL = async () => {
    
     
     try{
+      console.log(todayCards)
       await navigator.clipboard.writeText(previewUrl)
       alert("Share link copied!")
     } catch(err){
