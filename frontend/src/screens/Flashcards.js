@@ -40,12 +40,21 @@ import quizletIcon from '../static/quizlet.svg';
 import importIcon from '../static/import-icon.svg';
 import { ankiImportsDisabled, quizletImportsDisabled } from '../config';
 import ImportFromCSVDialogue from '../containers/Modal/ImportFromCSVDialogue/ImportFromCSVDialogue';
+import SharedFoldersOverview from '../containers/SharedFoldersOverview/SharedFoldersOverview';
+import CreateNewSharedFolderPopup from '../containers/Modal/CreateNewSharedFolderPopup/CreateNewSharedFolderPopup';
 
-// The optional premium modules imported
-import { safeImport } from '../utils/safeImport';
-const SharedFoldersOverview = safeImport(
-  '../containers/SharedFoldersOverview/SharedFoldersOverview'
-);
+// // The optional premium modules imported
+// import { safeImport } from '../utils/safeImport';
+// const SharedFoldersOverview = safeImport(
+//   '../containers/SharedFoldersOverview/SharedFoldersOverview.js'
+// );
+// import SharedFoldersOverview from '../containers/SharedFoldersOverview/SharedFoldersOverview';
+
+// const optionalModules = {
+//   SharedFoldersOverview: () =>
+//     require('../containers/SharedFoldersOverview/SharedFoldersOverview').default,
+// };
+// import { SharedFoldersOverview } from '@dolphin/premium-features';
 
 function Flashcards() {
   // Set general variables
@@ -78,8 +87,8 @@ function Flashcards() {
     setImportFromQuizletDialogueVisible,
   ] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [editFlashcardPopupVisible, setEditFlashcardPopupVisible] = useState(false);
   const [createNewSharedFolderPopupVisible, setCreateNewSharedFolderPopupVisible] = useState(false);
+  const [sharedFolderData, setSharedFolderData] = useState(null);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -96,6 +105,11 @@ function Flashcards() {
   const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
 
   useEffect(() => {console.log(todayCards)}, [todayCards]);
+
+  // Populate the shared folder data
+  useEffect(() => {
+    apiManager.getSharedFolders(getCookie("jwtToken"), setSharedFolderData);
+  }, []);
 
   function studyMultipleCards() {
     let urlPath = '';
@@ -218,6 +232,12 @@ function Flashcards() {
       <ImportFromAnkiDialogue
         visible={importFromAnkiDialogueVisible}
         setVisible={setImportFromAnkiDialogueVisible}
+        view={view}
+        setReload={setReload}
+      />
+      <CreateNewSharedFolderPopup
+        visible={createNewSharedFolderPopupVisible}
+        setVisible={setCreateNewSharedFolderPopupVisible}
         view={view}
         setReload={setReload}
       />
@@ -466,15 +486,16 @@ function Flashcards() {
             </div>
           </WhiteOverlay>
           
-          {view !== "mobile" && SharedFoldersOverview
+          {view !== "mobile"
 
             ? <SharedFoldersOverview
               onCreateNewSharedFolder={() => {
                 setCreateNewSharedFolderPopupVisible(true);
               }}
-              onViewSharedFolder={() => {
-                window.location.href = '/sharedfolder?folderID=exampleID';
+              onViewSharedFolder={(folderID) => {
+                window.location.href = `/sharedfolder?folderID=${folderID}`;
               }}
+              sharedFolderData={sharedFolderData}
             />
             : <></>
           }

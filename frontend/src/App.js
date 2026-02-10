@@ -15,12 +15,15 @@ import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
 import Settings from './screens/Settings';
 import AIFlashcards from './screens/AIFlashcards';
+import SharedFolderOverviewMobile from './screens/SharedFolderOverviewMobile';
+import SharedFolder from './screens/SharedFolder';
+import CreatedSharedFolder from './screens/CreatedSharedFolder';
 
 //  Import the optional premium modules
 import { safeImport } from './utils/safeImport';
-const SharedFolder = safeImport('./screens/SharedFolder');
-const CreatedSharedFolder = safeImport('./screens/CreatedSharedFolder');
-const SharedFolderOverviewMobile = safeImport('./screens/SharedFolderOverviewMobile');
+// const SharedFolder = safeImport('./screens/SharedFolder');
+// const CreatedSharedFolder = safeImport('./screens/CreatedSharedFolder');
+// const SharedFolderOverviewMobile = safeImport('./screens/SharedFolderOverviewMobile');
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -157,7 +160,6 @@ function App() {
               />
             }
           />
-          {SharedFolderOverviewMobile ?
           <Route
             path="/shared-folder-overview-mobile"
             element={
@@ -167,8 +169,7 @@ function App() {
                 child={<SharedFolderOverviewMobile />}
               />
             }
-          /> : null}
-          {SharedFolder ? 
+          />
           <Route
             path="/SharedFolder"
             element={
@@ -178,8 +179,7 @@ function App() {
                 child={<SharedFolder />}
               />
             }
-          /> : null}
-          {CreatedSharedFolder ? 
+          />
           <Route
             path="/CreatedSharedFolder"
             element={
@@ -189,7 +189,7 @@ function App() {
                 child={<CreatedSharedFolder />}
               />
             }
-          /> : null}
+          />
           <Route path="/preview" element={<PreviewFlashcard />} />
           <Route
             path="/premium-repo-installed"
