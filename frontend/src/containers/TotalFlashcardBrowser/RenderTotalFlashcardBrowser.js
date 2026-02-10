@@ -12,7 +12,8 @@ import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
 import GhostButton from '../../componments/GhostButton';
 import Button from '../../componments/Button';
-import copyIcon from '../../static/copy-icon-white.svg';
+import copyIcon from '../../static/copy-icon.svg';
+import queryString from 'query-string';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -25,6 +26,11 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showCopiedMessage, setShowCopiedMessage] = useState(false);
+  const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
+  const id = flashcardID?.[0];
+  const name = flashcardName?.[0];
+  const previewUrl = `${window.location.origin}/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -65,11 +71,13 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
    
     
     try{
-      console.log(todayCards)
       await navigator.clipboard.writeText(previewUrl)
-      alert("Share link copied!")
+       setShowCopiedMessage(true);
+
+        setTimeout(() => {
+          setShowCopiedMessage(false);
+        }, 3000);
     } catch(err){
-      alert("could not copy link")
     }
   }
 
@@ -115,19 +123,17 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
               <Image url={GreyRightArrow} onClick={rightButtonClick} paddingRight="0px"/>
               </div>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' ,marginLeft:'auto'}}>
-              <Button
-                      style={{
-                        //marginLeft:'auto',
-                        // textAlign: 'center',
-                      }}
-                      onClick={() => { CopyPreviewURL()
-                      }}
-                      icon={copyIcon}
-                    />
+              <Image url={copyIcon} onClick={CopyPreviewURL} style={{height:"26px",width:"26px", }} className='expand-icon'/>  
               <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-icon'/>                        
             </div>
             </div>
           )}
+           {showCopiedMessage &&(
+              <div style={{marginLeft:"auto", marginRight:"auto", marginTop:"15px"}} className="small-text">
+                Share link {previewUrl} copied!
+              </div>
+              
+            )}
           {isFullscreen &&(
             <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
           )}

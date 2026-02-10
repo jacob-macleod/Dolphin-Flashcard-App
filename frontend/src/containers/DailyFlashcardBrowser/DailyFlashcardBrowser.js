@@ -19,7 +19,7 @@ import Image from '../../componments/Image/Image';
 import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
 import GhostButton from '../../componments/GhostButton';
 import Button from '../../componments/Button';
-import copyIcon from '../../static/copy-icon-white.svg';
+import copyIcon from '../../static/copy-icon.svg';
 
 
 const slideVariants = {
@@ -45,6 +45,7 @@ function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [notStarted, setNotStarted] = useState(0);
   const [currentCard, setCurrentCard] = useState(null);
   const [cardReviewer, setCardReviewer] = useState(null);
+  const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const id = flashcardID?.[0];
   const name = flashcardName?.[0];
   const previewUrl = `${window.location.origin}/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
@@ -244,9 +245,12 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
     try{
       console.log(todayCards)
       await navigator.clipboard.writeText(previewUrl)
-      alert("Share link copied!")
+       setShowCopiedMessage(true);
+
+        setTimeout(() => {
+          setShowCopiedMessage(false);
+        }, 3000);
     } catch(err){
-      alert("could not copy link")
     }
   }
 
@@ -267,27 +271,23 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   toggleFullscreen={toggleFullscreen}
                   fullscreen={isFullscreen}
                   view={view}
+                  previewUrl={previewUrl}
+                  CopyPreviewURL={CopyPreviewURL}
                 />
               </div>
               {!isFullscreen &&(
                 <div style={{width:"100%", marginLeft: "8px" , display:'flex'}}>
                   <ReviewBarChartKey style={{ paddingTop: '8px'}} />
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginLeft:'auto' }}>
-                  <Button
-                      style={{
-                        //marginLeft:'auto',
-                        // textAlign: 'center',
-                      }}
-                      onClick={() => {
-                        CopyPreviewURL()
-                      }}
-                      icon={copyIcon}
-                    />
+                 
+                    
               {view !== "mobile"  ?
-                <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>       
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginLeft:'auto' }}>
+                <Image url={copyIcon} onClick={CopyPreviewURL} style={{height:"26px",width:"26px" }} className='expand-button'/>       
+                <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>
+                </div>      
                 : <></>
               }     
-              </div>          
+                      
               </div>
               )}
               {!isFullscreen &&(
@@ -305,6 +305,13 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   style={{ padding: '0px', width: "maxContent" }}
                 /> : <></>}
               </div>
+              
+            )}
+            {showCopiedMessage &&(
+              <div style={{marginLeft:"auto", marginRight:"auto", marginTop:"15px"}} className="small-text">
+                Share link {previewUrl} copied!
+              </div>
+              
             )}
               {isFullscreen &&(
                   <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
