@@ -10,6 +10,7 @@
 }
 
 .card-overview{
+    margin-left:16px;
     max-height: 250px;
     overflow-y: scroll;
 }
