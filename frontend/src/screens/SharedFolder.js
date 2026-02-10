@@ -1,10 +1,8 @@
 import {React, useState, useEffect} from 'react';
-import { Helmet } from 'react-helmet';
 import useWindowSize from '../hooks/useWindowSize';
 import '../App.css';
 import BlobBackground from '../containers/BlobBackground';
 import GridContainer from '../componments/GridContainer/GridContainer';
-import GridItem from '../componments/GridItem/GridItem';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import '../componments/Text/Text/Text.css';
@@ -12,13 +10,11 @@ import '../componments/Text/Link/Link.css';
 import '../componments/Text/BoldParagraph/Bold.css';
 import Heading5 from '../componments/Text/Heading5';
 import Heading3 from '../componments/Text/Heading3';
-import Paragraph from '../componments/Text/Paragraph';
-import MobilePageWrapper from '../containers/MobilePageWrapper';
 import Button from '../componments/Button';
 import GhostButton from '../componments/GhostButton';
-import useTodayCards from '../hooks/useTodayCards';
 import apiManager from '../api/Api';
 import { getCookie } from '../api/Authentication';
+import FeaturedFlashcardTile from '../containers/FeaturedFlashcardTile/FeaturedFlashcardTile';
 
 
 
@@ -35,10 +31,14 @@ function SharedFolder() {
   const view = useWindowSize(mobileBreakpoint, tabletBreakpoint);
   const [reload, setReload] = useState(true);
   const [createFolderDialogueVisible, setCreateFolderDialogueVisible] = useState(false);
-  const todayCards = useTodayCards(reload, setReload, apiManager, getCookie);
-  
+  const urlParams = new URLSearchParams(window.location.search);
+  const sharedFolderId = urlParams.get("folderID");
+  const [folderDetails, setFolderDetails] = useState(null);
 
-  
+  useEffect(() => {
+    apiManager.getSharedFolderDetails(getCookie("jwtToken"), sharedFolderId, setFolderDetails);
+    setReload(false);
+  }, []);
 
   const [flashcardBoxHorizontalPadding, setFlashcardBoxHorizontalPadding] = useState(
     view === "mobile" ? "8px" : "16px"
@@ -73,8 +73,8 @@ function SharedFolder() {
               height: "100%",
               padding: "16px",
             }}>
-              <Heading3 text="Name of Folder" style={{textAlign: "left", marginBottom: "16px"}} />
-              <Heading5 text="Short Description of Folder and its contents" style={{textAlign: "left", marginBottom: "16px"}} />
+              <Heading3 text={folderDetails?.name} style={{textAlign: "left", marginBottom: "16px"}} />
+              <Heading5 text={folderDetails?.description} style={{textAlign: "left", marginBottom: "16px"}} />
               <Button
                   text="Study All"
                   style={{display: view !== "mobile" ? "inline-block": "", marginLeft: view === "mobile" ? "0px" : ""}}
@@ -82,6 +82,16 @@ function SharedFolder() {
                 view={view}
               />
             </div>
+            {folderDetails?.sets.map((set) => {
+              return (
+                <FeaturedFlashcardTile
+                  title={set.name}
+                  url={"/view?flashcardID[]=" + set.id + "&folder[]=&flashcardName[]=" + set.name}
+                  view={view}
+                  previewButtonText="Study"
+                />
+              );
+            })}
             <div style={{
               display: "flex",
               flexDirection: "row",

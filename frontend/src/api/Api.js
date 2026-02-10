@@ -586,6 +586,19 @@ class ApiManager {
     });
   };
 
+  getSharedFolderDetails(jwtToken, folderID, setSharedFolderDetails) {
+    const url = 'get-shared-folder';
+    const data = {
+      jwtToken: jwtToken,
+      sharedFolderID: folderID
+    };
+
+    this.fetchData(data, url, (sharedFolderDetails) => {
+      setSharedFolderDetails(sharedFolderDetails);
+      console.log(sharedFolderDetails);
+    });
+  };
+
 }
 
 

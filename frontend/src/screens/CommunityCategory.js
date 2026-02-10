@@ -17,7 +17,7 @@ import MobilePageWrapper from '../containers/MobilePageWrapper';
 import SidePanel from '../containers/SidePanel/SidePanel';
 import WhiteOverlay from '../componments/WhiteOverlay/WhiteOverlay';
 import DolphinLogo from '../componments/Logos/DolphinLogo/DolphinLogo';
-import FeaturedCommunitySet from '../containers/FeaturedCommunitySet/FeaturedCommunitySet';
+import FeaturedFlashcardTile from '../containers/FeaturedFlashcardTile/FeaturedFlashcardTile';
 
 import apiManager from '../api/Api';
 import communitySets from '../classes/CommunitySets';
@@ -162,7 +162,7 @@ function CommunityCategory() {
               <Heading2 text={flashcardCategory + " Flashcard Sets:"} style={{textAlign: "left"}}/>
               <div className={view === "desktop" ? "flashcard-recommendation-container" : "flashcard-recommendation-container-mobile"}>
                 {communitySets[flashcardCategory] && communitySets[flashcardCategory]["gcseSets"].map((set, index) => (
-                  <FeaturedCommunitySet key={index} title={set.title} url={set.url} view={view}/>
+                  <FeaturedFlashcardTile key={index} title={set.title} url={set.url} view={view}/>
                 ))
                 }
               </div>
