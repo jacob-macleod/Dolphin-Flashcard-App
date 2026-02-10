@@ -4,7 +4,17 @@ import { slideRight, flipVariants } from '../../animations/animations';
 import './WhiteOverlay.css';
 import Heading2 from '../Text/Heading2';
 
-function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible=true, onClick=null, className=null, header=null }) {
+function WhiteOverlay({
+  children,
+  style,
+  isFlipped,
+  flipOnClick = false,
+  visible=true,
+  onClick=null,
+  className=null,
+  header=null,
+  innerOverlayClassName=null
+}) {
   return (
     <div className={className}>
       {visible ? <>
@@ -32,7 +42,7 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
           </motion.div>
         ) : (
           <motion.div
-            className={"overlay " + className}
+            className={className +" overlay"}
             style={style}
             initial="hidden"
             animate="visible"
@@ -43,7 +53,10 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
             {header !== null ? <div className="header-wrapper">
               <Heading2 text={header} className="white-overlay-header" style={{fontWeight: "600"}}/>
             </div>: <></>}
-            <div className={'overlay-content '  + (header === null ? "" : "overlay-content-header")}>
+            <div className={
+              (innerOverlayClassName !== null ? innerOverlayClassName + " " : "")
+              + 'overlay-content ' 
+              + (header === null ? "" : "overlay-content-header")}>
                 {children}
               </div>
             </motion.div>

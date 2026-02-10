@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '../../componments/Button';
 import Paragraph from '../../componments/Text/Paragraph';
-import "./FeaturedCommunitySet.css";
+import "./FeaturedFlashcardTile.css";
 import WhiteOverlay from '../../componments/WhiteOverlay/WhiteOverlay';
 
-function FeaturedCommunitySet({ title, url, view }) {
+function FeaturedFlashcardTile({ title, url, view, previewButtonText="Preview" }) {
 
     function goToUrl() {
         window.location.href = url;
@@ -13,9 +13,9 @@ function FeaturedCommunitySet({ title, url, view }) {
     return (
         <WhiteOverlay className={view === "desktop" ? "featured-community-set" : "featured-community-set-mobile"}>
             <Paragraph text={title} style={{textAlign: "left"}}/>
-            <Button text="Preview" onClick={goToUrl} />
+            <Button text={previewButtonText} onClick={goToUrl} />
         </WhiteOverlay>
     );
 }
 
-export default FeaturedCommunitySet;
+export default FeaturedFlashcardTile;

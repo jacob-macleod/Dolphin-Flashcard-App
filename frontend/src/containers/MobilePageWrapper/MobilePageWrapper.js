@@ -33,6 +33,13 @@ function MobilePageWrapper({ children, view, itemClicked }) {
                     clicked={itemClicked === "flashcards"}
                 />
                 <NavBarButton
+                    text="Shared"
+                    src="/shared-folder-overview-mobile"
+                    clickedImage={flashcardsIconClicked}
+                    unclickedImage={flashcardsIconUnclicked}
+                    clicked={itemClicked === "shared"}
+                />
+                <NavBarButton
                     text="Community"
                     src="/community"
                     clickedImage={communityIconClicked}

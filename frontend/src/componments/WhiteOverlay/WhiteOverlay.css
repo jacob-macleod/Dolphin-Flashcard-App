@@ -55,3 +55,9 @@ body.dark-theme .overlay {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 50px;
+}

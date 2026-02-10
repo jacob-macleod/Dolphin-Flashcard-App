@@ -15,6 +15,15 @@ import LandingPage from './screens/LandingPage';
 import { ThemeProvider } from './context/ThemeContext';
 import Settings from './screens/Settings';
 import AIFlashcards from './screens/AIFlashcards';
+import SharedFolderOverviewMobile from './screens/SharedFolderOverviewMobile';
+import SharedFolder from './screens/SharedFolder';
+import CreatedSharedFolder from './screens/CreatedSharedFolder';
+
+//  Import the optional premium modules
+import { safeImport } from './utils/safeImport';
+// const SharedFolder = safeImport('./screens/SharedFolder');
+// const CreatedSharedFolder = safeImport('./screens/CreatedSharedFolder');
+// const SharedFolderOverviewMobile = safeImport('./screens/SharedFolderOverviewMobile');
 
 function PromptLoginIfNotLoggedIn({ child, jwtToken, setJwtToken }) {
   /* If there is no JWT Token, display the landing page - the user can access sign in from there.*/
@@ -152,6 +161,37 @@ function App() {
             }
           />
           <Route
+            path="/shared-folder-overview-mobile"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<SharedFolderOverviewMobile />}
+              />
+            }
+          />
+          <Route
+            path="/SharedFolder"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<SharedFolder />}
+              />
+            }
+          />
+          <Route
+            path="/CreatedSharedFolder"
+            element={
+              <ErrorChecking
+                jwtToken={jwtToken}
+                setJwtToken={setJwtToken}
+                child={<CreatedSharedFolder />}
+              />
+            }
+          />
+          <Route path="/preview" element={<PreviewFlashcard />} />
+          <Route
             path="/premium-repo-installed"
             element={
               <ErrorChecking
@@ -160,10 +200,9 @@ function App() {
                 child={
                   TestScreen ? <TestScreen /> : <p>No optional component</p>
               }
-              />
+            />
             }
           />
-          <Route path="/preview" element={<PreviewFlashcard />} />
           {/* Do not check if the user is signed in or not, because 404 pages can be accessed without jwt tokens */}
           <Route
             path="*"

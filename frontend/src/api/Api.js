@@ -554,28 +554,51 @@ class ApiManager {
   }
 
   getAIFlashcardData(jwtToken,flashcardPrompt,quantity,setAIFlashcardData,getTodayDate){
-  const url = 'generate-ai-flashcard';
+    const url = 'generate-ai-flashcard';
 
- 
-  const data = {
-      jwtToken:jwtToken,
-      flashcardPrompt: flashcardPrompt,
-      quantity: quantity
+  
+    const data = {
+        jwtToken:jwtToken,
+        flashcardPrompt: flashcardPrompt,
+        quantity: quantity
+      };
+      console.log(data)
+      //loops through each flashcard and adds a reviewStatus and lastReview value
+      this.fetchData(data, url, (flashcards) => {
+        const updated = (flashcards).map(card => ({
+          ...card,
+          reviewStatus: "0.0",
+          lastReview: getTodayDate()
+        }));
+
+        setAIFlashcardData(updated);
+      });
+  };
+
+  getSharedFolders(jwtToken, setSharedFolders) {
+    const url = 'get-shared-folders';
+    const data = {
+      jwtToken: jwtToken,
     };
-  console.log(data)
-  //loops through each flashcard and adds a reviewStatus and lastReview value
-this.fetchData(data, url, (flashcards) => {
-    const updated = (flashcards).map(card => ({
-      ...card,
-      reviewStatus: "0.0",
-      lastReview: getTodayDate()
-    }));
 
-    setAIFlashcardData(updated);
+    this.fetchData(data, url, (sharedFolders) => {
+      setSharedFolders(sharedFolders);
+    });
+  };
 
-  });
+  getSharedFolderDetails(jwtToken, folderID, setSharedFolderDetails) {
+    const url = 'get-shared-folder';
+    const data = {
+      jwtToken: jwtToken,
+      sharedFolderID: folderID
+    };
 
-}
+    this.fetchData(data, url, (sharedFolderDetails) => {
+      setSharedFolderDetails(sharedFolderDetails);
+      console.log(sharedFolderDetails);
+    });
+  };
+
 }
 
 

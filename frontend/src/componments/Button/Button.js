@@ -11,9 +11,9 @@ function Button({
   view = 'desktop',
 }) {
   style = {
-    ...style,
     width: view === 'mobile' ? '100%' : 'auto',
     cursor: disabled ? 'not-allowed' : 'pointer',
+    ...style,
   };
   return (
     <motion.button
