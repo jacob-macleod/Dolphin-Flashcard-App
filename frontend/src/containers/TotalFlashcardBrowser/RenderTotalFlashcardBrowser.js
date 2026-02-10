@@ -128,7 +128,7 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
             </div>
             </div>
           )}
-           {showCopiedMessage &&(
+           {(showCopiedMessage&& !isFullscreen) &&(
               <div style={{marginLeft:"auto", marginRight:"auto", marginTop:"15px"}} className="small-text">
                 Share link {previewUrl} copied!
               </div>
