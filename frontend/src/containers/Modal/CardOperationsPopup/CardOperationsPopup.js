@@ -16,14 +16,18 @@ function CardOperationsPopup({ visible, showMovePopup, showDeleteConfirmation, s
         "path": path,
         "flashcardName": flashcardName
     };
+    const customStyle = {
+    padding: "2px",
+    paddingLeft: "2px",
+    };
 
     return (
         visible ?
         <div className={view == "mobile" ? 'card-operations-popup-wrapper-mobile' : 'card-operations-popup-wrapper'}>
             <div className='card-operations-container'>
-                <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" onClick={() => setRenameFlashcardSetPopupVisible(cardData)} float={float}/>
-                <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}} float={float}/>
-                <MenuItem text="Delete" imgUrl={deleteIcon} onClick={() => {showDeleteConfirmation(cardData)}} margin="0px" float={float}/>
+                <MenuItem text="Rename" imgUrl={renameIcon} margin="0px" onClick={() => setRenameFlashcardSetPopupVisible(cardData)} float={float} style={customStyle}/>
+                <MenuItem text="Move" imgUrl={moveIcon} margin="0px" onClick={() => {showMovePopup(cardData)}} float={float} style={customStyle}/>
+                <MenuItem text="Delete" imgUrl={deleteIcon} onClick={() => {showDeleteConfirmation(cardData)}} margin="0px" float={float} style={customStyle}/>
             </div>
         </div>
         : <></>

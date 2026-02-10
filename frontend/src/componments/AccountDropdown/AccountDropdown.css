@@ -3,7 +3,7 @@
     filter: drop-shadow(0px 2px 14.8px var(--account-dropdown-shadow-light));
     background-color: var(--account-dropdown-bg-light);
     width: 141px;
-    height: 116px;
+    height: 90px;
     margin-left: 50px;
     border-radius: 16px;
     transition: all 0.5s ease;
