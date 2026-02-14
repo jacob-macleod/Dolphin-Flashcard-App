@@ -11,6 +11,9 @@ import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
 import "./TotalFlashcardBrowser.css";
 import { motion, AnimatePresence } from 'framer-motion';
 import GhostButton from '../../componments/GhostButton';
+import Button from '../../componments/Button';
+import copyIcon from '../../static/copy-icon.svg';
+import queryString from 'query-string';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -23,6 +26,11 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showCopiedMessage, setShowCopiedMessage] = useState(false);
+  const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
+  const id = flashcardID?.[0];
+  const name = flashcardName?.[0];
+  const previewUrl = `${window.location.origin}/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen);
@@ -56,6 +64,22 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [handleKeyDown]);
+
+  
+
+  const CopyPreviewURL = async () => {
+   
+    
+    try{
+      await navigator.clipboard.writeText(previewUrl)
+       setShowCopiedMessage(true);
+
+        setTimeout(() => {
+          setShowCopiedMessage(false);
+        }, 3000);
+    } catch(err){
+    }
+  }
 
   return (
     <div className={isFullscreen ? 'fullscreen' : ''}>
@@ -93,12 +117,23 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
           </div>
           {!isFullscreen && (
             <div className="controls-panel">
+              <div style={{ display: 'flex', margin:'auto',position:'absolute',left:'50%',transform: 'translateX(-50%)'}}>
               <Image url={GreyLeftArrow} onClick={leftButtonClick} paddingRight="0px" />
               <Paragraph text={`${currentCardIndex + 1} / ${individualCards.length}`} type="grey" />
               <Image url={GreyRightArrow} onClick={rightButtonClick} paddingRight="0px"/>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' ,marginLeft:'auto'}}>
+              <Image url={copyIcon} onClick={CopyPreviewURL} style={{height:"26px",width:"26px", }} className='expand-icon'/>  
               <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-icon'/>                        
             </div>
+            </div>
           )}
+           {(showCopiedMessage&& !isFullscreen) &&(
+              <div style={{marginLeft:"auto", marginRight:"auto", marginTop:"15px"}} className="small-text">
+                Share link {previewUrl} copied!
+              </div>
+              
+            )}
           {isFullscreen &&(
             <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
           )}

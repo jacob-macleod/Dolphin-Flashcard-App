@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import Image from '../../componments/Image/Image';
 import './MenuItem.css';
 
-function MenuItem({ text, clicked=false, src, imgUrl="", width="178px", margin=null, onClick=null, float=null}) {
+function MenuItem({ text, clicked=false, src, imgUrl="", width="178px",style=null, onClick=null, float=null}) {
     return (
         <div
             className={clicked ? "menu-item-clicked" : "menu-item"}
-            style={{display: "inline-flex", width: width, margin: margin, float: float}}
+            style={{display: "inline-flex", width: width, float: float,...style}}
             onClick={onClick}
         >
             {imgUrl === "" ? null :<Image

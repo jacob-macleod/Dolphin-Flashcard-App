@@ -210,7 +210,7 @@ function ImportFromAnkiDialogue({ visible, setVisible, view, setReload }) {
               cols="40"
               rows="5"
               style={{ resize: 'none', width: 'calc(100% - 32px)' }}
-              className="input"
+              className="textarea-input"
               placeholder="Folder description"
               value={flashcardDescription}
               onChange={onFlashcardDescriptionChange}

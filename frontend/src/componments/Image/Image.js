@@ -2,7 +2,7 @@ import React from 'react';
 
 function Image({
   width = '50px',
-  minWidth = '50px',
+  minWidth = '25px',
   height = '50px',
   url = '/favicon.ico',
   borderRadius = '0px',

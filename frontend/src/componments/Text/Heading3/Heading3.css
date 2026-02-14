@@ -5,6 +5,7 @@
     font-weight: 700;
     word-wrap: break-word;
     margin: 16px;
+    margin-bottom:0px;
 }
 
 body.dark-theme .heading3 {

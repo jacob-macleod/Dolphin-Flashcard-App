@@ -27,7 +27,7 @@
     display: grid;
     margin: 0px;
     height: 100%;
-    align-items: end;
+    align-items: start;
     width:100%;
 }
 

@@ -1,12 +1,13 @@
 .popup-container{
     position:absolute;
     width: 378px;
-    height: 420px;
+    height: auto;
     background: var(--modal-bg-light);
     box-shadow: 0px 2px 16px -3px var(--modal-shadow-light);
     border-radius: 16px;
     border: 1px solid var(--modal-border-light);
     padding: 16px;
+    padding-left:0px;
     margin: 16px;
     z-index: 4;
     transition: all 0.5 ease;
@@ -15,12 +16,13 @@
 .popup-container-tablet {
     position:absolute;
     width: 378px;
-    height: 420px;
+    height: auto;
     background: var(--modal-bg-light);
     box-shadow: 0px 2px 16px -3px var(--modal-shadow-light);
     border-radius: 16px;
     border: 1px solid var(--modal-border-light);
     padding: 16px;
+    padding-left: 0px;
     margin: 16px;
     z-index: 4;
     transition: all 0.5 ease;
