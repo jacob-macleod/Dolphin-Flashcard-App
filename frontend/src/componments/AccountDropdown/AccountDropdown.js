@@ -6,7 +6,10 @@ import closeOnOutsideClick from '../../hooks/closeOnOutsideClick';
 import './AccountDropdown.css';
 
 function AccountDropown({ setVisible, visible }) {
-    const menuItemMargin = "12px";
+    const customStyle = {
+    padding: "2px",
+    paddingLeft: "5px",
+    };
     const dropdownRef = useRef(null);
 
     closeOnOutsideClick(dropdownRef, setVisible);
@@ -25,8 +28,8 @@ function AccountDropown({ setVisible, visible }) {
     return (
         visible === false ? null :
         <div className='account-dropdown-background'>
-            <MenuItem text="Sign Out" onClick={() => {signOut()}} margin={menuItemMargin} imgUrl={signOutIcon}/>
-            <MenuItem text="Settings" src="/settings" margin={menuItemMargin} imgUrl={settingsIcon}/>
+            <MenuItem text="Sign Out" onClick={() => {signOut()}} style={customStyle} imgUrl={signOutIcon}/>
+            <MenuItem text="Settings" src="/settings" style={customStyle} imgUrl={settingsIcon}/>
         </div>
     );
 }

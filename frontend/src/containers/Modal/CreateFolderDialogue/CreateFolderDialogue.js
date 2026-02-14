@@ -94,7 +94,7 @@ function CreateFolderDialogue({ visible, setVisible, view, setReload }) {
 
                 <div className={view !== "mobile" ? "input-container" : "input-container-mobile"}>
                     <Paragraph text="Name: " style={{ display: "flex", alignItems: "center" }} />
-                    <input type="text" style={{width: "calc(100% - 32px)"}} className="input" value={folderName} onChange={onFlashcardNameChange} />
+                    <input type="text" style={{}} className="input" value={folderName} onChange={onFlashcardNameChange} />
                 </div>
 
                 <ErrorText text={errorMessage} style={{ display: errorMessageVisibility}} />

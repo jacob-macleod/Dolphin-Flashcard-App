@@ -176,9 +176,6 @@ function EditGoalPopup({ visible, setVisible, view }) {
                     <Button text="Set Goal" onClick={createGoal} />
                 </div>
 
-                <div style={{display: "flex", justifyContent: "center", height: "50px"}}>
-                    <DelayedElement childValue={loadingIcon} child={<></>}/>
-                </div>
             </motion.div>
         </div>
     );
