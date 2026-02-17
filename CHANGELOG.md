@@ -29,8 +29,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - made all the 3 dots vertically aligned on mobile, on the flashcard page
 - The limit for AI flashcard generation is now 25 flashcards per prompt
 - the submit prompt button is now on a new line under the prompt bar
+- Changed the window titles for the community and settings pages
 
+### Added
+- added signout button to the Settings page.
 
+### Removed
+- removed scrollbar from settings page
 
 ## 7.7.1 - 2026-02-10
 
