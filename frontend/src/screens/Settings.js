@@ -15,6 +15,7 @@ import '../componments/Text/BoldParagraph/Bold.css';
 import './Flashcards.css';
 import './Settings.css';
 import GhostButton from '../componments/GhostButton';
+import { signOut } from '../componments/AccountDropdown/AccountDropdown';
 
 import { useTheme } from '../context/ThemeContext';
 
@@ -69,14 +70,20 @@ function Settings() {
             visible={view == "mobile" ? false : true}
             className="settings-page-wrapper"
           >
-            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "", overflowY: "scroll" }}>
+            <div style={{ maxWidth: "1200px", margin: "auto", padding: view === "mobile" ? "0px" : "16px", height: view === "mobile" ? "100%" : "" }}>
                 <MobilePageWrapper view={view} itemClicked="settings">
-                  <div>
+                  <div style={{display:"flex" ,flexDirection:"column"}}>
                     <p>Settings</p>
                     <GhostButton 
                         text={darkMode ? "Toggle Light Mode" : "Toggle Dark Mode"} 
                         onClick={toggleTheme}
+                        style={{marginLeft:"18px"}}
                     />
+                    <GhostButton 
+                        text="Sign out"
+                        onClick={signOut}
+                        style={{marginLeft:"18px"}}
+                  />
                 </div>
               </MobilePageWrapper>
             </div>
