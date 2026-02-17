@@ -21,7 +21,7 @@ import { useTheme } from '../context/ThemeContext';
 
 function Settings() {
     // Set general variables
-    const title = "Flashcards";
+    const title = "Settings";
 
     // Set variables for the size
     const mobileBreakpoint = 650;

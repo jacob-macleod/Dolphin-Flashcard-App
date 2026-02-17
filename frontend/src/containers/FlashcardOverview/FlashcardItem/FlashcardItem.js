@@ -105,7 +105,7 @@ function FlashcardItem({
         <div>
         <GridContainer
             classType="flashcard-overview"
-            layout={view == "desktop" ? "260px auto 80px" : "auto auto auto"}
+            layout={view == "desktop" ? "260px auto 80px" : "260px auto 80px"}
         >
             <GridItem style={gridItemStyle}>
                 <div className='flashcard-item'>
