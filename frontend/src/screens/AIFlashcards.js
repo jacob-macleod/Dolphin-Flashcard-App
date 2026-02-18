@@ -161,14 +161,13 @@ function AIFlashcards() {
               style={{
                 width: '90%',
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 alignItems: 'flex-end',
-                marginTop: '16px',
-                marginLeft: '20px',
-                height: '100px'
+                height: '150px',
+                marginLeft:"20px",
               }}>
               <PromptBar width={"100%"}
-                style={{ margin: "auto" }}
+                style={{margin:"auto"}}
 
                 setSearchTerm={setPrompt}
 
@@ -181,6 +180,7 @@ function AIFlashcards() {
                   margin: "0px",
                   borderRadius: "8px",
                   marginLeft: "8px",
+                  marginTop:"10px"
                 }}
                 onClick={() => {
                   setAIFlashcardData(null)

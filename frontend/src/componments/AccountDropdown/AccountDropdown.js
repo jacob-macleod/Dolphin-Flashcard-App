@@ -5,16 +5,7 @@ import signOutIcon from '../../static/signout-icon.svg';
 import closeOnOutsideClick from '../../hooks/closeOnOutsideClick';
 import './AccountDropdown.css';
 
-function AccountDropown({ setVisible, visible }) {
-    const customStyle = {
-    padding: "2px",
-    paddingLeft: "5px",
-    };
-    const dropdownRef = useRef(null);
-
-    closeOnOutsideClick(dropdownRef, setVisible);
-
-    function signOut() {
+export function signOut() {
         // Clear all cookies
         document.cookie.split(';').forEach(cookie => {
             const eqPos = cookie.indexOf('=');
@@ -25,6 +16,18 @@ function AccountDropown({ setVisible, visible }) {
         window.location.reload();
     }
 
+
+function AccountDropown({ setVisible, visible }) {
+    const customStyle = {
+    padding: "2px",
+    paddingLeft: "5px",
+    };
+    const dropdownRef = useRef(null);
+
+    closeOnOutsideClick(dropdownRef, setVisible);
+
+   
+
     return (
         visible === false ? null :
         <div className='account-dropdown-background'>
@@ -33,5 +36,4 @@ function AccountDropown({ setVisible, visible }) {
         </div>
     );
 }
-
 export default AccountDropown;

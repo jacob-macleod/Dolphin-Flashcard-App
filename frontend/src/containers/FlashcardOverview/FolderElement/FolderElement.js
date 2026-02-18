@@ -25,7 +25,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
     function toggleClick() {
         if (selected) {
             setSelectedPath(null);
-            setSelected(false);
+            setSelected(true);
         } else {
             setSelectedPath(path);
             setSelected(true);
@@ -46,11 +46,11 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
 
     return (
         <div key={folderKey} className='folder-wrapper'>
-            <div className={selected ? 'flashcard-item-blue' : 'flashcard-item'}>
+            <div className={selected ? 'flashcard-item-blue' : 'flashcard-item'} onClick={toggleClick}>
                 <Image
                     url={showChildren ?
-                        selected ? verticalTriangleWhite : verticalTriangle
-                        : selected ? horizontalTriangleWhite : horizontalTriangle}
+                        (selected ? verticalTriangleWhite : verticalTriangle)
+                        : (selected ? horizontalTriangleWhite : horizontalTriangle)}
                     width='16px' height="16px" minWidth='16px'
                     onClick={toggleChildren}
                 />
@@ -59,7 +59,7 @@ function FolderElement({ element, name, child, folderKey, path, selectedPath, se
                     lineHeight: "1",
                     textAlign: "left",
                     color: getTextColor()
-                }} onClick={toggleClick}/>
+                }}/>
             </div>
             <div className='child-wrapper' style={{
                 display: showChildren ? 'block' : 'none',

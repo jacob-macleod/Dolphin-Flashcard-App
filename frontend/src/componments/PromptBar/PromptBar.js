@@ -15,14 +15,15 @@ function PromptBar({
     width,
     float,
     height,
+    style
 }) {
     return (
         <textarea
-            className={view == "mobile" ? "input-mobile" : "input"}
+            className={view == "mobile" ? "input-mobile" : "textarea-input"}
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder="“Generate a flashcard set with 20 cards explaining the properties of waves for A-Level AQA Physics”"
+            placeholder="“Generate a flashcard set with 25 cards explaining the properties of waves for A-Level AQA Physics”"
             style={{
                 marginBottom: "0px",
                 float: "left",
@@ -35,6 +36,7 @@ function PromptBar({
                 float: float,
                 height: height,
                 resize: "none",
+                ...style
             }}
             type='text'
         >
