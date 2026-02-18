@@ -55,7 +55,7 @@ class FlashcardGenerator:
                 raise ValueError("Invalid API type")
         return cls._instance
 
-    def generate_flashcard(self, topic: str, number_of_cards: str = "20"):
+    def generate_flashcard(self, topic: str, number_of_cards: str = "25"):
         """
         Generate flashcards
 

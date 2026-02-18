@@ -139,7 +139,7 @@ function SearchSectionMobile({view, searchTerm, setSearchTerm, flashcardSearchDa
 
 function SearchForFlashcard() {
   // Set general variables
-  const title = "Search";
+  const title = "Community";
   const [mobileSidePanelVisible, setMobileSidePanelVisible] = useState(false);
 
   // Set variables for the size
