@@ -245,13 +245,14 @@ function Flashcards() {
                 <div
                   className={view === 'mobile' ? 'flashcards-page-content' : ''}
                 >
-                  <SearchBar
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    view={view}
-                    width={'90%'}
-                    marginLeft="0px"
-                  />
+
+                    <SearchBar
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
+                      view={view}
+                      width={'90%'}
+                      marginLeft="0px"
+                    />
                   {view !== 'mobile' ? <br></br> : <></>}
                   {view !== 'mobile' ? <br></br> : <></>}
                   <GridContainer

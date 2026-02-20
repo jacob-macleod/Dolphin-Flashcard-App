@@ -44,7 +44,7 @@ function NewGoalForm({ setVisible, quantity, setQuantity, option, setOption, dat
             <Heading3 text="Set a new goal:" />
 
             <div className="input-container">
-                <Paragraph text="Type of goal: " style={{ display: "flex", alignItems: "center" }} />
+                <Paragraph text="Type of goal: " style={{ display: "flex", justifyContent: "space-between" }} />
                 <select className="dropdown" value={option} onChange={handleOptionChange}>
                     <option value="xp" className="option">XP Goal</option>
                     <option value="flashcards" className="option">Flashcard Goal</option>

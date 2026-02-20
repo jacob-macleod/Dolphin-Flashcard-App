@@ -7,7 +7,6 @@
 }
 
 .controls-panel .expand-icon {
-  position: absolute;
   right: 10px; 
 }
 .card-container {
@@ -101,17 +100,12 @@
 }
 
 .expand-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1001;
 }
 
 .review-bar-chart-wrapper {
-  margin-top: 20px;
 }
 
 /* Mobile-specific styles */

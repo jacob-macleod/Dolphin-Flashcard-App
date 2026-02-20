@@ -25,6 +25,7 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
     setFlashcardItems,
   } = useFlashcardDataForMultipleCards(folder, flashcardID, "", flashcardName);
   const [loadingIcon, setLoadingIcon] = useState(null);
+  
 
   useEffect(() => {
       if (flashcardItems.length !== 0) {

@@ -143,8 +143,8 @@ function Flashcards() {
               >
                 <div style={{ maxWidth: "1200px", margin: "auto", width: "100%" }}>
                   <FlashcardHeader newSet={newSet} flashcardName={flashcardName} folder={folder} flashcardID={flashcardID}/>
-                  <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
-                  <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} />
+                  {/* <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
+                  <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} /> */}
 
                   <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} style={{marginLeft: "16px"}}/>
 

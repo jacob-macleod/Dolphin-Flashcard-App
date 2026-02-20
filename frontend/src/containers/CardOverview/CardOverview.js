@@ -5,6 +5,7 @@ import "../../componments/Text/Text/Text.css";
 import DOMPurify from 'dompurify';
 import ExpandIcon from '../../static/expand-icon.svg';
 import Image from '../../componments/Image/Image';
+import copyIcon from '../../static/copy-icon.svg'
 
 function sanitizeHtml(html) {
     return DOMPurify.sanitize(html, {
@@ -59,7 +60,9 @@ function CardOverview({
     fullscreen=false,
     view="desktop",
     isInEditPage=false,
-    turnable=true
+    turnable=true,
+    previewUrl,
+    CopyPreviewURL
 }) {
     let htmlText = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -71,6 +74,7 @@ function CardOverview({
     const sanitizedBack = sanitizeHtml(back);
     const [cardText, setCardText] = useState(sanitizedFront);
     const [isFlipped, setIsFlipped] = useState(false);
+    const [showCopiedMessage, setShowCopiedMessage] = useState(false);
     const isFlippedRef = useRef(isFlipped);
 
     useEffect(() => {
@@ -111,6 +115,7 @@ function CardOverview({
     }, []);
 
 
+
     return (
         <>
         <WhiteOverlay
@@ -146,7 +151,10 @@ function CardOverview({
                     }
                     {
                         toggleFullscreen !== null && fullscreen === false && view === "mobile"
-                        ? <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/> 
+                        ? <div style={{ display: 'flex', gap: '8px', alignItems: 'center', position:"absolute", right:"10px", top:"10px" }}>
+                    <Image url={copyIcon} onClick={CopyPreviewURL} style={{height:"26px",width:"26px", }} className='expand-button'/>       
+                    <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>
+                </div>      
                         : <></>
                     }
                     <div style={{ transformStyle: "preserve-3d" }}>
@@ -155,7 +163,9 @@ function CardOverview({
                     {showResponseOptions && isFlipped && (view !== "mobile" || fullscreen == false) ?
                         <ResponseOptions ghostButtonStyle={ghostButtonStyle} setResponse={setResponse} />
                     : <></>}
+                    
                 </div>
+                
             }
             style={{
                 width: "100%",
@@ -167,8 +177,11 @@ function CardOverview({
         {(showResponseOptions && isFlipped && fullscreen && view === "mobile") ?
             <ResponseOptions ghostButtonStyle={ghostButtonStyle} setResponse={setResponse} />
         : <></>}
+         
         </>
+        
     );
+    
 }
 
 export default CardOverview;

@@ -21,6 +21,43 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 7.7.2 - 2026-02-17
+
+### Changed
+- Made it so the dropdown arrow becomes blue consistently when clicked when creating a new set or folder
+- commented out the search bar and sort bar on the edit set page
+- made all the 3 dots vertically aligned on mobile, on the flashcard page
+- The limit for AI flashcard generation is now 25 flashcards per prompt
+- the submit prompt button is now on a new line under the prompt bar
+- Changed the window titles for the community and settings pages
+
+### Added
+- added signout button to the Settings page.
+
+### Removed
+- removed scrollbar from settings page
+
+## 7.7.1 - 2026-02-10
+
+### Changed
+- Recently studied sets text has been aligned to top on the dashboard page
+- Day streak text is now horizontally centered within its container on the dashboard page
+- the buttons appearing when clicking on the profile in the top left (settings,sign out) are now vertically closer together
+
+- Type of goal and date selection boxes are now aligned to the right in the create goal popup
+- Textboxes of most popups shrank to better match the size of the intended inputs
+- The body text on popups now has as much left margin as the titles in bold (set a new goal, deadline)
+- Padding around every popup is now equal
+- The cancel button and set goal button are now closer together on the create goal popup
+- all heading3's are now closer to what is below them
+
+
+## 7.7.0 - 2026-02-05
+
+### Added
+
+- Added copy share link button on daily flashcards and all flashcards study pages.
+- Made it so if the user tries going to the view page of a flashcard set they dont own, it takes them to the preview page instead
 
 ## 7.6.2 - 2026-01-23
 
