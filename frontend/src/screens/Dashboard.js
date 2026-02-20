@@ -92,8 +92,8 @@ function Dashboard() {
       classType={view === "mobile" ? "grid-container-mobile" : "grid-container"}
       >
         {view != "mobile" ? <SidePanel selectedItem="dashboard"/> : <></>}
-        <GridItem style={{padding: "0px", width: view == "mobile" ? "100vw" : "100%"}}>
-          <Heading4 text={userWelcomeText} />
+        <GridItem style={{padding: "16px", width: view == "mobile" ? "100vw" : "100%"}}>
+          <Heading4 text={userWelcomeText} style={{padding: "16px"}}/>
           <StreakWidget />
 
           <GoalsWidget
@@ -112,7 +112,7 @@ function Dashboard() {
         </GridItem>
 
         {view == "desktop" ?
-        <GridItem style={{padding: "0px 16px 0px 0px"}}>
+        <GridItem style={{padding: "16px 16px 16px 16px"}}>
           {third_collum}
         </GridItem>
         : <></>}
