@@ -95,7 +95,7 @@ function AIFlashcards() {
         ></meta>
       </Helmet>
 
-       <CreateFlashcardSetDialogue
+      <CreateFlashcardSetDialogue
         visible={createCardDialogueVisible}
         setVisible={setCreateCardDialogueVisible}
         view={view}

@@ -222,27 +222,13 @@ function Flashcards() {
       >
         {view !== 'mobile' ? <SidePanel selectedItem="flashcards" /> : <></>}
 
-        <GridItem
-          style={{
-            paddingLeft:
-              view === 'mobile' ? '0px' : flashcardBoxHorizontalPadding,
-            paddingRight:
-              view === 'mobile' ? '0px' : flashcardBoxHorizontalPadding,
-            paddingTop: '0px',
-            paddingBottom: view === 'mobile' ? '0px' : '',
-            width: view === 'mobile' ? '100vw' : '',
-            display: view === 'mobile' ? 'block' : 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}
-        >
+
           <WhiteOverlay
             style={{
               height: 'max-content',
               paddingBottom: view === 'mobile' ? '80px' : '',
               width: view === 'desktop' ? '100%' : 'calc(100% - 16px)',
-              padding: "0px",
-              marginTop: '16px',
+              margin: '16px',
             }}
             visible={view === 'mobile' ? false : true}
           >
@@ -273,9 +259,7 @@ function Flashcards() {
                     classType="review-bar-wrapper"
                     layout={view === 'desktop' ? '260px auto 80px' : 'auto'}
                   >
-                    {view === 'desktop' ? <GridItem /> : <></>}
                     <ReviewBarChartKey view={view} />
-                    {view === 'desktop' ? <GridItem /> : <></>}
                   </GridContainer>
                   <div>
                     <div
@@ -364,7 +348,7 @@ function Flashcards() {
                             setCreateFolderDialogueVisible(todayCards);
                           }}
                         />
-                         
+                        
                         <Button
                           text="+ New Set"
                           style={{
@@ -474,7 +458,6 @@ function Flashcards() {
               </MobilePageWrapper>
             </div>
           </WhiteOverlay>
-        </GridItem>
       </GridContainer>
       <BlobBackground />
     </div>
