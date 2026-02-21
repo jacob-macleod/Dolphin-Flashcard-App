@@ -11,9 +11,9 @@
 }
 
 .button-container-mobile {
-   padding: 0px;
-   margin: 0px;
-   width: 100%;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
 }
 
 /* .study-mode-container {
@@ -32,4 +32,17 @@
 
 .desktop-page-container{
     width: 100%;
+}
+
+.heading4-black {
+    color: var(--text-light);
+    font-size: 21px;
+    font-weight: bold;
+    font-style: normal;
+    font-family: Roboto;
+    display: flex;
+    justify-content: left;
+    margin: 0px;
+    padding-top: 16px;
+    padding-bottom: 16px;
 }

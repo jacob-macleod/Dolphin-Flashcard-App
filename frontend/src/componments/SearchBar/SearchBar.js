@@ -17,11 +17,10 @@ function SearchBar({
 }) {
     return (
         <input
-            className={view == "mobile" ? "input-mobile" : "input"}
+            className={view === "mobile" ? "input-mobile" : "input"}
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             onKeyDown={onKeyDown}
-            defaultValue="Search"
             style={{
                 marginBottom: "0px",
                 float: "left",
@@ -34,7 +33,7 @@ function SearchBar({
                 float: float
             }}
             type='text'
-            placeholder={placeholder}
+            placeholder={"Search..."}
         />
     );
 }

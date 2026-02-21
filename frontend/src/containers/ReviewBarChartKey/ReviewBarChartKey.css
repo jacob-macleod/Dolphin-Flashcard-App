@@ -1,12 +1,27 @@
 .key-wrapper{
     display: flex;
-    float: left;
-    padding-left: 99px;
+    flex-wrap: nowrap; /* keep children on a single row */
+    gap: 8px;
+    align-items: center;
+    grid-column: 1 / -1;    /* span entire row */
+    justify-self: end;      /* align to far right */
+    margin-left: auto;      /* fallback for flex parents */
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow-x: auto; /* allow horizontal scroll on very small screens */
 }
 
 .key-wrapper-mobile{
     display: flex;
-    float: left;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: center;
+    grid-column: 1 / -1;
+    justify-self: end;
+    margin-left: auto;
+    padding-right: 12px;
+    white-space: nowrap;
+    overflow-x: auto;
 }
 
 .color-box{

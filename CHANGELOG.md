@@ -21,6 +21,20 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 7.7.3 - 2026-02-20
+
+### Changed
+- White Overlay fills the screen
+- Placeholder says Search... 
+- Align text on empty set
+- Titles like other modes have been moved left to align properly
+
+### Added
+- added an edit option to the three dots menu that takes users to the edit page
+
+### Removed
+- Removed percentage completed
+  
 ## 7.7.2 - 2026-02-17
 
 ### Changed

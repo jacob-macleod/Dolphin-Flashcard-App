@@ -6,7 +6,7 @@ import Image from '../../../componments/Image/Image';
 import GridContainer from '../../../componments/GridContainer/GridContainer';
 import GridItem from '../../../componments/GridItem/GridItem';
 import ReviewBarChart from '../../ReviewBarChart';
-import CardOperationsPopup from '../../Modal/CardOperationsPopup/CardOperationsPopup';
+import { CardOperationsPopup } from '../../Modal/CardOperationsPopup/CardOperationsPopup';
 
 import circledTick from '../../../static/circled-tick.svg';
 import emptyCircle from '../../../static/empty-circle.svg';
@@ -157,6 +157,8 @@ function FlashcardItem({
                         path={path}
                         flashcardName={element.flashcardName}
                         view={view}
+                        folder={path}
+                        flashcardID={element.flashcardID}
                     />
                 </div>
             </GridItem>
