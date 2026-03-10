@@ -21,7 +21,7 @@ function ReviewBarChartKey({ view, style={} }) {
             <Heading5 text="Studying" style={headingStyle} />
 
             <div className='color-box' style={{background: recappingColor}}></div>
-            <Heading5 text="Recappping" style={headingStyle} />
+            <Heading5 text="Recapping" style={headingStyle} />
         </div>
     );
 }
