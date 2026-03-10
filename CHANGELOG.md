@@ -28,6 +28,7 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - Placeholder says Search... 
 - Align text on empty set
 - Titles like other modes have been moved left to align properly
+- Fixed a typo
 
 ### Added
 - added an edit option to the three dots menu that takes users to the edit page
