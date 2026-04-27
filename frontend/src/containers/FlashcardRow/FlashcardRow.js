@@ -15,7 +15,7 @@ function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setIni
     }
 
     return (
-        <div className='flashcard-row'>
+        <div className={view === 'mobile' ? 'flashcard-row-mobile' : 'flashcard-row'}>
             <CardOverview text={front} turnOverCardOnSpaceKey={false} isInEditPage={isInEditPage} showTurnOverButton={false} turnable={turnable}/>
             <CardOverview text={back} turnOverCardOnSpaceKey={false} isInEditPage={isInEditPage} showTurnOverButton={false} turnable={turnable}/>
             <FlashcardOperationsMenu
@@ -32,8 +32,8 @@ function FlashcardRow({ front, back, view, showEditPopup, setInitialTerm, setIni
                 setReload={setReload}
                 flashcardID={flashcardID}
             />
-            <div>
-                <Image url={ThreeDots} width="16px" minWidth="16px" maxHeight="16px" paddingRight='0px' onClick={handleClick}/>
+            <div className="three-dots-container" onClick={handleClick}>
+                <Image url={ThreeDots} width={view === 'mobile' ? "32px" : "16px"} minWidth={view === 'mobile' ? "32px" : "16px"} maxHeight={view === 'mobile' ? "32px" : "16px"} paddingRight='0px'/>
             </div>
             <div></div>
             <div></div>

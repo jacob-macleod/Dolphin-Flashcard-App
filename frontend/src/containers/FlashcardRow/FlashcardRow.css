@@ -5,3 +5,11 @@
     column-gap: 14px;
     align-items: center;
 }
+
+.flashcard-row-mobile{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) 32px; /* Equal-width columns */
+    justify-items: center;
+    column-gap: 14px;
+    align-items: center;
+}

@@ -123,6 +123,7 @@ function EmailSignupForm({ setJwtToken }) {
                     style={{
                         width: '100%',
                     }}
+                    type="button"
                 />
 
                 <ErrorText text={errorMessage} />

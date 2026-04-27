@@ -48,7 +48,7 @@ function CardOperationsPopup({
 
     return (
         visible ?
-        <div className={view == "mobile" ? 'card-operations-popup-wrapper-mobile' : 'card-operations-popup-wrapper'} style={{zIndex: 2, height: "104px"}}>
+        <div className={view == "mobile" ? 'card-operations-popup-wrapper-mobile' : 'card-operations-popup-wrapper'} style={{zIndex: 2}}>
             <div className='card-operations-container'>
                 <MenuItem text="Edit" src={window.location.href} imgUrl={renameIcon} margin="0px" float={float} onClick={() => {
                     setInitialTerm(front);

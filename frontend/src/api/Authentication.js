@@ -7,9 +7,12 @@ import 'firebase/compat/firestore';
 export function signInWithGoogle(setJwtToken, setErrorMessage, forceRecreate) {
     const provider = new firebase.auth.GoogleAuthProvider();
   
+    alert ("Got provider")
+
     // Sign in
     firebase.auth().signInWithPopup(provider)
         .then(async (result) => {
+            alert(result);
             // Successful sign-in, you can access user information here
             const user = result.user;
             const idToken = await user.getIdToken();
@@ -25,6 +28,7 @@ export function signInWithGoogle(setJwtToken, setErrorMessage, forceRecreate) {
             createCookie("profileImage", user.photoURL);
             })
             .catch((error) => {
+            alert("Error signing in: " + error);
             // Handle errors here
             console.error('Google sign-in error: ', error);
     }); 
