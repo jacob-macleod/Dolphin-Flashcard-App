@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.7.5 - 2026-04-27
+
+### Changed
+
+- Removed alerts from google sign in
+
 ## 7.7.4 - 2026-04-27
 
 ### Changed
