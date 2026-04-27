@@ -21,6 +21,13 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+
+## 7.7.4 - 2026-04-27
+
+### Changed
+
+- Added improvements to make the three dot menu next to flashcards accessible on mobile
+
 ## 7.7.3 - 2026-02-20
 
 ### Changed
