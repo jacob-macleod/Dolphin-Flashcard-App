@@ -19,9 +19,7 @@ function GhostButton({
     gridTemplateColumns: icon ? 'auto auto' : 'auto',
     ...style,
   };
-  console.log(text);
-  console.log(style);
-  console.log(buttonStyle);
+
 
   return (
     <motion.button

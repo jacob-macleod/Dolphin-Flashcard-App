@@ -807,4 +807,5 @@ def update_shared_card_progress():
         return jsonify({"success": True, "message": "Card progress updated"}), 200
         
     except Exception as e:
+        print ("Error updating shared card progress:", str(e))
         return jsonify({"error": str(e)}), 500

@@ -5,8 +5,6 @@ import './MobilePageWrapper.css';
 function MobilePageWrapper({ clickedImage, unclickedImage, text, src, clicked=false }) {
 
   function wrapperClicked() {
-    console.log("clicked");
-    console.log(src);
     window.open(src, '_self');
   }
 
