@@ -26,10 +26,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 ### Fixed
 
-- Commented out caching for TodayData for flashcards on flashcards page, to prevent a logic error where, after studying a card, data was not updated when returning to the main flashcards page
+- Commented out caching for TodayData for flashcards on flashcards page, to prevent a logic error where, after studying a card, data was not updated when returning to the main flashcards page. Now, whenever loading flashcards page, data will be loaded from scratch to ensure the latest version of the data is always available
 - Fixed issue in DailyFlashcardBrowser where DelayedElement for saving card progress was not saved, causing a bug where users did not know card progress was not saved and clicked away, causing card progress to be lost
 - Added mouse cursor to three-dot menu
 - Fixed issue where Copy and Fullscreen buttons overlapped the "Turn Over" button on DailyFlashcardBrowser on mobile
+- If user does not exist for increase_xp in the backend, the code will now assume the user exists and create stats information
+
 
 ### Changed
 

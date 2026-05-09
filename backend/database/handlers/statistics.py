@@ -199,7 +199,7 @@ class Statistics(DatabaseHandler):
             self._context.collection(self._db_name).document(user_id).get().to_dict()
         )
         if stats is None:
-            # Assume use exists
+            # Assume user exists
             stats = {
                 "lastStreak": self._date.get_current_date(),
                 "streak": 0,
