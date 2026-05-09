@@ -54,9 +54,7 @@ function AIFlashcards() {
   const [prompt, setPrompt] = useState('');
   const [timesFlashcardsGenerated, setTimesFlashcardsGenerated] = useState(0);
   const [createCardDialogueVisible, setCreateCardDialogueVisible]= useState(false);
-  // useEffect(() => {
-  //   console.log("AI Flashcard Data:", aiFlashcardData);
-  // }, [aiFlashcardData]);
+
 
   function getTodayDate() {
   let today = new Date();
@@ -67,19 +65,13 @@ function AIFlashcards() {
 }
 
   useEffect(() => {
-    console.log(timesFlashcardsGenerated)
     if (timesFlashcardsGenerated > 0) {
-      console.log(prompt)
       apiManager.getAIFlashcardData(getCookie("jwtToken"), prompt, '', setAIFlashcardData,getTodayDate);
     }
     else {
 
     }
   }, [timesFlashcardsGenerated]);
-
-  useEffect(() => {
-    console.log("Updated flashcards:", aiFlashcardData);
-  }, [aiFlashcardData]);
 
 
 

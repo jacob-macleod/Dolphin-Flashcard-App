@@ -314,7 +314,7 @@ class ApiManager {
     });
   }
 
-  updateCardProgress(jwtToken, cardData, setCardsRevised) {
+  updateCardProgress(jwtToken, cardData, setCardsRevised, setAreCardsSaved) {
     const url = 'update-card-progress';
     const data = {
       jwtToken: jwtToken,
@@ -323,6 +323,7 @@ class ApiManager {
 
     this.fetchData(data, url, (response) => {
       setCardsRevised(response);
+      setAreCardsSaved(true);
     });
   }
 
@@ -485,7 +486,6 @@ class ApiManager {
       formData.append('delimiter', ',');
       formData.append('firstRowOfData', '1');
 
-      console.log([...formData.entries()]);
 
       this.fetchDataUsingFormData(formData, url, (status) => {
         setVisible(false);
@@ -545,7 +545,6 @@ class ApiManager {
         throw new Error(`Server error: ${response.status}`, err)
       }
       const data = await response.json()
-      console.log(data)
       // return data
     } catch (error) {
       console.error("Error importing Quizlet set: ", error)
@@ -562,7 +561,6 @@ class ApiManager {
       flashcardPrompt: flashcardPrompt,
       quantity: quantity
     };
-  console.log(data)
   //loops through each flashcard and adds a reviewStatus and lastReview value
 this.fetchData(data, url, (flashcards) => {
     const updated = (flashcards).map(card => ({

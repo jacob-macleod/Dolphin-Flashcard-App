@@ -39,11 +39,6 @@ function FlashcardOverview({
     return search(cardData);
   }
 
-  useEffect(() => {
-    console.log("flashcardData")
-    console.log(flashcardData)
-  }, [flashcardData])
-
   const renderElement = (element, folderName, path="") => {
     if (element.cards) {
       return (

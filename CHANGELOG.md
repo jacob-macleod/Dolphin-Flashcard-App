@@ -22,6 +22,18 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.7.6 - 2026-05-09
+
+### Fixed
+
+- Fixed issue in DailyFlashcardBrowser where DelayedElement for saving card progress was not saved, causing a bug where users did not know card progress was not saved and clicked away, causing card progress to be lost
+- Added mouse cursor to three-dot menu
+- Fixed issue where Copy and Fullscreen buttons overlapped the "Turn Over" button on DailyFlashcardBrowser on mobile
+
+### Changed
+
+- Removed alerts from google sign in
+
 ## 7.7.5 - 2026-04-27
 
 ### Changed

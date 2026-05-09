@@ -21,23 +21,19 @@ const useTodayCards = (reload, setReload, apiManager, getCookie) => {
 
   });
 
-  console.log ("Running middle part");
   useEffect(() => {
-    console.log("Inside useEffect, reload:", reload, "todayCards:", todayCards);
     // Fetch if:
     // 1. reload triggered
     // 2. Or no cached data
     if (reload || todayCards === null) {
       setReload(false);
-      console.log("Fetching today cards from server...");
 
       apiManager.getTodayCards(getCookie("jwtToken"), (data) => {
         setTodayCards(data);
-        console.log("Fetched today cards:", data);
 
-        if (USE_SESSION_CACHE) {
-          sessionStorage.setItem('todayCards', JSON.stringify(data));
-        }
+        // No matter what, save them in storage for getTodayCardsFromStorage to access,
+        // even if we aren't using the session cache for the main state
+        sessionStorage.setItem('todayCards', JSON.stringify(data));
       });
     }
   }, [reload, apiManager, getCookie]);

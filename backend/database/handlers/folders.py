@@ -323,7 +323,7 @@ class Folders(DatabaseHandler):
             )
 
         # Save the updated folder data
-        self._context.collection(self._db_name).document(user_id).set(
+        result = self._context.collection(self._db_name).document(user_id).set(
             {"data": folder_data}
         )
 

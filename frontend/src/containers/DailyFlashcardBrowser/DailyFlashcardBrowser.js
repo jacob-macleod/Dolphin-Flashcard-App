@@ -20,6 +20,7 @@ import ExitFullscreenIcon from '../../static/exit-fullscreen-icon.svg';
 import GhostButton from '../../componments/GhostButton';
 import Button from '../../componments/Button';
 import copyIcon from '../../static/copy-icon.svg';
+import { use } from 'react';
 
 
 const slideVariants = {
@@ -39,26 +40,29 @@ function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [newDataSaved, setNewDataSaved] = useState(false);
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
-  const [cardsSaved, setCardsSaved] = useState(false);
+  const [savedCards, setSavedCards] = useState(false);
   const [studying, setStudying] = useState(0);
   const [reviewing, setReviewing] = useState(0);
   const [notStarted, setNotStarted] = useState(0);
   const [currentCard, setCurrentCard] = useState(null);
   const [cardReviewer, setCardReviewer] = useState(null);
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
+  const [areCardsSaved, setAreCardsSaved] = useState(null);
   const id = flashcardID?.[0];
   const name = flashcardName?.[0];
   const previewUrl = `${window.location.origin}/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
 
   function saveFlashcards(newCardData) {
+    if (updatedCardData.length === 0) return; // Don't run at the start when no cards have been loaded
     /*
     Save the flashcard data
     */
-   apiManager.updateCardProgress(
-    getCookie("jwtToken"),
-    newCardData,
-    setCardsSaved
-   )
+    apiManager.updateCardProgress(
+      getCookie("jwtToken"),
+      newCardData,
+      setSavedCards,
+      setAreCardsSaved
+    )
   }
 
   useEffect(() => {
@@ -184,9 +188,9 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
       // Again, make sure it only populates card data once
       if (cardData.length !== 0) {
         setAddedReviewDataToCards(true);
-        setCardsSaved(false);
+        setSavedCards(false);
       } else {
-        setCardsSaved(true);
+        setSavedCards(true);
       }
     }
   }, [cardData, reviewStatuses]);
@@ -243,7 +247,6 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
    
     
     try{
-      console.log(todayCards)
       await navigator.clipboard.writeText(previewUrl)
        setShowCopiedMessage(true);
 
@@ -268,7 +271,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   showResponseOptions={true}
                   setResponse={setResponse}
                   height={isFullscreen ? '100%' : 'fit-content'}
-                  toggleFullscreen={toggleFullscreen}
+                  // toggleFullscreen={toggleFullscreen}
                   fullscreen={isFullscreen}
                   view={view}
                   previewUrl={previewUrl}
@@ -280,13 +283,10 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   <ReviewBarChartKey style={{ paddingTop: '8px'}} />
                  
                     
-              {view !== "mobile"  ?
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginLeft:'auto' }}>
-                <Image url={copyIcon} onClick={CopyPreviewURL} style={{height:"26px",width:"26px" }} className='expand-button'/>       
-                <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>
-                </div>      
-                : <></>
-              }     
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginLeft:'auto' }}>
+                    <Image url={copyIcon} onClick={CopyPreviewURL} style={{height:"26px",width:"26px" }} className='expand-button'/>       
+                    <Image url={ExpandIcon} onClick={toggleFullscreen} style={{height:"26px",width:"26px"}} className='expand-button'/>
+                  </div>      
                       
               </div>
               )}
@@ -312,10 +312,10 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                 )}
             </div>
         </>
-      ) : cardsSaved === false ? (
+      ) : savedCards === false ? (
         <>
           <div style={{ display: 'inline-block' }}>
-            <DelayedElement child={null} childValue={null} />
+            <DelayedElement child={null} childValue={areCardsSaved} />
             <Heading5 text="Saving cards..." />
           </div>
         </>
