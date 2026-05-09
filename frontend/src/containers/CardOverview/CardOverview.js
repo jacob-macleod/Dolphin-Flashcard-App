@@ -77,9 +77,6 @@ function CardOverview({
     const [showCopiedMessage, setShowCopiedMessage] = useState(false);
     const isFlippedRef = useRef(isFlipped);
 
-    useEffect(() => {
-        console.log(fullscreen);
-    }, [fullscreen]);
 
     function turnOverCard() {
         if (!turnable) return;

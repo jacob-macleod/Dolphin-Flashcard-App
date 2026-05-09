@@ -15,6 +15,7 @@ function Image({
   marginBottom = '0px',
   marginTop = '0px',
   objectFit = 'fill',
+  cursor = undefined,
   style = {},
 }) {
   const handleClick = () => {
@@ -40,7 +41,7 @@ function Image({
         marginBottom: marginBottom,
         marginTop: marginTop,
         objectFit: objectFit,
-        cursor: onClick != undefined ? 'pointer' : 'auto',
+        cursor: cursor !== undefined ? cursor : onClick != undefined ? 'pointer' : 'auto',
         ...style,
       }}
       onClick={handleClick}
