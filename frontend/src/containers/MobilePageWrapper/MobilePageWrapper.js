@@ -12,57 +12,62 @@ import settingsIconUnclicked from '../../static/settings-icon-unclicked.svg';
 import leaderboardIconClicked from '../../static/leaderboard-icon-clicked.svg';
 import leaderboardIconUnclicked from '../../static/leaderboard-icon-unclicked.svg';
 import warningIconUnclicked from '../../static/warning-icon-unclicked.svg'
-function MobilePageWrapper({ children, view, itemClicked }) {
-  return view === "mobile"
-    ? <div className="mobile-page-grid-container">
-        {children}
-        <div className='nav-bar-wrapper'>
-            <div className='nav-bar'>
-                <NavBarButton
-                    text="Dashboard"
-                    src="/dashboard"
-                    clickedImage={dashboardIconClicked}
-                    unclickedImage={dashboardIconUnclicked}
-                    clicked={itemClicked === "dashboard"}
-                />
-                <NavBarButton
-                    text="Flashcards"
-                    src="/flashcards"
-                    clickedImage={flashcardsIconClicked}
-                    unclickedImage={flashcardsIconUnclicked}
-                    clicked={itemClicked === "flashcards"}
-                />
-                <NavBarButton
-                    text="Community"
-                    src="/community"
-                    clickedImage={communityIconClicked}
-                    unclickedImage={communityIconUnclicked}
-                    clicked={itemClicked === "community"}
-                />
-                <NavBarButton
-                    text="Settings"
-                    src="/settings"
-                    clickedImage={settingsIconClicked}
-                    unclickedImage={settingsIconUnclicked}
-                    clicked={itemClicked === "settings"}
-                />
-                {/*<NavBarButton
-                    text="Leaderboard"
-                    src="/leaderboard"
-                    clickedImage={leaderboardIconClicked}
-                    unclickedImage={leaderboardIconUnclicked}
-                    clicked={itemClicked === "leaderboard"}
-                />*/}
-                <NavBarButton
-                    text="Report Issues"
-                    src="/https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAHPmNG5UOU1JOVBHTkNRMjREM0o2V0cwM0VXS0JCUC4u"
-                    //clickedImage={leaderboardIconClicked}
-                    unclickedImage={warningIconUnclicked}
-                    clicked={itemClicked === "leaderboard"}
-                />
+function MobilePageWrapper({ children, view, itemClicked, showReturnToFlashcardsWarning, flashcardsBeingSaved, setReturnToFlashcardsWarningVisible }) {
+    function showWarningBox() {
+        setReturnToFlashcardsWarningVisible(true);
+    }
+
+    return view === "mobile"
+        ? <div className="mobile-page-grid-container">
+            {children}
+            <div className='nav-bar-wrapper'>
+                <div className='nav-bar'>
+                    <NavBarButton
+                        text="Dashboard"
+                        src="/dashboard"
+                        clickedImage={dashboardIconClicked}
+                        unclickedImage={dashboardIconUnclicked}
+                        clicked={itemClicked === "dashboard"}
+                    />
+                    <NavBarButton
+                        text="Flashcards"
+                        src="/flashcards"
+                        clickedImage={flashcardsIconClicked}
+                        unclickedImage={flashcardsIconUnclicked}
+                        clicked={itemClicked === "flashcards"}
+                        onClick={showReturnToFlashcardsWarning && flashcardsBeingSaved ? showWarningBox : () => {window.open("/flashcards", "_self")}}
+                    />
+                    <NavBarButton
+                        text="Community"
+                        src="/community"
+                        clickedImage={communityIconClicked}
+                        unclickedImage={communityIconUnclicked}
+                        clicked={itemClicked === "community"}
+                    />
+                    <NavBarButton
+                        text="Settings"
+                        src="/settings"
+                        clickedImage={settingsIconClicked}
+                        unclickedImage={settingsIconUnclicked}
+                        clicked={itemClicked === "settings"}
+                    />
+                    {/*<NavBarButton
+                        text="Leaderboard"
+                        src="/leaderboard"
+                        clickedImage={leaderboardIconClicked}
+                        unclickedImage={leaderboardIconUnclicked}
+                        clicked={itemClicked === "leaderboard"}
+                    />*/}
+                    <NavBarButton
+                        text="Report Issues"
+                        src="/https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAHPmNG5UOU1JOVBHTkNRMjREM0o2V0cwM0VXS0JCUC4u"
+                        //clickedImage={leaderboardIconClicked}
+                        unclickedImage={warningIconUnclicked}
+                        clicked={itemClicked === "leaderboard"}
+                    />
+                </div>
             </div>
         </div>
-    </div>
     : children
 }
 

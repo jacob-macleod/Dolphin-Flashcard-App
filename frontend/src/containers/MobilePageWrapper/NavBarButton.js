@@ -2,13 +2,13 @@ import React from 'react';
 import Image from '../../componments/Image';
 import './MobilePageWrapper.css';
 
-function MobilePageWrapper({ clickedImage, unclickedImage, text, src, clicked=false }) {
+function MobilePageWrapper({ clickedImage, unclickedImage, text, src, clicked=false, onClick=() => {wrapperClicked()}}) {
 
   function wrapperClicked() {
     window.open(src, '_self');
   }
 
-  return <div className={clicked ? 'nav-bar-item-active' : 'nav-bar-item'} onClick={() => {wrapperClicked()}}>
+  return <div className={clicked ? 'nav-bar-item-active' : 'nav-bar-item'} onClick={onClick}>
         <div className='icon-wrapper'>
           <Image url={clicked ? clickedImage : unclickedImage} width='20px' height='20px' minWidth='20px' paddingRight='0px'/>
         </div>
