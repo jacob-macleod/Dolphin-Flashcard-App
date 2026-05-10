@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.7.7 - 2026-05-10
+
+### Changed
+
+- Added alert if user clicks away before flashcards are saved
+
 ## 7.7.6 - 2026-05-09
 
 ### Fixed

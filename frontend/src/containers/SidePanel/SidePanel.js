@@ -18,13 +18,16 @@ import './SidePanel.css';
 import '../../componments/GridItem/GridItem.css';
 
 
-function SidePanel ({ selectedItem }) {
+function SidePanel ({ selectedItem, showReturnToFlashcardsWarning, flashcardsBeingSaved, setReturnToFlashcardsWarningVisible }) {
     const [accountDropdownVisibility, setAccountDropdownVisibility] = useState(false);
     const gridItemStyle = {
         width: "240px",
         padding: "0px"
     }
 
+    function showWarningBox() {
+        setReturnToFlashcardsWarningVisible(true);
+    }
 
     return <div className='grid-item' style={gridItemStyle}>
         <div className="side-panel">
@@ -41,6 +44,7 @@ function SidePanel ({ selectedItem }) {
                 src="/flashcards"
                 clicked={selectedItem == "flashcards" ? true : false}
                 imgUrl={selectedItem == "flashcards" ? flashcard_icon_white : flashcard_icon}
+                onClick={showReturnToFlashcardsWarning && flashcardsBeingSaved ? showWarningBox : () => {window.open("/flashcards", "_self")}}
             />
             <MenuItem
                 text="Community"

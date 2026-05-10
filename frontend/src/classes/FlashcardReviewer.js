@@ -79,7 +79,7 @@ class FlashcardReviewer {
         this._unlearnedCards = [];
         this._currentCollection = null;
         this._saveFlashcardData = saveFlashcardData;
-        this._setCardsPercentage = setCardsPercentage
+        this._setCardsPercentage = setCardsPercentage;
         this._cardsSaved = false;
         this.#categoriseCards();
     }
@@ -305,6 +305,7 @@ class FlashcardReviewer {
                 this._saveFlashcardData(this._cardData);
                 this._cardsSaved = true;
             }
+
             return true;
         } else {
             return false;

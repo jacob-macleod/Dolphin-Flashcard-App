@@ -4,6 +4,7 @@ import Image from '../../componments/Image/Image';
 import './MenuItem.css';
 
 function MenuItem({ text, clicked=false, src, imgUrl="", width="178px",style=null, onClick=null, float=null}) {
+    
     return (
         <div
             className={clicked ? "menu-item-clicked" : "menu-item"}
@@ -17,7 +18,15 @@ function MenuItem({ text, clicked=false, src, imgUrl="", width="178px",style=nul
                 url={imgUrl}
                 className="menu-icon"
             />}
-            <Link to={src} style={{textDecoration: "none"}}>
+            <Link
+                to={src || '#'}
+                style={{textDecoration: "none"}}
+                onClick={(e) => {
+                    if (onClick !== null) {
+                        e.preventDefault();
+                    }
+                }}
+            >
                 <p className={clicked ? "menu-item-text-clicked" : "menu-item-text"}
                     style={{margin: "0px", height: "min-content"}}>
                     {text}
