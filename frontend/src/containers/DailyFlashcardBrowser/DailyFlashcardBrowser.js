@@ -31,12 +31,14 @@ const slideVariants = {
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
 
-function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
+
+function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage, setFlashcardsBeingSaved}) {
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardIndex, setCardIndex] = useState(0);
   const [updatedCardData, setUpdatedCardData] = useState([]);
   const [flashcardsLoaded, setFlashcardsLoaded] = useState(null);
   const [addedReviewDataToCards, setAddedReviewDataToCards] = useState(false);
+  const [areCardsSaved, setAreCardsSaved] = useState(null);
   const [newDataSaved, setNewDataSaved] = useState(false);
   const location = useLocation();
   const { folder, flashcardName, flashcardID } = queryString.parse(location.search, { arrayFormat: 'bracket' });
@@ -47,10 +49,10 @@ function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
   const [currentCard, setCurrentCard] = useState(null);
   const [cardReviewer, setCardReviewer] = useState(null);
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
-  const [areCardsSaved, setAreCardsSaved] = useState(null);
   const id = flashcardID?.[0];
   const name = flashcardName?.[0];
   const previewUrl = `${window.location.origin}/preview?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`;
+  const [allCardsRevised, setAllCardsRevised] = useState(false);
 
   function saveFlashcards(newCardData) {
     if (updatedCardData.length === 0) return; // Don't run at the start when no cards have been loaded
@@ -64,6 +66,14 @@ function DailyFlashcardBrowser({ view, cardsPercentage, setCardsPercentage }) {
       setAreCardsSaved
     )
   }
+
+  useEffect(() => {
+    if (allCardsRevised && savedCards === false) {
+      setFlashcardsBeingSaved(true);
+    } else {
+      setFlashcardsBeingSaved(false);
+    }
+  }, [allCardsRevised, savedCards]);
 
   useEffect(() => {
     let reviewer = new flashcardReviewer(updatedCardData, saveFlashcards, setCardsPercentage);
@@ -198,6 +208,9 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
   const setResponse = (response) => {
     cardReviewer.reviseCard(currentCard, response);
     setCurrentCard(cardReviewer.next());
+    if (cardReviewer.allCardsRevised()) {
+      setAllCardsRevised(true);
+    };
   };
 
   // Count the types of cards
@@ -315,7 +328,10 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
       ) : savedCards === false ? (
         <>
           <div style={{ display: 'inline-block' }}>
-            <DelayedElement child={null} childValue={areCardsSaved} />
+            <DelayedElement
+              child={null}
+              childValue={areCardsSaved}
+            />
             <Heading5 text="Saving cards..." />
           </div>
         </>

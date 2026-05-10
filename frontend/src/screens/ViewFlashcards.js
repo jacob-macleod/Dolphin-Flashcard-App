@@ -18,6 +18,7 @@ import { TotalFlashcardBrowser } from '../containers/TotalFlashcardBrowser';
 import DailyFlashcardBrowser from '../containers/DailyFlashcardBrowser';
 import MobilePageWrapper from '../containers/MobilePageWrapper';
 import Heading5 from '../componments/Text/Heading5';
+import ReturnToFlashcardsPageWarning from '../containers/Modal/ReturnToFlashcardsPageWarning';
 import "../componments/Text/Link/Link.css";
 import './ViewFlashcards.css';
 
@@ -26,6 +27,8 @@ function ViewFlashcards() {
   const [mode, setMode] = useState("daily");
   const [todayCards, setTodayCards] = useState(getTodayCardsFromStorage());
   const [cardsPercentage, setCardsPercentage] = useState("0%");
+  const [returnToFlashcardsWarningVisible, setReturnToFlashcardsWarningVisible] = useState(false);
+  const [flashcardsBeingSaved, setFlashcardsBeingSaved] = useState(false);
 
   // Set variables for the size
   const mobileBreakpoint = 650;
@@ -74,7 +77,7 @@ const collectCardIDs = (cards, flashcardIDs) => {
   return cardIDs;
 };
 
-const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
+  const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
 
   return (
     <div style={{ top: "0px" }}>
@@ -83,8 +86,18 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
 
+      <ReturnToFlashcardsPageWarning visible={returnToFlashcardsWarningVisible} setVisible={setReturnToFlashcardsWarningVisible} view={view} />
+
       <GridContainer layout={view !== "mobile" ? "240px auto" : "auto"} classType="two-column-grid">
-        {view !== "mobile" ? <SidePanel selectedItem="flashcards" /> : <></>}
+        {view !== "mobile"
+        ? <SidePanel
+            selectedItem="flashcards"
+            showReturnToFlashcardsWarning={true}
+            flashcardsBeingSaved={flashcardsBeingSaved}
+            setReturnToFlashcardsWarningVisible={setReturnToFlashcardsWarningVisible}
+            /> 
+          : <></>
+        }
 
         <GridItem
           style={{
@@ -99,7 +112,14 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
             justifyContent: "center",
           }}
         >
-          <MobilePageWrapper view={view} itemClicked="flashcards">
+
+          <MobilePageWrapper
+            view={view} 
+            itemClicked="flashcards"
+            showReturnToFlashcardsWarning={true}
+            flashcardsBeingSaved={flashcardsBeingSaved}
+            setReturnToFlashcardsWarningVisible={setReturnToFlashcardsWarningVisible}
+          >
             <div className={view === "mobile" ? "mobile-page-container" : "desktop-page-container"}>
 
               <WhiteOverlay
@@ -146,7 +166,12 @@ const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
                   </div>
 
                   {mode === "daily"
-                    ? <DailyFlashcardBrowser view={view} setCardsPercentage={setCardsPercentage} cardsPercentage={cardsPercentage}/>
+                    ? <DailyFlashcardBrowser
+                      view={view}
+                      setCardsPercentage={setCardsPercentage}
+                      cardsPercentage={cardsPercentage}
+                      setFlashcardsBeingSaved={setFlashcardsBeingSaved}
+                    />
                     : <TotalFlashcardBrowser
                         folder={folder}
                         flashcardName={flashcardName}
