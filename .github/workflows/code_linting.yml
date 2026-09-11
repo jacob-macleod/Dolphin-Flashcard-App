@@ -49,10 +49,11 @@ jobs:
 
     - name: Activate Premium Repo...
       run: |
-        cd frontend/src
-        git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
-        cd ../..
-        bash install_premium_repo.sh
+        echo "Disabled for now"
+        # cd frontend/src
+        # git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
+        # cd ../..
+        # bash install_premium_repo.sh
       env:
           PREMIUM_REPO_ACCESS_TOKEN: ${{ secrets.PREMIUM_REPO_ACCESS_TOKEN }}
 
