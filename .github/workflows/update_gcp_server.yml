@@ -42,7 +42,7 @@ jobs:
 
       - name: Activate Premium Repo...
         run: |
-          echo "This is cancelled for now"
+          echo "Disabled for now"
           # cd frontend/src
           # git clone https://x-access-token:${PREMIUM_REPO_ACCESS_TOKEN}@github.com/jacob-macleod/Dolphin-Flashcards-Premium-Features.git
           # cd ../..

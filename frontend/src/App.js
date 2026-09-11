@@ -43,16 +43,16 @@ function App() {
   const [jwtToken, setJwtToken] = useState(getCookie('jwtToken'));
   const [TestScreen, setTestScreen] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const module = await import("./Dolphin-Flashcards-Premium-Features/frontend/screens/testScreen"); // try importing
-        setTestScreen(() => module.default);
-      } catch (err) {
-        console.warn("OptionalComponent not found, continuing without it");
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const module = await import("./Dolphin-Flashcards-Premium-Features/frontend/screens/testScreen"); // try importing
+  //       setTestScreen(() => module.default);
+  //     } catch (err) {
+  //       console.warn("OptionalComponent not found, continuing without it");
+  //     }
+  //   })();
+  // }, []);
 
 
   return (
