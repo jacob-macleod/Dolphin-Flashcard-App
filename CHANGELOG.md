@@ -22,6 +22,12 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.7.9 - 2026-09-12
+
+### Changed
+
+- Removed reference to premium repo for now
+
 ## 7.7.8 - 2026-09-11
 
 ### Fixed
