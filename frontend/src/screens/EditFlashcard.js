@@ -64,6 +64,7 @@ function Flashcards() {
     flashcardsExist,
     flashcardItems,
     setFlashcardItems,
+    flashcardsLoaded,
   } = useFlashcardData(newSet, folder, flashcardID, description, flashcardName);
 
   const handleOptionChange = (event) => setSortType(event.target.value);
@@ -79,6 +80,10 @@ function Flashcards() {
   const flashcardItemsFiltered = searchValue 
     ? flashcardItems.filter(card => [card.front, card.back].some(text => text.toLowerCase().includes(searchValue.toLowerCase()))) 
     : flashcardItems
+
+    console.log(flashcardItems);
+    console.log("flashcardLoaded", flashcardsLoaded);
+    console.log("flashcardData", flashcardData);
 
   return (
     <div style={{ top: "0px" }}>
@@ -146,7 +151,7 @@ function Flashcards() {
                   {/* <FlashcardSearch view={view} currentValue={searchValue} handleSearchClick={setSearchValue}/>
                   <FlashcardSort sortType={sortType} handleOptionChange={handleOptionChange} /> */}
 
-                  <Button text="+ New Card" onClick={() => setNewFlashcardPopupVisible(true)} style={{marginLeft: "16px"}}/>
+                  <Button text="+ New Card" onClick={() => flashcardsLoaded ? setNewFlashcardPopupVisible(true) : null} style={{marginLeft: "16px"}}/>
 
                   <div className='two-column-text'>
                     <BoldParagraph text="Term:" />
@@ -154,7 +159,7 @@ function Flashcards() {
                   </div>
 
                   {
-                  flashcardData === null
+                  flashcardsLoaded === false
                     ? <div className={"loading-icon-wrapper"}>
                       <DelayedElement child={<></>} childValue={null} />
                     </div>

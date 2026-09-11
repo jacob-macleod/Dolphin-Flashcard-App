@@ -6,7 +6,6 @@ import ErrorText from '../Text/ErrorText';
 
 function signInButton({ setJwtToken, active = true }) {
   const [signInErrorMessage, setSignInErrorMessage] = useState('');
-
   const queryParams = new URLSearchParams(location.search);
 
   const [forceRecreate, setForceRecreate] = useState(

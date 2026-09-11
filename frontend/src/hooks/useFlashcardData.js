@@ -6,25 +6,18 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
   const [flashcardData, setFlashcardData] = useState(null);
   const [flashcardsExist, setFlashcardsExist] = useState(null);
   const [flashcardItems, setFlashcardItems] = useState([]);
+  const [flashcardsLoaded, setFlashcardsLoaded] = useState(false);
 
   useEffect(() => {
-      if (newSet === "true") {
-      setFlashcardData({
-          "cards": [],
-          "description": description,
-          "name": flashcardName,
-      });
-      setFlashcardsExist(false);
-      } else {
-      apiManager.getFlashcard(
-        getCookie("jwtToken"),
-        flashcardID,
-        setFlashcardData
-      );
-      }
+    apiManager.getFlashcard(
+    getCookie("jwtToken"),
+    flashcardID,
+    setFlashcardData
+    );
   }, [newSet, folder, flashcardName, description]);
 
   useEffect(() => {
+    console.log(flashcardData);
     if (flashcardData != null  && flashcardData.cards) {
       const fetchCardData = async () => {
       const cardPromises = Object.keys(flashcardData.cards).map((cardID) => {
@@ -36,14 +29,16 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
       });
 
       const cardData = await Promise.all(cardPromises);
+      setFlashcardsLoaded(true);
       setFlashcardItems(cardData);
       setFlashcardsExist(true);
       };
 
       if (flashcardData && Object.keys(flashcardData.cards).length) {
           fetchCardData();
-      } else if (flashcardData && flashcardData.cards.length === 0) {
+      } else if (flashcardData && Object.keys(flashcardData.cards).length === 0) {
           setFlashcardsExist(false);
+          setFlashcardsLoaded(true);
       }
 
     }
@@ -51,7 +46,7 @@ const useFlashcardData = (newSet, folder, flashcardID, description, flashcardNam
   }, [flashcardData]);
 
 
-  return { flashcardData, flashcardsExist, flashcardItems, setFlashcardItems };
+  return { flashcardData, flashcardsExist, flashcardItems, setFlashcardItems, flashcardsLoaded };
 };
 
 export default useFlashcardData;

@@ -6,8 +6,6 @@ import 'firebase/compat/firestore';
 
 export function signInWithGoogle(setJwtToken, setErrorMessage, forceRecreate) {
     const provider = new firebase.auth.GoogleAuthProvider();
-  
-
 
     // Sign in
     firebase.auth().signInWithPopup(provider)
