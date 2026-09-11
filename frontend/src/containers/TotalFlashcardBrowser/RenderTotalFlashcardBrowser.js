@@ -14,6 +14,7 @@ import GhostButton from '../../componments/GhostButton';
 import Button from '../../componments/Button';
 import copyIcon from '../../static/copy-icon.svg';
 import queryString from 'query-string';
+import Heading5 from '../../componments/Text/Heading5';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -138,7 +139,7 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
             <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
           )}
         </>
-      ) : null}
+      ) : <Heading5 text="You don't have any flashcards yet!" />}
     </div>
   );
 }

@@ -23,19 +23,20 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
     flashcardItems,
     individualCards,
     setFlashcardItems,
+    flashcardsLoaded
   } = useFlashcardDataForMultipleCards(folder, flashcardID, "", flashcardName);
   const [loadingIcon, setLoadingIcon] = useState(null);
   
 
   useEffect(() => {
-      if (flashcardItems.length !== 0) {
-          // Show the loading icon
-          setLoadingIcon(true);
-      } else {
-          // Hide the loading icon
-          setLoadingIcon(null);
-      }
-  }), [flashcardItems];
+    if (flashcardsLoaded === false) {
+        // Hide the loading icon
+        setLoadingIcon(null);
+    } else {
+        // Show the loading icon
+        setLoadingIcon(true);
+    }
+  }), [flashcardsLoaded];
 
   return (
     <DelayedElement childValue={loadingIcon} child={

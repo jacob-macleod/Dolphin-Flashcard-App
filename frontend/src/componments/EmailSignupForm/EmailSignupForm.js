@@ -10,6 +10,13 @@ function EmailSignupForm({ setJwtToken }) {
     const [password, setPassword] = useState('');
     const [displayName, setDisplayName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const queryParams = new URLSearchParams(location.search);
+
+    const [forceRecreate, setForceRecreate] = useState(
+        queryParams.get('forceRecreate') == null
+        ? false
+        : queryParams.get('forceRecreate')
+    );
 
     useEffect(() => {
         if (!firebase.apps.length) {
@@ -118,7 +125,7 @@ function EmailSignupForm({ setJwtToken }) {
                 <GhostButton
                     text="Or, sign in with Google"
                     onClick={() =>
-                        signInWithGoogle(setJwtToken, setErrorMessage, false)
+                        signInWithGoogle(setJwtToken, setErrorMessage, forceRecreate)
                     }
                     style={{
                         width: '100%',
