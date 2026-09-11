@@ -80,7 +80,8 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload,flash
           '&flashcardDescription=' +
           flashcardDescription +
           '&flashcardID=' +
-          loadEditFlashcardPage.flashcardID,
+          loadEditFlashcardPage.flashcardID +
+          '&newSet=true',
         '_self'
       );
     }

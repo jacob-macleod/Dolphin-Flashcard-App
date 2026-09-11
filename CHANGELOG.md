@@ -22,6 +22,14 @@ This changelog follows the semantic versioning standard(https://semver.org)
 - N/A
 -->
 
+## 7.7.8 - 2026-09-11
+
+### Fixed
+
+- Fixed major bug where adding new flashcard before they're all loaded deletes the set. Also fixed loading animation for edit flashcard page
+- Fixed bug where, after creating a flashcard set and being taken to the edit page, going back took the user to the preview flashcard page for that card, not the /flashcards page
+- Fixed bug where "All Flashcards" mode never finishes loading if a user has no cards
+
 ## 7.7.7 - 2026-05-10
 
 ### Changed
