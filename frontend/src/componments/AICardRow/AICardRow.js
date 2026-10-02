@@ -21,7 +21,7 @@ function AICardRow({ front, back, view, showEditPopup, setInitialTerm, setInitia
     }
 
     return (
-        <div className={view === 'mobile' ? 'flashcard-row-mobile' : 'flashcard-row'}>
+        <div className={view === 'mobile' ? 'flashcard-row-mobile' : 'flashcard-row'} style={{width:'90%', margin: '0 auto' }}>
             <CardOverview text={front} turnOverCardOnSpaceKey={false} isInEditPage={isInEditPage} showTurnOverButton={false} turnable={false}/>
             <CardOverview text={back} turnOverCardOnSpaceKey={false} isInEditPage={isInEditPage} showTurnOverButton={false} turnable={false}/>
             <FlashcardOperationsMenu

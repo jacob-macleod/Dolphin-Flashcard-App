@@ -37,6 +37,14 @@ const FlashcardHeader = ({ newSet, flashcardName, folder, type="editFlashcardHea
         </p>
         : <></>
       }
+      <p
+          className='link'
+          style={{ paddingLeft: "16px" }}
+          onClick={() => {
+          window.open("/flashcards", "_self")
+          }}
+        >Back
+        </p>
     </div>
   );
 };

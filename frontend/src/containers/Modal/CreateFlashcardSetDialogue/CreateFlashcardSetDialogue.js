@@ -46,7 +46,7 @@ function CreateFlashcardSetDialogue({ visible, setVisible, view, setReload,flash
     } else if (flashcardName === '') {
       setErrorMessage('Please enter a name!');
     } else if (flashcardDescription === '') {
-      setErrorMessage('Please enter a description!');
+      setErrorMessage(null);
     } else {
       setErrorMessage(null);
     }

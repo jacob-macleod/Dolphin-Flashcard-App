@@ -139,7 +139,7 @@ function RenderTotalFlashcardBrowser({ flashcardData, flashcardsExist, flashcard
             <GhostButton style={{position:'absolute',top:'10px',right:'10px' }} text="Exit Fullscreen" onClick={toggleFullscreen} icon={ExitFullscreenIcon}/>
           )}
         </>
-      ) : <Heading5 text="You don't have any flashcards yet!" />}
+      ) : <Heading5 text="No Flashcards!" />}
     </div>
   );
 }
