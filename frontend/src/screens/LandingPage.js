@@ -327,7 +327,6 @@ function LandingPage({ setJwtToken }) {
               <MailChimpInput />
             </div>
           </div>
-          <ProjectProgress view={view} />
           <div
             style={{
               textAlign: 'start',

@@ -190,7 +190,7 @@ function AIFlashcards() {
             />
 
             <div style={{ display: 'flex', flexDirection: 'column', width: '100%', margin: 'auto' }}>
-              <div className='two-column-text'>
+              <div className='two-column-text' style={{width:'70%', margin: '0 auto' }}>
                 <BoldParagraph text="Term:" />
                 <BoldParagraph text="Definition:" />
               </div>

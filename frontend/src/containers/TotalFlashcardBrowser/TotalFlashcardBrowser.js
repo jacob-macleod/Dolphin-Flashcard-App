@@ -4,6 +4,7 @@ import useFlashcardDataForMultipleCards from '../../hooks/getFlashcardDataForMul
 import '../../App.css';
 import RenderTotalFlashcardBrowser from './RenderTotalFlashcardBrowser';
 import "./TotalFlashcardBrowser.css";
+import Heading5 from '../../componments/Text/Heading5/Heading5.js';
 
 const slideVariants = {
   hiddenLeft: { x: '-100%', opacity: 0, position: 'fixed' },
@@ -13,9 +14,21 @@ const slideVariants = {
   exitRight: { x: '100%', opacity: 0, position: 'fixed' },
 };
 
+  
+
 function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
   /* An interface to access RenderTotalFlashcardBrowser. Used when viewing flashcards which
   have been added to a folder. */
+
+  const [time, setTime] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTime(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const {
     flashcardData,
@@ -25,7 +38,7 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
     setFlashcardItems,
     flashcardsLoaded
   } = useFlashcardDataForMultipleCards(folder, flashcardID, "", flashcardName);
-  const [loadingIcon, setLoadingIcon] = useState(null);
+  const [loadingIcon, setLoadingIcon] = useState(true);
   
 
   useEffect(() => {
@@ -39,7 +52,12 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
   }), [flashcardsLoaded];
 
   return (
-    <DelayedElement childValue={loadingIcon} child={
+    <div>
+    {(flashcardItems.length == 0 && time == true) ? (
+       <Heading5 text="No Flashcards!"/>
+  ) :  <div>{ (
+  
+  <DelayedElement childValue={loadingIcon} child={
       <RenderTotalFlashcardBrowser
           flashcardData={flashcardData}
           flashcardsExist={flashcardsExist}
@@ -48,6 +66,8 @@ function TotalFlashcardBrowser({ folder, flashcardName, flashcardID}) {
           setFlashcardItems={setFlashcardItems}
       />
     }/>
+    )}</div>}
+    </div>
   );
 }
 

@@ -21,6 +21,22 @@ This changelog follows the semantic versioning standard(https://semver.org)
 
 - N/A
 -->
+## 7.8.0 - 2026-09-20
+
+### Added
+
+- Added a back button to the top left of the flashcard set studying window
+
+### Fixed
+
+- When you are studying an empty set and go to all flashcards, it now instantly says there are no flashcards
+
+### Changed
+
+- Images are now placed horizontally next to text in landing page
+- Timeline on landing page removed
+- Description can now be empty when creating a new flashcard
+- AI flashcards are now horizontally and vertically smaller, growing in size depending how much text is in their contents
 
 ## 7.7.9 - 2026-09-12
 

@@ -289,6 +289,7 @@ const { cardIDs, reviewStatuses } = collectCardIDs(
                   view={view}
                   previewUrl={previewUrl}
                   CopyPreviewURL={CopyPreviewURL}
+                  minHeight={'260px'}
                 />
               </div>
               {!isFullscreen &&(

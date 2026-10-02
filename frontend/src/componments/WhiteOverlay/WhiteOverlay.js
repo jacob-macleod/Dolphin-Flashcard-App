@@ -25,7 +25,7 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
               {header !== null ? <div className="header-wrapper">
                 <Heading2 text={header} style={{fontWeight: "600"}}/>
               </div>: <></>}
-              <div className='overlay-content'>
+              <div className='overlay-content' style={style}>
                 {children}
               </div>
             </motion.div>
@@ -43,7 +43,7 @@ function WhiteOverlay({ children, style, isFlipped, flipOnClick = false, visible
             {header !== null ? <div className="header-wrapper">
               <Heading2 text={header} className="white-overlay-header" style={{fontWeight: "600"}}/>
             </div>: <></>}
-            <div className={'overlay-content '  + (header === null ? "" : "overlay-content-header")}>
+            <div className={'overlay-content '  + (header === null ? "" : "overlay-content-header")} style={style}>
                 {children}
               </div>
             </motion.div>

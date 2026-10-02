@@ -29,7 +29,6 @@ function ViewFlashcards() {
   const [cardsPercentage, setCardsPercentage] = useState("0%");
   const [returnToFlashcardsWarningVisible, setReturnToFlashcardsWarningVisible] = useState(false);
   const [flashcardsBeingSaved, setFlashcardsBeingSaved] = useState(false);
-
   // Set variables for the size
   const mobileBreakpoint = 650;
   const tabletBreakpoint = 1090;
@@ -78,7 +77,6 @@ const collectCardIDs = (cards, flashcardIDs) => {
 };
 
   const cardIDs = collectCardIDs(todayCards || {}, flashcardID);
-
   return (
     <div style={{ top: "0px" }}>
       <Helmet>
@@ -152,7 +150,7 @@ const collectCardIDs = (cards, flashcardIDs) => {
                     </p>
                     <p
                       className={mode === "total" ? "link" : "inactive-link"}
-                      onClick={() => {
+                      onClick={() => {                                      
                         setMode("total");
                       }}
                     >
